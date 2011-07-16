@@ -1,0 +1,286 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		518E2D7713D24FA60080E068 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7613D24FA60080E068 /* UIKit.framework */; };
+		518E2D7913D24FA60080E068 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7813D24FA60080E068 /* Foundation.framework */; };
+		518E2D7B13D24FA60080E068 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7A13D24FA60080E068 /* CoreGraphics.framework */; };
+		518E2D8113D24FA60080E068 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 518E2D7F13D24FA60080E068 /* InfoPlist.strings */; };
+		518E2D8413D24FA60080E068 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 518E2D8313D24FA60080E068 /* main.m */; };
+		518E2D8713D24FA60080E068 /* TrueRSVPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 518E2D8613D24FA60080E068 /* TrueRSVPAppDelegate.m */; };
+		518E2D8A13D24FA60080E068 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518E2D8813D24FA60080E068 /* MainWindow.xib */; };
+		518E2D8D13D24FA60080E068 /* TrueRSVPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 518E2D8C13D24FA60080E068 /* TrueRSVPViewController.m */; };
+		518E2D9013D24FA70080E068 /* TrueRSVPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518E2D8E13D24FA70080E068 /* TrueRSVPViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		518E2D7213D24FA60080E068 /* TrueRSVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueRSVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		518E2D7613D24FA60080E068 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		518E2D7813D24FA60080E068 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		518E2D7A13D24FA60080E068 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		518E2D7E13D24FA60080E068 /* TrueRSVP-Info.plist */ = {isa = PBXFileReference; path = "TrueRSVP-Info.plist"; sourceTree = "<group>"; };
+		518E2D8013D24FA60080E068 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		518E2D8213D24FA60080E068 /* TrueRSVP-Prefix.pch */ = {isa = PBXFileReference; path = "TrueRSVP-Prefix.pch"; sourceTree = "<group>"; };
+		518E2D8313D24FA60080E068 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		518E2D8513D24FA60080E068 /* TrueRSVPAppDelegate.h */ = {isa = PBXFileReference; path = TrueRSVPAppDelegate.h; sourceTree = "<group>"; };
+		518E2D8613D24FA60080E068 /* TrueRSVPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrueRSVPAppDelegate.m; sourceTree = "<group>"; };
+		518E2D8913D24FA60080E068 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		518E2D8B13D24FA60080E068 /* TrueRSVPViewController.h */ = {isa = PBXFileReference; path = TrueRSVPViewController.h; sourceTree = "<group>"; };
+		518E2D8C13D24FA60080E068 /* TrueRSVPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrueRSVPViewController.m; sourceTree = "<group>"; };
+		518E2D8F13D24FA70080E068 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TrueRSVPViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		518E2D6F13D24FA60080E068 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				518E2D7713D24FA60080E068 /* UIKit.framework in Frameworks */,
+				518E2D7913D24FA60080E068 /* Foundation.framework in Frameworks */,
+				518E2D7B13D24FA60080E068 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		518E2D6713D24FA60080E068 = {
+			isa = PBXGroup;
+			children = (
+				518E2D7C13D24FA60080E068 /* TrueRSVP */,
+				518E2D7513D24FA60080E068 /* Frameworks */,
+				518E2D7313D24FA60080E068 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		518E2D7313D24FA60080E068 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				518E2D7213D24FA60080E068 /* TrueRSVP.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		518E2D7513D24FA60080E068 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				518E2D7613D24FA60080E068 /* UIKit.framework */,
+				518E2D7813D24FA60080E068 /* Foundation.framework */,
+				518E2D7A13D24FA60080E068 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		518E2D7C13D24FA60080E068 /* TrueRSVP */ = {
+			isa = PBXGroup;
+			children = (
+				518E2D8513D24FA60080E068 /* TrueRSVPAppDelegate.h */,
+				518E2D8613D24FA60080E068 /* TrueRSVPAppDelegate.m */,
+				518E2D8813D24FA60080E068 /* MainWindow.xib */,
+				518E2D8B13D24FA60080E068 /* TrueRSVPViewController.h */,
+				518E2D8C13D24FA60080E068 /* TrueRSVPViewController.m */,
+				518E2D8E13D24FA70080E068 /* TrueRSVPViewController.xib */,
+				518E2D7D13D24FA60080E068 /* Supporting Files */,
+			);
+			path = TrueRSVP;
+			sourceTree = "<group>";
+		};
+		518E2D7D13D24FA60080E068 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				518E2D7E13D24FA60080E068 /* TrueRSVP-Info.plist */,
+				518E2D7F13D24FA60080E068 /* InfoPlist.strings */,
+				518E2D8213D24FA60080E068 /* TrueRSVP-Prefix.pch */,
+				518E2D8313D24FA60080E068 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		518E2D7113D24FA60080E068 /* TrueRSVP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 518E2D9313D24FA70080E068 /* Build configuration list for PBXNativeTarget "TrueRSVP" */;
+			buildPhases = (
+				518E2D6E13D24FA60080E068 /* Sources */,
+				518E2D6F13D24FA60080E068 /* Frameworks */,
+				518E2D7013D24FA60080E068 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TrueRSVP;
+			productName = TrueRSVP;
+			productReference = 518E2D7213D24FA60080E068 /* TrueRSVP.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		518E2D6913D24FA60080E068 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = Komocode;
+			};
+			buildConfigurationList = 518E2D6C13D24FA60080E068 /* Build configuration list for PBXProject "TrueRSVP" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 518E2D6713D24FA60080E068;
+			productRefGroup = 518E2D7313D24FA60080E068 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				518E2D7113D24FA60080E068 /* TrueRSVP */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		518E2D7013D24FA60080E068 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				518E2D8113D24FA60080E068 /* InfoPlist.strings in Resources */,
+				518E2D8A13D24FA60080E068 /* MainWindow.xib in Resources */,
+				518E2D9013D24FA70080E068 /* TrueRSVPViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		518E2D6E13D24FA60080E068 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				518E2D8413D24FA60080E068 /* main.m in Sources */,
+				518E2D8713D24FA60080E068 /* TrueRSVPAppDelegate.m in Sources */,
+				518E2D8D13D24FA60080E068 /* TrueRSVPViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		518E2D7F13D24FA60080E068 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				518E2D8013D24FA60080E068 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		518E2D8813D24FA60080E068 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				518E2D8913D24FA60080E068 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		518E2D8E13D24FA70080E068 /* TrueRSVPViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				518E2D8F13D24FA70080E068 /* en */,
+			);
+			name = TrueRSVPViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		518E2D9113D24FA70080E068 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		518E2D9213D24FA70080E068 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		518E2D9413D24FA70080E068 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TrueRSVP/TrueRSVP-Prefix.pch";
+				INFOPLIST_FILE = "TrueRSVP/TrueRSVP-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		518E2D9513D24FA70080E068 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TrueRSVP/TrueRSVP-Prefix.pch";
+				INFOPLIST_FILE = "TrueRSVP/TrueRSVP-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		518E2D6C13D24FA60080E068 /* Build configuration list for PBXProject "TrueRSVP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				518E2D9113D24FA70080E068 /* Debug */,
+				518E2D9213D24FA70080E068 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		518E2D9313D24FA70080E068 /* Build configuration list for PBXNativeTarget "TrueRSVP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				518E2D9413D24FA70080E068 /* Debug */,
+				518E2D9513D24FA70080E068 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 518E2D6913D24FA60080E068 /* Project object */;
+}
