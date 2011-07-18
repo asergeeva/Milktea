@@ -7,25 +7,27 @@
 //
 
 #import "TrueRSVPAppDelegate.h"
-
 #import "TrueRSVPViewController.h"
-
+#import "SignInViewController.h"
 @implementation TrueRSVPAppDelegate
-
-
 @synthesize window=_window;
-
 @synthesize viewController=_viewController;
-
+@synthesize facebook;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	facebook = [[Facebook alloc] initWithAppId:@"166527620083686"];
 	// Override point for customization after application launch.
-	 
+	
 	self.window.rootViewController = self.viewController;
+	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.window.rootViewController];
+	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
+//	signVC.view.frame = CGRectMake(signVC.view.frame.origin.x, signVC.view.frame.origin.y-250, signVC.view.frame.size.width, signVC.view.frame.size.height); 
+	[navController pushViewController:signVC animated:NO];
+	[signVC release];
+	[self.window addSubview:navController.view];
 	[self.window makeKeyAndVisible];
     return YES;
 }
-
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	/*
@@ -67,6 +69,7 @@
 
 - (void)dealloc
 {
+	[facebook release];
 	[_window release];
 	[_viewController release];
     [super dealloc];
