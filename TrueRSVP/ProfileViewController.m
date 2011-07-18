@@ -1,15 +1,15 @@
 //
-//  TrueRSVPViewController.m
+//  ProfileViewController.m
 //  TrueRSVP
 //
 //  Created by movingincircles on 7/16/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "TrueRSVPViewController.h"
+#import "ProfileViewController.h"
 
 
-@implementation TrueRSVPViewController
+@implementation ProfileViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,7 +51,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-	return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

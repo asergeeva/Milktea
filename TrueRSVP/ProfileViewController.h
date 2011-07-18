@@ -1,5 +1,5 @@
 //
-//  TrueRSVPViewController.h
+//  ProfileViewController.h
 //  TrueRSVP
 //
 //  Created by movingincircles on 7/16/11.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface TrueRSVPViewController : UIViewController {
+@interface ProfileViewController : UIViewController {
     
 }
 
