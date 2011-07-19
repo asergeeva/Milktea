@@ -21,7 +21,6 @@
 	self.window.rootViewController = self.viewController;
 	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.window.rootViewController];
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
-//	signVC.view.frame = CGRectMake(signVC.view.frame.origin.x, signVC.view.frame.origin.y-250, signVC.view.frame.size.width, signVC.view.frame.size.height); 
 	[navController pushViewController:signVC animated:NO];
 	[signVC release];
 	[self.window addSubview:navController.view];

@@ -7,14 +7,23 @@
 //
 
 #import "ProfileViewController.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @implementation ProfileViewController
-
+//@synthesize navBar;
+@synthesize nameLabel;
+@synthesize emailTextField;
+@synthesize cellTextField;
+@synthesize zipTextField;
+@synthesize twitterTextField;
+@synthesize aboutTextView;
+@synthesize updateButton;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+		aboutTextView.clipsToBounds = YES;
+		aboutTextView.layer.cornerRadius = 10.0f;
         // Custom initialization
     }
     return self;
@@ -37,6 +46,7 @@
 
 - (void)viewDidLoad
 {
+	self.navigationController.navigationBarHidden = YES;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

@@ -11,16 +11,16 @@
 @interface SignInViewController : UIViewController <UITextFieldDelegate, FBSessionDelegate> {
 	IBOutlet UITextField *txtUsername;
 	IBOutlet UITextField *txtPassword;
-	IBOutlet UINavigationBar *navBar;
+//	IBOutlet UINavigationBar *navBar;
 	IBOutlet UIButton *loginButton;
-//	Facebook *facebook;
+	Facebook *facebook;
 }
 - (IBAction)login:(id)sender;
 - (IBAction)facebookLogin:(id)sender;
 - (void)setViewMoveUp:(BOOL)moveUp;
 @property (nonatomic, retain) IBOutlet UITextField *txtUsername;
 @property (nonatomic, retain) IBOutlet UITextField *txtPassword;
-@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
+//@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 //@property (nonatomic, retain) IBOutlet UIButton *loginButton;
 @property (nonatomic, retain) Facebook *facebook;
 @end

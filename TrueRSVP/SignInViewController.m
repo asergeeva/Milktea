@@ -5,20 +5,26 @@
 //  Created by movingincircles on 7/16/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
-
+#import "Constants.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "SignInViewController.h"
 //#import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
-#import "CJSONDeserializer.h"
+//#import "CJSONDeserializer.h"
+#import "MainViewController.h"
 @implementation SignInViewController
 @synthesize txtUsername;
 @synthesize txtPassword;
-@synthesize navBar;
+//@synthesize navBar;
 @synthesize facebook;
 //@synthesize loginButton;
 - (void)dealloc
 {
+	[txtUsername release];
+	[txtPassword release];
+//	[navBar release];
+	[loginButton release];
+	[facebook release];
     [super dealloc];
 }
 
@@ -29,7 +35,13 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
-
+//- (id)init
+//{
+//	if((self = [super init]))
+//	{
+//	}
+//	return self;
+//}
 #pragma mark - View lifecycle
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -99,6 +111,8 @@
 
 - (IBAction)login:(id)sender
 {
+//	txtUsername.text = @"movingincircles@gmail.com";
+//	txtPassword.text = @"supfoo";
 	if([[txtPassword text] isEqualToString:@""] || [[txtUsername text] isEqualToString:@""])
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Blank" 
@@ -110,10 +124,11 @@
 		[alert release];
 		return;
 	}
-	NSURL *url = [NSURL URLWithString:@"http://localhost/Eventfii/api/login"];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"login/"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
-//	[request setPostValue:@"movingincircles@gmail.com" forKey:@"email"];
+	
+	//MD5 encryption code
 	NSString *str = [txtPassword text];
 	const char *cStr = [str UTF8String];
 	unsigned char result[16];
@@ -125,6 +140,7 @@
 			result[8], result[9], result[10], result[11],
 			result[12], result[13], result[14], result[15]
 			]; 
+	
 	[request setPostValue:str forKey:@"password"];	
 	[request startSynchronous];
 	NSString *status = [request responseString];
@@ -140,7 +156,14 @@
 	}
 	else if ([status isEqualToString:@"status_loginSuccess"])
 	{
-		[self.navigationController popToRootViewControllerAnimated:NO];
+		UINavigationController *navController = self.navigationController;
+		NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
+		[controllers removeLastObject];
+		navController.viewControllers = controllers;
+		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
+//		[self.navigationController pushViewController:mainVC animated:YES];
+		[navController pushViewController:mainVC animated:YES];
+		[mainVC release];
 	}
 	
 }
@@ -160,16 +183,19 @@
 - (void)viewDidLoad
 {
 	facebook = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]).facebook;
-	self.navigationController.navigationBarHidden = YES;
-	navBar.topItem.title = @"Sign In";
-//	self.navigationItem.hidesBackButton = YES;
-//	self.navigationItem.title = @"Sign In";
-//	self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.2 green:0.6 blue:0.8 alpha:1.0];
+	CGRect rect = self.view.bounds;
+	rect.origin.y += 44.0;
+	self.view.bounds = rect;
+	self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.235 green:0.600 blue:0.792 alpha:1.000];
+	self.navigationController.navigationBar.topItem.title = @"Sign In";
+	self.navigationItem.hidesBackButton = YES;
+//	self.navigationController.navigationBarHidden = YES;
+//	self.wantsFullScreenLayout = YES;
+//		self.navigationController.navigationBarHidden = NO;
 	[txtUsername setDelegate:self];
 	[txtPassword setDelegate:self];
 	
     [super viewDidLoad];
-//	NSLog(@"HI");
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
