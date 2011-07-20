@@ -14,13 +14,18 @@
 //	IBOutlet UINavigationBar *navBar;
 	IBOutlet UIButton *loginButton;
 	Facebook *facebook;
+//	IBOutlet UIView *portraitView;
+//	IBOutlet UIView *landscapeView;
 }
 - (IBAction)login:(id)sender;
 - (IBAction)facebookLogin:(id)sender;
 - (void)setViewMoveUp:(BOOL)moveUp;
+//- (void)orientationChanged:(id)sender;
 @property (nonatomic, retain) IBOutlet UITextField *txtUsername;
 @property (nonatomic, retain) IBOutlet UITextField *txtPassword;
 //@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 //@property (nonatomic, retain) IBOutlet UIButton *loginButton;
 @property (nonatomic, retain) Facebook *facebook;
+//@property (nonatomic, retain) IBOutlet UIView *portraitView;
+//@property (nonatomic, retain) IBOutlet UIView *landscapeView;
 @end

@@ -17,12 +17,13 @@
 {
 	facebook = [[Facebook alloc] initWithAppId:@"166527620083686"];
 	// Override point for customization after application launch.
-	
-	self.window.rootViewController = self.viewController;
-	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.window.rootViewController];
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
-	[navController pushViewController:signVC animated:NO];
+	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
+	self.window.rootViewController = navController;
+
+//	[navController pushViewController:signVC animated:NO];
 	[signVC release];
+
 	[self.window addSubview:navController.view];
 	[self.window makeKeyAndVisible];
     return YES;

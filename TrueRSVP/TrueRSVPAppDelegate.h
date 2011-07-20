@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
-@class TrueRSVPViewController;
+//@class TrueRSVPViewController;
 
 @interface TrueRSVPAppDelegate : NSObject <UIApplicationDelegate, FBSessionDelegate> {
 	Facebook *facebook;
 }
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet TrueRSVPViewController *viewController;
+@property (nonatomic, retain) IBOutlet UIViewController *viewController;
 @property (nonatomic, retain) Facebook *facebook;
 @end

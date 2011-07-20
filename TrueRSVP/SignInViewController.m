@@ -17,6 +17,8 @@
 @synthesize txtPassword;
 //@synthesize navBar;
 @synthesize facebook;
+//@synthesize portraitView;
+//@synthesize landscapeView;
 //@synthesize loginButton;
 - (void)dealloc
 {
@@ -82,11 +84,25 @@
     CGRect rect = self.view.frame;
     if (moveUp)
     {
-		rect.origin.y -= 150.0;
+		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
+		{
+			rect.origin.y -= 150.0;
+		}
+		else
+		{
+			rect.origin.y -= 65.0;
+		}	
     }
     else
     {
-		rect.origin.y += 150.0;
+		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
+		{
+			rect.origin.y += 150.0;
+		}
+		else
+		{
+			rect.origin.y += 65.0;
+		}	
     }
     self.view.frame = rect; 
     [UIView commitAnimations];
@@ -111,8 +127,8 @@
 
 - (IBAction)login:(id)sender
 {
-//	txtUsername.text = @"movingincircles@gmail.com";
-//	txtPassword.text = @"supfoo";
+	txtUsername.text = @"movingincircles@gmail.com";
+	txtPassword.text = @"supfoo";
 	if([[txtPassword text] isEqualToString:@""] || [[txtUsername text] isEqualToString:@""])
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Blank" 
@@ -196,6 +212,9 @@
 	[txtPassword setDelegate:self];
 	
     [super viewDidLoad];
+	
+//	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
@@ -219,7 +238,47 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+//	self.view.contentMode = UIViewContentModeRight;
+	return YES;
 }
-
+-(CGFloat)toRadians:(CGFloat)degrees
+{
+	return degrees * 3.14 / 180;
+}
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+	{
+//		self.view.transform = CGAffineTransformIdentity;
+//		self.view.transform = CGAffineTransformMakeRotation([self toRadians:90.0]);
+		if([txtUsername isFirstResponder] || [txtPassword isFirstResponder])
+		{
+			self.view.bounds = CGRectMake(-80.0, 184.0, 480.0, 320.0);
+		}
+		else
+		{
+			self.view.bounds = CGRectMake(-80.0, 119.0, 480.0, 320.0);
+		}
+	}
+	else
+	{
+//		self.view.transform = CGAffineTransformIdentity;
+//		self.view.transform = CGAffineTransformMakeRotation([self toRadians:90.0]);
+		if([txtUsername isFirstResponder] || [txtPassword isFirstResponder])
+		{
+			self.view.bounds = CGRectMake(0.0, 194.0, 320.0, 480.0);			
+		}
+		else
+		{
+			self.view.bounds = CGRectMake(0.0, 44.0, 320.0, 480.0);
+		}
+	}
+	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+//{
+//	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//}
 @end

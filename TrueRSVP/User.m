@@ -16,6 +16,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 @synthesize cell;
 @synthesize zip;
 @synthesize twitter;
+@synthesize profilePic;
 - (void)dealloc
 {
 	[fullName release];
@@ -23,5 +24,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[cell release];
 	[zip release];
 	[twitter release];
+	[profilePic release];
+	[super dealloc];
 }
 @end
