@@ -8,8 +8,7 @@
 #import "Constants.h"
 #import "MainViewController.h"
 #import "ProfileViewController.h"
-#import "ASIFormDataRequest.h"
-#import "CJSONDeserializer.h"
+
 @implementation MainViewController
 //@synthesize navBar;
 @synthesize profileView;
@@ -21,13 +20,14 @@
 @synthesize attendingButton;
 
 //Profile
-@synthesize nameLabel;
-@synthesize emailTextField;
-@synthesize cellTextField;
-@synthesize zipTextField;
-@synthesize twitterTextField;
-@synthesize aboutTextView;
-@synthesize updateButton;
+//@synthesize nameLabel;
+//@synthesize emailTextField;
+//@synthesize cellTextField;
+//@synthesize zipTextField;
+//@synthesize twitterTextField;
+//@synthesize aboutTextView;
+//@synthesize updateButton;
+//@synthesize profilePic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,7 +50,6 @@
 	[profileButton release];
 	[hostingButton release];
 	[attendingButton release];
-//	[navBar release];
     [super dealloc];
 }
 
@@ -64,10 +63,7 @@
 
 #pragma mark - View lifecycle
 
-- (void)updatedProfile
-{
-	
-}
+
 - (void)profileTabSelected:(id)sender
 {
 	if(attendingButton.selected)
@@ -130,7 +126,7 @@
 }
 - (void)viewDidLoad
 {
-
+    [super viewDidLoad];
 	[profileButton setImage:[UIImage imageNamed:@"profile.png"] forState:UIControlStateNormal];
 //	[profileButton setImage:[UIImage imageNamed:@"profile_selected.png"] forState:UIControlStateHighlighted];
 	[profileButton setImage:[UIImage imageNamed:@"profile_selected.png"] forState:UIControlStateSelected];
@@ -153,15 +149,11 @@
 	segmentButtons.bounds = CGRectMake(0, -29, segmentButtons.frame.size.width, segmentButtons.frame.size.height);
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:segmentButtons];
 	self.navigationItem.hidesBackButton = YES;
-    [super viewDidLoad];
 	
-	
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getUserInfo/"]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request startSynchronous];
-	NSArray *userInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-	
-	profileView = [[[NSBundle mainBundle] loadNibNamed:@"ProfileViewController" owner:self options:nil] objectAtIndex:0];
+//	profileView = [[[NSBundle mainBundle] loadNibNamed:@"ProfileViewController" owner:self options:nil] objectAtIndex:0];
+	ProfileViewController *profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
+	profileView = profileVC.view;
+	[self.view addSubview:profileView];
 	CGRect rect = profileView.bounds;
 	rect.origin.y += 44.0;
 	profileView.bounds = rect;

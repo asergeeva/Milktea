@@ -7,5 +7,5 @@
 //
 
 #import "Constants.h"
-
+NSString *const rootAddress = @"http://192.168.1.135/Eventfii/";
 NSString *const APILocation = @"http://192.168.1.135/Eventfii/api/";

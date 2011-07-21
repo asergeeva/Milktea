@@ -12,6 +12,7 @@
 #import "ASIFormDataRequest.h"
 //#import "CJSONDeserializer.h"
 #import "MainViewController.h"
+#import "SettingsManager.h"
 @implementation SignInViewController
 @synthesize txtUsername;
 @synthesize txtPassword;
@@ -86,22 +87,22 @@
     {
 		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
 		{
-			rect.origin.y -= 150.0;
+			rect.origin.y -= 135.0;
 		}
 		else
 		{
-			rect.origin.y -= 65.0;
+			rect.origin.y -= 95.0;
 		}	
     }
     else
     {
 		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
 		{
-			rect.origin.y += 150.0;
+			rect.origin.y += 135.0;
 		}
 		else
 		{
-			rect.origin.y += 65.0;
+			rect.origin.y += 95.0;
 		}	
     }
     self.view.frame = rect; 
@@ -180,6 +181,7 @@
 //		[self.navigationController pushViewController:mainVC animated:YES];
 		[navController pushViewController:mainVC animated:YES];
 		[mainVC release];
+		[SettingsManager sharedSettingsManager].welcomeDismissed = NO;
 	}
 	
 }
@@ -205,23 +207,18 @@
 	self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.235 green:0.600 blue:0.792 alpha:1.000];
 	self.navigationController.navigationBar.topItem.title = @"Sign In";
 	self.navigationItem.hidesBackButton = YES;
-//	self.navigationController.navigationBarHidden = YES;
-//	self.wantsFullScreenLayout = YES;
-//		self.navigationController.navigationBarHidden = NO;
 	[txtUsername setDelegate:self];
 	[txtPassword setDelegate:self];
 	
     [super viewDidLoad];
-	
-//	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-	
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url 
+{	
 	return [facebook handleOpenURL:url]; 
 }
-- (void)fbDidLogin {
+- (void)fbDidLogin 
+{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
@@ -239,36 +236,29 @@
 {
     // Return YES for supported orientations
 //    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-	self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-//	self.view.contentMode = UIViewContentModeRight;
+//	self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 	return YES;
-}
--(CGFloat)toRadians:(CGFloat)degrees
-{
-	return degrees * 3.14 / 180;
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 	{
-//		self.view.transform = CGAffineTransformIdentity;
-//		self.view.transform = CGAffineTransformMakeRotation([self toRadians:90.0]);
+		self.navigationController.navigationBarHidden = YES;
 		if([txtUsername isFirstResponder] || [txtPassword isFirstResponder])
 		{
-			self.view.bounds = CGRectMake(-80.0, 184.0, 480.0, 320.0);
+			self.view.bounds = CGRectMake(-80.0, 189.0, 480.0, 320.0);
 		}
 		else
 		{
-			self.view.bounds = CGRectMake(-80.0, 119.0, 480.0, 320.0);
+			self.view.bounds = CGRectMake(-80.0, 89.0, 480.0, 320.0);
 		}
 	}
 	else
 	{
-//		self.view.transform = CGAffineTransformIdentity;
-//		self.view.transform = CGAffineTransformMakeRotation([self toRadians:90.0]);
+		self.navigationController.navigationBarHidden = NO;
 		if([txtUsername isFirstResponder] || [txtPassword isFirstResponder])
 		{
-			self.view.bounds = CGRectMake(0.0, 194.0, 320.0, 480.0);			
+			self.view.bounds = CGRectMake(0.0, 179.0, 320.0, 480.0);			
 		}
 		else
 		{
@@ -277,8 +267,4 @@
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
-//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-//{
-//	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-//}
 @end
