@@ -64,7 +64,7 @@
 		5194225F13D3972E008B5418 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194225413D3972E008B5418 /* CJSONSerializer.m */; };
 		5194226013D3972E008B5418 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194225613D3972E008B5418 /* CDataScanner.m */; };
 		5194226313D39A89008B5418 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194226213D39A89008B5418 /* Reachability.m */; };
-		51E7AC3913D7ADB800174805 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 51E7AC3813D7ADB800174805 /* libz.1.2.5.dylib */; };
+		51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */; };
 		51E7AC4113D7B30700174805 /* SignIn_Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */; };
 		51E7AC4313D7B33800174805 /* Signin_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E7AC4213D7B33800174805 /* Signin_Background.png */; };
 		51F3B4A913D41384008ACF04 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F3B4A713D41384008ACF04 /* MainViewController.m */; };
@@ -177,7 +177,7 @@
 		5194225613D3972E008B5418 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		5194226113D39A89008B5418 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5194226213D39A89008B5418 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		51E7AC3813D7ADB800174805 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Background@2x.png"; sourceTree = "<group>"; };
 		51E7AC4213D7B33800174805 /* Signin_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Signin_Background.png; sourceTree = "<group>"; };
 		51F3B4A613D41384008ACF04 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51E7AC3913D7ADB800174805 /* libz.1.2.5.dylib in Frameworks */,
+				51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */,
 				511F360B13D5869A00F7E748 /* QuartzCore.framework in Frameworks */,
 				5194223213D39657008B5418 /* MobileCoreServices.framework in Frameworks */,
 				5194223013D3964E008B5418 /* SystemConfiguration.framework in Frameworks */,
@@ -256,7 +256,7 @@
 		518E2D6713D24FA60080E068 = {
 			isa = PBXGroup;
 			children = (
-				51E7AC3813D7ADB800174805 /* libz.1.2.5.dylib */,
+				51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */,
 				511F360A13D5869A00F7E748 /* QuartzCore.framework */,
 				5194223113D39657008B5418 /* MobileCoreServices.framework */,
 				5194222F13D3964E008B5418 /* SystemConfiguration.framework */,

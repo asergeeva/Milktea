@@ -13,6 +13,7 @@
 //#import "CJSONDeserializer.h"
 #import "MainViewController.h"
 #import "SettingsManager.h"
+//#import "ProfileViewController.h"
 @implementation SignInViewController
 @synthesize txtUsername;
 @synthesize txtPassword;
@@ -173,14 +174,16 @@
 	}
 	else if ([status isEqualToString:@"status_loginSuccess"])
 	{
-		UINavigationController *navController = self.navigationController;
-		NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
-		[controllers removeLastObject];
-		navController.viewControllers = controllers;
+//		UINavigationController *navController = self.navigationController;
+//		NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
+//		[controllers removeLastObject];
+//		navController.viewControllers = controllers;
 		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
-//		[self.navigationController pushViewController:mainVC animated:YES];
-		[navController pushViewController:mainVC animated:YES];
+		[self.navigationController pushViewController:mainVC animated:YES];
+//		[navController pushViewController:mainVC animated:YES];
 		[mainVC release];
+//		ProfileViewController *profileVC = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
+//		[self.navigationController pushViewController:profileVC animated:YES];
 		[SettingsManager sharedSettingsManager].welcomeDismissed = NO;
 	}
 	
@@ -209,7 +212,6 @@
 	self.navigationItem.hidesBackButton = YES;
 	[txtUsername setDelegate:self];
 	[txtPassword setDelegate:self];
-	
     [super viewDidLoad];
 }
 

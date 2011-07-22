@@ -24,17 +24,17 @@
 @synthesize updateButton;
 @synthesize profilePic;
 @synthesize welcomeBar;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-//		[[textViewStatus layer] setBorderColor:[[UIColor whiteColor] CGColor]];
-//		[[textViewStatus layer] setBorderWidth:2.3];
-//		[[textViewStatus layer] setCornerRadius:15];
-//		[textViewStatus setClipsToBounds: YES];
-    }
-    return self;
-}
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+//{
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self) {
+////		[[textViewStatus layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+////		[[textViewStatus layer] setBorderWidth:2.3];
+////		[[textViewStatus layer] setCornerRadius:15];
+////		[textViewStatus setClipsToBounds: YES];
+//    }
+//    return self;
+//}
 
 - (void)dealloc
 {
@@ -59,12 +59,12 @@
 }
 
 #pragma mark - View lifecycle
-- (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
-	for (UIView* view in self.view.subviews) {
-		if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UITextView class]])
-			[view resignFirstResponder];	
-	}	
-}
+//- (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
+//	for (UIView* view in self.view.subviews) {
+//		if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UITextView class]])
+//			[view resignFirstResponder];	
+//	}	
+//}
 - (void)viewDidLoad
 {
 //	self.navigationController.navigationBarHidden = YES;
@@ -106,13 +106,14 @@
 - (void)updatedStrings
 {
 	User *user = [User sharedUser];
-	nameLabel.text = user.fullName;
+	nameLabel.text = [NSString stringWithFormat:@"%@", user.fullName];
 	emailTextField.text = user.email;
+	[emailTextField.text retain];
 	cellTextField.text = user.cell;
 	zipTextField.text = user.zip;
 	//	twitterTextField.text = user.twitter;
 	aboutTextView.text = [NSString stringWithFormat:@"%@",user.about];
-	
+//	
 	if(![SettingsManager sharedSettingsManager].welcomeDismissed)
 	{
 		welcomeBar = [[UINavigationBar alloc] initWithFrame:self.view.frame];
@@ -121,7 +122,6 @@
 		rect.origin.y = 00;
 		welcomeBar.frame = rect;
 		welcomeBar.tintColor = [UIColor colorWithRed:0.992 green:0.800 blue:0.424 alpha:1.000];
-//		welcomeBar.topItem.title = @"Welcome";
 		UILabel *label = [[UILabel alloc] initWithFrame:welcomeBar.bounds];
 		label.textAlignment = UITextAlignmentCenter;
 		label.text = [NSString stringWithFormat:@"Welcome %@!", user.fullName];

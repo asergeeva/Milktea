@@ -19,15 +19,6 @@
 @synthesize hostingButton;
 @synthesize attendingButton;
 
-//Profile
-//@synthesize nameLabel;
-//@synthesize emailTextField;
-//@synthesize cellTextField;
-//@synthesize zipTextField;
-//@synthesize twitterTextField;
-//@synthesize aboutTextView;
-//@synthesize updateButton;
-//@synthesize profilePic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -151,9 +142,11 @@
 	self.navigationItem.hidesBackButton = YES;
 	
 //	profileView = [[[NSBundle mainBundle] loadNibNamed:@"ProfileViewController" owner:self options:nil] objectAtIndex:0];
+	profileView = [[UIView alloc] init];
 	ProfileViewController *profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
 	profileView = profileVC.view;
 	[self.view addSubview:profileView];
+//	[self.navigationController pushViewController:profileVC animated:YES];
 	CGRect rect = profileView.bounds;
 	rect.origin.y += 44.0;
 	profileView.bounds = rect;

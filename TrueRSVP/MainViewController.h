@@ -19,15 +19,6 @@
 	UIButton *attendingButton;
 	UIButton *hostingButton;
 	
-	//Profile
-//	IBOutlet UILabel *nameLabel;
-//	IBOutlet UITextField *emailTextField;
-//	IBOutlet UITextField *cellTextField;
-//	IBOutlet UITextField *zipTextField;
-//	IBOutlet UITextField *twitterTextField;
-//	IBOutlet UITextView *aboutTextView;
-//	IBOutlet UIButton *updateButton;
-//	IBOutlet UIImageView *profilePic;
 }
 //@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) UIView *profileView;
@@ -37,14 +28,4 @@
 @property (nonatomic, retain) UIButton *profileButton;
 @property (nonatomic, retain) UIButton *attendingButton;
 @property (nonatomic, retain) UIButton *hostingButton;
-
-//Profile
-//@property (nonatomic, retain) IBOutlet UILabel *nameLabel;
-//@property (nonatomic, retain) IBOutlet UITextField *emailTextField;
-//@property (nonatomic, retain) IBOutlet UITextField *cellTextField;
-//@property (nonatomic, retain) IBOutlet UITextField *zipTextField;
-//@property (nonatomic, retain) IBOutlet UITextField *twitterTextField;
-//@property (nonatomic, retain) IBOutlet UITextView *aboutTextView;
-//@property (nonatomic, retain) IBOutlet UIButton *updateButton;
-//@property (nonatomic, retain) IBOutlet UIImageView *profilePic;
 @end
