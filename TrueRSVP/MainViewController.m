@@ -23,7 +23,7 @@
 @synthesize hostingButton;
 @synthesize attendingButton;
 @synthesize animatedDistance;
-
+BOOL keyboardUp = NO;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -166,39 +166,19 @@
 		}
 	}
 }
-//
-//Code from http://cocoawithlove.com/2008/10/sliding-uitextfields-around-to-avoid.html
-//
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-	CGRect textFieldRect =
-	[self.view.window convertRect:textField.bounds fromView:textField];
-    CGRect viewRect =
-	[self.view.window convertRect:self.view.bounds fromView:self.view];
-	CGFloat midline = textFieldRect.origin.y + 0.5 * textFieldRect.size.height;
-    CGFloat numerator = midline - viewRect.origin.y - 0.2 * viewRect.size.height;
-    CGFloat denominator = (0.8 - 0.2)
-	* viewRect.size.height;
-    CGFloat heightFraction = numerator / denominator;
-	if (heightFraction < 0.0)
-    {
-        heightFraction = 0.0;
-    }
-    else if (heightFraction > 1.0)
-    {
-        heightFraction = 1.0;
-    }
-	UIInterfaceOrientation orientation =
-	[[UIApplication sharedApplication] statusBarOrientation];
-    if (orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortraitUpsideDown)
-    {
-        animatedDistance = floor(216 * heightFraction);
-    }
-    else
-    {
-        animatedDistance = floor(162 * heightFraction);
-    }
+	if(UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]))
+	{
+		int viewPoint = self.view.frame.size.height/2 - 340;
+		animatedDistance = viewPoint + textField.frame.origin.y;
+	}
+	else
+	{
+		int viewPoint = self.view.frame.size.height/2 - 200;
+		animatedDistance = viewPoint + textField.frame.origin.y;		
+	}
 	CGRect viewFrame = self.view.frame;
     viewFrame.origin.y -= animatedDistance;
     
@@ -209,6 +189,7 @@
     [self.view setFrame:viewFrame];
     
     [UIView commitAnimations];
+	keyboardUp = YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -222,6 +203,7 @@
     [self.view setFrame:viewFrame];
     
     [UIView commitAnimations];
+	keyboardUp = NO;
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
@@ -312,11 +294,15 @@
 {
     // Return YES for supported orientations
 //    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-	return YES;
+	if(!keyboardUp)
+	{
+		return YES;
+	}
+	return NO;
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	[currentVC willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+		[currentVC willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 //	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 //	{
 //		[currentVC.view removeFromSuperview];
