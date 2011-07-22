@@ -38,8 +38,8 @@
 		518E2D8A13D24FA60080E068 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518E2D8813D24FA60080E068 /* MainWindow.xib */; };
 		518E2D8D13D24FA60080E068 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 518E2D8C13D24FA60080E068 /* SignInViewController.m */; };
 		518E2D9013D24FA70080E068 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518E2D8E13D24FA70080E068 /* SignInViewController.xib */; };
-		518E2DAD13D259EB0080E068 /* Signin_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DAB13D259EB0080E068 /* Signin_Button.png */; };
-		518E2DAE13D259EB0080E068 /* Signin_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DAC13D259EB0080E068 /* Signin_Button@2x.png */; };
+		518E2DAD13D259EB0080E068 /* SignIn_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DAB13D259EB0080E068 /* SignIn_Button.png */; };
+		518E2DAE13D259EB0080E068 /* SignIn_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DAC13D259EB0080E068 /* SignIn_Button@2x.png */; };
 		518E2DC113D25EC80080E068 /* SignIn_Facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DBF13D25EC80080E068 /* SignIn_Facebook@2x.png */; };
 		518E2DC313D25FC10080E068 /* SignIn_Facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DC213D25FC10080E068 /* SignIn_Facebook.png */; };
 		5194222513D3962B008B5418 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194221D13D3962B008B5418 /* ASIAuthenticationDialog.m */; };
@@ -64,6 +64,8 @@
 		5194225F13D3972E008B5418 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194225413D3972E008B5418 /* CJSONSerializer.m */; };
 		5194226013D3972E008B5418 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194225613D3972E008B5418 /* CDataScanner.m */; };
 		5194226313D39A89008B5418 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194226213D39A89008B5418 /* Reachability.m */; };
+		519C557113DA04F900EE8E9A /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C557013DA04F900EE8E9A /* Attendance.m */; };
+		519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */; };
 		51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */; };
 		51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D84D4F13D90C43008A705B /* AttendingViewController.m */; };
 		51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51D84D5013D90C43008A705B /* AttendingViewController.xib */; };
@@ -129,8 +131,8 @@
 		518E2D8B13D24FA60080E068 /* SignInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		518E2D8C13D24FA60080E068 /* SignInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		518E2D8F13D24FA70080E068 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SignInViewController.xib; sourceTree = "<group>"; };
-		518E2DAB13D259EB0080E068 /* Signin_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Signin_Button.png; sourceTree = "<group>"; };
-		518E2DAC13D259EB0080E068 /* Signin_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Signin_Button@2x.png"; sourceTree = "<group>"; };
+		518E2DAB13D259EB0080E068 /* SignIn_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignIn_Button.png; sourceTree = "<group>"; };
+		518E2DAC13D259EB0080E068 /* SignIn_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Button@2x.png"; sourceTree = "<group>"; };
 		518E2DBF13D25EC80080E068 /* SignIn_Facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Facebook@2x.png"; sourceTree = "<group>"; };
 		518E2DC213D25FC10080E068 /* SignIn_Facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignIn_Facebook.png; sourceTree = "<group>"; };
 		5194221113D39626008B5418 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -179,6 +181,9 @@
 		5194225613D3972E008B5418 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		5194226113D39A89008B5418 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5194226213D39A89008B5418 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		519C556F13DA04F900EE8E9A /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
+		519C557013DA04F900EE8E9A /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
+		519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController_Landscape.xib; sourceTree = "<group>"; };
 		51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		51D84D4E13D90C42008A705B /* AttendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingViewController.h; sourceTree = "<group>"; };
 		51D84D4F13D90C43008A705B /* AttendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingViewController.m; sourceTree = "<group>"; };
@@ -239,7 +244,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		511F35EC13D5685900F7E748 /* buttons */ = {
+		511F35EC13D5685900F7E748 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
 				511F35ED13D5686300F7E748 /* attending_selected.png */,
@@ -255,17 +260,12 @@
 				511F35F713D5686300F7E748 /* profile.png */,
 				511F35F813D5686300F7E748 /* profile@2x.png */,
 			);
-			name = buttons;
+			name = "Tab Bar";
 			sourceTree = "<group>";
 		};
 		518E2D6713D24FA60080E068 = {
 			isa = PBXGroup;
 			children = (
-				51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */,
-				511F360A13D5869A00F7E748 /* QuartzCore.framework */,
-				5194223113D39657008B5418 /* MobileCoreServices.framework */,
-				5194222F13D3964E008B5418 /* SystemConfiguration.framework */,
-				5194222D13D39644008B5418 /* CFNetwork.framework */,
 				518E2D7C13D24FA60080E068 /* TrueRSVP */,
 				518E2D7513D24FA60080E068 /* Frameworks */,
 				518E2D7313D24FA60080E068 /* Products */,
@@ -283,6 +283,11 @@
 		518E2D7513D24FA60080E068 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */,
+				511F360A13D5869A00F7E748 /* QuartzCore.framework */,
+				5194223113D39657008B5418 /* MobileCoreServices.framework */,
+				5194222F13D3964E008B5418 /* SystemConfiguration.framework */,
+				5194222D13D39644008B5418 /* CFNetwork.framework */,
 				518E2D7613D24FA60080E068 /* UIKit.framework */,
 				518E2D7813D24FA60080E068 /* Foundation.framework */,
 				518E2D7A13D24FA60080E068 /* CoreGraphics.framework */,
@@ -293,35 +298,32 @@
 		518E2D7C13D24FA60080E068 /* TrueRSVP */ = {
 			isa = PBXGroup;
 			children = (
-				5194223B13D396FC008B5418 /* TouchJSON */,
-				5194221013D3961A008B5418 /* ASIHTTPRequest */,
-				51F9BB4513D26C820017731B /* facebook-src */,
+				519C557613DA05A200EE8E9A /* Models */,
+				519C557513DA058A00EE8E9A /* Addons */,
 				518E2D9613D2527D0080E068 /* Resources */,
-				511F361713D592AC00F7E748 /* SynthesizeSingleton.h */,
-				51F9BB7413D2AAB70017731B /* ProfileViewController.h */,
-				51F9BB7513D2AAB70017731B /* ProfileViewController.m */,
-				51F9BB7613D2AAB70017731B /* ProfileViewController.xib */,
+				511F360C13D58B0C00F7E748 /* Constants.h */,
+				511F360D13D58B0D00F7E748 /* Constants.m */,
 				51D84D4E13D90C42008A705B /* AttendingViewController.h */,
 				51D84D4F13D90C43008A705B /* AttendingViewController.m */,
 				51D84D5013D90C43008A705B /* AttendingViewController.xib */,
 				51F3B4A613D41384008ACF04 /* MainViewController.h */,
 				51F3B4A713D41384008ACF04 /* MainViewController.m */,
 				51F3B4A813D41384008ACF04 /* MainViewController.xib */,
-				518E2D8513D24FA60080E068 /* TrueRSVPAppDelegate.h */,
-				518E2D8613D24FA60080E068 /* TrueRSVPAppDelegate.m */,
-				511F360C13D58B0C00F7E748 /* Constants.h */,
-				511F360D13D58B0D00F7E748 /* Constants.m */,
-				518E2D8813D24FA60080E068 /* MainWindow.xib */,
+				51F9BB7413D2AAB70017731B /* ProfileViewController.h */,
+				51F9BB7513D2AAB70017731B /* ProfileViewController.m */,
+				51F9BB7613D2AAB70017731B /* ProfileViewController.xib */,
+				519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */,
 				5173571B13D8117D00204AAF /* SettingsManager.h */,
 				5173571C13D8117D00204AAF /* SettingsManager.m */,
 				518E2D8B13D24FA60080E068 /* SignInViewController.h */,
 				518E2D8C13D24FA60080E068 /* SignInViewController.m */,
 				518E2D8E13D24FA70080E068 /* SignInViewController.xib */,
-				511F360513D5801600F7E748 /* User.h */,
-				511F360613D5801700F7E748 /* User.m */,
 				51F9BB4013D2623A0017731B /* TrueRSVPViewController.h */,
 				51F9BB4113D2623A0017731B /* TrueRSVPViewController.m */,
 				51F9BB4213D2623A0017731B /* TrueRSVPViewController.xib */,
+				518E2D8513D24FA60080E068 /* TrueRSVPAppDelegate.h */,
+				518E2D8613D24FA60080E068 /* TrueRSVPAppDelegate.m */,
+				518E2D8813D24FA60080E068 /* MainWindow.xib */,
 				518E2D7D13D24FA60080E068 /* Supporting Files */,
 			);
 			path = TrueRSVP;
@@ -341,19 +343,9 @@
 		518E2D9613D2527D0080E068 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				511F35EC13D5685900F7E748 /* buttons */,
-				518E2DAB13D259EB0080E068 /* Signin_Button.png */,
-				518E2DAC13D259EB0080E068 /* Signin_Button@2x.png */,
-				518E2DC213D25FC10080E068 /* SignIn_Facebook.png */,
-				518E2DBF13D25EC80080E068 /* SignIn_Facebook@2x.png */,
-				51E7AC4213D7B33800174805 /* Signin_Background.png */,
-				51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */,
-				5173571213D7FAD100204AAF /* Profile_aboutTextView.png */,
-				5173571313D7FAD100204AAF /* Profile_aboutTextView@2x.png */,
-				5173571713D7FF5200204AAF /* Profile_Update.png */,
-				5173571813D7FF5200204AAF /* Profile_Update@2x.png */,
-				5173571E13D81CAA00204AAF /* Profile_X.png */,
-				5173571F13D81CAA00204AAF /* Profile_X@2x.png */,
+				519C557413DA055F00EE8E9A /* Profile */,
+				519C557313DA050C00EE8E9A /* SignIn */,
+				511F35EC13D5685900F7E748 /* Tab Bar */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -439,7 +431,55 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
-		51F9BB4513D26C820017731B /* facebook-src */ = {
+		519C557313DA050C00EE8E9A /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				518E2DAB13D259EB0080E068 /* SignIn_Button.png */,
+				518E2DAC13D259EB0080E068 /* SignIn_Button@2x.png */,
+				518E2DC213D25FC10080E068 /* SignIn_Facebook.png */,
+				518E2DBF13D25EC80080E068 /* SignIn_Facebook@2x.png */,
+				51E7AC4213D7B33800174805 /* Signin_Background.png */,
+				51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */,
+			);
+			name = SignIn;
+			sourceTree = "<group>";
+		};
+		519C557413DA055F00EE8E9A /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				5173571213D7FAD100204AAF /* Profile_aboutTextView.png */,
+				5173571313D7FAD100204AAF /* Profile_aboutTextView@2x.png */,
+				5173571713D7FF5200204AAF /* Profile_Update.png */,
+				5173571813D7FF5200204AAF /* Profile_Update@2x.png */,
+				5173571E13D81CAA00204AAF /* Profile_X.png */,
+				5173571F13D81CAA00204AAF /* Profile_X@2x.png */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		519C557513DA058A00EE8E9A /* Addons */ = {
+			isa = PBXGroup;
+			children = (
+				5194223B13D396FC008B5418 /* TouchJSON */,
+				5194221013D3961A008B5418 /* ASIHTTPRequest */,
+				51F9BB4513D26C820017731B /* Facebook */,
+			);
+			name = Addons;
+			sourceTree = "<group>";
+		};
+		519C557613DA05A200EE8E9A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				511F361713D592AC00F7E748 /* SynthesizeSingleton.h */,
+				519C556F13DA04F900EE8E9A /* Attendance.h */,
+				519C557013DA04F900EE8E9A /* Attendance.m */,
+				511F360513D5801600F7E748 /* User.h */,
+				511F360613D5801700F7E748 /* User.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		51F9BB4513D26C820017731B /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
 				51F9BB4913D26C830017731B /* Facebook.h */,
@@ -455,7 +495,7 @@
 				51F9BB5313D26C830017731B /* FBRequest.m */,
 				51F9BB5413D26C830017731B /* JSON */,
 			);
-			name = "facebook-src";
+			name = Facebook;
 			path = src;
 			sourceTree = "<group>";
 		};
@@ -532,8 +572,8 @@
 				518E2D8113D24FA60080E068 /* InfoPlist.strings in Resources */,
 				518E2D8A13D24FA60080E068 /* MainWindow.xib in Resources */,
 				518E2D9013D24FA70080E068 /* SignInViewController.xib in Resources */,
-				518E2DAD13D259EB0080E068 /* Signin_Button.png in Resources */,
-				518E2DAE13D259EB0080E068 /* Signin_Button@2x.png in Resources */,
+				518E2DAD13D259EB0080E068 /* SignIn_Button.png in Resources */,
+				518E2DAE13D259EB0080E068 /* SignIn_Button@2x.png in Resources */,
 				518E2DC113D25EC80080E068 /* SignIn_Facebook@2x.png in Resources */,
 				518E2DC313D25FC10080E068 /* SignIn_Facebook.png in Resources */,
 				51F9BB4413D2623A0017731B /* TrueRSVPViewController.xib in Resources */,
@@ -561,6 +601,7 @@
 				5173572013D81CAA00204AAF /* Profile_X.png in Resources */,
 				5173572113D81CAA00204AAF /* Profile_X@2x.png in Resources */,
 				51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */,
+				519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +651,7 @@
 				511F360E13D58B0D00F7E748 /* Constants.m in Sources */,
 				5173571D13D8117D00204AAF /* SettingsManager.m in Sources */,
 				51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */,
+				519C557113DA04F900EE8E9A /* Attendance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

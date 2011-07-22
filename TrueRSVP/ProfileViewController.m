@@ -14,11 +14,17 @@
 @implementation ProfileViewController
 //Profile
 @synthesize nameLabel;
+@synthesize emailLabel;
+@synthesize cellLabel;
+@synthesize zipLabel;
+@synthesize twitterLabel;
+@synthesize aboutLabel;
 @synthesize emailTextField;
 @synthesize cellTextField;
 @synthesize zipTextField;
 @synthesize twitterTextField;
 @synthesize aboutTextView;
+@synthesize aboutImageView;
 @synthesize whiteBackground;
 @synthesize updateButton;
 @synthesize profilePic;
@@ -28,10 +34,6 @@
 //{
 //    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 //    if (self) {
-////		[[textViewStatus layer] setBorderColor:[[UIColor whiteColor] CGColor]];
-////		[[textViewStatus layer] setBorderWidth:2.3];
-////		[[textViewStatus layer] setCornerRadius:15];
-////		[textViewStatus setClipsToBounds: YES];
 //    }
 //    return self;
 //}
@@ -39,11 +41,17 @@
 - (void)dealloc
 {
 	[nameLabel release];
+	[emailLabel release];
+	[cellLabel release];
+	[zipLabel release];
+	[twitterLabel release];
+	[aboutLabel release];
 	[emailTextField release];
 	[cellTextField release];
 	[zipTextField release];
 	[twitterTextField release];
 	[aboutTextView release];
+	[aboutImageView release];
 	[whiteBackground release];
 	[updateButton release];
 	[profilePic release];
@@ -74,6 +82,7 @@
 	NSDictionary *userInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	[User sharedUser].delegate = self;
 	[[User sharedUser] updateUser:userInfo];
+	[self updatedImages];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 - (void)viewDidLoad
@@ -107,6 +116,7 @@
     CGRect rect = self.welcomeBar.frame;
 	rect.origin.y -= 44;
     self.welcomeBar.frame = rect; 
+	welcomeBar.layer.opacity = 0.0;
     [UIView commitAnimations];
 }
 - (void)requestFinished:(ASIHTTPRequest *)request
@@ -178,7 +188,7 @@
 	twitterTextField.text = user.twitter;
 	aboutTextView.text = user.about;
 //	
-	if(!welcomeShown)
+	if(!welcomeShown && self.view.frame.size.width < 400)
 	{
 		welcomeBar = [[UINavigationBar alloc] initWithFrame:self.view.frame];
 		CGRect rect = welcomeBar.frame;
@@ -216,5 +226,48 @@
 - (void)updatedImages
 {
 	profilePic.image = [User sharedUser].profilePic;
+}
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+	{
+		[self dismissWelcome:nil];
+		whiteBackground.frame = CGRectMake(4, 76, 210, 210);
+		aboutImageView.frame = CGRectMake(323, 120, 149, 79);
+		profilePic.frame = CGRectMake(16, 87, 188, 188);
+		emailTextField.frame = CGRectMake(222, 74, 250, 31);
+		cellTextField.frame = CGRectMake(222, 120, 93, 31);
+		zipTextField.frame = CGRectMake(222, 168, 93, 31);
+		twitterTextField.frame = CGRectMake(222, 214, 250, 31);
+		aboutTextView.frame = CGRectMake(328, 120, 145, 79);
+		nameLabel.frame = CGRectMake(4, 53, 210, 21);
+		emailLabel.frame = CGRectMake(222, 53, 42, 21);
+		cellLabel.frame = CGRectMake(222, 100, 42, 21);
+		aboutLabel.frame = CGRectMake(323, 100, 42, 21);
+		zipLabel.frame = CGRectMake(222, 148, 42, 21);
+		twitterLabel.frame = CGRectMake(222, 196, 105, 21);
+		updateButton.frame = CGRectMake(253, 253, 183, 27);
+		self.view.frame = CGRectMake(-2.0, 10.0, 480.0, 320.0);
+	}
+	else
+	{
+		whiteBackground.frame = CGRectMake(14, 120, 135, 135);
+		aboutImageView.frame = CGRectMake(13, 264, 136, 81);
+		profilePic.frame = CGRectMake(24, 131, 115, 115);
+		emailTextField.frame = CGRectMake(157, 134, 149, 31);
+		cellTextField.frame = CGRectMake(157, 193, 149, 31);
+		zipTextField.frame = CGRectMake(157, 254, 149, 31);
+		twitterTextField.frame = CGRectMake(157, 315, 149, 31);
+		aboutTextView.frame = CGRectMake(14, 266, 135, 79);
+		nameLabel.frame = CGRectMake(14, 98, 135, 21);
+		emailLabel.frame = CGRectMake(157, 113, 42, 21);
+		cellLabel.frame = CGRectMake(157, 173, 42, 21);
+		zipLabel.frame = CGRectMake(157, 234, 42, 21);
+		twitterLabel.frame = CGRectMake(157, 297, 105, 21);
+		updateButton.frame = CGRectMake(69, 374, 183, 27);
+		aboutLabel.frame = CGRectMake(400, 0, 0, 0);
+		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
+	}
+	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 @end

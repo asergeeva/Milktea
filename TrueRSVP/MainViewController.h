@@ -14,10 +14,12 @@
 @interface MainViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate> {
 //	IBOutlet UINavigationBar *navBar;
 	ProfileViewController *profileVC;
+	ProfileViewController *profileVCLandscape;
 	AttendingViewController *attendingVC;
 //	UIView *attendingView;
 	UIView *hostingView;
-	UIView *currentView;
+	UIViewController *currentVC;
+	UIViewController *currentVCLandscape;
 	UIView *segmentButtons;
 	UIButton *profileButton;
 	UIButton *attendingButton;
@@ -26,10 +28,12 @@
 }
 //@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) ProfileViewController *profileVC;
+@property (nonatomic, retain) ProfileViewController *profileVCLandscape;
 @property (nonatomic, retain) AttendingViewController *attendingVC;
 //@property (nonatomic, retain) UIView *attendingView;
 @property (nonatomic, retain) UIView *hostingView;
-@property (nonatomic, retain) UIView *currentView;
+@property (nonatomic, retain) UIViewController *currentVC;
+@property (nonatomic, retain) UIViewController *currentVCLandscape;
 @property (nonatomic, retain) UIView *segmentButtons;
 @property (nonatomic, retain) UIButton *profileButton;
 @property (nonatomic, retain) UIButton *attendingButton;
