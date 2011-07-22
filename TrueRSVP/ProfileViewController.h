@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
-
-@interface ProfileViewController : UIViewController <UserDelegate> {
+#import "ASIFormDataRequest.h"
+@interface ProfileViewController : UIViewController <UserDelegate, ASIHTTPRequestDelegate> {
 //    IBOutlet UINavigationBar *navBar;
 	IBOutlet UILabel *nameLabel;
 	IBOutlet UITextField *emailTextField;
@@ -21,7 +21,9 @@
 	IBOutlet UIButton *updateButton;
 	IBOutlet UIImageView *profilePic;
 	UINavigationBar *welcomeBar;
+	BOOL welcomeShown;
 }
+- (IBAction)updateProfile:(id)sender;
 //@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) IBOutlet UITextField *emailTextField;
@@ -33,4 +35,5 @@
 @property (nonatomic, retain) IBOutlet UIButton *updateButton;
 @property (nonatomic, retain) IBOutlet UIImageView *profilePic;
 @property (nonatomic, retain) UINavigationBar *welcomeBar;
+@property (nonatomic) BOOL welcomeShown;
 @end

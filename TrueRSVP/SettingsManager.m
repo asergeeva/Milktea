@@ -12,4 +12,12 @@
 @implementation SettingsManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 @synthesize welcomeDismissed;
+- (id)init
+{
+	if((self = [super init]))
+	{
+		welcomeDismissed = NO;
+	}
+	return self;
+}
 @end

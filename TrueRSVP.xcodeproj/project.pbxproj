@@ -65,6 +65,8 @@
 		5194226013D3972E008B5418 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194225613D3972E008B5418 /* CDataScanner.m */; };
 		5194226313D39A89008B5418 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194226213D39A89008B5418 /* Reachability.m */; };
 		51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */; };
+		51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D84D4F13D90C43008A705B /* AttendingViewController.m */; };
+		51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51D84D5013D90C43008A705B /* AttendingViewController.xib */; };
 		51E7AC4113D7B30700174805 /* SignIn_Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */; };
 		51E7AC4313D7B33800174805 /* Signin_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E7AC4213D7B33800174805 /* Signin_Background.png */; };
 		51F3B4A913D41384008ACF04 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F3B4A713D41384008ACF04 /* MainViewController.m */; };
@@ -178,6 +180,9 @@
 		5194226113D39A89008B5418 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5194226213D39A89008B5418 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
+		51D84D4E13D90C42008A705B /* AttendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingViewController.h; sourceTree = "<group>"; };
+		51D84D4F13D90C43008A705B /* AttendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingViewController.m; sourceTree = "<group>"; };
+		51D84D5013D90C43008A705B /* AttendingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingViewController.xib; sourceTree = "<group>"; };
 		51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Background@2x.png"; sourceTree = "<group>"; };
 		51E7AC4213D7B33800174805 /* Signin_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Signin_Background.png; sourceTree = "<group>"; };
 		51F3B4A613D41384008ACF04 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -296,6 +301,9 @@
 				51F9BB7413D2AAB70017731B /* ProfileViewController.h */,
 				51F9BB7513D2AAB70017731B /* ProfileViewController.m */,
 				51F9BB7613D2AAB70017731B /* ProfileViewController.xib */,
+				51D84D4E13D90C42008A705B /* AttendingViewController.h */,
+				51D84D4F13D90C43008A705B /* AttendingViewController.m */,
+				51D84D5013D90C43008A705B /* AttendingViewController.xib */,
 				51F3B4A613D41384008ACF04 /* MainViewController.h */,
 				51F3B4A713D41384008ACF04 /* MainViewController.m */,
 				51F3B4A813D41384008ACF04 /* MainViewController.xib */,
@@ -552,6 +560,7 @@
 				5173571A13D7FF5200204AAF /* Profile_Update@2x.png in Resources */,
 				5173572013D81CAA00204AAF /* Profile_X.png in Resources */,
 				5173572113D81CAA00204AAF /* Profile_X@2x.png in Resources */,
+				51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,6 +609,7 @@
 				511F360713D5801700F7E748 /* User.m in Sources */,
 				511F360E13D58B0D00F7E748 /* Constants.m in Sources */,
 				5173571D13D8117D00204AAF /* SettingsManager.m in Sources */,
+				51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

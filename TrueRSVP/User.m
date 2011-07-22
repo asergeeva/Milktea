@@ -20,6 +20,20 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 @synthesize profilePic;
 @synthesize about;
 @synthesize delegate;
+- (id)init
+{
+	if((self = [super init]))
+	{
+		uid = [[NSString alloc] init];
+		fullName = [[NSString alloc] init];
+		email = [[NSString alloc] init];
+		cell = [[NSString alloc] init];
+		zip = [[NSString alloc] init];
+		twitter = [[NSString alloc] init];
+		about = [[NSString alloc] init];
+	}
+	return self;
+}
 - (void)updateUser:(NSDictionary*)userInfo
 {
 	uid = [userInfo objectForKey:@"id"];
@@ -28,7 +42,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	cell = [userInfo objectForKey:@"phone"];
 	zip = [userInfo objectForKey:@"zip"];
 	about = [userInfo objectForKey:@"about"];
-	//twitter = [userInfo objectForKey:@"twitter"];
+	twitter = [userInfo objectForKey:@"twitter"];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", rootAddress, @"upload/user/images/", uid, @".png"]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	request.delegate = self;
@@ -52,6 +66,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[zip release];
 	[twitter release];
 	[profilePic release];
+	[about release];
 	[super dealloc];
 }
 @end

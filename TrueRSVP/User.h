@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
-@protocol UserDelegate <NSObject, ASIHTTPRequestDelegate>
+@protocol UserDelegate
 @optional
 - (void)updatedStrings;
 - (void)updatedImages;
 @end
 
-@interface User : NSObject {
+@interface User : NSObject <ASIHTTPRequestDelegate> {
 	NSString *uid;
     NSString *fullName;
 	NSString *email;
