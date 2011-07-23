@@ -10,10 +10,8 @@
 
 
 @implementation MainViewController
-//@synthesize navBar;
 @synthesize profileVC;
 @synthesize attendingVC;
-//@synthesize attendingView;
 @synthesize hostingView;
 @synthesize currentVC;
 @synthesize segmentButtons;
@@ -40,7 +38,6 @@ BOOL keyboardUp = NO;
 {
 	[profileVC release];
 	[attendingVC release];
-//	[attendingView release];
 	[hostingView release];
 	[segmentButtons release];
 	[profileButton release];
@@ -70,21 +67,6 @@ BOOL keyboardUp = NO;
 
 - (void)profileTabSelected:(id)sender
 {
-//	if(attendingButton.selected)
-//	{
-//		attendingButton.selected = NO;
-//		[attendingView removeFromSuperview];
-//	}
-//	else if(hostingButton.selected)
-//	{
-//		hostingButton.selected = NO;
-//		[hostingView removeFromSuperview];
-//	}
-//	if(!profileButton.selected)
-//	{
-//		profileButton.selected = YES;
-//		profileView.hidden = NO;
-//	}
 	profileButton.selected = YES;
 	attendingButton.selected = NO;
 	hostingButton.selected = NO;
@@ -95,47 +77,16 @@ BOOL keyboardUp = NO;
 }
 - (void)attendingTabSelected:(id)sender
 {
-//	if(profileButton.selected)
-//	{
-//		profileButton.selected = NO;		
-//		profileView.hidden = YES;
-//	}
-//	else if(hostingButton.selected)
-//	{
-//		hostingButton.selected = NO;
-//		[hostingView removeFromSuperview];
-//	}
-//	if(!attendingButton.selected)
-//	{
-//		attendingButton.selected = YES;
-//		//Do stuff here
-//	}
 	profileButton.selected = NO;
 	attendingButton.selected = YES;
 	hostingButton.selected = NO;
 	[currentVC.view removeFromSuperview];
 	currentVC = attendingVC;
 	[self.view addSubview:currentVC.view];
-	
+	[currentVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 }
 - (void)hostingTabSelected:(id)sender
-{
-//	if(profileButton.selected)
-//	{
-//		profileButton.selected = NO;		
-//		profileView.hidden = YES;
-//	}
-//	else if(attendingButton.selected)
-//	{
-//		attendingButton.selected = NO;
-//		[attendingView removeFromSuperview];
-//	}
-//	if(!hostingButton.selected)
-//	{
-//		hostingButton.selected = YES;
-//		//Do stuff here
-//	}
-	profileButton.selected = NO;
+{	profileButton.selected = NO;
 	attendingButton.selected = NO;
 	hostingButton.selected = YES;
 	[currentVC.view removeFromSuperview];

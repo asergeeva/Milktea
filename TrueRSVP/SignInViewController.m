@@ -244,7 +244,7 @@
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
 	{
 		self.navigationController.navigationBarHidden = YES;
 		if([txtUsername isFirstResponder] || [txtPassword isFirstResponder])

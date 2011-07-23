@@ -7,6 +7,7 @@
 //
 
 #import "AttendingViewController.h"
+#import "AttendingDetailViewController.h"
 #import "User.h"
 #import "ASIFormDataRequest.h"
 #import "Constants.h"
@@ -35,10 +36,11 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	EventAttending *event = [((NSMutableArray*)[eventSections objectAtIndex:indexPath.section]) objectAtIndex:indexPath.row];
-	
+	AttendingDetailViewController *attendingDetailVC = [[AttendingDetailViewController alloc] initWithNibName:@"AttendingDetailViewController" bundle:[NSBundle mainBundle] event:event];
+	self.view = attendingDetailVC.view;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -188,7 +190,20 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	return YES;
+}
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+	{
+		self.view.frame = CGRectMake(0.0, 0.0, 480.0, 320.0);
+	}
+	else
+	{
+		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
+	}
+	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 - (void)dealloc
 {

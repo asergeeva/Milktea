@@ -31,6 +31,20 @@
 		5173571D13D8117D00204AAF /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5173571C13D8117D00204AAF /* SettingsManager.m */; };
 		5173572013D81CAA00204AAF /* Profile_X.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571E13D81CAA00204AAF /* Profile_X.png */; };
 		5173572113D81CAA00204AAF /* Profile_X@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571F13D81CAA00204AAF /* Profile_X@2x.png */; };
+		517AAA3313DACF9D00733342 /* AttendingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */; };
+		517AAA3413DACF9D00733342 /* AttendingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */; };
+		517AAA3613DACFE000733342 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AAA3513DACFE000733342 /* MapKit.framework */; };
+		517AAA4113DADAF700733342 /* EventsAttending_Checkin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3813DADAF700733342 /* EventsAttending_Checkin@2x.png */; };
+		517AAA4213DADAF700733342 /* EventsAttending_Contact.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3913DADAF700733342 /* EventsAttending_Contact.png */; };
+		517AAA4313DADAF700733342 /* EventsAttending_Contact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3A13DADAF700733342 /* EventsAttending_Contact@2x.png */; };
+		517AAA4413DADAF700733342 /* EventsAttending_Directions.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3B13DADAF700733342 /* EventsAttending_Directions.png */; };
+		517AAA4513DADAF700733342 /* EventsAttending_Directions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3C13DADAF700733342 /* EventsAttending_Directions@2x.png */; };
+		517AAA4613DADAF700733342 /* EventsAttending_Live.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3D13DADAF700733342 /* EventsAttending_Live.png */; };
+		517AAA4713DADAF700733342 /* EventsAttending_Live@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3E13DADAF700733342 /* EventsAttending_Live@2x.png */; };
+		517AAA4813DADAF700733342 /* EventsAttending_RSVP.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3F13DADAF700733342 /* EventsAttending_RSVP.png */; };
+		517AAA4913DADAF700733342 /* EventsAttending_RSVP@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA4013DADAF700733342 /* EventsAttending_RSVP@2x.png */; };
+		517AAA4B13DADB6800733342 /* EventsAttending_Checkin.png in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA4A13DADB6800733342 /* EventsAttending_Checkin.png */; };
+		517AAA4D13DAE42E00733342 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AAA4C13DAE42D00733342 /* CoreLocation.framework */; };
 		518E2D7713D24FA60080E068 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7613D24FA60080E068 /* UIKit.framework */; };
 		518E2D7913D24FA60080E068 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7813D24FA60080E068 /* Foundation.framework */; };
 		518E2D7B13D24FA60080E068 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7A13D24FA60080E068 /* CoreGraphics.framework */; };
@@ -122,6 +136,21 @@
 		5173571C13D8117D00204AAF /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		5173571E13D81CAA00204AAF /* Profile_X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile_X.png; sourceTree = "<group>"; };
 		5173571F13D81CAA00204AAF /* Profile_X@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_X@2x.png"; sourceTree = "<group>"; };
+		517AAA3013DACF9D00733342 /* AttendingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingDetailViewController.h; sourceTree = "<group>"; };
+		517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingDetailViewController.m; sourceTree = "<group>"; };
+		517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingDetailViewController.xib; sourceTree = "<group>"; };
+		517AAA3513DACFE000733342 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		517AAA3813DADAF700733342 /* EventsAttending_Checkin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EventsAttending_Checkin@2x.png"; sourceTree = "<group>"; };
+		517AAA3913DADAF700733342 /* EventsAttending_Contact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventsAttending_Contact.png; sourceTree = "<group>"; };
+		517AAA3A13DADAF700733342 /* EventsAttending_Contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EventsAttending_Contact@2x.png"; sourceTree = "<group>"; };
+		517AAA3B13DADAF700733342 /* EventsAttending_Directions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventsAttending_Directions.png; sourceTree = "<group>"; };
+		517AAA3C13DADAF700733342 /* EventsAttending_Directions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EventsAttending_Directions@2x.png"; sourceTree = "<group>"; };
+		517AAA3D13DADAF700733342 /* EventsAttending_Live.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventsAttending_Live.png; sourceTree = "<group>"; };
+		517AAA3E13DADAF700733342 /* EventsAttending_Live@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EventsAttending_Live@2x.png"; sourceTree = "<group>"; };
+		517AAA3F13DADAF700733342 /* EventsAttending_RSVP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventsAttending_RSVP.png; sourceTree = "<group>"; };
+		517AAA4013DADAF700733342 /* EventsAttending_RSVP@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EventsAttending_RSVP@2x.png"; sourceTree = "<group>"; };
+		517AAA4A13DADB6800733342 /* EventsAttending_Checkin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventsAttending_Checkin.png; sourceTree = "<group>"; };
+		517AAA4C13DAE42D00733342 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		518E2D7213D24FA60080E068 /* TrueRSVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueRSVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		518E2D7613D24FA60080E068 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		518E2D7813D24FA60080E068 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -237,6 +266,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				517AAA4D13DAE42E00733342 /* CoreLocation.framework in Frameworks */,
+				517AAA3613DACFE000733342 /* MapKit.framework in Frameworks */,
 				51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */,
 				511F360B13D5869A00F7E748 /* QuartzCore.framework in Frameworks */,
 				5194223213D39657008B5418 /* MobileCoreServices.framework in Frameworks */,
@@ -270,9 +301,30 @@
 			name = "Tab Bar";
 			sourceTree = "<group>";
 		};
+		517AAA3713DADAE100733342 /* EventsAttending */ = {
+			isa = PBXGroup;
+			children = (
+				5151F61913DABCB100D6D9FF /* Attending_1px.png */,
+				5151F61A13DABCB100D6D9FF /* Attending_1px@2x.png */,
+				517AAA4A13DADB6800733342 /* EventsAttending_Checkin.png */,
+				517AAA3813DADAF700733342 /* EventsAttending_Checkin@2x.png */,
+				517AAA3913DADAF700733342 /* EventsAttending_Contact.png */,
+				517AAA3A13DADAF700733342 /* EventsAttending_Contact@2x.png */,
+				517AAA3B13DADAF700733342 /* EventsAttending_Directions.png */,
+				517AAA3C13DADAF700733342 /* EventsAttending_Directions@2x.png */,
+				517AAA3D13DADAF700733342 /* EventsAttending_Live.png */,
+				517AAA3E13DADAF700733342 /* EventsAttending_Live@2x.png */,
+				517AAA3F13DADAF700733342 /* EventsAttending_RSVP.png */,
+				517AAA4013DADAF700733342 /* EventsAttending_RSVP@2x.png */,
+			);
+			name = EventsAttending;
+			sourceTree = "<group>";
+		};
 		518E2D6713D24FA60080E068 = {
 			isa = PBXGroup;
 			children = (
+				517AAA4C13DAE42D00733342 /* CoreLocation.framework */,
+				517AAA3513DACFE000733342 /* MapKit.framework */,
 				518E2D7C13D24FA60080E068 /* TrueRSVP */,
 				518E2D7513D24FA60080E068 /* Frameworks */,
 				518E2D7313D24FA60080E068 /* Products */,
@@ -313,6 +365,9 @@
 				51D84D4E13D90C42008A705B /* AttendingViewController.h */,
 				51D84D4F13D90C43008A705B /* AttendingViewController.m */,
 				51D84D5013D90C43008A705B /* AttendingViewController.xib */,
+				517AAA3013DACF9D00733342 /* AttendingDetailViewController.h */,
+				517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */,
+				517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */,
 				51F3B4A613D41384008ACF04 /* MainViewController.h */,
 				51F3B4A713D41384008ACF04 /* MainViewController.m */,
 				51F3B4A813D41384008ACF04 /* MainViewController.xib */,
@@ -350,8 +405,7 @@
 		518E2D9613D2527D0080E068 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5151F61913DABCB100D6D9FF /* Attending_1px.png */,
-				5151F61A13DABCB100D6D9FF /* Attending_1px@2x.png */,
+				517AAA3713DADAE100733342 /* EventsAttending */,
 				519C557413DA055F00EE8E9A /* Profile */,
 				519C557313DA050C00EE8E9A /* SignIn */,
 				511F35EC13D5685900F7E748 /* Tab Bar */,
@@ -615,6 +669,17 @@
 				519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */,
 				5151F61B13DABCB100D6D9FF /* Attending_1px.png in Resources */,
 				5151F61C13DABCB100D6D9FF /* Attending_1px@2x.png in Resources */,
+				517AAA3413DACF9D00733342 /* AttendingDetailViewController.xib in Resources */,
+				517AAA4113DADAF700733342 /* EventsAttending_Checkin@2x.png in Resources */,
+				517AAA4213DADAF700733342 /* EventsAttending_Contact.png in Resources */,
+				517AAA4313DADAF700733342 /* EventsAttending_Contact@2x.png in Resources */,
+				517AAA4413DADAF700733342 /* EventsAttending_Directions.png in Resources */,
+				517AAA4513DADAF700733342 /* EventsAttending_Directions@2x.png in Resources */,
+				517AAA4613DADAF700733342 /* EventsAttending_Live.png in Resources */,
+				517AAA4713DADAF700733342 /* EventsAttending_Live@2x.png in Resources */,
+				517AAA4813DADAF700733342 /* EventsAttending_RSVP.png in Resources */,
+				517AAA4913DADAF700733342 /* EventsAttending_RSVP@2x.png in Resources */,
+				517AAA4B13DADB6800733342 /* EventsAttending_Checkin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +731,7 @@
 				51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */,
 				519C557113DA04F900EE8E9A /* Attendance.m in Sources */,
 				51F222BF13DA4CDE00D2A834 /* EventAttending.m in Sources */,
+				517AAA3313DACF9D00733342 /* AttendingDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

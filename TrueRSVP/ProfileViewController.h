@@ -23,7 +23,7 @@
 	IBOutlet UITextField *twitterTextField;
 	IBOutlet UITextView *aboutTextView;
 	IBOutlet UIImageView *aboutImageView;
-	IBOutlet UITextView *whiteBackground;
+	IBOutlet UIView *whiteBackground;
 	IBOutlet UIButton *updateButton;
 	IBOutlet UIImageView *profilePic;
 	IBOutlet UIView *portrait;
@@ -43,7 +43,7 @@
 @property (nonatomic, retain) IBOutlet UITextField *twitterTextField;
 @property (nonatomic, retain) IBOutlet UITextView *aboutTextView;
 @property (nonatomic, retain) IBOutlet UIImageView *aboutImageView;
-@property (nonatomic, retain) IBOutlet UITextView *whiteBackground;
+@property (nonatomic, retain) IBOutlet UIView *whiteBackground;
 @property (nonatomic, retain) IBOutlet UIButton *updateButton;
 @property (nonatomic, retain) IBOutlet UIImageView *profilePic;
 @property (nonatomic, retain) UINavigationBar *welcomeBar;
