@@ -10,14 +10,20 @@
 #import "User.h"
 #import "ASIFormDataRequest.h"
 #import "Constants.h"
-#import "CJSONDeserializer.h"
+#import "NSDictionary_JSONExtensions.h"
+#import "Attendance.h"
+#import <QuartzCore/QuartzCore.h>
 @implementation AttendingViewController
-@synthesize tableView;
+@synthesize eventTableView;
+@synthesize uniqueMonths;
+@synthesize eventSections;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+		uniqueMonths = [[NSMutableArray alloc] init];
+		eventSections = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -29,18 +35,146 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+	EventAttending *event = [((NSMutableArray*)[eventSections objectAtIndex:indexPath.section]) objectAtIndex:indexPath.row];
+	
+}
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *tableCell = [tableView dequeueReusableCellWithIdentifier:@"someCell"];
+	if(tableCell == nil)
+	{
+		tableCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"someCell"];		
+		tableCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		tableCell.textLabel.font = [UIFont systemFontOfSize:14];
+		tableCell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
+		tableCell.detailTextLabel.textColor = [UIColor grayColor];
+	}
 
+//	EventAttending *event = ((EventAttending*)[[Attendance sharedAttendance].eventsArray objectAtIndex:indexPath.section + indexPath.row]);		
+	EventAttending *event = [((NSMutableArray*)[eventSections objectAtIndex:indexPath.section]) objectAtIndex:indexPath.row];
+	if(event.eventName.length > 15)
+	{
+		tableCell.textLabel.text = [NSString stringWithFormat:@" %@...", [event.eventName substringToIndex:14]];
+	}
+	else
+	{
+		tableCell.textLabel.text = [NSString stringWithFormat:@" %@", event.eventName];
+	}
+	
+	NSDateFormatter *df = [[NSDateFormatter alloc]init];
+	df.dateFormat = @"MMMM d - hh:mm a";
+	tableCell.detailTextLabel.text = [df stringFromDate:event.eventDate];
+	[df release];
+	return tableCell;
+}
+//- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
+//{
+//	return UITableViewCellAccessoryDisclosureIndicator;
+//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+//	NSMutableArray *dates = [[NSMutableArray alloc] init];
+	NSArray *eventArray = [Attendance sharedAttendance].eventsArray;
+	for(EventAttending *event in eventArray)
+	{
+		NSDate *date = event.eventDate;
+		NSDateFormatter *df = [[NSDateFormatter alloc] init];
+		df.dateFormat = @"yyyy-M/MM";
+		if(![uniqueMonths containsObject:[df stringFromDate:date]])
+		{
+			[uniqueMonths addObject:[df stringFromDate:date]];
+			NSMutableArray *newSection = [[NSMutableArray alloc] init];
+			[eventSections addObject:newSection];
+			[newSection release];
+		}
+		[df release];
+	}
+	
+	return uniqueMonths.count;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	NSString *selectedMonth = [uniqueMonths objectAtIndex:section];
+	NSArray *eventArray = [Attendance sharedAttendance].eventsArray;
+	int counter = 0;
+	for(EventAttending *event in eventArray)
+	{
+		NSDate *date = event.eventDate;
+		NSDateFormatter *df = [[NSDateFormatter alloc] init];
+		df.dateFormat = @"yyyy-M/MM";
+		if([[df stringFromDate:date] isEqualToString:selectedMonth])
+		{
+			counter++;
+			[((NSMutableArray*)[eventSections objectAtIndex:section]) addObject:event];
+		}
+		[df release];
+	}
+	return counter;
+}
+//- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//	NSString *selectedMonth = [uniqueMonths objectAtIndex:section];
+//	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//	df.dateFormat = @"yyyy-M/MM";
+//	if([selectedMonth isEqualToString:[df stringFromDate:[NSDate date]]])
+//	{
+//		return @"This Month";
+//	}
+//	else
+//	{
+//		NSDate *fromString = [df dateFromString:selectedMonth];
+//		df.dateFormat = @"MMMM";
+//		return [df stringFromDate:fromString];
+//	}
+//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+	return 22;
+}
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+	UIView *sectionView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)] autorelease];
+	sectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Attending_1px.png"]];
+	UILabel *label = [[UILabel alloc] initWithFrame:sectionView.frame];
+	label.backgroundColor = [UIColor clearColor];
+	label.textColor = [UIColor whiteColor];
+	label.font = [UIFont boldSystemFontOfSize:15];
+	label.layer.shadowOpacity = 0.2;
+	label.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+	NSString *selectedMonth = [uniqueMonths objectAtIndex:section];
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-M/MM";
+	if([selectedMonth isEqualToString:[df stringFromDate:[NSDate date]]])
+	{
+		label.text = @"   This Month";
+	}
+	else
+	{
+		NSDate *fromString = [df dateFromString:selectedMonth];
+		df.dateFormat = @"   MMMM";
+		label.text = [df stringFromDate:fromString];
+	}
+	[sectionView addSubview: label];
+	[label release];
+	return sectionView;
+}
 #pragma mark - View lifecycle
 - (void)refreshAttendance
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getAttendingEvents/"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request startSynchronous];
-	NSDictionary *attendanceInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	NSArray *attendanceInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
+	[[Attendance sharedAttendance] updateAttendance:attendanceInfo];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	[self refreshAttendance];
+	eventTableView.dataSource = self;
+	eventTableView.delegate = self;
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -58,7 +192,8 @@
 }
 - (void)dealloc
 {
-	[tableView release];
+	[uniqueMonths release];
+	[eventTableView release];
 	[super dealloc];
 }
 @end

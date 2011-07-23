@@ -10,9 +10,13 @@
 
 @interface EventAttending : NSObject
 {
-	NSString *eventName;
-	NSString *eventDescription;
+	NSMutableString *eventName;
+	NSMutableString *eventDescription;
+	NSMutableString *eventAddress;
+	NSDate *eventDate;
 }
-@property (nonatomic, retain) NSString *eventName;
-@property (nonatomic, retain) NSString *eventDescription;
+@property (nonatomic, retain) NSMutableString *eventName;
+@property (nonatomic, retain) NSMutableString *eventDescription;
+@property (nonatomic, retain) NSMutableString *eventAddress;
+@property (nonatomic, retain) NSDate *eventDate;
 @end

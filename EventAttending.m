@@ -11,11 +11,16 @@
 @implementation EventAttending
 @synthesize eventName;
 @synthesize eventDescription;
+@synthesize eventAddress;
+@synthesize eventDate;
 - (id)init
 {
     self = [super init];
     if (self) {
-        // Initialization code here.
+		eventName = [[NSMutableString alloc] init];
+		eventDescription = [[NSMutableString alloc] init];
+		eventAddress = [[NSMutableString alloc] init];
+//		eventDate = [[NSDate alloc] init];
     }
     
     return self;
@@ -24,6 +29,8 @@
 {
 	[eventName release];
 	[eventDescription release];
+	[eventAddress release];
+	[eventDate release];
 	[super dealloc];
 }
 @end

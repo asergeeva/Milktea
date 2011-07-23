@@ -91,6 +91,7 @@ BOOL keyboardUp = NO;
 	[currentVC.view removeFromSuperview];
 	currentVC = profileVC;
 	[self.view addSubview:currentVC.view];
+	[currentVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 }
 - (void)attendingTabSelected:(id)sender
 {

@@ -12,5 +12,7 @@
 {
 	NSMutableArray *eventsArray;
 }
++ (Attendance*)sharedAttendance;
+- (void)updateAttendance:(NSArray*)attendance;
 @property (nonatomic, retain) NSMutableArray *eventsArray;
 @end

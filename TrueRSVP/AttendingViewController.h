@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AttendingViewController : UIViewController
+@interface AttendingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
-	IBOutlet UITableView *tableView;
+	IBOutlet UITableView *eventTableView;
+	NSMutableArray *uniqueMonths;
+	NSMutableArray *eventSections;
+//	NSMutableArray *eventRows;
 }
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet UITableView *eventTableView;
+@property (nonatomic, retain) NSMutableArray *uniqueMonths;
+@property (nonatomic, retain) NSMutableArray *eventSections;
 @end
