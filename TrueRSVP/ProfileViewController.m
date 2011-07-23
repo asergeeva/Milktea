@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "SettingsManager.h"
 @implementation ProfileViewController
-//Profile
 @synthesize nameLabel;
 @synthesize emailLabel;
 @synthesize cellLabel;
@@ -87,7 +86,6 @@
 }
 - (void)viewDidLoad
 {
-//	self.navigationController.navigationBarHidden = YES;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	[self refreshProfile];
@@ -144,31 +142,7 @@
 	[alert release];
 }
 - (IBAction)updateProfile:(id)sender
-{
-//	User *user = [User sharedUser];
-//	if(emailTextField.text.length > 0)
-//	{
-//		NSLog(@"%@", emailTextField.text);
-//		NSLog(@"%@", [[User sharedUser] email]);
-//		user.email = emailTextField.text;
-//	}
-//	if(cellTextField.text.length > 0)
-//	{
-//		NSLog(@"%@", cellTextField.text);
-//		NSLog(@"%@", [[User sharedUser] cell]);
-//		user.cell = cellTextField.text;
-//	}
-//	if(zipTextField.text.length > 0)
-//	{	
-//		user.zip = zipTextField.text;
-//	}
-//	if(aboutTextView.text.length > 0)
-//	{
-//		NSLog(@"%@", aboutTextView.text);
-//		NSLog(@"%@", [[User sharedUser] about]);
-//		user.about = aboutTextView.text;
-//	}
-	
+{	
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", APILocation, @"setProfile"]]];
 	[request addPostValue:emailTextField.text forKey:@"email"];
 	[request addPostValue:aboutTextView.text forKey:@"about"];
@@ -187,7 +161,6 @@
 	zipTextField.text = user.zip;
 	twitterTextField.text = user.twitter;
 	aboutTextView.text = user.about;
-//	
 	if(!welcomeShown && self.view.frame.size.width < 400)
 	{
 		welcomeBar = [[UINavigationBar alloc] initWithFrame:self.view.frame];
@@ -196,6 +169,7 @@
 		rect.origin.y = 00;
 		welcomeBar.frame = rect;
 		welcomeBar.tintColor = [UIColor colorWithRed:0.992 green:0.800 blue:0.424 alpha:1.000];
+		
 		UILabel *label = [[UILabel alloc] initWithFrame:welcomeBar.bounds];
 		label.textAlignment = UITextAlignmentCenter;
 		label.text = [NSString stringWithFormat:@"Welcome %@!", user.fullName];
@@ -205,14 +179,17 @@
 		label.layer.shadowOpacity = 0.2;
 		label.layer.shadowOffset = CGSizeMake(0.0, 2.0);
 		[welcomeBar addSubview:label];
+		
 		UIButton *xButton = [[UIButton alloc] initWithFrame:CGRectMake(290, 10, 16, 24)];
 		[xButton setImage:[UIImage imageNamed:@"Profile_X.png"] forState:UIControlStateNormal];
 		[xButton addTarget:self action:@selector(dismissWelcome:) forControlEvents:UIControlEventTouchUpInside];
 		[welcomeBar addSubview:xButton];
+		
 		[self.view addSubview:welcomeBar];
 		[xButton release];
 		[label release];
 		
+		//Scroll down animation
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.3];
 		[UIView setAnimationBeginsFromCurrentState:YES];

@@ -1,15 +1,16 @@
 //
-//  Attendance.m
+//  EventAttending.m
 //  TrueRSVP
 //
 //  Created by Nicholas C Chan on 7/22/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "Attendance.h"
+#import "EventAttending.h"
 
-@implementation Attendance
-@synthesize eventsArray;
+@implementation EventAttending
+@synthesize eventName;
+@synthesize eventDescription;
 - (id)init
 {
     self = [super init];
@@ -21,7 +22,8 @@
 }
 - (void)dealloc
 {
-	[eventsArray release];
+	[eventName release];
+	[eventDescription release];
 	[super dealloc];
 }
 @end

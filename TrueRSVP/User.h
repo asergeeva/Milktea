@@ -15,25 +15,25 @@
 @end
 
 @interface User : NSObject <ASIHTTPRequestDelegate> {
-	NSString *uid;
-    NSString *fullName;
-	NSString *email;
-	NSString *cell;
-	NSString *zip;
-	NSString *twitter;
-	NSString *about;
+	NSMutableString *uid;
+    NSMutableString *fullName;
+	NSMutableString *email;
+	NSMutableString *cell;
+	NSMutableString *zip;
+	NSMutableString *twitter;
+	NSMutableString *about;
 	UIImage *profilePic;
 	id<UserDelegate> delegate;
 }
 + (User*)sharedUser;
 - (void)updateUser:(NSDictionary*)userInfo;
-@property (nonatomic, retain) NSString *uid;
-@property (nonatomic, retain) NSString *fullName;
-@property (nonatomic, retain) NSString *email;
-@property (nonatomic, retain) NSString *cell;
-@property (nonatomic, retain) NSString *zip;
-@property (nonatomic, retain) NSString *twitter;
-@property (nonatomic, retain) NSString *about;
+@property (nonatomic, retain) NSMutableString *uid;
+@property (nonatomic, retain) NSMutableString *fullName;
+@property (nonatomic, retain) NSMutableString *email;
+@property (nonatomic, retain) NSMutableString *cell;
+@property (nonatomic, retain) NSMutableString *zip;
+@property (nonatomic, retain) NSMutableString *twitter;
+@property (nonatomic, retain) NSMutableString *about;
 @property (nonatomic, retain) UIImage *profilePic;
 @property (nonatomic, assign) id<UserDelegate> delegate;
 @end

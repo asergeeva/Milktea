@@ -8,6 +8,9 @@
 
 #import "AttendingViewController.h"
 #import "User.h"
+#import "ASIFormDataRequest.h"
+#import "Constants.h"
+#import "CJSONDeserializer.h"
 @implementation AttendingViewController
 @synthesize tableView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -28,7 +31,13 @@
 }
 
 #pragma mark - View lifecycle
-
+- (void)refreshAttendance
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getAttendingEvents/"]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request startSynchronous];
+	NSDictionary *attendanceInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

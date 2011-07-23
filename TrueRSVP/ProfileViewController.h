@@ -27,13 +27,10 @@
 	IBOutlet UIButton *updateButton;
 	IBOutlet UIImageView *profilePic;
 	IBOutlet UIView *portrait;
-//	IBOutlet UIView *landscape;
-//	UINavigationBar *welcomeBar;
 	BOOL welcomeShown;
 }
 - (IBAction)updateProfile:(id)sender;
 - (void)dismissWelcome:(id)sender;
-//@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *emailLabel;
 @property (nonatomic, retain) IBOutlet UILabel *cellLabel;
@@ -50,7 +47,5 @@
 @property (nonatomic, retain) IBOutlet UIButton *updateButton;
 @property (nonatomic, retain) IBOutlet UIImageView *profilePic;
 @property (nonatomic, retain) UINavigationBar *welcomeBar;
-//@property (nonatomic, retain) IBOutlet UIView *portrait;
-//@property (nonatomic, retain) IBOutlet UIView *landscape;
 @property (nonatomic) BOOL welcomeShown;
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "EventAttending.h"
 @interface Attendance : NSObject
-
+{
+	NSMutableArray *eventsArray;
+}
+@property (nonatomic, retain) NSMutableArray *eventsArray;
 @end

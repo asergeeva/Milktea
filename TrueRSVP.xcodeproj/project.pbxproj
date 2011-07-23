@@ -71,6 +71,7 @@
 		51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51D84D5013D90C43008A705B /* AttendingViewController.xib */; };
 		51E7AC4113D7B30700174805 /* SignIn_Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */; };
 		51E7AC4313D7B33800174805 /* Signin_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E7AC4213D7B33800174805 /* Signin_Background.png */; };
+		51F222BF13DA4CDE00D2A834 /* EventAttending.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F222BE13DA4CDE00D2A834 /* EventAttending.m */; };
 		51F3B4A913D41384008ACF04 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F3B4A713D41384008ACF04 /* MainViewController.m */; };
 		51F3B4AA13D41384008ACF04 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51F3B4A813D41384008ACF04 /* MainViewController.xib */; };
 		51F9BB4313D2623A0017731B /* TrueRSVPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F9BB4113D2623A0017731B /* TrueRSVPViewController.m */; };
@@ -190,6 +191,8 @@
 		51D84D5013D90C43008A705B /* AttendingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingViewController.xib; sourceTree = "<group>"; };
 		51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Background@2x.png"; sourceTree = "<group>"; };
 		51E7AC4213D7B33800174805 /* Signin_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Signin_Background.png; sourceTree = "<group>"; };
+		51F222BD13DA4CDE00D2A834 /* EventAttending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventAttending.h; path = ../EventAttending.h; sourceTree = "<group>"; };
+		51F222BE13DA4CDE00D2A834 /* EventAttending.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventAttending.m; path = ../EventAttending.m; sourceTree = "<group>"; };
 		51F3B4A613D41384008ACF04 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		51F3B4A713D41384008ACF04 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		51F3B4A813D41384008ACF04 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
@@ -473,6 +476,8 @@
 				511F361713D592AC00F7E748 /* SynthesizeSingleton.h */,
 				519C556F13DA04F900EE8E9A /* Attendance.h */,
 				519C557013DA04F900EE8E9A /* Attendance.m */,
+				51F222BD13DA4CDE00D2A834 /* EventAttending.h */,
+				51F222BE13DA4CDE00D2A834 /* EventAttending.m */,
 				511F360513D5801600F7E748 /* User.h */,
 				511F360613D5801700F7E748 /* User.m */,
 			);
@@ -652,6 +657,7 @@
 				5173571D13D8117D00204AAF /* SettingsManager.m in Sources */,
 				51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */,
 				519C557113DA04F900EE8E9A /* Attendance.m in Sources */,
+				51F222BF13DA4CDE00D2A834 /* EventAttending.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

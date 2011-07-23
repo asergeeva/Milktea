@@ -180,6 +180,7 @@
 //		navController.viewControllers = controllers;
 		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
 		[self.navigationController pushViewController:mainVC animated:YES];
+		[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 //		[navController pushViewController:mainVC animated:YES];
 		[mainVC release];
 //		ProfileViewController *profileVC = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];

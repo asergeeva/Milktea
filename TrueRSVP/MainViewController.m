@@ -12,12 +12,10 @@
 @implementation MainViewController
 //@synthesize navBar;
 @synthesize profileVC;
-@synthesize profileVCLandscape;
 @synthesize attendingVC;
 //@synthesize attendingView;
 @synthesize hostingView;
 @synthesize currentVC;
-//@synthesize currentVCLandscape;
 @synthesize segmentButtons;
 @synthesize profileButton;
 @synthesize hostingButton;
@@ -32,7 +30,6 @@ BOOL keyboardUp = NO;
 		hostingButton = [[UIButton alloc] init];
 		attendingButton = [[UIButton alloc] init];
 		profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
-//		profileVCLandscape = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController_Landscape" bundle:[NSBundle mainBundle]];
 		attendingVC = [[AttendingViewController alloc] initWithNibName:@"AttendingViewController" bundle:[NSBundle mainBundle]];
         // Custom initialization
     }
@@ -42,7 +39,6 @@ BOOL keyboardUp = NO;
 - (void)dealloc
 {
 	[profileVC release];
-//	[profileVCLandscape release];
 	[attendingVC release];
 //	[attendingView release];
 	[hostingView release];
@@ -93,14 +89,7 @@ BOOL keyboardUp = NO;
 	attendingButton.selected = NO;
 	hostingButton.selected = NO;
 	[currentVC.view removeFromSuperview];
-//	if(UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-//	{
-//		currentVC = profileVCLandscape;
-//	}
-//	else
-//	{
-		currentVC = profileVC;
-//	}
+	currentVC = profileVC;
 	[self.view addSubview:currentVC.view];
 }
 - (void)attendingTabSelected:(id)sender
@@ -262,24 +251,12 @@ BOOL keyboardUp = NO;
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:segmentButtons];
 	self.navigationItem.hidesBackButton = YES;
 	currentVC = profileVC;	
-//	currentVCLandscape = profileVCLandscape;
-//	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-//	{
-//		[self setTextFieldDelegates:profileVCLandscape.view];
-//		[self.view addSubview:currentVCLandscape.view];
-//	}
-//	else
-//	{
-		[self setTextFieldDelegates:profileVC.view];
-		[self.view addSubview:currentVC.view];
-//	}
+	[self setTextFieldDelegates:profileVC.view];
+	[self.view addSubview:currentVC.view];
 	CGRect rect = profileVC.view.bounds;
 	rect.origin.y = 44.0;
 	profileVC.view.bounds = rect;
 	attendingVC.view.bounds = rect;
-//	rect = profileVCLandscape.view.bounds;
-//	rect.origin.y = 44.0;
-//	profileVCLandscape.view.bounds = rect;
 	profileButton.selected = YES;
 }
 
@@ -303,19 +280,5 @@ BOOL keyboardUp = NO;
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 		[currentVC willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-//	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
-//	{
-//		[currentVC.view removeFromSuperview];
-//		currentVC = profileVCLandscape;
-//		[self.view addSubview:profileVCLandscape.view];
-//	}
-//	else
-//	{
-//		[currentVC.view removeFromSuperview];
-//		currentVC = profileVC;
-//		[self.view addSubview:currentVC.view];
-//		
-//	}
-//	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 @end
