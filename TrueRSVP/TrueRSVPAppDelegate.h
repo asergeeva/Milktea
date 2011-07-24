@@ -12,8 +12,10 @@
 
 @interface TrueRSVPAppDelegate : NSObject <UIApplicationDelegate, FBSessionDelegate> {
 	Facebook *facebook;
+	UINavigationController *navController;
 }
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UIViewController *viewController;
 @property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, retain) UINavigationController *navController;
 @end

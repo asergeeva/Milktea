@@ -21,7 +21,7 @@
 @synthesize facebook;
 //@synthesize portraitView;
 //@synthesize landscapeView;
-//@synthesize loginButton;
+@synthesize loginButton;
 - (void)dealloc
 {
 	[txtUsername release];
@@ -206,7 +206,7 @@
 {
 	facebook = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]).facebook;
 	CGRect rect = self.view.bounds;
-	rect.origin.y += 44.0;
+	rect.origin.y += self.navigationController.navigationBar.frame.size.height;
 	self.view.bounds = rect;
 	self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.235 green:0.600 blue:0.792 alpha:1.000];
 	self.navigationController.navigationBar.topItem.title = @"Sign In";

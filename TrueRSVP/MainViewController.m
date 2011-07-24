@@ -8,18 +8,20 @@
 #import "Constants.h"
 #import "MainViewController.h"
 
-
 @implementation MainViewController
 @synthesize profileVC;
 @synthesize attendingVC;
 @synthesize hostingView;
-@synthesize currentVC;
+//@synthesize currentVC;
 @synthesize segmentButtons;
 @synthesize profileButton;
 @synthesize hostingButton;
 @synthesize attendingButton;
 @synthesize animatedDistance;
+@synthesize scrollView;
+//@synthesize pageControl;
 BOOL keyboardUp = NO;
+#pragma mark - Loading
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,11 +31,87 @@ BOOL keyboardUp = NO;
 		attendingButton = [[UIButton alloc] init];
 		profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
 		attendingVC = [[AttendingViewController alloc] initWithNibName:@"AttendingViewController" bundle:[NSBundle mainBundle]];
+		attendingVC.delegate = self;
         // Custom initialization
     }
     return self;
 }
-
+- (void)setupScrolling
+{
+	scrollView.delegate = self;
+	scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+	scrollView.clipsToBounds = YES;
+	scrollView.scrollEnabled = YES;
+	scrollView.pagingEnabled = YES;
+	//	currentVC = profileVC;	
+	[self setTextFieldDelegates:profileVC.view];
+	//	[self.view addSubview:currentVC.view];
+	CGRect rect = profileVC.view.bounds;
+	rect.origin.y = self.navigationController.navigationBar.frame.size.height;
+	profileVC.view.bounds = rect;
+	attendingVC.view.bounds = rect;
+	profileButton.selected = YES;
+	[scrollView setContentSize:CGSizeMake(scrollView.frame.size.width*2, 1)];
+	
+	rect = scrollView.frame;
+	rect.origin.x += profileVC.view.frame.size.width*2;
+	attendingVC.view.frame = rect;
+	[scrollView addSubview:profileVC.view];
+	[scrollView addSubview:attendingVC.view];
+	scrollView.delaysContentTouches = NO;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat pageWidth = self.scrollView.frame.size.width;
+    int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+	switch (page) {
+		case 0:
+			[self profileTabSelected:nil];
+			break;
+		case 1:
+			[self attendingTabSelected:nil];
+			break;
+		case 2:
+			[self hostingTabSelected:nil];
+			break;
+		default:
+			break;
+	}
+//    pageControl.currentPage = page;
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+//	[profileVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication]statusBarOrientation]duration:0];
+	[self resetRotation:profileVC duration:0];
+	[self resetRotation:attendingVC duration:0];
+	
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	[self setupScrolling];
+	[self.navigationController setNavigationBarHidden:NO animated:YES];
+	[profileButton setImage:[UIImage imageNamed:@"profile.png"] forState:UIControlStateNormal];
+	[profileButton setImage:[UIImage imageNamed:@"profile_selected.png"] forState:UIControlStateSelected];
+	profileButton.frame = CGRectMake(0, 0, 68, 29);
+	[profileButton addTarget:self action:@selector(profileTabSelected:) forControlEvents:UIControlEventTouchUpInside];
+	[attendingButton setImage:[UIImage imageNamed:@"attending.png"] forState:UIControlStateNormal];
+	[attendingButton setImage:[UIImage imageNamed:@"attending_selected.png"] forState:UIControlStateSelected];
+	attendingButton.frame = CGRectMake(66, 0, 68, 29); 
+	[attendingButton addTarget:self action:@selector(attendingTabSelected:) forControlEvents:UIControlEventTouchUpInside];
+	[hostingButton setImage:[UIImage imageNamed:@"hosting.png"] forState:UIControlStateNormal];
+	[hostingButton setImage:[UIImage imageNamed:@"hosting_selected.png"] forState:UIControlStateSelected];
+	hostingButton.frame = CGRectMake(133, 0, 68, 29);
+	[hostingButton addTarget:self action:@selector(hostingTabSelected:) forControlEvents:UIControlEventTouchUpInside];
+	segmentButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, 86)];
+	[segmentButtons addSubview:profileButton];
+	[segmentButtons addSubview:hostingButton];
+	[segmentButtons addSubview:attendingButton];
+	segmentButtons.bounds = CGRectMake(0, -29, segmentButtons.frame.size.width, segmentButtons.frame.size.height);
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:segmentButtons];
+	self.navigationItem.hidesBackButton = YES;
+}
+#pragma mark - Unloading
 - (void)dealloc
 {
 	[profileVC release];
@@ -43,8 +121,9 @@ BOOL keyboardUp = NO;
 	[profileButton release];
 	[hostingButton release];
 	[attendingButton release];
-	[currentVC release];
-//	[currentVCLandscape release];
+//	[currentVC release];
+	[scrollView release];
+//	[pageControl release];
     [super dealloc];
 }
 
@@ -55,44 +134,63 @@ BOOL keyboardUp = NO;
     
     // Release any cached data, images, etc that aren't in use.
 }
-#pragma mark - View lifecycle
+
 - (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
-	for (UIView* view in currentVC.view.subviews) {
+	for (UIView* view in scrollView.subviews) {
 		if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UITextView class]])
 		{
 			[view resignFirstResponder];	
 		}
 	}	
 }
-
+#pragma mark - Attending Delegate Method
+- (void)selectedEvent:(UIViewController *)viewController
+{
+	[self.navigationController pushViewController:viewController animated:YES];
+}
+#pragma mark - Navigation Bar
 - (void)profileTabSelected:(id)sender
 {
 	profileButton.selected = YES;
 	attendingButton.selected = NO;
 	hostingButton.selected = NO;
-	[currentVC.view removeFromSuperview];
-	currentVC = profileVC;
-	[self.view addSubview:currentVC.view];
-	[currentVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+//	[currentVC.view removeFromSuperview];
+//	currentVC = profileVC;
+//	[self.view addSubview:currentVC.view];
+//	[currentVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	if(sender)
+	{
+		CGRect frame = scrollView.frame;
+		frame.origin.x = 0;
+		[scrollView scrollRectToVisible:frame animated:YES];
+	}
+	
 }
 - (void)attendingTabSelected:(id)sender
 {
 	profileButton.selected = NO;
 	attendingButton.selected = YES;
 	hostingButton.selected = NO;
-	[currentVC.view removeFromSuperview];
-	currentVC = attendingVC;
-	[self.view addSubview:currentVC.view];
-	[currentVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+//	[currentVC.view removeFromSuperview];
+//	currentVC = attendingVC;
+//	[self.view addSubview:currentVC.view];
+//	[currentVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	if(sender)
+	{
+		CGRect frame = scrollView.frame;
+		frame.origin.x = frame.size.width;
+		[scrollView scrollRectToVisible:frame animated:YES];
+	}
 }
 - (void)hostingTabSelected:(id)sender
 {	profileButton.selected = NO;
 	attendingButton.selected = NO;
 	hostingButton.selected = YES;
-	[currentVC.view removeFromSuperview];
+//	[currentVC.view removeFromSuperview];
 //	currentVC = hostingView;
 //	[self.view addSubview:currentVC.view];
 }
+#pragma mark - Textfield Delegate Methods
 - (void)setTextFieldDelegates:(UIView*)mainView
 {
 	for(UIView *view in mainView.subviews)
@@ -179,46 +277,11 @@ BOOL keyboardUp = NO;
 	}
     return YES;
 }
-- (void)viewDidLoad
+#pragma mark - Rotation
+- (void)resetRotation:(UIViewController*)viewController duration:(NSTimeInterval)duration
 {
-    [super viewDidLoad];
-	[self.navigationController setNavigationBarHidden:NO animated:YES];
-	[profileButton setImage:[UIImage imageNamed:@"profile.png"] forState:UIControlStateNormal];
-	[profileButton setImage:[UIImage imageNamed:@"profile_selected.png"] forState:UIControlStateSelected];
-	profileButton.frame = CGRectMake(0, 0, 68, 29);
-	[profileButton addTarget:self action:@selector(profileTabSelected:) forControlEvents:UIControlEventTouchUpInside];
-	[attendingButton setImage:[UIImage imageNamed:@"attending.png"] forState:UIControlStateNormal];
-	[attendingButton setImage:[UIImage imageNamed:@"attending_selected.png"] forState:UIControlStateSelected];
-	attendingButton.frame = CGRectMake(66, 0, 68, 29); 
-	[attendingButton addTarget:self action:@selector(attendingTabSelected:) forControlEvents:UIControlEventTouchUpInside];
-	[hostingButton setImage:[UIImage imageNamed:@"hosting.png"] forState:UIControlStateNormal];
-	[hostingButton setImage:[UIImage imageNamed:@"hosting_selected.png"] forState:UIControlStateSelected];
-	hostingButton.frame = CGRectMake(133, 0, 68, 29);
-	[hostingButton addTarget:self action:@selector(hostingTabSelected:) forControlEvents:UIControlEventTouchUpInside];
-	segmentButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, 86)];
-	[segmentButtons addSubview:profileButton];
-	[segmentButtons addSubview:hostingButton];
-	[segmentButtons addSubview:attendingButton];
-	segmentButtons.bounds = CGRectMake(0, -29, segmentButtons.frame.size.width, segmentButtons.frame.size.height);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:segmentButtons];
-	self.navigationItem.hidesBackButton = YES;
-	currentVC = profileVC;	
-	[self setTextFieldDelegates:profileVC.view];
-	[self.view addSubview:currentVC.view];
-	CGRect rect = profileVC.view.bounds;
-	rect.origin.y = 44.0;
-	profileVC.view.bounds = rect;
-	attendingVC.view.bounds = rect;
-	profileButton.selected = YES;
+	[viewController willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:duration];
 }
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -231,6 +294,10 @@ BOOL keyboardUp = NO;
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-		[currentVC willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+	[self resetRotation:profileVC duration:duration];
+	[self resetRotation:attendingVC duration:duration];
+//	[profileVC willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//	[attendingVC willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+	[scrollView setContentSize:CGSizeMake(scrollView.frame.size.width*2, 1)];
 }
 @end

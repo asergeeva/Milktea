@@ -24,7 +24,7 @@
 @property (nonatomic, retain) IBOutlet UITextField *txtUsername;
 @property (nonatomic, retain) IBOutlet UITextField *txtPassword;
 //@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
-//@property (nonatomic, retain) IBOutlet UIButton *loginButton;
+@property (nonatomic, retain) IBOutlet UIButton *loginButton;
 @property (nonatomic, retain) Facebook *facebook;
 //@property (nonatomic, retain) IBOutlet UIView *portraitView;
 //@property (nonatomic, retain) IBOutlet UIView *landscapeView;

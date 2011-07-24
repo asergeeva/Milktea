@@ -51,7 +51,7 @@
 	[twitterTextField release];
 	[aboutTextView release];
 	[aboutImageView release];
-	[whiteBackground release];
+	[whiteBackground release];;
 	[updateButton release];
 	[profilePic release];
     [super dealloc];
@@ -99,7 +99,14 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -165,7 +172,7 @@
 	{
 		welcomeBar = [[UINavigationBar alloc] initWithFrame:self.view.frame];
 		CGRect rect = welcomeBar.frame;
-		rect.size.height = 44;
+		rect.size.height = self.navigationController.navigationBar.frame.size.height;
 		rect.origin.y = 00;
 		welcomeBar.frame = rect;
 		welcomeBar.tintColor = [UIColor colorWithRed:0.992 green:0.800 blue:0.424 alpha:1.000];
@@ -178,6 +185,7 @@
 		label.backgroundColor = [UIColor clearColor];
 		label.layer.shadowOpacity = 0.2;
 		label.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+		label.layer.shouldRasterize = YES;
 		[welcomeBar addSubview:label];
 		
 		UIButton *xButton = [[UIButton alloc] initWithFrame:CGRectMake(290, 10, 16, 24)];
@@ -194,7 +202,7 @@
 		[UIView setAnimationDuration:0.3];
 		[UIView setAnimationBeginsFromCurrentState:YES];
 		rect = self.welcomeBar.frame;
-		rect.origin.y += 44;
+		rect.origin.y += self.navigationController.navigationBar.frame.size.height;
 		self.welcomeBar.frame = rect; 
 		[UIView commitAnimations];
 		welcomeShown = YES;

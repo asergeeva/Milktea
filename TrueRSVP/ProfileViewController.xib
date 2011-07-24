@@ -339,7 +339,6 @@
 						<string key="NSFrame">{{69, 374}, {183, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">2</int>
 							<bytes key="NSRGB">MC44NzQ1MDk4NzEgMC44Nzg0MzE0Mzk0IDAuODgyMzUzMDA3OCAwAA</bytes>
@@ -538,19 +537,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">aboutImageView</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="870845287"/>
-					</object>
-					<int key="connectionID">50</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">whiteBackground</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="203020078"/>
 					</object>
-					<int key="connectionID">51</int>
+					<int key="connectionID">53</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">aboutImageView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="166512246"/>
+					</object>
+					<int key="connectionID">56</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -734,7 +733,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">51</int>
+			<int key="maxID">56</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -757,7 +756,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>aboutBackView</string>
 							<string>aboutImageView</string>
 							<string>aboutLabel</string>
 							<string>aboutTextView</string>
@@ -772,12 +770,12 @@
 							<string>twitterTextField</string>
 							<string>updateButton</string>
 							<string>whiteBackground</string>
+							<string>whiteBackgroundAbout</string>
 							<string>zipLabel</string>
 							<string>zipTextField</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>UIView</string>
 							<string>UIImageView</string>
 							<string>UILabel</string>
 							<string>UITextView</string>
@@ -792,6 +790,7 @@
 							<string>UITextField</string>
 							<string>UIButton</string>
 							<string>UIView</string>
+							<string>UIView</string>
 							<string>UILabel</string>
 							<string>UITextField</string>
 						</object>
@@ -800,7 +799,6 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>aboutBackView</string>
 							<string>aboutImageView</string>
 							<string>aboutLabel</string>
 							<string>aboutTextView</string>
@@ -815,15 +813,12 @@
 							<string>twitterTextField</string>
 							<string>updateButton</string>
 							<string>whiteBackground</string>
+							<string>whiteBackgroundAbout</string>
 							<string>zipLabel</string>
 							<string>zipTextField</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">aboutBackView</string>
-								<string key="candidateClassName">UIView</string>
-							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">aboutImageView</string>
 								<string key="candidateClassName">UIImageView</string>
@@ -878,6 +873,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">whiteBackground</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">whiteBackgroundAbout</string>
 								<string key="candidateClassName">UIView</string>
 							</object>
 							<object class="IBToOneOutletInfo">

@@ -22,6 +22,10 @@
 		511F360713D5801700F7E748 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 511F360613D5801700F7E748 /* User.m */; };
 		511F360B13D5869A00F7E748 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 511F360A13D5869A00F7E748 /* QuartzCore.framework */; };
 		511F360E13D58B0D00F7E748 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 511F360D13D58B0D00F7E748 /* Constants.m */; };
+		512163E613DC0CB000B5989E /* TestViewcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 512163E413DC0CAF00B5989E /* TestViewcontroller.m */; };
+		512163E713DC0CB000B5989E /* TestViewcontroller.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512163E513DC0CAF00B5989E /* TestViewcontroller.xib */; };
+		512163EA13DC1FC500B5989E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512163E913DC1FC500B5989E /* MessageUI.framework */; };
+		512163EC13DC342100B5989E /* AttendingDetailViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */; };
 		5151F61B13DABCB100D6D9FF /* Attending_1px.png in Resources */ = {isa = PBXBuildFile; fileRef = 5151F61913DABCB100D6D9FF /* Attending_1px.png */; };
 		5151F61C13DABCB100D6D9FF /* Attending_1px@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5151F61A13DABCB100D6D9FF /* Attending_1px@2x.png */; };
 		5173571413D7FAD100204AAF /* Profile_aboutTextView.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571213D7FAD100204AAF /* Profile_aboutTextView.png */; };
@@ -126,6 +130,11 @@
 		511F360C13D58B0C00F7E748 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		511F360D13D58B0D00F7E748 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		511F361713D592AC00F7E748 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		512163E313DC0CAF00B5989E /* TestViewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewcontroller.h; sourceTree = "<group>"; };
+		512163E413DC0CAF00B5989E /* TestViewcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewcontroller.m; sourceTree = "<group>"; };
+		512163E513DC0CAF00B5989E /* TestViewcontroller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewcontroller.xib; sourceTree = "<group>"; };
+		512163E913DC1FC500B5989E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingDetailViewController_Landscape.xib; sourceTree = "<group>"; };
 		5151F61913DABCB100D6D9FF /* Attending_1px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Attending_1px.png; sourceTree = "<group>"; };
 		5151F61A13DABCB100D6D9FF /* Attending_1px@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Attending_1px@2x.png"; sourceTree = "<group>"; };
 		5173571213D7FAD100204AAF /* Profile_aboutTextView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile_aboutTextView.png; sourceTree = "<group>"; };
@@ -266,6 +275,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				512163EA13DC1FC500B5989E /* MessageUI.framework in Frameworks */,
 				517AAA4D13DAE42E00733342 /* CoreLocation.framework in Frameworks */,
 				517AAA3613DACFE000733342 /* MapKit.framework in Frameworks */,
 				51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */,
@@ -323,6 +333,7 @@
 		518E2D6713D24FA60080E068 = {
 			isa = PBXGroup;
 			children = (
+				512163E913DC1FC500B5989E /* MessageUI.framework */,
 				517AAA4C13DAE42D00733342 /* CoreLocation.framework */,
 				517AAA3513DACFE000733342 /* MapKit.framework */,
 				518E2D7C13D24FA60080E068 /* TrueRSVP */,
@@ -368,6 +379,7 @@
 				517AAA3013DACF9D00733342 /* AttendingDetailViewController.h */,
 				517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */,
 				517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */,
+				512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */,
 				51F3B4A613D41384008ACF04 /* MainViewController.h */,
 				51F3B4A713D41384008ACF04 /* MainViewController.m */,
 				51F3B4A813D41384008ACF04 /* MainViewController.xib */,
@@ -380,6 +392,9 @@
 				518E2D8B13D24FA60080E068 /* SignInViewController.h */,
 				518E2D8C13D24FA60080E068 /* SignInViewController.m */,
 				518E2D8E13D24FA70080E068 /* SignInViewController.xib */,
+				512163E313DC0CAF00B5989E /* TestViewcontroller.h */,
+				512163E413DC0CAF00B5989E /* TestViewcontroller.m */,
+				512163E513DC0CAF00B5989E /* TestViewcontroller.xib */,
 				51F9BB4013D2623A0017731B /* TrueRSVPViewController.h */,
 				51F9BB4113D2623A0017731B /* TrueRSVPViewController.m */,
 				51F9BB4213D2623A0017731B /* TrueRSVPViewController.xib */,
@@ -680,6 +695,8 @@
 				517AAA4813DADAF700733342 /* EventsAttending_RSVP.png in Resources */,
 				517AAA4913DADAF700733342 /* EventsAttending_RSVP@2x.png in Resources */,
 				517AAA4B13DADB6800733342 /* EventsAttending_Checkin.png in Resources */,
+				512163E713DC0CB000B5989E /* TestViewcontroller.xib in Resources */,
+				512163EC13DC342100B5989E /* AttendingDetailViewController_Landscape.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +749,7 @@
 				519C557113DA04F900EE8E9A /* Attendance.m in Sources */,
 				51F222BF13DA4CDE00D2A834 /* EventAttending.m in Sources */,
 				517AAA3313DACF9D00733342 /* AttendingDetailViewController.m in Sources */,
+				512163E613DC0CB000B5989E /* TestViewcontroller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

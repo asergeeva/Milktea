@@ -14,10 +14,12 @@
 #import "NSDictionary_JSONExtensions.h"
 #import "Attendance.h"
 #import <QuartzCore/QuartzCore.h>
+#import "TrueRSVPAppDelegate.h"
 @implementation AttendingViewController
 @synthesize eventTableView;
 @synthesize uniqueMonths;
 @synthesize eventSections;
+@synthesize delegate;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -40,7 +42,10 @@
 {
 	EventAttending *event = [((NSMutableArray*)[eventSections objectAtIndex:indexPath.section]) objectAtIndex:indexPath.row];
 	AttendingDetailViewController *attendingDetailVC = [[AttendingDetailViewController alloc] initWithNibName:@"AttendingDetailViewController" bundle:[NSBundle mainBundle] event:event];
-	self.view = attendingDetailVC.view;
+	[self.delegate selectedEvent:attendingDetailVC];
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication]).navController pushViewController:attendingDetailVC animated:YES];
+	//	self.view = attendingDetailVC.view;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -145,6 +150,7 @@
 	label.font = [UIFont boldSystemFontOfSize:15];
 	label.layer.shadowOpacity = 0.2;
 	label.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+	label.layer.shouldRasterize = YES;
 	NSString *selectedMonth = [uniqueMonths objectAtIndex:section];
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-M/MM";
@@ -162,7 +168,6 @@
 	[label release];
 	return sectionView;
 }
-#pragma mark - View lifecycle
 - (void)refreshAttendance
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getAttendingEvents/"]];
@@ -177,6 +182,7 @@
 	[self refreshAttendance];
 	eventTableView.dataSource = self;
 	eventTableView.delegate = self;
+	eventTableView.delaysContentTouches = NO;
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -197,11 +203,11 @@
 {
 	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
 	{
-		self.view.frame = CGRectMake(0.0, 0.0, 480.0, 320.0);
+		self.view.frame = CGRectMake(480.0, 0.0, 480.0, 320.0);
 	}
 	else
 	{
-		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
+		self.view.frame = CGRectMake(320.0, 0.0, 320.0, 480.0);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }

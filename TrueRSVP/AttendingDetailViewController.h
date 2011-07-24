@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "EventAttending.h"
 #import <MapKit/MapKit.h>
-@interface AttendingDetailViewController : UIViewController
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
+@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate>
 {
+	EventAttending *eventAttending;
 	IBOutlet UIView *eventWhiteBack;
 	IBOutlet UILabel *eventName;
 	IBOutlet UILabel *eventDate;
@@ -22,9 +25,17 @@
 	IBOutlet UIButton *update;
 	IBOutlet UIButton *checkIn;
 	IBOutlet UIButton *live;
-	NSString *address;
+//	NSURL *someURL;
+	float lat;
+	float lng;
+//	NSMutableString *address;
+
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(EventAttending*)event;
+- (IBAction)showMail:(id)sender;
+- (IBAction)showMap:(id)sender;
+- (IBAction)showRSVP:(id)sender;
+@property (nonatomic, retain) EventAttending *eventAttending;
 @property (nonatomic, retain) IBOutlet UIView *eventWhiteBack;
 @property (nonatomic, retain) IBOutlet UILabel *eventName;
 @property (nonatomic, retain) IBOutlet UILabel *eventDate;
@@ -36,5 +47,8 @@
 @property (nonatomic, retain) IBOutlet UIButton *update;
 @property (nonatomic, retain) IBOutlet UIButton *checkIn;
 @property (nonatomic, retain) IBOutlet UIButton *live;
-@property (nonatomic, retain) NSString *address;
+//@property (nonatomic, retain) NSURL *someURL;
+@property (nonatomic) float lat;
+@property (nonatomic) float lng;
+//@property (nonatomic, retain) NSMutableString *address;
 @end
