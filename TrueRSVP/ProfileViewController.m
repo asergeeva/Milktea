@@ -29,6 +29,7 @@
 @synthesize profilePic;
 @synthesize welcomeBar;
 @synthesize welcomeShown;
+//@synthesize view;
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 //{
 //    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -54,6 +55,7 @@
 	[whiteBackground release];;
 	[updateButton release];
 	[profilePic release];
+//	[view release];
     [super dealloc];
 }
 
@@ -75,7 +77,7 @@
 
 - (void)refreshProfile
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getUserInfo/"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getUserInfo"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request startSynchronous];
 	NSDictionary *userInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
@@ -90,7 +92,11 @@
     // Do any additional setup after loading the view from its nib.
 	[self refreshProfile];
 	whiteBackground.layer.cornerRadius = 5;
-	whiteBackground.clipsToBounds = YES;
+	whiteBackground.layer.shadowOffset = CGSizeMake(0.0, 0.2);
+	whiteBackground.layer.shadowOpacity = 0.25;
+//	whiteBackground.clipsToBounds = YES;
+	updateButton.layer.cornerRadius = 5;
+	updateButton.clipsToBounds = YES;
 }
 
 - (void)viewDidUnload
@@ -150,7 +156,7 @@
 }
 - (IBAction)updateProfile:(id)sender
 {	
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", APILocation, @"setProfile"]]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", APILocation, @"setUserInfo"]]];
 	[request addPostValue:emailTextField.text forKey:@"email"];
 	[request addPostValue:aboutTextView.text forKey:@"about"];
 	[request addPostValue:cellTextField.text forKey:@"cell"];
@@ -172,8 +178,8 @@
 	{
 		welcomeBar = [[UINavigationBar alloc] initWithFrame:self.view.frame];
 		CGRect rect = welcomeBar.frame;
-		rect.size.height = self.navigationController.navigationBar.frame.size.height;
-		rect.origin.y = 00;
+		rect.size.height = 44;
+		rect.origin.y = 44;
 		welcomeBar.frame = rect;
 		welcomeBar.tintColor = [UIColor colorWithRed:0.992 green:0.800 blue:0.424 alpha:1.000];
 		
@@ -185,6 +191,7 @@
 		label.backgroundColor = [UIColor clearColor];
 		label.layer.shadowOpacity = 0.2;
 		label.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+		label.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 		label.layer.shouldRasterize = YES;
 		[welcomeBar addSubview:label];
 		

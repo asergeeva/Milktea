@@ -9,6 +9,8 @@
 #import "EventAttending.h"
 
 @implementation EventAttending
+@synthesize eventID;
+@synthesize eventOrganizer;
 @synthesize eventName;
 @synthesize eventDescription;
 @synthesize eventAddress;
@@ -17,6 +19,7 @@
 {
     self = [super init];
     if (self) {
+		eventID = [[NSMutableString alloc] init];
 		eventName = [[NSMutableString alloc] init];
 		eventDescription = [[NSMutableString alloc] init];
 		eventAddress = [[NSMutableString alloc] init];
@@ -27,6 +30,8 @@
 }
 - (void)dealloc
 {
+	[eventID release];
+	[eventOrganizer release];
 	[eventName release];
 	[eventDescription release];
 	[eventAddress release];

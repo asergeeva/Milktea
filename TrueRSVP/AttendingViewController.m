@@ -150,6 +150,7 @@
 	label.font = [UIFont boldSystemFontOfSize:15];
 	label.layer.shadowOpacity = 0.2;
 	label.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+	label.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	label.layer.shouldRasterize = YES;
 	NSString *selectedMonth = [uniqueMonths objectAtIndex:section];
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -201,15 +202,15 @@
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-	{
-		self.view.frame = CGRectMake(480.0, 0.0, 480.0, 320.0);
-	}
-	else
-	{
-		self.view.frame = CGRectMake(320.0, 0.0, 320.0, 480.0);
-	}
-	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+//	{
+//		self.view.frame = CGRectMake(480.0, 0.0, 480.0, 320.0);
+//	}
+//	else
+//	{
+//		self.view.frame = CGRectMake(320.0, 0.0, 320.0, 480.0);
+//	}
+//	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 - (void)dealloc
 {

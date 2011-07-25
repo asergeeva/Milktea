@@ -27,6 +27,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Attendance);
 	for(NSDictionary *dictionary in attendance)
 	{
 		EventAttending *event = [[EventAttending alloc] init];
+		event.eventID = [dictionary objectForKey:@"id"];
+		event.eventOrganizer = [dictionary objectForKey:@"organizer"];
 		event.eventName = [dictionary objectForKey:@"title"];
 		event.eventDescription = [dictionary objectForKey:@"description"];
 		event.eventAddress = [dictionary objectForKey:@"location_address"];

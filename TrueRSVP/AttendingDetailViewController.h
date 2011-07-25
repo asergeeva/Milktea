@@ -25,6 +25,8 @@
 	IBOutlet UIButton *update;
 	IBOutlet UIButton *checkIn;
 	IBOutlet UIButton *live;
+	IBOutlet UIView *buttonWhiteBack;
+	NSString *organizerEmail;
 //	NSURL *someURL;
 	float lat;
 	float lng;
@@ -47,6 +49,8 @@
 @property (nonatomic, retain) IBOutlet UIButton *update;
 @property (nonatomic, retain) IBOutlet UIButton *checkIn;
 @property (nonatomic, retain) IBOutlet UIButton *live;
+@property (nonatomic, retain) IBOutlet UIView *buttonWhiteBack;;
+@property (nonatomic, retain) NSString *organizerEmail;
 //@property (nonatomic, retain) NSURL *someURL;
 @property (nonatomic) float lat;
 @property (nonatomic) float lng;

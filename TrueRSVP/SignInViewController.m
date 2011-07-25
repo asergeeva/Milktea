@@ -142,7 +142,7 @@
 		[alert release];
 		return;
 	}
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"login/"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"login"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
 	

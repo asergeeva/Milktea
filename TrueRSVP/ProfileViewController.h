@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "ASIFormDataRequest.h"
+//#import "DebugView.h"
 @interface ProfileViewController : UIViewController <UserDelegate, ASIHTTPRequestDelegate> {
 //    IBOutlet UINavigationBar *navBar;
 	IBOutlet UILabel *nameLabel;
@@ -28,6 +29,7 @@
 	IBOutlet UIImageView *profilePic;
 	IBOutlet UIView *portrait;
 	BOOL welcomeShown;
+//	IBOutlet DebugView *view;
 }
 - (IBAction)updateProfile:(id)sender;
 - (void)dismissWelcome:(id)sender;
@@ -48,4 +50,5 @@
 @property (nonatomic, retain) IBOutlet UIImageView *profilePic;
 @property (nonatomic, retain) UINavigationBar *welcomeBar;
 @property (nonatomic) BOOL welcomeShown;
+//@property (nonatomic, retain) IBOutlet DebugView *view;
 @end

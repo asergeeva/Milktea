@@ -21,6 +21,7 @@
 @synthesize scrollView;
 //@synthesize pageControl;
 BOOL keyboardUp = NO;
+int pageNumber = 0;
 #pragma mark - Loading
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,11 +61,11 @@ BOOL keyboardUp = NO;
 	[scrollView addSubview:attendingVC.view];
 	scrollView.delaysContentTouches = NO;
 }
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     CGFloat pageWidth = self.scrollView.frame.size.width;
-    int page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-	switch (page) {
+    pageNumber = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+	switch (pageNumber) {
 		case 0:
 			[self profileTabSelected:nil];
 			break;
@@ -79,13 +80,54 @@ BOOL keyboardUp = NO;
 	}
 //    pageControl.currentPage = page;
 }
-- (void)viewDidAppear:(BOOL)animated
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-//	[profileVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication]statusBarOrientation]duration:0];
+	//A fix for possible iOS bug. Frame continues to reset to (320, 0, 480, 320) for some reason.
+	if(profileVC.view.frame.origin.x > 0)
+	{
+		profileVC.view.frame = CGRectMake(0, 0, 480, 320);
+	}	
+}
+- (void)resetScrollViewContentSize:(UIInterfaceOrientation)toInterfaceOrientation
+{
+	scrollView.contentSize = CGSizeMake(0, 0);
+	scrollView.contentOffset = CGPointMake(0.0, 0.0);
+	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+	{
+		[scrollView setContentSize:CGSizeMake(1440, 1)];
+		[scrollView setContentOffset:CGPointMake(480*pageNumber, 0)];
+		CGRect frame = CGRectMake(0, 0, 480, 320);
+		frame.origin.x = 480*pageNumber;
+		[scrollView scrollRectToVisible:frame animated:YES];
+		profileVC.view.frame = CGRectMake(0, 0, 480, 320);
+		attendingVC.view.frame = CGRectMake(480, 0, 480, 320);
+	}
+	else
+	{
+		[scrollView setContentSize:CGSizeMake(960, 1)];
+		[scrollView setContentOffset:CGPointMake(320*pageNumber, 0)];
+		CGRect frame = CGRectMake(0, 0, 320, 480);
+		frame.origin.x = 320*pageNumber;
+		[scrollView scrollRectToVisible:frame animated:YES];
+		profileVC.view.frame = CGRectMake(0, 0, 320, 480);
+		attendingVC.view.frame = CGRectMake(320, 0, 320, 480);
+	}	
+	[self willRotateToInterfaceOrientation:toInterfaceOrientation duration:0];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
 	[self resetRotation:profileVC duration:0];
 	[self resetRotation:attendingVC duration:0];
-	
+	[self resetScrollViewContentSize:[[UIApplication sharedApplication] statusBarOrientation]];
+	[super viewWillAppear:animated];
 }
+//- (void)viewDidAppear:(BOOL)animated
+//{
+////	[profileVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication]statusBarOrientation]duration:0];
+////	[self resetRotation:profileVC duration:0];
+////	[self resetRotation:attendingVC duration:0];
+//	[super viewDidAppear:animated];
+//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -151,6 +193,7 @@ BOOL keyboardUp = NO;
 #pragma mark - Navigation Bar
 - (void)profileTabSelected:(id)sender
 {
+	[self scrollViewWillBeginDragging:nil];
 	profileButton.selected = YES;
 	attendingButton.selected = NO;
 	hostingButton.selected = NO;
@@ -164,7 +207,7 @@ BOOL keyboardUp = NO;
 		frame.origin.x = 0;
 		[scrollView scrollRectToVisible:frame animated:YES];
 	}
-	
+	pageNumber = 0;
 }
 - (void)attendingTabSelected:(id)sender
 {
@@ -181,6 +224,7 @@ BOOL keyboardUp = NO;
 		frame.origin.x = frame.size.width;
 		[scrollView scrollRectToVisible:frame animated:YES];
 	}
+	pageNumber = 1;
 }
 - (void)hostingTabSelected:(id)sender
 {	profileButton.selected = NO;
@@ -189,6 +233,7 @@ BOOL keyboardUp = NO;
 //	[currentVC.view removeFromSuperview];
 //	currentVC = hostingView;
 //	[self.view addSubview:currentVC.view];
+	pageNumber = 2;
 }
 #pragma mark - Textfield Delegate Methods
 - (void)setTextFieldDelegates:(UIView*)mainView
@@ -296,8 +341,9 @@ BOOL keyboardUp = NO;
 {
 	[self resetRotation:profileVC duration:duration];
 	[self resetRotation:attendingVC duration:duration];
-//	[profileVC willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-//	[attendingVC willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[scrollView setContentSize:CGSizeMake(scrollView.frame.size.width*2, 1)];
+	[self resetScrollViewContentSize:toInterfaceOrientation];
+//	CGRect frame = scrollView.frame;
+//	frame.origin.x = scrollView.frame.size.width * pageNumber;
+//	[scrollView scrollRectToVisible:frame animated:YES];
 }
 @end

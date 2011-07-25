@@ -26,6 +26,8 @@
 		512163E713DC0CB000B5989E /* TestViewcontroller.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512163E513DC0CAF00B5989E /* TestViewcontroller.xib */; };
 		512163EA13DC1FC500B5989E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512163E913DC1FC500B5989E /* MessageUI.framework */; };
 		512163EC13DC342100B5989E /* AttendingDetailViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */; };
+		514F875F13DCE11000EBAF83 /* AttendingDetail_1px.png in Resources */ = {isa = PBXBuildFile; fileRef = 514F875D13DCE11000EBAF83 /* AttendingDetail_1px.png */; };
+		514F876013DCE11000EBAF83 /* AttendingDetail_1px@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514F875E13DCE11000EBAF83 /* AttendingDetail_1px@2x.png */; };
 		5151F61B13DABCB100D6D9FF /* Attending_1px.png in Resources */ = {isa = PBXBuildFile; fileRef = 5151F61913DABCB100D6D9FF /* Attending_1px.png */; };
 		5151F61C13DABCB100D6D9FF /* Attending_1px@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5151F61A13DABCB100D6D9FF /* Attending_1px@2x.png */; };
 		5173571413D7FAD100204AAF /* Profile_aboutTextView.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571213D7FAD100204AAF /* Profile_aboutTextView.png */; };
@@ -86,6 +88,7 @@
 		5194226313D39A89008B5418 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194226213D39A89008B5418 /* Reachability.m */; };
 		519C557113DA04F900EE8E9A /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C557013DA04F900EE8E9A /* Attendance.m */; };
 		519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */; };
+		51D3F84F13DD5C7A00EBC93D /* EventAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */; };
 		51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */; };
 		51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D84D4F13D90C43008A705B /* AttendingViewController.m */; };
 		51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51D84D5013D90C43008A705B /* AttendingViewController.xib */; };
@@ -135,6 +138,8 @@
 		512163E513DC0CAF00B5989E /* TestViewcontroller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewcontroller.xib; sourceTree = "<group>"; };
 		512163E913DC1FC500B5989E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingDetailViewController_Landscape.xib; sourceTree = "<group>"; };
+		514F875D13DCE11000EBAF83 /* AttendingDetail_1px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AttendingDetail_1px.png; sourceTree = "<group>"; };
+		514F875E13DCE11000EBAF83 /* AttendingDetail_1px@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AttendingDetail_1px@2x.png"; sourceTree = "<group>"; };
 		5151F61913DABCB100D6D9FF /* Attending_1px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Attending_1px.png; sourceTree = "<group>"; };
 		5151F61A13DABCB100D6D9FF /* Attending_1px@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Attending_1px@2x.png"; sourceTree = "<group>"; };
 		5173571213D7FAD100204AAF /* Profile_aboutTextView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile_aboutTextView.png; sourceTree = "<group>"; };
@@ -227,6 +232,8 @@
 		519C556F13DA04F900EE8E9A /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
 		519C557013DA04F900EE8E9A /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
 		519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController_Landscape.xib; sourceTree = "<group>"; };
+		51D3F84D13DD5C7A00EBC93D /* EventAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAnnotation.h; sourceTree = "<group>"; };
+		51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAnnotation.m; sourceTree = "<group>"; };
 		51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		51D84D4E13D90C42008A705B /* AttendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingViewController.h; sourceTree = "<group>"; };
 		51D84D4F13D90C43008A705B /* AttendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingViewController.m; sourceTree = "<group>"; };
@@ -316,6 +323,8 @@
 			children = (
 				5151F61913DABCB100D6D9FF /* Attending_1px.png */,
 				5151F61A13DABCB100D6D9FF /* Attending_1px@2x.png */,
+				514F875D13DCE11000EBAF83 /* AttendingDetail_1px.png */,
+				514F875E13DCE11000EBAF83 /* AttendingDetail_1px@2x.png */,
 				517AAA4A13DADB6800733342 /* EventsAttending_Checkin.png */,
 				517AAA3813DADAF700733342 /* EventsAttending_Checkin@2x.png */,
 				517AAA3913DADAF700733342 /* EventsAttending_Contact.png */,
@@ -380,6 +389,8 @@
 				517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */,
 				517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */,
 				512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */,
+				51D3F84D13DD5C7A00EBC93D /* EventAnnotation.h */,
+				51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */,
 				51F3B4A613D41384008ACF04 /* MainViewController.h */,
 				51F3B4A713D41384008ACF04 /* MainViewController.m */,
 				51F3B4A813D41384008ACF04 /* MainViewController.xib */,
@@ -697,6 +708,8 @@
 				517AAA4B13DADB6800733342 /* EventsAttending_Checkin.png in Resources */,
 				512163E713DC0CB000B5989E /* TestViewcontroller.xib in Resources */,
 				512163EC13DC342100B5989E /* AttendingDetailViewController_Landscape.xib in Resources */,
+				514F875F13DCE11000EBAF83 /* AttendingDetail_1px.png in Resources */,
+				514F876013DCE11000EBAF83 /* AttendingDetail_1px@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,6 +763,7 @@
 				51F222BF13DA4CDE00D2A834 /* EventAttending.m in Sources */,
 				517AAA3313DACF9D00733342 /* AttendingDetailViewController.m in Sources */,
 				512163E613DC0CB000B5989E /* TestViewcontroller.m in Sources */,
+				51D3F84F13DD5C7A00EBC93D /* EventAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

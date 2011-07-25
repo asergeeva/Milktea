@@ -52,7 +52,7 @@
 						<string key="NSFrame">{{14, 120}, {135, 135}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="787465552"/>
+						<reference key="NSNextKeyView" ref="870845287"/>
 						<string key="NSReuseIdentifierKey">_NS:180</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -228,7 +228,7 @@
 						<string key="NSFrame">{{14, 98}, {135, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="870845287"/>
+						<reference key="NSNextKeyView" ref="203020078"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -339,6 +339,7 @@
 						<string key="NSFrame">{{69, 374}, {183, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">2</int>
 							<bytes key="NSRGB">MC44NzQ1MDk4NzEgMC44Nzg0MzE0Mzk0IDAuODgyMzUzMDA3OCAwAA</bytes>
@@ -365,7 +366,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">Profile_Update.png</string>
+							<string key="NSResourceName">AttendingDetail_1px.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="787465552">
@@ -394,7 +395,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="203020078"/>
+				<reference key="NSNextKeyView" ref="787465552"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">2</int>
 					<bytes key="NSRGB">MC45MjU0OTAyNjAxIDAuOTEzNzI1NTU0OSAwLjg3NDUwOTg3MQA</bytes>
@@ -481,14 +482,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">view</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="191373211"/>
-					</object>
-					<int key="connectionID">38</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">portrait</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="191373211"/>
@@ -550,6 +543,14 @@
 						<reference key="destination" ref="166512246"/>
 					</object>
 					<int key="connectionID">56</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">view</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="191373211"/>
+					</object>
+					<int key="connectionID">58</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -733,7 +734,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">56</int>
+			<int key="maxID">58</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -770,7 +771,6 @@
 							<string>twitterTextField</string>
 							<string>updateButton</string>
 							<string>whiteBackground</string>
-							<string>whiteBackgroundAbout</string>
 							<string>zipLabel</string>
 							<string>zipTextField</string>
 						</object>
@@ -789,7 +789,6 @@
 							<string>UILabel</string>
 							<string>UITextField</string>
 							<string>UIButton</string>
-							<string>UIView</string>
 							<string>UIView</string>
 							<string>UILabel</string>
 							<string>UITextField</string>
@@ -813,7 +812,6 @@
 							<string>twitterTextField</string>
 							<string>updateButton</string>
 							<string>whiteBackground</string>
-							<string>whiteBackgroundAbout</string>
 							<string>zipLabel</string>
 							<string>zipTextField</string>
 						</object>
@@ -876,10 +874,6 @@
 								<string key="candidateClassName">UIView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">whiteBackgroundAbout</string>
-								<string key="candidateClassName">UIView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
 								<string key="name">zipLabel</string>
 								<string key="candidateClassName">UILabel</string>
 							</object>
@@ -908,12 +902,12 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>Profile_Update.png</string>
+				<string>AttendingDetail_1px.png</string>
 				<string>Profile_aboutTextView.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{183, 27}</string>
+				<string>{1, 21}</string>
 				<string>{131, 80}</string>
 			</object>
 		</object>
