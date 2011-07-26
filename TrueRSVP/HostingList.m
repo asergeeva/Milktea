@@ -1,16 +1,15 @@
 //
-//  Attendance.m
+//  HostingList.m
 //  TrueRSVP
 //
-//  Created by Nicholas C Chan on 7/22/11.
+//  Created by Nicholas C Chan on 7/25/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "Attendance.h"
+#import "HostingList.h"
 #import "SynthesizeSingleton.h"
-#import "EventAttending.h"
-@implementation Attendance
-SYNTHESIZE_SINGLETON_FOR_CLASS(Attendance);
+@implementation HostingList
+SYNTHESIZE_SINGLETON_FOR_CLASS(HostingList);
 @synthesize eventsArray;
 - (id)init
 {
@@ -22,11 +21,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(Attendance);
     
     return self;
 }
-- (void)updateAttendance:(NSArray*)attendance
+- (void)updateEventsList:(NSArray*)eventsList
 {
-	for(NSDictionary *dictionary in attendance)
+	for(NSDictionary *dictionary in eventsList)
 	{
-		EventAttending *event = [[EventAttending alloc] init];
+		Event *event = [[Event alloc] init];
 		event.eventID = [dictionary objectForKey:@"id"];
 		event.eventOrganizer = [dictionary objectForKey:@"organizer"];
 		event.eventName = [dictionary objectForKey:@"title"];

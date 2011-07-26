@@ -33,7 +33,7 @@
 @synthesize organizerEmail;
 //@synthesize address;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(EventAttending*)event
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -69,6 +69,7 @@
 {
 	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Update RSVP" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Yes, I'll absolutely be there", @"I'm Pretty sure I'll be there", @"I'll go unless my plans change", @"I probably can't go", @"No, but I'm a supporter", @"No, I'm not interested", nil];
 	[sheet showInView:self.view];
+	[sheet release];
 }
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
@@ -109,16 +110,34 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-	[self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
-	[super viewWillAppear:animated];
-}
-- (void)viewDidLoad
-{
 	eventName.text = eventAttending.eventName;
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd hh:mm a";
 	eventDate.text = [df stringFromDate:eventAttending.eventDate];
 	eventDescription.text = eventAttending.eventDescription;
+	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAttending.eventAddress];
+	NSURL *someURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:someURL];
+	[request startSynchronous];
+	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+	lat = [[location objectForKey:@"lat"] floatValue];
+	lng = [[location objectForKey:@"lng"] floatValue];
+	CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat, lng);
+	MKCoordinateSpan span = MKCoordinateSpanMake(0.025, 0.025);
+	MKCoordinateRegion region = MKCoordinateRegionMake(coord, span);
+	eventMap.region = region;
+	[eventMap removeAnnotations:[eventMap annotations]];
+	EventAnnotation *annotation = [[EventAnnotation alloc] initWithName:eventName.text coordinate:coord];
+	[eventMap addAnnotation:annotation];
+	[annotation release];
+	[df release];
+	[self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	[super viewWillAppear:animated];
+}
+- (void)viewDidLoad
+{
+
     [super viewDidLoad];
 	//self.view.frame = self.navigationController.view.frame;
 	
@@ -153,22 +172,6 @@
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
 	eventMap.scrollEnabled = YES;
-	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAttending.eventAddress];
-	NSURL *someURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:someURL];
-	[request startSynchronous];
-	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
-	lat = [[location objectForKey:@"lat"] floatValue];
-	lng = [[location objectForKey:@"lng"] floatValue];
-	CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat, lng);
-	MKCoordinateSpan span = MKCoordinateSpanMake(0.025, 0.025);
-	MKCoordinateRegion region = MKCoordinateRegionMake(coord, span);
-	eventMap.region = region;
-	
-	EventAnnotation *annotation = [[EventAnnotation alloc] initWithName:eventName.text coordinate:coord];
-	[eventMap addAnnotation:annotation];
-	[annotation release];
 	CGRect rect = self.view.frame;
 	rect.origin.y += 44;
 	self.view.bounds = rect;

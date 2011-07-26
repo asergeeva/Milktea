@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AttendingController.h"
+#import "AttendingDetailViewController.h"
 @protocol AttendingDelegate
 @optional
 - (void)selectedEvent:(UIViewController*)viewController;
@@ -16,6 +17,7 @@
 {
 	IBOutlet UITableView *eventTableView;
 	AttendingController *attendingController;
+	AttendingDetailViewController *attendingDetailVC;
 //	NSMutableArray *uniqueMonths;
 //	NSMutableArray *eventSections;
 	id<AttendingDelegate> delegate;
@@ -23,6 +25,7 @@
 }
 @property (nonatomic, retain) IBOutlet UITableView *eventTableView;
 @property (nonatomic, retain) AttendingController *attendingController;
+@property (nonatomic, retain) AttendingDetailViewController *attendingDetailVC;
 //@property (nonatomic, retain) NSMutableArray *uniqueMonths;
 //@property (nonatomic, retain) NSMutableArray *eventSections;
 @property (nonatomic, assign) id<AttendingDelegate> delegate;

@@ -6,9 +6,9 @@
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "EventAttending.h"
+#import "Event.h"
 
-@implementation EventAttending
+@implementation Event
 @synthesize eventID;
 @synthesize eventOrganizer;
 @synthesize eventName;

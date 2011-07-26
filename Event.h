@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EventAttending : NSObject
+@interface Event : NSObject
 {
 	NSMutableString *eventID;
 	NSMutableString *eventOrganizer;

@@ -72,18 +72,22 @@
 		5194225F13D3972E008B5418 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194225413D3972E008B5418 /* CJSONSerializer.m */; };
 		5194226013D3972E008B5418 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194225613D3972E008B5418 /* CDataScanner.m */; };
 		5194226313D39A89008B5418 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194226213D39A89008B5418 /* Reachability.m */; };
-		519C557113DA04F900EE8E9A /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C557013DA04F900EE8E9A /* Attendance.m */; };
+		519C557113DA04F900EE8E9A /* AttendanceList.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C557013DA04F900EE8E9A /* AttendanceList.m */; };
 		519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */; };
 		51AEC93D13DE62A200E2FB69 /* AttendingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51AEC93C13DE62A200E2FB69 /* AttendingController.m */; };
+		51CC214C13DE919600980FE8 /* HostingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CC214B13DE919600980FE8 /* HostingList.m */; };
+		51CC215013DE954D00980FE8 /* HostingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CC214E13DE954D00980FE8 /* HostingDetailViewController.m */; };
+		51CC215113DE954D00980FE8 /* HostingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */; };
 		51D3F84F13DD5C7A00EBC93D /* EventAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */; };
 		51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */; };
 		51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D84D4F13D90C43008A705B /* AttendingViewController.m */; };
 		51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51D84D5013D90C43008A705B /* AttendingViewController.xib */; };
 		51DEC44313DE6F78004940A5 /* HostingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DEC44113DE6F78004940A5 /* HostingViewController.m */; };
 		51DEC44413DE6F78004940A5 /* HostingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51DEC44213DE6F78004940A5 /* HostingViewController.xib */; };
+		51DEC44913DE7EA9004940A5 /* HostingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DEC44813DE7EA8004940A5 /* HostingController.m */; };
 		51E7AC4113D7B30700174805 /* SignIn_Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */; };
 		51E7AC4313D7B33800174805 /* Signin_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 51E7AC4213D7B33800174805 /* Signin_Background.png */; };
-		51F222BF13DA4CDE00D2A834 /* EventAttending.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F222BE13DA4CDE00D2A834 /* EventAttending.m */; };
+		51F222BF13DA4CDE00D2A834 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F222BE13DA4CDE00D2A834 /* Event.m */; };
 		51F3B4A913D41384008ACF04 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F3B4A713D41384008ACF04 /* MainViewController.m */; };
 		51F3B4AA13D41384008ACF04 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51F3B4A813D41384008ACF04 /* MainViewController.xib */; };
 		51F9BB4313D2623A0017731B /* TrueRSVPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F9BB4113D2623A0017731B /* TrueRSVPViewController.m */; };
@@ -203,11 +207,16 @@
 		5194225613D3972E008B5418 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		5194226113D39A89008B5418 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5194226213D39A89008B5418 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		519C556F13DA04F900EE8E9A /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
-		519C557013DA04F900EE8E9A /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
+		519C556F13DA04F900EE8E9A /* AttendanceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceList.h; sourceTree = "<group>"; };
+		519C557013DA04F900EE8E9A /* AttendanceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceList.m; sourceTree = "<group>"; };
 		519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController_Landscape.xib; sourceTree = "<group>"; };
 		51AEC93B13DE62A200E2FB69 /* AttendingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingController.h; sourceTree = "<group>"; };
 		51AEC93C13DE62A200E2FB69 /* AttendingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingController.m; sourceTree = "<group>"; };
+		51CC214A13DE919600980FE8 /* HostingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostingList.h; sourceTree = "<group>"; };
+		51CC214B13DE919600980FE8 /* HostingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostingList.m; sourceTree = "<group>"; };
+		51CC214D13DE954D00980FE8 /* HostingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostingDetailViewController.h; sourceTree = "<group>"; };
+		51CC214E13DE954D00980FE8 /* HostingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostingDetailViewController.m; sourceTree = "<group>"; };
+		51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HostingDetailViewController.xib; sourceTree = "<group>"; };
 		51D3F84D13DD5C7A00EBC93D /* EventAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAnnotation.h; sourceTree = "<group>"; };
 		51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAnnotation.m; sourceTree = "<group>"; };
 		51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
@@ -217,10 +226,12 @@
 		51DEC44013DE6F78004940A5 /* HostingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostingViewController.h; sourceTree = "<group>"; };
 		51DEC44113DE6F78004940A5 /* HostingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostingViewController.m; sourceTree = "<group>"; };
 		51DEC44213DE6F78004940A5 /* HostingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HostingViewController.xib; sourceTree = "<group>"; };
+		51DEC44713DE7EA7004940A5 /* HostingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostingController.h; sourceTree = "<group>"; };
+		51DEC44813DE7EA8004940A5 /* HostingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostingController.m; sourceTree = "<group>"; };
 		51E7AC3F13D7B30700174805 /* SignIn_Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Background@2x.png"; sourceTree = "<group>"; };
 		51E7AC4213D7B33800174805 /* Signin_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Signin_Background.png; sourceTree = "<group>"; };
-		51F222BD13DA4CDE00D2A834 /* EventAttending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventAttending.h; path = ../EventAttending.h; sourceTree = "<group>"; };
-		51F222BE13DA4CDE00D2A834 /* EventAttending.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventAttending.m; path = ../EventAttending.m; sourceTree = "<group>"; };
+		51F222BD13DA4CDE00D2A834 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = ../Event.h; sourceTree = "<group>"; };
+		51F222BE13DA4CDE00D2A834 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Event.m; path = ../Event.m; sourceTree = "<group>"; };
 		51F3B4A613D41384008ACF04 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		51F3B4A713D41384008ACF04 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		51F3B4A813D41384008ACF04 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
@@ -340,13 +351,16 @@
 				51D84D4E13D90C42008A705B /* AttendingViewController.h */,
 				51D84D4F13D90C43008A705B /* AttendingViewController.m */,
 				51D84D5013D90C43008A705B /* AttendingViewController.xib */,
-				51DEC44013DE6F78004940A5 /* HostingViewController.h */,
-				51DEC44113DE6F78004940A5 /* HostingViewController.m */,
-				51DEC44213DE6F78004940A5 /* HostingViewController.xib */,
 				517AAA3013DACF9D00733342 /* AttendingDetailViewController.h */,
 				517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */,
 				517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */,
 				512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */,
+				51DEC44013DE6F78004940A5 /* HostingViewController.h */,
+				51DEC44113DE6F78004940A5 /* HostingViewController.m */,
+				51DEC44213DE6F78004940A5 /* HostingViewController.xib */,
+				51CC214D13DE954D00980FE8 /* HostingDetailViewController.h */,
+				51CC214E13DE954D00980FE8 /* HostingDetailViewController.m */,
+				51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */,
 				51F3B4A613D41384008ACF04 /* MainViewController.h */,
 				51F3B4A713D41384008ACF04 /* MainViewController.m */,
 				51F3B4A813D41384008ACF04 /* MainViewController.xib */,
@@ -499,10 +513,12 @@
 		519C557613DA05A200EE8E9A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				519C556F13DA04F900EE8E9A /* Attendance.h */,
-				519C557013DA04F900EE8E9A /* Attendance.m */,
-				51F222BD13DA4CDE00D2A834 /* EventAttending.h */,
-				51F222BE13DA4CDE00D2A834 /* EventAttending.m */,
+				519C556F13DA04F900EE8E9A /* AttendanceList.h */,
+				519C557013DA04F900EE8E9A /* AttendanceList.m */,
+				51CC214A13DE919600980FE8 /* HostingList.h */,
+				51CC214B13DE919600980FE8 /* HostingList.m */,
+				51F222BD13DA4CDE00D2A834 /* Event.h */,
+				51F222BE13DA4CDE00D2A834 /* Event.m */,
 				5173571B13D8117D00204AAF /* SettingsManager.h */,
 				5173571C13D8117D00204AAF /* SettingsManager.m */,
 				511F361713D592AC00F7E748 /* SynthesizeSingleton.h */,
@@ -519,6 +535,8 @@
 				519C557613DA05A200EE8E9A /* Models */,
 				51AEC93B13DE62A200E2FB69 /* AttendingController.h */,
 				51AEC93C13DE62A200E2FB69 /* AttendingController.m */,
+				51DEC44713DE7EA7004940A5 /* HostingController.h */,
+				51DEC44813DE7EA8004940A5 /* HostingController.m */,
 				51D3F84D13DD5C7A00EBC93D /* EventAnnotation.h */,
 				51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */,
 				511F360C13D58B0C00F7E748 /* Constants.h */,
@@ -669,6 +687,7 @@
 				514F875F13DCE11000EBAF83 /* BlueBackground_1px.png in Resources */,
 				514F876013DCE11000EBAF83 /* BlueBackground_1px@2x.png in Resources */,
 				51DEC44413DE6F78004940A5 /* HostingViewController.xib in Resources */,
+				51CC215113DE954D00980FE8 /* HostingDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,12 +737,15 @@
 				511F360E13D58B0D00F7E748 /* Constants.m in Sources */,
 				5173571D13D8117D00204AAF /* SettingsManager.m in Sources */,
 				51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */,
-				519C557113DA04F900EE8E9A /* Attendance.m in Sources */,
-				51F222BF13DA4CDE00D2A834 /* EventAttending.m in Sources */,
+				519C557113DA04F900EE8E9A /* AttendanceList.m in Sources */,
+				51F222BF13DA4CDE00D2A834 /* Event.m in Sources */,
 				517AAA3313DACF9D00733342 /* AttendingDetailViewController.m in Sources */,
 				51D3F84F13DD5C7A00EBC93D /* EventAnnotation.m in Sources */,
 				51AEC93D13DE62A200E2FB69 /* AttendingController.m in Sources */,
 				51DEC44313DE6F78004940A5 /* HostingViewController.m in Sources */,
+				51DEC44913DE7EA9004940A5 /* HostingController.m in Sources */,
+				51CC214C13DE919600980FE8 /* HostingList.m in Sources */,
+				51CC215013DE954D00980FE8 /* HostingDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

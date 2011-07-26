@@ -1,17 +1,17 @@
 //
-//  AttendingController.m
+//  HostingController.m
 //  TrueRSVP
 //
 //  Created by Nicholas C Chan on 7/25/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "AttendingController.h"
-#import "AttendanceList.h"
+#import "HostingController.h"
+#import "HostingList.h"
 #import "ASIFormDataRequest.h"
 #import "Constants.h"
 #import "NSDictionary_JSONExtensions.h"
-@implementation AttendingController
+@implementation HostingController
 @synthesize uniqueMonths;
 @synthesize eventSections;
 #pragma mark - Init
@@ -20,7 +20,7 @@
     self = [super init];
     if (self) {
         // Initialization code here.
-		[self refreshAttendance];
+		[self refreshHosting];
 		uniqueMonths = [[NSMutableArray alloc] init];
 		eventSections = [[NSMutableArray alloc] init];
     }
@@ -71,7 +71,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	//	NSMutableArray *dates = [[NSMutableArray alloc] init];
-	NSArray *eventArray = [AttendanceList sharedAttendanceList].eventsArray;
+	NSArray *eventArray = [HostingList sharedHostingList].eventsArray;
 	for(Event *event in eventArray)
 	{
 		NSDate *date = event.eventDate;
@@ -92,7 +92,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	NSString *selectedMonth = [uniqueMonths objectAtIndex:section];
-	NSArray *eventArray = [AttendanceList sharedAttendanceList].eventsArray;
+	NSArray *eventArray = [HostingList sharedHostingList].eventsArray;
 	int counter = 0;
 	for(Event *event in eventArray)
 	{
@@ -125,12 +125,13 @@
 //	}
 //}
 #pragma mark - Other
-- (void)refreshAttendance
+- (void)refreshHosting
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getAttendingEvents/"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getHostingEvents/"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request startSynchronous];
-	NSArray *attendanceInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
-	[[AttendanceList sharedAttendanceList] updateEventsList:attendanceInfo];
+	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
+	[[HostingList sharedHostingList] updateEventsList:hostingInfo];
 }
 @end
+

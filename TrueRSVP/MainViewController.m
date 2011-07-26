@@ -7,19 +7,17 @@
 //
 #import "Constants.h"
 #import "MainViewController.h"
-
+#import "HostingDetailViewController.h"
 @implementation MainViewController
 @synthesize profileVC;
 @synthesize attendingVC;
-@synthesize hostingView;
-//@synthesize currentVC;
+@synthesize hostingVC;
 @synthesize segmentButtons;
 @synthesize profileButton;
 @synthesize hostingButton;
 @synthesize attendingButton;
 @synthesize animatedDistance;
 @synthesize scrollView;
-//@synthesize pageControl;
 BOOL keyboardUp = NO;
 int pageNumber = 0;
 #pragma mark - Loading
@@ -32,34 +30,57 @@ int pageNumber = 0;
 		attendingButton = [[UIButton alloc] init];
 		profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
 		attendingVC = [[AttendingViewController alloc] initWithNibName:@"AttendingViewController" bundle:[NSBundle mainBundle]];
+		hostingVC = [[HostingViewController alloc] initWithNibName:@"HostingViewController" bundle:[NSBundle mainBundle]];
 		attendingVC.delegate = self;
+		hostingVC.delegate = self;
         // Custom initialization
     }
     return self;
 }
 - (void)setupScrolling
 {
+	self.navigationController.delegate = self;
 	scrollView.delegate = self;
 	scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
 	scrollView.clipsToBounds = YES;
 	scrollView.scrollEnabled = YES;
 	scrollView.pagingEnabled = YES;
-	//	currentVC = profileVC;	
 	[self setTextFieldDelegates:profileVC.view];
-	//	[self.view addSubview:currentVC.view];
 	CGRect rect = profileVC.view.bounds;
 	rect.origin.y = self.navigationController.navigationBar.frame.size.height;
 	profileVC.view.bounds = rect;
 	attendingVC.view.bounds = rect;
+	hostingVC.view.bounds = rect;
 	profileButton.selected = YES;
-	[scrollView setContentSize:CGSizeMake(scrollView.frame.size.width*2, 1)];
-	
-	rect = scrollView.frame;
-	rect.origin.x += profileVC.view.frame.size.width*2;
-	attendingVC.view.frame = rect;
+	scrollView.contentSize = CGSizeMake(0, 0);
+	scrollView.contentOffset = CGPointMake(0.0, 0.0);
+//	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+//	{
+//		[scrollView setContentSize:CGSizeMake(1440, 1)];
+//		[scrollView setContentOffset:CGPointMake(480*pageNumber, 0)];
+//		CGRect frame = CGRectMake(0, 0, 480, 320);
+//		frame.origin.x = 480*pageNumber;
+//		[scrollView scrollRectToVisible:frame animated:YES];
+//		profileVC.view.frame = CGRectMake(0, 0, 480, 320);
+//		attendingVC.view.frame = CGRectMake(480, 0, 480, 320);
+//		hostingVC.view.frame = CGRectMake(960, 0, 480, 320);
+//	}
+//	else
+//	{
+//		[scrollView setContentSize:CGSizeMake(960, 1)];
+//		[scrollView setContentOffset:CGPointMake(320*pageNumber, 0)];
+//		CGRect frame = CGRectMake(0, 0, 320, 480);
+//		frame.origin.x = 320*pageNumber;
+//		[scrollView scrollRectToVisible:frame animated:YES];
+//		profileVC.view.frame = CGRectMake(0, 0, 320, 480);
+//		attendingVC.view.frame = CGRectMake(320, 0, 320, 480);
+//		hostingVC.view.frame = CGRectMake(640, 0, 320, 480);
+//	}
+//	[self resetScrollViewContentSize:[[UIApplication sharedApplication] statusBarOrientation]];
 	[scrollView addSubview:profileVC.view];
 	[scrollView addSubview:attendingVC.view];
-	scrollView.delaysContentTouches = NO;
+	[scrollView addSubview:hostingVC.view];
+
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -78,15 +99,7 @@ int pageNumber = 0;
 		default:
 			break;
 	}
-//    pageControl.currentPage = page;
-}
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-	//A fix for possible iOS bug. Frame continues to reset to (320, 0, 480, 320) for some reason.
-	if(profileVC.view.frame.origin.x > 0)
-	{
-		profileVC.view.frame = CGRectMake(0, 0, 480, 320);
-	}	
+	//    pageControl.currentPage = page;
 }
 - (void)resetScrollViewContentSize:(UIInterfaceOrientation)toInterfaceOrientation
 {
@@ -101,6 +114,7 @@ int pageNumber = 0;
 		[scrollView scrollRectToVisible:frame animated:YES];
 		profileVC.view.frame = CGRectMake(0, 0, 480, 320);
 		attendingVC.view.frame = CGRectMake(480, 0, 480, 320);
+		hostingVC.view.frame = CGRectMake(960, 0, 480, 320);
 	}
 	else
 	{
@@ -111,23 +125,9 @@ int pageNumber = 0;
 		[scrollView scrollRectToVisible:frame animated:YES];
 		profileVC.view.frame = CGRectMake(0, 0, 320, 480);
 		attendingVC.view.frame = CGRectMake(320, 0, 320, 480);
+		hostingVC.view.frame = CGRectMake(640, 0, 320, 480);
 	}	
-	[self willRotateToInterfaceOrientation:toInterfaceOrientation duration:0];
 }
-- (void)viewWillAppear:(BOOL)animated
-{
-	[self resetRotation:profileVC duration:0];
-	[self resetRotation:attendingVC duration:0];
-	[self resetScrollViewContentSize:[[UIApplication sharedApplication] statusBarOrientation]];
-	[super viewWillAppear:animated];
-}
-//- (void)viewDidAppear:(BOOL)animated
-//{
-////	[profileVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication]statusBarOrientation]duration:0];
-////	[self resetRotation:profileVC duration:0];
-////	[self resetRotation:attendingVC duration:0];
-//	[super viewDidAppear:animated];
-//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -147,25 +147,71 @@ int pageNumber = 0;
 	[hostingButton addTarget:self action:@selector(hostingTabSelected:) forControlEvents:UIControlEventTouchUpInside];
 	segmentButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, 86)];
 	[segmentButtons addSubview:profileButton];
-	[segmentButtons addSubview:hostingButton];
 	[segmentButtons addSubview:attendingButton];
+	[segmentButtons addSubview:hostingButton];
 	segmentButtons.bounds = CGRectMake(0, -29, segmentButtons.frame.size.width, segmentButtons.frame.size.height);
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:segmentButtons];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:segmentButtons] autorelease];
 	self.navigationItem.hidesBackButton = YES;
+}
+#pragma mark - Navigation Controller Delegate methods
+//Unfortunately there's an iOS bug where scrollview resets all subviews when popping viewcontroller
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+	if([viewController isKindOfClass:[AttendingDetailViewController class]] || [viewController isKindOfClass:[HostingDetailViewController class]])
+	{
+		profileVC.view.hidden = YES;
+		attendingVC.view.hidden = YES;
+		hostingVC.view.hidden = YES;
+		switch (pageNumber) {
+			case 0:
+				profileVC.view.hidden = NO;
+				break;
+			case 1:
+				attendingVC.view.hidden = NO;
+				break;
+			case 2:
+				hostingVC.view.hidden = NO;
+				break;
+			default:
+				break;
+		}
+	}
+}
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+	if([viewController isKindOfClass:[self class]])
+	{
+		profileVC.view.hidden = NO;
+		attendingVC.view.hidden = NO;
+		hostingVC.view.hidden = NO;
+		if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+		{
+			profileVC.view.frame = CGRectMake(0, 0, 480, 320);
+			attendingVC.view.frame = CGRectMake(480, 0, 480, 320);
+			hostingVC.view.frame = CGRectMake(960, 0, 480, 320);
+			[scrollView setContentOffset:CGPointMake(480*pageNumber, 0)];
+		}
+		else
+		{
+			profileVC.view.frame = CGRectMake(0, 0, 320, 480);
+			attendingVC.view.frame = CGRectMake(320, 0, 320, 480);
+			hostingVC.view.frame = CGRectMake(640, 0, 320, 480);
+			[scrollView setContentOffset:CGPointMake(320*pageNumber, 0)];
+		}
+		[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	}
 }
 #pragma mark - Unloading
 - (void)dealloc
 {
 	[profileVC release];
 	[attendingVC release];
-	[hostingView release];
+	[hostingVC release];
 	[segmentButtons release];
 	[profileButton release];
 	[hostingButton release];
 	[attendingButton release];
-//	[currentVC release];
 	[scrollView release];
-//	[pageControl release];
     [super dealloc];
 }
 
@@ -185,22 +231,18 @@ int pageNumber = 0;
 		}
 	}	
 }
-#pragma mark - Attending Delegate Method
+#pragma mark - Attending/Hosting Delegate Method
 - (void)selectedEvent:(UIViewController *)viewController
-{
+{	
 	[self.navigationController pushViewController:viewController animated:YES];
 }
 #pragma mark - Navigation Bar
 - (void)profileTabSelected:(id)sender
 {
-	[self scrollViewWillBeginDragging:nil];
+//	[self scrollViewWillBeginDragging:nil];
 	profileButton.selected = YES;
 	attendingButton.selected = NO;
 	hostingButton.selected = NO;
-//	[currentVC.view removeFromSuperview];
-//	currentVC = profileVC;
-//	[self.view addSubview:currentVC.view];
-//	[currentVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	if(sender)
 	{
 		CGRect frame = scrollView.frame;
@@ -214,10 +256,6 @@ int pageNumber = 0;
 	profileButton.selected = NO;
 	attendingButton.selected = YES;
 	hostingButton.selected = NO;
-//	[currentVC.view removeFromSuperview];
-//	currentVC = attendingVC;
-//	[self.view addSubview:currentVC.view];
-//	[currentVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	if(sender)
 	{
 		CGRect frame = scrollView.frame;
@@ -230,9 +268,12 @@ int pageNumber = 0;
 {	profileButton.selected = NO;
 	attendingButton.selected = NO;
 	hostingButton.selected = YES;
-//	[currentVC.view removeFromSuperview];
-//	currentVC = hostingView;
-//	[self.view addSubview:currentVC.view];
+	if(sender)
+	{
+		CGRect frame = scrollView.frame;
+		frame.origin.x = frame.size.width*2;
+		[scrollView scrollRectToVisible:frame animated:YES];
+	}
 	pageNumber = 2;
 }
 #pragma mark - Textfield Delegate Methods
@@ -245,7 +286,7 @@ int pageNumber = 0;
 			((UITextField*)view).delegate = self;
 		}
 		else if ([view isKindOfClass:[UITextView class]])
-		{
+		{ 
 			((UITextView*)view).delegate = self;
 		}
 	}
@@ -303,7 +344,6 @@ int pageNumber = 0;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-//    [textField resignFirstResponder];
 	if([profileVC.view viewWithTag:textField.tag+1])
 	{
 		UIView *tempView = [profileVC.view viewWithTag:textField.tag+1];
@@ -315,10 +355,6 @@ int pageNumber = 0;
 		{
 			[textField resignFirstResponder];
 		}
-//		else if ([tempView isKindOfClass:[UITextView class]])
-//		{
-//			[((UITextView*)tempView) becomeFirstResponder];			
-//		}
 	}
     return YES;
 }
@@ -330,7 +366,6 @@ int pageNumber = 0;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 	if(!keyboardUp)
 	{
 		return YES;
@@ -341,9 +376,7 @@ int pageNumber = 0;
 {
 	[self resetRotation:profileVC duration:duration];
 	[self resetRotation:attendingVC duration:duration];
+	[self resetRotation:hostingVC duration:duration];
 	[self resetScrollViewContentSize:toInterfaceOrientation];
-//	CGRect frame = scrollView.frame;
-//	frame.origin.x = scrollView.frame.size.width * pageNumber;
-//	[scrollView scrollRectToVisible:frame animated:YES];
 }
 @end

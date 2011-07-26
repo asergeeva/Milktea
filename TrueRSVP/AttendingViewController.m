@@ -7,17 +7,18 @@
 //
 
 #import "AttendingViewController.h"
-#import "AttendingDetailViewController.h"
+
 #import "User.h"
 #import "ASIFormDataRequest.h"
 #import "Constants.h"
 
-#import "Attendance.h"
+#import "AttendanceList.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TrueRSVPAppDelegate.h"
 @implementation AttendingViewController
 @synthesize eventTableView;
 @synthesize attendingController;
+@synthesize attendingDetailVC;
 //@synthesize uniqueMonths;
 //@synthesize eventSections;
 @synthesize delegate;
@@ -27,6 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		attendingController = [[AttendingController alloc] init];
+		attendingDetailVC = [[AttendingDetailViewController alloc] initWithNibName:@"AttendingDetailViewController" bundle:[NSBundle mainBundle]];
         // Custom initialization
 //		uniqueMonths = [[NSMutableArray alloc] init];
 //		eventSections = [[NSMutableArray alloc] init];
@@ -55,6 +57,7 @@
 //	[uniqueMonths release];
 	[eventTableView release];
 	[attendingController release];
+	[AttendingViewController release];
 	[super dealloc];
 }
 #pragma mark - View Delegate Methods
@@ -86,10 +89,11 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	EventAttending *event = [((NSMutableArray*)[attendingController.eventSections objectAtIndex:indexPath.section]) objectAtIndex:indexPath.row];
-	AttendingDetailViewController *attendingDetailVC = [[AttendingDetailViewController alloc] initWithNibName:@"AttendingDetailViewController" bundle:[NSBundle mainBundle] event:event];
+	Event *event = [((NSMutableArray*)[attendingController.eventSections objectAtIndex:indexPath.section]) objectAtIndex:indexPath.row];
+	attendingDetailVC.eventAttending = event;
 	[self.delegate selectedEvent:attendingDetailVC];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//	[attendingDetailVC release];
 //	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication]).navController pushViewController:attendingDetailVC animated:YES];
 	//	self.view = attendingDetailVC.view;
 }
@@ -114,7 +118,7 @@
 	df.dateFormat = @"yyyy-M/MM";
 	if([selectedMonth isEqualToString:[df stringFromDate:[NSDate date]]])
 	{
-		label.text = @"   This Month";
+		[label setText:@"   This Month"];
 	}
 	else
 	{
@@ -124,6 +128,7 @@
 	}
 	[sectionView addSubview: label];
 	[label release];
+	[df release];
 	return sectionView;
 }
 @end

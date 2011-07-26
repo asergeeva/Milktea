@@ -1,8 +1,8 @@
 //
-//  AttendingDetailViewController.h
+//  HostingDetailViewController.h
 //  TrueRSVP
 //
-//  Created by Nicholas C Chan on 7/23/11.
+//  Created by Nicholas C Chan on 7/25/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
@@ -11,10 +11,12 @@
 #import <MapKit/MapKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
-
-@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate>
+@interface HostingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate>
 {
-	Event *eventAttending;
+	Event *eventHosting;
+	IBOutlet UILabel *dynamicRSVP;
+	IBOutlet UILabel *staticRSVP;
+	IBOutlet UIView *yourRSVPBack;
 	IBOutlet UIView *eventWhiteBack;
 	IBOutlet UILabel *eventName;
 	IBOutlet UILabel *eventDate;
@@ -22,24 +24,18 @@
 	IBOutlet UITextView *eventDescription;
 	IBOutlet MKMapView *eventMap;
 	IBOutlet UIButton *contact;
-	IBOutlet UIButton *directions;
-	IBOutlet UIButton *update;
 	IBOutlet UIButton *checkIn;
 	IBOutlet UIButton *live;
 	IBOutlet UIView *buttonWhiteBack;
-
-	NSString *organizerEmail;
-//	NSURL *someURL;
+	
 	float lat;
 	float lng;
-//	NSMutableString *address;
-
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
-- (IBAction)showMail:(id)sender;
-- (IBAction)showMap:(id)sender;
-- (IBAction)showRSVP:(id)sender;
-@property (nonatomic, retain) Event *eventAttending;
+@property (nonatomic, retain) Event *eventHosting;
+@property (nonatomic, retain) UILabel *dynamicRSVP;
+@property (nonatomic, retain) UILabel *staticRSVP;
+@property (nonatomic, retain) UIView *yourRSVPBack;
 @property (nonatomic, retain) IBOutlet UIView *eventWhiteBack;
 @property (nonatomic, retain) IBOutlet UILabel *eventName;
 @property (nonatomic, retain) IBOutlet UILabel *eventDate;
@@ -47,15 +43,11 @@
 @property (nonatomic, retain) IBOutlet UITextView *eventDescription;
 @property (nonatomic, retain) IBOutlet MKMapView *eventMap;
 @property (nonatomic, retain) IBOutlet UIButton *contact;
-@property (nonatomic, retain) IBOutlet UIButton *directions;
-@property (nonatomic, retain) IBOutlet UIButton *update;
 @property (nonatomic, retain) IBOutlet UIButton *checkIn;
 @property (nonatomic, retain) IBOutlet UIButton *live;
 @property (nonatomic, retain) IBOutlet UIView *buttonWhiteBack;;
-@property (nonatomic, retain) NSString *organizerEmail;
-//@property (nonatomic, retain) NSURL *someURL;
+//@property (nonatomic, retain) NSString *organizerEmail;
 @property (nonatomic) float lat;
 @property (nonatomic) float lng;
 
-//@property (nonatomic, retain) NSMutableString *address;
 @end

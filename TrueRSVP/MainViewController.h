@@ -10,13 +10,14 @@
 #import "User.h"
 #import "ProfileViewController.h"
 #import "AttendingViewController.h"
-
-@interface MainViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, UIScrollViewDelegate, AttendingDelegate> {
+#import "HostingViewController.h"
+@interface MainViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, UIScrollViewDelegate, AttendingDelegate, HostingDelegate, UINavigationControllerDelegate> {
 //	IBOutlet UINavigationBar *navBar;
 	ProfileViewController *profileVC;
 	AttendingViewController *attendingVC;
+	HostingViewController *hostingVC;
 //	UIView *attendingView;
-	UIView *hostingView;
+//	UIView *hostingView;
 //	UIViewController *currentVC;
 	UIView *segmentButtons;
 	UIButton *profileButton;
@@ -32,11 +33,13 @@
 - (void)hostingTabSelected:(id)sender;
 - (void)setupScrolling;
 - (void)resetRotation:(UIViewController*)viewController duration:(NSTimeInterval)duration;
+- (void)resetScrollViewContentSize:(UIInterfaceOrientation)toInterfaceOrientation;
 //@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) ProfileViewController *profileVC;
 @property (nonatomic, retain) AttendingViewController *attendingVC;
+@property (nonatomic, retain) HostingViewController *hostingVC;
 //@property (nonatomic, retain) UIView *attendingView;
-@property (nonatomic, retain) UIView *hostingView;
+//@property (nonatomic, retain) UIView *hostingView;
 //@property (nonatomic, retain) UIViewController *currentVC;
 @property (nonatomic, retain) UIView *segmentButtons;
 @property (nonatomic, retain) UIButton *profileButton;
