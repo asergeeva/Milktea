@@ -1,15 +1,15 @@
 //
-//  TestViewcontroller.m
+//  HostingViewController.m
 //  TrueRSVP
 //
-//  Created by Nicholas C Chan on 7/24/11.
+//  Created by Nicholas C Chan on 7/25/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "TestViewcontroller.h"
+#import "HostingViewController.h"
 
-@implementation TestViewcontroller
-@synthesize b1;
+@implementation HostingViewController
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -19,11 +19,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-	[b1 release];
-	[super dealloc];
-}
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.

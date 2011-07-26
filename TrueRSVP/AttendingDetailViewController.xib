@@ -228,9 +228,9 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
-						<object class="NSCustomResource" key="IBUINormalBackgroundImage" id="2655395">
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage" id="456744038">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">AttendingDetail_1px.png</string>
+							<string key="NSResourceName">BlueBackground_1px.png</string>
 						</object>
 					</object>
 					<object class="IBUIButton" id="117903602">
@@ -255,7 +255,7 @@
 						<reference key="IBUIHighlightedTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleShadowColor" ref="241952363"/>
-						<reference key="IBUINormalBackgroundImage" ref="2655395"/>
+						<reference key="IBUINormalBackgroundImage" ref="456744038"/>
 					</object>
 					<object class="IBUIButton" id="203857276">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -279,7 +279,7 @@
 						<reference key="IBUIHighlightedTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleShadowColor" ref="241952363"/>
-						<reference key="IBUINormalBackgroundImage" ref="2655395"/>
+						<reference key="IBUINormalBackgroundImage" ref="456744038"/>
 					</object>
 					<object class="IBUIButton" id="31133666">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -287,7 +287,6 @@
 						<string key="NSFrame">{{70, 399}, {180, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:222</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">2</int>
@@ -303,7 +302,7 @@
 						<reference key="IBUIHighlightedTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleShadowColor" ref="241952363"/>
-						<reference key="IBUINormalBackgroundImage" ref="2655395"/>
+						<reference key="IBUINormalBackgroundImage" ref="456744038"/>
 					</object>
 					<object class="IBUIButton" id="879225299">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -327,7 +326,7 @@
 						<reference key="IBUIHighlightedTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleShadowColor" ref="241952363"/>
-						<reference key="IBUINormalBackgroundImage" ref="2655395"/>
+						<reference key="IBUINormalBackgroundImage" ref="456744038"/>
 					</object>
 				</object>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
@@ -532,21 +531,6 @@
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">20</int>
-						<reference key="object" ref="203857276"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">19</int>
-						<reference key="object" ref="117903602"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">18</int>
-						<reference key="object" ref="879225299"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">9</int>
 						<reference key="object" ref="743017326"/>
 						<reference key="parent" ref="191373211"/>
@@ -579,6 +563,24 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">49</int>
 						<reference key="object" ref="549651491"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">18</int>
+						<reference key="object" ref="879225299"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">20</int>
+						<reference key="object" ref="203857276"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">19</int>
+						<reference key="object" ref="117903602"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</object>
@@ -803,7 +805,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">AttendingDetail_1px.png</string>
+			<string key="NS.key.0">BlueBackground_1px.png</string>
 			<string key="NS.object.0">{1, 21}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">534</string>

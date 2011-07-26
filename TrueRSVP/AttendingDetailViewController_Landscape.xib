@@ -232,9 +232,9 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
-						<object class="NSCustomResource" key="IBUINormalImage">
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage" id="408572474">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">EventsAttending_RSVP.png</string>
+							<string key="NSResourceName">BlueBackground_1px.png</string>
 						</object>
 					</object>
 					<object class="IBUIButton" id="1008186031">
@@ -261,10 +261,7 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="826660262"/>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">EventsAttending_Checkin.png</string>
-						</object>
+						<reference key="IBUINormalBackgroundImage" ref="408572474"/>
 					</object>
 					<object class="IBUIButton" id="40017459">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -290,10 +287,7 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="826660262"/>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">EventsAttending_Live.png</string>
-						</object>
+						<reference key="IBUINormalBackgroundImage" ref="408572474"/>
 					</object>
 					<object class="IBUIButton" id="272838389">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -319,10 +313,7 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="826660262"/>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">EventsAttending_Contact.png</string>
-						</object>
+						<reference key="IBUINormalBackgroundImage" ref="408572474"/>
 					</object>
 					<object class="IBUIButton" id="893067540">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -348,10 +339,7 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="826660262"/>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">EventsAttending_Directions.png</string>
-						</object>
+						<reference key="IBUINormalBackgroundImage" ref="408572474"/>
 					</object>
 					<object class="IBUINavigationBar" id="573129420">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -585,23 +573,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<bool key="EncodedWithXMLCoder">YES</bool>
-			<object class="NSArray" key="dict.sortedKeys">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>EventsAttending_Checkin.png</string>
-				<string>EventsAttending_Contact.png</string>
-				<string>EventsAttending_Directions.png</string>
-				<string>EventsAttending_Live.png</string>
-				<string>EventsAttending_RSVP.png</string>
-			</object>
-			<object class="NSMutableArray" key="dict.values">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{183, 27}</string>
-				<string>{125, 22}</string>
-				<string>{125, 22}</string>
-				<string>{184, 27}</string>
-				<string>{183, 27}</string>
-			</object>
+			<string key="NS.key.0">BlueBackground_1px.png</string>
+			<string key="NS.object.0">{1, 21}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">534</string>
 	</data>

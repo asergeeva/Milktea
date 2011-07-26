@@ -339,7 +339,6 @@
 						<string key="NSFrame">{{69, 374}, {183, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">2</int>
 							<bytes key="NSRGB">MC44NzQ1MDk4NzEgMC44Nzg0MzE0Mzk0IDAuODgyMzUzMDA3OCAwAA</bytes>
@@ -366,7 +365,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">AttendingDetail_1px.png</string>
+							<string key="NSResourceName">BlueBackground_1px.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="787465552">
@@ -902,7 +901,7 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>AttendingDetail_1px.png</string>
+				<string>BlueBackground_1px.png</string>
 				<string>Profile_aboutTextView.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">

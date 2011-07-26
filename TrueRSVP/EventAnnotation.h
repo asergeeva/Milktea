@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-@interface EventAnnotation : NSObject <MKAnnotation>
+@interface EventAnnotation : UIView <MKAnnotation>
 {
 	NSString *name;
 	CLLocationCoordinate2D coordinate;
