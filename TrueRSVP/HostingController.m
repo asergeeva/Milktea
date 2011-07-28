@@ -9,7 +9,8 @@
 #import "HostingController.h"
 #import "HostingList.h"
 #import "ASIFormDataRequest.h"
-#import "Constants.h"
+//#import "Constants.h"
+#import "SettingsManager.h"
 #import "NSDictionary_JSONExtensions.h"
 @implementation HostingController
 @synthesize uniqueMonths;
@@ -127,7 +128,7 @@
 #pragma mark - Other
 - (void)refreshHosting
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getHostingEvents/"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"getHostingEvents/"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request startSynchronous];
 	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];

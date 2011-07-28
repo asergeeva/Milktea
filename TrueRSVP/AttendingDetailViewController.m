@@ -11,7 +11,8 @@
 #import "ASIFormDataRequest.h"
 #import "CJSONDeserializer.h"
 #import <QuartzCore/QuartzCore.h>
-#import "Constants.h"
+//#import "Constants.h"
+#import "SettingsManager.h"
 #import "EventAnnotation.h"
 
 @implementation AttendingDetailViewController
@@ -46,7 +47,7 @@
 }
 - (IBAction)showMail:(id)sender
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getOrganizerEmail", APILocation]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getOrganizerEmail", [[SettingsManager sharedSettingsManager] APILocation]]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventOrganizer] forKey:@"oid"];
 	[request startSynchronous];
@@ -102,7 +103,7 @@
 			return;
 			break;
 	}
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@setAttendanceForEvent", APILocation]]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@setAttendanceForEvent", [[SettingsManager sharedSettingsManager] APILocation]]]];
 	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventID] forKey:@"eid"];
 	[request setPostValue:[NSString stringWithFormat:@"%d", confidence] forKey:@"confidence"];
 	[request startSynchronous];
@@ -219,7 +220,7 @@
 //    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 	return YES;
 }
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 	{

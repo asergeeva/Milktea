@@ -5,7 +5,7 @@
 //  Created by movingincircles on 7/16/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
-#import "Constants.h"
+//#import "Constants.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "SignInViewController.h"
 //#import "ASIHTTPRequest.h"
@@ -13,6 +13,7 @@
 //#import "CJSONDeserializer.h"
 #import "MainViewController.h"
 #import "SettingsManager.h"
+#import "DebugViewController.h"
 //#import "ProfileViewController.h"
 @implementation SignInViewController
 @synthesize txtUsername;
@@ -142,7 +143,7 @@
 		[alert release];
 		return;
 	}
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"login"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"login"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
 	
@@ -201,7 +202,12 @@
 		[facebook authorize:nil delegate:self];
 	}
 }
-
+- (void)showDebugView:(id)sender
+{
+	DebugViewController *debugVC = [[DebugViewController alloc] initWithNibName:@"DebugViewController" bundle:[NSBundle mainBundle]];
+	[self presentModalViewController:debugVC animated:YES];
+	[debugVC release];
+}
 - (void)viewDidLoad
 {
 	facebook = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]).facebook;
@@ -213,6 +219,13 @@
 	self.navigationItem.hidesBackButton = YES;
 	[txtUsername setDelegate:self];
 	[txtPassword setDelegate:self];
+	
+	UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showDebugView:)];
+	recognizer.direction = UISwipeGestureRecognizerDirectionUp;
+	recognizer.numberOfTouchesRequired = 3;
+	[self.view addGestureRecognizer:recognizer];
+	[recognizer release];
+	
     [super viewDidLoad];
 }
 

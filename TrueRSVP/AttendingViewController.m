@@ -35,6 +35,11 @@
     }
     return self;
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -57,7 +62,7 @@
 //	[uniqueMonths release];
 	[eventTableView release];
 	[attendingController release];
-	[AttendingViewController release];
+	[attendingDetailVC release];
 	[super dealloc];
 }
 #pragma mark - View Delegate Methods
@@ -69,15 +74,17 @@
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	//	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-	//	{
-	//		self.view.frame = CGRectMake(480.0, 0.0, 480.0, 320.0);
-	//	}
-	//	else
-	//	{
-	//		self.view.frame = CGRectMake(320.0, 0.0, 320.0, 480.0);
-	//	}
-	//	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+	{
+		self.eventTableView.frame = CGRectMake(0, 32, self.eventTableView.frame.size.width, self.eventTableView.frame.size.height);
+		self.view.bounds = CGRectMake(0, 32, 480, 320);
+	}
+	else
+	{
+		self.eventTableView.frame = CGRectMake(0, 44, self.eventTableView.frame.size.width, self.eventTableView.frame.size.height);
+		self.view.bounds = CGRectMake(0, 44, 320, 480);
+	}
+	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 - (void)didReceiveMemoryWarning
 {

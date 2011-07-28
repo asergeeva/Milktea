@@ -5,7 +5,8 @@
 //  Created by movingincircles on 7/19/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
-#import "Constants.h"
+//#import "Constants.h"
+#import "SettingsManager.h"
 #import "User.h"
 #import "SynthesizeSingleton.h"
 
@@ -43,7 +44,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[zip setString:[userInfo objectForKey:@"zip"]];
 	[about setString:[userInfo objectForKey:@"about"]];
 	[twitter setString:[userInfo objectForKey:@"twitter"]];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", rootAddress, @"upload/user/images/", uid, @".png"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager] rootAddress], @"upload/user/images/", uid, @".png"]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	request.delegate = self;
 	[request startAsynchronous];

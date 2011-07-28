@@ -17,6 +17,7 @@
 //	IBOutlet UIView *portraitView;
 //	IBOutlet UIView *landscapeView;
 }
+- (void)showDebugView:(id)sender;
 - (IBAction)login:(id)sender;
 - (IBAction)facebookLogin:(id)sender;
 - (void)setViewMoveUp:(BOOL)moveUp;

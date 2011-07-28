@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HostingController.h"
+#import "HostingDetailViewController.h"
 @protocol HostingDelegate
 @optional
 - (void)selectedEvent:(UIViewController*)viewController;
@@ -16,8 +17,10 @@
 {
 	HostingController *hostingController;
 	id<HostingDelegate> delegate;
+	HostingDetailViewController *hostingDetailVC;
 }
 @property (nonatomic, retain) IBOutlet UITableView *eventTableView;
 @property (nonatomic, retain) HostingController *hostingController;
 @property (nonatomic, assign) id<HostingDelegate> delegate;
+@property (nonatomic, retain) HostingDetailViewController *hostingDetailVC;
 @end

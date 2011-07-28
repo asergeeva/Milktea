@@ -13,12 +13,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
 #import "EventAnnotation.h"
+
 @implementation HostingDetailViewController
 @synthesize eventHosting;
 @synthesize dynamicRSVP;
 @synthesize staticRSVP;
 @synthesize yourRSVPBack;
 @synthesize eventWhiteBack;
+@synthesize eventMapBack;
 @synthesize eventName;
 @synthesize eventDate;
 @synthesize eventDescriptionWhiteBack;
@@ -30,12 +32,20 @@
 @synthesize lat;
 @synthesize lng;
 @synthesize buttonWhiteBack;
+@synthesize guestListVC;
+@synthesize reader;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
 		eventHosting = event;
+		reader = [ZBarReaderViewController new];
+		reader.readerDelegate = self;
+		[reader.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
+//		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:0];
+		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
     }
     return self;
 }
@@ -47,7 +57,53 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
+- (IBAction)showCheckIn:(id)sender
+{
+	UIActionSheet *sheet;
+	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+	{	
+		sheet = [[UIActionSheet alloc] initWithTitle:@"Check In" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Guest List", @"QR Code Reader", nil];
+	}
+	else
+	{
+		sheet = [[UIActionSheet alloc] initWithTitle:@"Check In" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Check in via Guest List", nil];		
+	}
+	[sheet showInView:self.view];
+	[sheet release];
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	id<NSFastEnumeration> results = [info objectForKey: ZBarReaderControllerResults];
+	for(ZBarSymbol *symbol in results)
+	{
+		NSLog(@"%@", symbol.data);
+	}
+	[reader dismissModalViewControllerAnimated:NO];
+	[self presentModalViewController:reader animated:NO];
+//	[reader.scanner
 
+//	[reader dismissModalViewControllerAnimated:YES];
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	switch (buttonIndex)
+	{
+		case 0:
+			guestListVC = [[GuestListViewController alloc] initWithNibName:@"GuestListViewController" bundle:[NSBundle mainBundle] event:eventHosting];
+			[self.navigationController pushViewController:guestListVC animated:YES];
+			break;
+		case 1:
+			if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+			{
+				[[UIApplication sharedApplication] setStatusBarHidden:YES];
+				[self presentModalViewController:reader animated:YES];
+			}
+			break;
+		default:
+			return;
+			break;
+	}
+}
 #pragma mark - View lifecycle
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -73,8 +129,8 @@
 	[eventMap addAnnotation:annotation];
 	[annotation release];
 	[df release];
-	[self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[super viewWillAppear:animated];
+	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 }
 - (void)viewDidLoad
 {
@@ -91,6 +147,7 @@
 	eventDescriptionWhiteBack.layer.shadowOffset = shadowOffset;
 	eventDescriptionWhiteBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	eventDescriptionWhiteBack.layer.shouldRasterize = YES;
+//	eventDescription.clipsToBounds = YES;
 	buttonWhiteBack.layer.cornerRadius = 5;
 	buttonWhiteBack.layer.shadowOpacity = 0.3;
 	buttonWhiteBack.layer.shadowOffset = shadowOffset;
@@ -115,6 +172,8 @@
 	CGRect rect = self.view.frame;
 	rect.origin.y += 44;
 	self.view.bounds = rect;
+	eventMap.frame = CGRectMake(25, 275, 270, 72);
+	eventDescription.frame = CGRectMake(17, 157, 292, 116);
 }
 
 - (void)viewDidUnload
@@ -157,6 +216,7 @@
 	[eventDescriptionWhiteBack release];
 	[eventDescription release];
 	[eventMap release];
+	[eventMapBack release];
 	[contact release];
 	[checkIn release];
 	[live release];
@@ -164,6 +224,9 @@
 	[yourRSVPBack release];
 	[staticRSVP release];
 	[dynamicRSVP release];
+	[guestListVC release];
+	[reader release];
+
 	[super dealloc];
 }
 
@@ -173,5 +236,43 @@
 //    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 	return YES;
 }
-
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+	{
+		eventWhiteBack.frame = CGRectMake(0, 51, 300, 40);
+		eventName.frame = CGRectMake(10, 54, 380, 21);
+		eventDate.frame = CGRectMake(10, 71, 280, 21);
+		yourRSVPBack.frame = CGRectMake(308, 51, 172, 40);
+		staticRSVP.frame = CGRectMake(247, 59, 300, 21);
+		dynamicRSVP.frame = CGRectMake(0, 500, 94, 21);
+		eventMap.frame = CGRectMake(8, 109, 284, 96);
+		eventMapBack.frame = CGRectMake(0, 100, 300, 114);
+		buttonWhiteBack.frame = CGRectMake(308, 100, 172, 114);
+		live.frame = CGRectMake(319, 177, 150, 27);
+		contact.frame = CGRectMake(319, 143, 150, 27);
+		checkIn.frame = CGRectMake(319, 109, 150, 27);
+		eventDescriptionWhiteBack.frame = CGRectMake(0, 222, 480, 72);
+		eventDescription.frame = CGRectMake(15, 0, 455, 72);
+	}
+	else
+	{
+		eventWhiteBack.frame = CGRectMake(10, 54, 300, 40);
+		eventName.frame = CGRectMake(20, 57, 280, 21);
+		eventDate.frame = CGRectMake(20, 74, 280, 21);
+		yourRSVPBack.frame = CGRectMake(10, 105, 300, 40);
+		staticRSVP.frame = CGRectMake(10, 114, 300, 21);
+		dynamicRSVP.frame = CGRectMake(198,114, 94, 21);
+		eventMap.frame = CGRectMake(25, 235, 270, 72);
+		eventMapBack.frame = CGRectMake(500, 500, 300, 114);
+		buttonWhiteBack.frame = CGRectMake(55, 325, 210, 120);
+		live.frame = CGRectMake(70, 407, 180, 27);
+		contact.frame = CGRectMake(70, 372, 180, 27);
+		checkIn.frame = CGRectMake(70, 337, 180, 27);
+		eventDescriptionWhiteBack.frame = CGRectMake(10, 153, 300, 164);
+		eventDescription.frame = CGRectMake(0, 0, 300, 76);
+//		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
+	}
+	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
 @end

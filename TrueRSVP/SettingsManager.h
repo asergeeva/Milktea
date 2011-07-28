@@ -11,7 +11,14 @@
 @interface SettingsManager : NSObject
 {
 	BOOL welcomeDismissed;
+	NSMutableString *rootAddress;
+	NSMutableString *APILocation;
+	
 }
+- (void)save;
+- (void)load;
 + (SettingsManager*)sharedSettingsManager;
 @property (nonatomic) BOOL welcomeDismissed;
+@property (nonatomic, retain) NSMutableString *rootAddress;
+@property (nonatomic, retain) NSMutableString *APILocation;
 @end

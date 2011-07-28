@@ -9,7 +9,8 @@
 #import "AttendingController.h"
 #import "AttendanceList.h"
 #import "ASIFormDataRequest.h"
-#import "Constants.h"
+//#import "Constants.h"
+#import "SettingsManager.h"
 #import "NSDictionary_JSONExtensions.h"
 @implementation AttendingController
 @synthesize uniqueMonths;
@@ -127,7 +128,7 @@
 #pragma mark - Other
 - (void)refreshAttendance
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, @"getAttendingEvents/"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"getAttendingEvents/"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request startSynchronous];
 	NSArray *attendanceInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
