@@ -43,6 +43,7 @@
 		eventHosting = event;
 		reader = [ZBarReaderViewController new];
 		reader.readerDelegate = self;
+		reader.showsZBarControls = NO;
 		[reader.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
 //		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:0];
 		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
@@ -71,6 +72,10 @@
 	[sheet showInView:self.view];
 	[sheet release];
 }
+- (void)dismissCamera
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
 	id<NSFastEnumeration> results = [info objectForKey: ZBarReaderControllerResults];
@@ -90,11 +95,19 @@
 	{
 		case 0:
 			guestListVC = [[GuestListViewController alloc] initWithNibName:@"GuestListViewController" bundle:[NSBundle mainBundle] event:eventHosting];
+			if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+			{
+//				[self presentModalViewController:guestListVC animated:YES];
+				UIViewController *vc = [[UIViewController alloc] init];
+				[self presentModalViewController:vc animated:NO];
+				[self dismissModalViewControllerAnimated:NO];
+			}	
 			[self.navigationController pushViewController:guestListVC animated:YES];
 			break;
 		case 1:
 			if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
 			{
+
 				[[UIApplication sharedApplication] setStatusBarHidden:YES];
 				[self presentModalViewController:reader animated:YES];
 			}
@@ -131,10 +144,12 @@
 	[df release];
 	[super viewWillAppear:animated];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	[[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	self.navigationItem.title = @"Event Details";
     // Do any additional setup after loading the view from its nib.
 	CGSize shadowOffset = CGSizeMake(0.0, 0.2);
 	eventWhiteBack.layer.cornerRadius = 5;
@@ -174,6 +189,16 @@
 	self.view.bounds = rect;
 	eventMap.frame = CGRectMake(25, 275, 270, 72);
 	eventDescription.frame = CGRectMake(17, 157, 292, 116);
+	
+	UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 450, 320, 30)] autorelease];
+//	view.backgroundColor = [UIColor colorWithRed:0.235 green:0.600 blue:0.792 alpha:1.000];
+	view.backgroundColor = [UIColor whiteColor];
+	UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 70, 30)];
+	[doneButton setImage:[UIImage imageNamed:@"doneButton.png"] forState:UIControlStateNormal];
+	[doneButton addTarget:self action:@selector(dismissCamera) forControlEvents:UIControlEventTouchUpInside];
+	[view addSubview:doneButton];
+	[doneButton release];
+	reader.cameraOverlayView = view;
 }
 
 - (void)viewDidUnload

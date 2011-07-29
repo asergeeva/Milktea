@@ -30,6 +30,7 @@
 	IBOutlet UIButton *checkIn;
 	IBOutlet UIButton *live;
 	IBOutlet UIView *buttonWhiteBack;
+
 	GuestListViewController *guestListVC;
 	ZBarReaderViewController *reader;
 
@@ -38,6 +39,7 @@
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
+- (void)dismissCamera;
 @property (nonatomic, retain) Event *eventHosting;
 @property (nonatomic, retain) UILabel *dynamicRSVP;
 @property (nonatomic, retain) UILabel *staticRSVP;
@@ -55,7 +57,6 @@
 @property (nonatomic, retain) IBOutlet UIView *buttonWhiteBack;;
 @property (nonatomic, retain) GuestListViewController *guestListVC;
 @property (nonatomic, retain) ZBarReaderViewController *reader;
-
 //@property (nonatomic, retain) NSString *organizerEmail;
 @property (nonatomic) float lat;
 @property (nonatomic) float lng;

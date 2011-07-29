@@ -11,39 +11,51 @@
 #import "Event.h"
 #import "Attendee.h"
 
-@interface GuestListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate>
+@interface GuestListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 {
-	IBOutlet UILabel *eventName;
+	IBOutlet UILabel *eventCheck;
 	IBOutlet UILabel *eventDate;
-	IBOutlet UIView *eventNameBack;
+	IBOutlet UILabel *eventName;
+//	IBOutlet UINavigationBar *navBar;
 	IBOutlet UITableView *guestTable;
 	IBOutlet UIView *eventCheckBack;
-//	GuestListController *guestList;
-	IBOutlet UILabel *eventCheck;
+	IBOutlet UIView *eventNameBack;
+	UIButton *doneButton;
+	UIButton *refreshButton;
+	UIButton *searchButton;
+	UIButton *sendButton;
+	UISearchBar *searchBar;
+	UIToolbar *toolbar;
+	UIView *masterHeader;
+	UIView *searchHeader;
+	NSMutableArray *filteredArray;
 	NSMutableArray *guestNameAttendance;
 	Event *event;
-	UIToolbar *toolbar;
-	UIButton *searchButton;
-	UIButton *refreshButton;
-	UIButton *sendButton;
-//	IBOutlet UISearchDisplayController *searchBar;
 }
 - (void)refreshGuestList;
 - (void)checkboxPressed:(UIButton*)sender;
+- (void)moveSearchOut:(float)duration;
 - (void)sortPressed:(UIButton*)sender;
+- (void)searchPressed:(UIButton*)sender;
+- (void)donePressed:(UISearchBar *)thisSearchBar;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)thisEvent;
-@property (nonatomic, retain) IBOutlet UILabel *eventName;
-@property (nonatomic, retain) IBOutlet UILabel *eventDate;
-@property (nonatomic, retain) IBOutlet UIView *eventNameBack;
-@property (nonatomic, retain) IBOutlet UIView *eventCheckBack;
-@property (nonatomic, retain) IBOutlet UITableView *guestTable;
-//@property (nonatomic, retain) GuestListController *guestList;
+- (void)textFieldDidChange:(NSNotification*)bar;
 @property (nonatomic, retain) IBOutlet UILabel *eventCheck;
-@property (nonatomic, retain) Event *event;
-@property (nonatomic, retain) NSMutableArray *guestNameAttendance;
-@property (nonatomic, retain) UIToolbar *toolbar;
-@property (nonatomic, retain) UIButton *searchButton;
+@property (nonatomic, retain) IBOutlet UILabel *eventDate;
+@property (nonatomic, retain) IBOutlet UILabel *eventName;
+//@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
+@property (nonatomic, retain) IBOutlet UITableView *guestTable;
+@property (nonatomic, retain) IBOutlet UIView *eventCheckBack;
+@property (nonatomic, retain) IBOutlet UIView *eventNameBack;
+@property (nonatomic, retain) UIButton *doneButton;
 @property (nonatomic, retain) UIButton *refreshButton;
+@property (nonatomic, retain) UIButton *searchButton;
 @property (nonatomic, retain) UIButton *sendButton;
-//@property (nonatomic, retain) IBOutlet UISearchDisplayController *searchBar;
+@property (nonatomic, retain) UISearchBar *searchBar;
+@property (nonatomic, retain) UIView *masterHeader;
+@property (nonatomic, retain) UIView *searchHeader;
+@property (nonatomic, retain) UIToolbar *toolbar;
+@property (nonatomic, retain) NSMutableArray *guestNameAttendance;
+@property (nonatomic, retain) NSMutableArray *filteredArray;
+@property (nonatomic, retain) Event *event;
 @end

@@ -141,7 +141,7 @@
 
     [super viewDidLoad];
 	//self.view.frame = self.navigationController.view.frame;
-	
+	self.navigationItem.title = @"Event Details";
 	CGSize shadowOffset = CGSizeMake(0.0, 0.2);
 	eventWhiteBack.layer.cornerRadius = 5;
 	eventWhiteBack.layer.shadowOpacity = 0.3;
