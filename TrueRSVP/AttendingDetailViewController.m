@@ -45,28 +45,28 @@
     }
     return self;
 }
-- (IBAction)showMail:(id)sender
+- (IBAction)showMail:(UIButton*)sender
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getOrganizerEmail", [[SettingsManager sharedSettingsManager] APILocation]]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventOrganizer] forKey:@"oid"];
-	[request startSynchronous];
-	MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
-	mailVC.mailComposeDelegate = self;
-	[mailVC setSubject:[NSString stringWithFormat:@"Event: %@",eventName.text]];
-	NSDictionary *info = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-	NSString *email = [info objectForKey:@"email"];
-	[mailVC setToRecipients:[NSArray arrayWithObject:email]];
-	[self presentModalViewController:mailVC animated:YES];
-	[mailVC release];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getOrganizerEmail", [[SettingsManager sharedSettingsManager] APILocation]]];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventOrganizer] forKey:@"oid"];
+//	[request startSynchronous];
+//	MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
+//	mailVC.mailComposeDelegate = self;
+//	[mailVC setSubject:[NSString stringWithFormat:@"Event: %@",eventName.text]];
+//	NSDictionary *info = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+//	NSString *email = [info objectForKey:@"email"];
+//	[mailVC setToRecipients:[NSArray arrayWithObject:email]];
+//	[self presentModalViewController:mailVC animated:YES];
+//	[mailVC release];
 }
-- (IBAction)showMap:(id)sender
+- (IBAction)showMap:(UIButton*)sender
 {
 //	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?ll=%f,%f", lat, lng]];
 	NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"http://maps.google.com/maps?q=%@", eventAttending.eventAddress] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 	[[UIApplication sharedApplication] openURL:url];
 }
-- (IBAction)showRSVP:(id)sender
+- (IBAction)showRSVP:(UIButton*)sender
 {
 	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Update RSVP" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Yes, I'll absolutely be there", @"I'm Pretty sure I'll be there", @"I'll go unless my plans change", @"I probably can't go", @"No, but I'm a supporter", @"No, I'm not interested", nil];
 	[sheet showInView:self.view];
@@ -75,6 +75,48 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
 	[self dismissModalViewControllerAnimated:YES];
+}
+- (IBAction)checkIn:(UIButton*)sender
+{
+	CLLocation *destinationLocation = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
+	CLLocationDistance distance = [destinationLocation distanceFromLocation:eventMap.userLocation.location];
+	if(distance > 3218)
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+														message:@"You are either too far or GPS is currently inaccurate. Try again when you are closer to the event."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
+	else
+	{
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkInByDistance",[[SettingsManager sharedSettingsManager] APILocation]]];
+		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+		[request setPostValue:eventAttending.eventID forKey:@"eid"];
+		[request startSynchronous];
+		if([[request responseString] isEqualToString:@"status_checkInSuccess"])
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+															message:@"You are now checked in!"
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+		else
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+															message:@"Check-in unsuccessful. Try again later."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+	}
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -106,35 +148,20 @@
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@setAttendanceForEvent", [[SettingsManager sharedSettingsManager] APILocation]]]];
 	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventID] forKey:@"eid"];
 	[request setPostValue:[NSString stringWithFormat:@"%d", confidence] forKey:@"confidence"];
-	[request startSynchronous];
+	[request startAsynchronous];
 //	NSLog(@"%@", [request responseString]);
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-	eventName.text = eventAttending.eventName;
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-MM-dd hh:mm a";
-	eventDate.text = [df stringFromDate:eventAttending.eventDate];
-	eventDescription.text = eventAttending.eventDescription;
 	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAttending.eventAddress];
 	NSURL *someURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:someURL];
-	[request startSynchronous];
-	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
-	lat = [[location objectForKey:@"lat"] floatValue];
-	lng = [[location objectForKey:@"lng"] floatValue];
-	CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat, lng);
-	MKCoordinateSpan span = MKCoordinateSpanMake(0.025, 0.025);
-	MKCoordinateRegion region = MKCoordinateRegionMake(coord, span);
-	eventMap.region = region;
-	[eventMap removeAnnotations:[eventMap annotations]];
-	EventAnnotation *annotation = [[EventAnnotation alloc] initWithName:eventName.text coordinate:coord];
-	[eventMap addAnnotation:annotation];
-	[annotation release];
-	[df release];
-	[self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	request.delegate = self;
+	[request startAsynchronous];	
 	[super viewWillAppear:animated];
+	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+
+	directions.enabled = NO;
 }
 - (void)viewDidLoad
 {
@@ -169,6 +196,13 @@
 	checkIn.clipsToBounds = YES;
 	live.layer.cornerRadius = 5;
 	live.clipsToBounds = YES;
+	
+	eventName.text = eventAttending.eventName;
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd hh:mm a";
+	eventDate.text = [df stringFromDate:eventAttending.eventDate];
+	eventDescription.text = eventAttending.eventDescription;
+	[df release];
 	
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
@@ -213,7 +247,23 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
-
+#pragma mark - ASIHTTP Delegate Methods
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+	lat = [[location objectForKey:@"lat"] floatValue];
+	lng = [[location objectForKey:@"lng"] floatValue];
+	CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat, lng);
+	MKCoordinateSpan span = MKCoordinateSpanMake(0.025, 0.025);
+	MKCoordinateRegion region = MKCoordinateRegionMake(coord, span);
+	eventMap.region = region;
+	[eventMap removeAnnotations:[eventMap annotations]];
+	EventAnnotation *annotation = [[EventAnnotation alloc] initWithName:eventName.text coordinate:coord];
+	[eventMap addAnnotation:annotation];
+	[annotation release];
+	directions.enabled = YES;
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations

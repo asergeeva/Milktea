@@ -118,21 +118,9 @@
 	label.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	label.layer.shouldRasterize = YES;
 	NSString *selectedMonth = [hostingController.uniqueMonths objectAtIndex:section];
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-M/MM";
-	if([selectedMonth isEqualToString:[df stringFromDate:[NSDate date]]])
-	{
-		label.text = @"   This Month";
-	}
-	else
-	{
-		NSDate *fromString = [df dateFromString:selectedMonth];
-		df.dateFormat = @"   MMMM";
-		label.text = [df stringFromDate:fromString];
-	}
+	label.text = [HostingController getSectionText:selectedMonth];
 	[sectionView addSubview: label];
 	[label release];
-	[df release];
 	return sectionView;
 }
 @end

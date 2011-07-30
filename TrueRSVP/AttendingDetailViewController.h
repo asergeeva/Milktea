@@ -11,8 +11,8 @@
 #import <MapKit/MapKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
-
-@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate>
+#import "ASIFormDataRequest.h"
+@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ASIHTTPRequestDelegate>
 {
 	Event *eventAttending;
 	IBOutlet UIView *eventWhiteBack;
@@ -36,9 +36,10 @@
 
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
-- (IBAction)showMail:(id)sender;
-- (IBAction)showMap:(id)sender;
-- (IBAction)showRSVP:(id)sender;
+- (IBAction)showMail:(UIButton*)sender;
+- (IBAction)showMap:(UIButton*)sender;
+- (IBAction)showRSVP:(UIButton*)sender;
+- (IBAction)checkIn:(UIButton*)sender;
 @property (nonatomic, retain) Event *eventAttending;
 @property (nonatomic, retain) IBOutlet UIView *eventWhiteBack;
 @property (nonatomic, retain) IBOutlet UILabel *eventName;

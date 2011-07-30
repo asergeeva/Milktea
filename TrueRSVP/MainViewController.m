@@ -29,6 +29,7 @@ int pageNumber = 0;
 		hostingButton = [[UIButton alloc] init];
 		attendingButton = [[UIButton alloc] init];
 		profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
+		profileButton.selected = YES;
 		attendingVC = [[AttendingViewController alloc] initWithNibName:@"AttendingViewController" bundle:[NSBundle mainBundle]];
 		hostingVC = [[HostingViewController alloc] initWithNibName:@"HostingViewController" bundle:[NSBundle mainBundle]];
 		attendingVC.delegate = self;
@@ -51,7 +52,6 @@ int pageNumber = 0;
 	profileVC.view.bounds = rect;
 	attendingVC.view.bounds = rect;
 	hostingVC.view.bounds = rect;
-	profileButton.selected = YES;
 	scrollView.contentSize = CGSizeMake(0, 0);
 	scrollView.contentOffset = CGPointMake(0.0, 0.0);
 //	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))

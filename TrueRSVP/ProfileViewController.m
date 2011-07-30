@@ -101,6 +101,12 @@
 
 - (void)viewDidUnload
 {
+	[profilePic release];
+	profilePic = nil;
+	[whiteBackground release];
+	whiteBackground = nil;
+	[portrait release];
+	portrait = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

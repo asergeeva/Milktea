@@ -23,6 +23,7 @@
 //@synthesize portraitView;
 //@synthesize landscapeView;
 @synthesize loginButton;
+
 - (void)dealloc
 {
 	[txtUsername release];
@@ -163,6 +164,7 @@
 	[request setPostValue:str forKey:@"password"];	
 	[request startSynchronous];
 	NSString *status = [request responseString];
+	NSLog(@"%@", status);
 	if ([status isEqualToString:@"status_loginFailed"])
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Incorrect" 

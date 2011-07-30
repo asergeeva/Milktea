@@ -12,6 +12,7 @@
 #import "NSDictionary_JSONExtensions.h"
 #import "CJSONDeserializer.h"
 #import "ASIFormDataRequest.h"
+#import "CheckInButton.h"
 @implementation GuestListViewController
 @synthesize guestNameAttendance;
 @synthesize event;
@@ -41,13 +42,13 @@ BOOL attendingAscending;
     if (self) {
 		event = thisEvent;
 		guestNameAttendance = [[NSMutableArray alloc] init];
-		[self refreshGuestList];
 		fnameAscending = YES;
 		lnameAscending = YES;
 		attendingAscending = YES;
 		toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
 		searchButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 105, 48)];
-		refreshButton = [[UIButton alloc] initWithFrame:CGRectMake(110, 0, 105, 48)];
+		refreshButton = [[UIButton alloc] initWithFrame:CGRectMake(105, 0, 105, 48)];
+		[refreshButton addTarget:self action:@selector(refreshGuestList) forControlEvents:UIControlEventTouchUpInside];
 		sendButton = [[UIButton alloc] initWithFrame:CGRectMake(215, 0, 105, 48)];
 		doneButton = [[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 44)];
 		searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 210, 44)];
@@ -163,6 +164,7 @@ BOOL attendingAscending;
 	CGRect rect = self.view.frame;
 	rect.origin.y += 44;
 	self.view.bounds = rect;
+	[self refreshGuestList];
 //	toolbar.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin);
 }
 #pragma mark - Unloading
@@ -201,6 +203,7 @@ BOOL attendingAscending;
 	[request addPostValue:event.eventID forKey:@"eid"];
 	[request startSynchronous];
 	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
+	[guestNameAttendance removeAllObjects];
 	for (NSDictionary *dictionary in guestNames)
 	{
 		Attendee *newAttendee = [[Attendee alloc] init];
@@ -211,6 +214,8 @@ BOOL attendingAscending;
 		[guestNameAttendance addObject:newAttendee];
 		[newAttendee release];
 	}
+
+	[guestTable reloadData];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -229,16 +234,23 @@ BOOL attendingAscending;
 	[UIView commitAnimations];
 }
 #pragma mark - UIButton Actions
-- (void)checkboxPressed:(UIButton*)sender
+- (void)checkboxPressed:(CheckInButton*)sender
 {
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager] APILocation]]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:sender.uid forKey:@"uid"];
+	[request setPostValue:sender.eid forKey:@"eid"];
 	if(sender.isSelected)
 	{
+		[request setPostValue:@"0" forKey:@"checkIn"];
 		sender.selected = NO;
 	}
 	else
 	{
+		[request setPostValue:@"1" forKey:@"checkIn"];
 		sender.selected = YES;
 	}
+	[request startSynchronous];
 	((Attendee*)[guestNameAttendance objectAtIndex:sender.tag]).isAttending = sender.selected;
 }
 - (void)sortPressed:(UIButton*)sender
@@ -331,6 +343,16 @@ BOOL attendingAscending;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	UITableViewCell *currentCell = [tableView cellForRowAtIndexPath:indexPath];
+	for (UIView *view in [currentCell.contentView subviews])
+	{
+		if([view isKindOfClass:[CheckInButton class]])
+		{
+			[self checkboxPressed:(CheckInButton*)view];
+			return;
+		}
+	}
+
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -367,12 +389,14 @@ BOOL attendingAscending;
 	lname.font = [UIFont systemFontOfSize:12];
 	[attendeeCell.contentView addSubview:lname];
 	
-	UIButton *checkbox = [[[UIButton alloc] initWithFrame:CGRectMake(240, 0, 16, 20)] autorelease];
+	CheckInButton *checkbox = [[[CheckInButton alloc] initWithFrame:CGRectMake(240, 0, 16, 20)] autorelease];
 	checkbox.tag = indexPath.row;
 	[checkbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
 	[checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
 	[checkbox addTarget:self action:@selector(checkboxPressed:) forControlEvents:UIControlEventTouchUpInside];
-	
+	checkbox.uid = attendee.uid;
+	checkbox.eid = event.eventID;
+	checkbox.userInteractionEnabled = NO;
 	if(attendee.isAttending)
 	{
 		checkbox.selected = YES;
