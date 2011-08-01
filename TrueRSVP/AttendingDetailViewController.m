@@ -14,7 +14,7 @@
 //#import "Constants.h"
 #import "SettingsManager.h"
 #import "EventAnnotation.h"
-
+#import "LiveViewController.h"
 @implementation AttendingDetailViewController
 @synthesize eventAttending;
 @synthesize eventWhiteBack;
@@ -44,6 +44,12 @@
 //		address = [[NSMutableString alloc] init];
     }
     return self;
+}
+- (IBAction)showLive:(UIButton*)sender
+{
+	LiveViewController *liveVC = [[[LiveViewController alloc] initWithNibName:@"LiveViewController" bundle:[NSBundle mainBundle] event:eventAttending] autorelease];
+	[self.navigationController pushViewController:liveVC animated:YES];
+	
 }
 - (IBAction)showMail:(UIButton*)sender
 {

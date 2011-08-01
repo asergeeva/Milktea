@@ -7,5 +7,7 @@
 //
 
 #import "Constants.h"
-NSString *const rootAddress = @"http://192.168.1.135/Eventfii/";
-NSString *const APILocation = @"http://192.168.1.135/Eventfii/api/";
+//NSString *const rootAddress = @"http://192.168.1.135/Eventfii/";
+//NSString *const APILocation = @"http://192.168.1.135/Eventfii/api/";
+NSString *const consumerKey = @"oDMGOs0jPxFz7DDULHnw";
+NSString *const consumerSecret = @"wHO9IHpUUkDIj1sGCs7YWRRUnKj4FMrmBrYwQGoMpw";

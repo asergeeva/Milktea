@@ -14,6 +14,7 @@
 #import "GuestListViewController.h"
 #import "ZBarReaderViewController.h"
 #import "ASIFormDataRequest.h"
+#import "UITextViewUneditable.h"
 @interface HostingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ZBarReaderDelegate, ASIHTTPRequestDelegate>
 {
 	Event *eventHosting;
@@ -25,7 +26,7 @@
 	IBOutlet UILabel *eventName;
 	IBOutlet UILabel *eventDate;
 	IBOutlet UIView *eventDescriptionWhiteBack;
-	IBOutlet UITextView *eventDescription;
+	IBOutlet UITextViewUneditable *eventDescription;
 	IBOutlet MKMapView *eventMap;
 	IBOutlet UIButton *contact;
 	IBOutlet UIButton *checkIn;
@@ -50,7 +51,7 @@
 //@property (nonatomic, retain) IBOutlet UILabel *eventName;
 //@property (nonatomic, retain) IBOutlet UILabel *eventDate;
 @property (nonatomic, retain) IBOutlet UIView *eventDescriptionWhiteBack;
-@property (nonatomic, retain) IBOutlet UITextView *eventDescription;
+@property (nonatomic, retain) IBOutlet UITextViewUneditable *eventDescription;
 @property (nonatomic, retain) IBOutlet MKMapView *eventMap;
 //@property (nonatomic, retain) IBOutlet UIButton *contact;
 //@property (nonatomic, retain) IBOutlet UIButton *checkIn;

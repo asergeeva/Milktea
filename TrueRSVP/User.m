@@ -18,6 +18,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 @synthesize cell;
 @synthesize zip;
 @synthesize twitter;
+@synthesize picURL;
 @synthesize profilePic;
 @synthesize about;
 @synthesize delegate;
@@ -32,6 +33,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 		zip = [[NSMutableString alloc] init];
 		twitter = [[NSMutableString alloc] init];
 		about = [[NSMutableString alloc] init];
+		picURL = [[NSMutableString alloc] init];
 	}
 	return self;
 }
@@ -44,7 +46,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[zip setString:[userInfo objectForKey:@"zip"]];
 	[about setString:[userInfo objectForKey:@"about"]];
 	[twitter setString:[userInfo objectForKey:@"twitter"]];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager] rootAddress], @"upload/user/images/", uid, @".png"]];
+	[picURL setString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager] rootAddress], @"upload/user/images/", uid, @".png"]];
+	NSURL *url = [NSURL URLWithString:picURL];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	request.delegate = self;
 	[request startAsynchronous];
@@ -69,6 +72,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[twitter release];
 	[profilePic release];
 	[about release];
+	[picURL release];
 	[super dealloc];
 }
 @end

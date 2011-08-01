@@ -22,6 +22,7 @@
 	NSMutableString *zip;
 	NSMutableString *twitter;
 	NSMutableString *about;
+	NSMutableString *picURL;
 	UIImage *profilePic;
 	id<UserDelegate> delegate;
 }
@@ -34,6 +35,7 @@
 @property (nonatomic, retain) NSMutableString *zip;
 @property (nonatomic, retain) NSMutableString *twitter;
 @property (nonatomic, retain) NSMutableString *about;
+@property (nonatomic, retain) NSMutableString *picURL;
 @property (nonatomic, retain) UIImage *profilePic;
 @property (nonatomic, assign) id<UserDelegate> delegate;
 @end

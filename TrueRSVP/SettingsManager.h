@@ -13,7 +13,7 @@
 	BOOL welcomeDismissed;
 	NSMutableString *rootAddress;
 	NSMutableString *APILocation;
-	
+	NSMutableString *twitterCache;
 }
 - (void)save;
 - (void)load;
@@ -21,4 +21,5 @@
 @property (nonatomic) BOOL welcomeDismissed;
 @property (nonatomic, retain) NSMutableString *rootAddress;
 @property (nonatomic, retain) NSMutableString *APILocation;
+@property (nonatomic, retain) NSMutableString *twitterCache;
 @end

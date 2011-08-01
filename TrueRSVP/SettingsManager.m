@@ -14,6 +14,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 @synthesize welcomeDismissed;
 @synthesize rootAddress;
 @synthesize APILocation;
+@synthesize twitterCache;
 - (id)init
 {
 	if((self = [super init]))
@@ -21,8 +22,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 		welcomeDismissed = NO;
 //		NSString *const rootAddress = @"http://192.168.1.135/Eventfii/";
 //		NSString *const APILocation = @"http://192.168.1.135/Eventfii/api/";
-		rootAddress = [[NSMutableString alloc] initWithString:@"http://192.168.1.135/Eventfii/"];
-		APILocation = [[NSMutableString alloc] initWithString:@"http://192.168.1.135/Eventfii/api/"];
+		rootAddress = [[NSMutableString alloc] initWithString:@"http://207.151.245.214/Eventfii/"];
+		APILocation = [[NSMutableString alloc] initWithString:@"http://207.151.245.214/Eventfii/api/"];
+		twitterCache = [[NSMutableString alloc] init];
 		[self load];
 	}
 	return self;
@@ -31,6 +33,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 {
 	[[NSUserDefaults standardUserDefaults] setObject:rootAddress forKey:@"rootAddress"];
 	[[NSUserDefaults standardUserDefaults] setObject:APILocation forKey:@"APILocation"];
+	[[NSUserDefaults standardUserDefaults] setObject:twitterCache forKey:@"twitterCache"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)load
@@ -43,11 +46,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 	{
 		[APILocation setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"]];
 	}
+	if([[NSUserDefaults standardUserDefaults] objectForKey:@"twitterCache"])
+	{
+		[twitterCache setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"twitterCache"]];
+	}	
 }
 - (void)dealloc
 {
 	[rootAddress release];
 	[APILocation release];
+	[twitterCache release];
 	[super dealloc];
 }
 @end

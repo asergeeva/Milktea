@@ -12,6 +12,7 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "ASIFormDataRequest.h"
+#import "UITextViewUneditable.h"
 @interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ASIHTTPRequestDelegate>
 {
 	Event *eventAttending;
@@ -19,7 +20,7 @@
 	IBOutlet UILabel *eventName;
 	IBOutlet UILabel *eventDate;
 	IBOutlet UIView *eventDescriptionWhiteBack;
-	IBOutlet UITextView *eventDescription;
+	IBOutlet UITextViewUneditable *eventDescription;
 	IBOutlet MKMapView *eventMap;
 	IBOutlet UIButton *contact;
 	IBOutlet UIButton *directions;
@@ -36,6 +37,7 @@
 
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
+- (IBAction)showLive:(UIButton*)sender;
 - (IBAction)showMail:(UIButton*)sender;
 - (IBAction)showMap:(UIButton*)sender;
 - (IBAction)showRSVP:(UIButton*)sender;
@@ -45,7 +47,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *eventName;
 @property (nonatomic, retain) IBOutlet UILabel *eventDate;
 @property (nonatomic, retain) IBOutlet UIView *eventDescriptionWhiteBack;
-@property (nonatomic, retain) IBOutlet UITextView *eventDescription;
+@property (nonatomic, retain) IBOutlet UITextViewUneditable *eventDescription;
 @property (nonatomic, retain) IBOutlet MKMapView *eventMap;
 @property (nonatomic, retain) IBOutlet UIButton *contact;
 @property (nonatomic, retain) IBOutlet UIButton *directions;

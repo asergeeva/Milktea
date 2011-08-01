@@ -16,7 +16,7 @@
 @synthesize navController;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	facebook = [[Facebook alloc] initWithAppId:@"166527620083686"];
+	facebook = [[Facebook alloc] initWithAppId:@"122732554481304"];
 	// Override point for customization after application launch.
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
