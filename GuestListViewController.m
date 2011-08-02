@@ -198,7 +198,7 @@ BOOL attendingAscending;
 }
 - (void)refreshGuestList
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] objectForKey:@"APILocation"], @"getGuestList"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getGuestList"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request addPostValue:event.eventID forKey:@"eid"];
 	[request startSynchronous];
@@ -236,7 +236,7 @@ BOOL attendingAscending;
 #pragma mark - UIButton Actions
 - (void)checkboxPressed:(CheckInButton*)sender
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager] objectForKey:@"APILocation"]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
 
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:sender.uid forKey:@"uid"];

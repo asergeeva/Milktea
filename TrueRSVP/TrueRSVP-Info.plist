@@ -27,8 +27,11 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.komodrone.TrueRSVP</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>trueRSVP</string>
 				<string>fb166527620083686</string>
 			</array>
 		</dict>

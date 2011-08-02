@@ -9,6 +9,7 @@
 #import "TrueRSVPAppDelegate.h"
 #import "TrueRSVPViewController.h"
 #import "SignInViewController.h"
+#import "LiveViewController.h"
 @implementation TrueRSVPAppDelegate
 @synthesize window=_window;
 @synthesize viewController=_viewController;
@@ -27,6 +28,29 @@
 //	[self.window addSubview:navController.view];
 	[self.window makeKeyAndVisible];
 	
+    return YES;
+}
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+	
+    // naively parse url
+    NSArray *urlComponents = [[url absoluteString] componentsSeparatedByString:@"?"];
+    NSArray *requestParameterChunks = [[urlComponents objectAtIndex:1] componentsSeparatedByString:@"&"];
+    for (NSString *chunk in requestParameterChunks) {
+        NSArray *keyVal = [chunk componentsSeparatedByString:@"="];
+        
+        if ([[keyVal objectAtIndex:0] isEqualToString:@"oauth_verifier"]) 
+		{
+			for(UIViewController *vc in navController.viewControllers)
+			{
+				if([vc isKindOfClass:[LiveViewController class]])
+				{
+					[(LiveViewController*)vc handleOAuthVerifier:[keyVal objectAtIndex:1]];
+				}
+			}
+        }
+        
+    }
+    
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application
