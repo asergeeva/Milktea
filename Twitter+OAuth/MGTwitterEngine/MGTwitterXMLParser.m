@@ -7,6 +7,8 @@
 //
 
 #import "MGTwitterXMLParser.h"
+
+
 @implementation MGTwitterXMLParser
 
 
@@ -26,7 +28,7 @@ connectionIdentifier:(NSString *)identifier requestType:(MGTwitterRequestType)re
 }
 
 
-- (id)initWithXML:(NSData *)theXML delegate:(NSObject <MGTwitterParserDelegate>*)theDelegate 
+- (id)initWithXML:(NSData *)theXML delegate:(NSObject *)theDelegate 
 connectionIdentifier:(NSString *)theIdentifier requestType:(MGTwitterRequestType)reqType 
      responseType:(MGTwitterResponseType)respType
 {

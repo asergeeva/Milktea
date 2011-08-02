@@ -77,7 +77,8 @@
 
 - (void)refreshProfile
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"getUserInfo"]];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"getUserInfo"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getUserInfo"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request startSynchronous];
 	NSDictionary *userInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
@@ -162,7 +163,9 @@
 }
 - (IBAction)updateProfile:(id)sender
 {	
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"setUserInfo"]]];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"setUserInfo"]]];
+	
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"setUserInfo"]]];
 	[request addPostValue:emailTextField.text forKey:@"email"];
 	[request addPostValue:aboutTextView.text forKey:@"about"];
 	[request addPostValue:cellTextField.text forKey:@"cell"];

@@ -13,6 +13,7 @@
 #import "Constants.h"
 #import "EventAnnotation.h"
 #import "SettingsManager.h"
+#import "LiveViewController.h"
 @implementation HostingDetailViewController
 @synthesize eventHosting;
 //@synthesize dynamicRSVP;
@@ -49,8 +50,8 @@
     return self;
 }
 - (void)viewWillAppear:(BOOL)animated
-{
-	NSString *urlAddress = [NSString stringWithFormat:@"%@computeTrueRSVP", [[SettingsManager sharedSettingsManager] APILocation]];
+{	
+	NSString *urlAddress = [NSString stringWithFormat:@"%@computeTrueRSVP", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]];
 	NSURL *trueURL = [NSURL URLWithString:urlAddress];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:trueURL];
 	[request setPostValue:eventHosting.eventID forKey:@"eid"];
@@ -260,6 +261,12 @@
 	[annotation release];
 }
 #pragma mark - Button Methods
+- (IBAction)showLive:(UIButton*)sender
+{
+	LiveViewController *liveVC = [[[LiveViewController alloc] initWithNibName:@"LiveViewController" bundle:[NSBundle mainBundle] event:eventHosting] autorelease];
+	[self.navigationController pushViewController:liveVC animated:YES];
+	
+}
 - (IBAction)showCheckIn:(id)sender
 {
 	UIActionSheet *sheet;

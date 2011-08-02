@@ -53,18 +53,18 @@
 }
 - (IBAction)showMail:(UIButton*)sender
 {
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getOrganizerEmail", [[SettingsManager sharedSettingsManager] APILocation]]];
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventOrganizer] forKey:@"oid"];
-//	[request startSynchronous];
-//	MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
-//	mailVC.mailComposeDelegate = self;
-//	[mailVC setSubject:[NSString stringWithFormat:@"Event: %@",eventName.text]];
-//	NSDictionary *info = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-//	NSString *email = [info objectForKey:@"email"];
-//	[mailVC setToRecipients:[NSArray arrayWithObject:email]];
-//	[self presentModalViewController:mailVC animated:YES];
-//	[mailVC release];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getOrganizerEmail", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventOrganizer] forKey:@"oid"];
+	[request startSynchronous];
+	MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
+	mailVC.mailComposeDelegate = self;
+	[mailVC setSubject:[NSString stringWithFormat:@"Event: %@",eventName.text]];
+	NSDictionary *info = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	NSString *email = [info objectForKey:@"email"];
+	[mailVC setToRecipients:[NSArray arrayWithObject:email]];
+	[self presentModalViewController:mailVC animated:YES];
+	[mailVC release];
 }
 - (IBAction)showMap:(UIButton*)sender
 {
@@ -98,7 +98,7 @@
 	}
 	else
 	{
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkInByDistance",[[SettingsManager sharedSettingsManager] APILocation]]];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkInByDistance",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
 		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 		[request setPostValue:eventAttending.eventID forKey:@"eid"];
 		[request startSynchronous];
@@ -151,7 +151,8 @@
 			return;
 			break;
 	}
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@setAttendanceForEvent", [[SettingsManager sharedSettingsManager] APILocation]]]];
+
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@setAttendanceForEvent", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]]];
 	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventID] forKey:@"eid"];
 	[request setPostValue:[NSString stringWithFormat:@"%d", confidence] forKey:@"confidence"];
 	[request startAsynchronous];

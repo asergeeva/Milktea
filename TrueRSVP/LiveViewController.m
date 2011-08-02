@@ -18,6 +18,9 @@
 @synthesize event;
 @synthesize tweets;
 @synthesize tweetTable;
+@synthesize logout;
+@synthesize lastTweet;
+BOOL twitterLoginShown = NO;
 //@synthesize twit;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)thisEvent
 {
@@ -26,6 +29,7 @@
 		event = thisEvent;
 		tweets = [[NSMutableArray alloc] init];
 		lastTweet = [[NSMutableDictionary alloc] init];
+		logout = [[UIBarButtonItem alloc] init];
 //		twit = [[MGTwitterEngine alloc] initWithDelegate:self];
 //		[twit setConsumerKey:@"oDMGOs0jPxFz7DDULHnw" secret:@"wHO9IHpUUkDIj1sGCs7YWRRUnKj4FMrmBrYwQGoMpw"];
 //		[twit setUsesSecureConnection:YES];
@@ -51,11 +55,20 @@
 		twit.consumerKey = consumerKey;
 		twit.consumerSecret = consumerSecret;
 	}
-	
 	UIViewController *controller = [SA_OAuthTwitterController controllerToEnterCredentialsWithTwitterEngine:twit delegate:self];
 	
 	if (controller)
-		[self presentModalViewController:controller animated: YES];
+	{
+		if(!twitterLoginShown)
+		{
+			[self presentModalViewController:controller animated: YES];
+			twitterLoginShown = YES;
+		}
+		else
+		{
+			[self.navigationController popViewControllerAnimated:YES];
+		}
+	}
 	else 
 	{
 		[self updateStream];
@@ -67,15 +80,23 @@
 }
 - (void)viewDidLoad
 {
+	twitterLoginShown = NO;
     [super viewDidLoad];
-	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignKeyboard)];
-	[self.view addGestureRecognizer:tap];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	tweetField.delegate = self;
+	self.navigationItem.title = @"Live Feed";
 	eventName.text = event.eventName;
 	liveEventBack.layer.cornerRadius = 5;
 	liveEventBack.layer.shadowOffset = CGSizeMake(0.0, 0.25);
 	liveEventBack.layer.shadowOpacity = 0.25;
 	liveEventBack.layer.shouldRasterize = YES;
+	
+	logout.title = @"Logout";
+	logout.target = self;
+	logout.action = @selector(loggingOut);
+//	[self.navigationItem setRightBarButtonItem:logout];
+	self.navigationItem.rightBarButtonItem = logout;
+	
 	
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"MMMM d - hh:mm a";
@@ -116,8 +137,12 @@
 	}	
 }
 
-- (IBAction)tweet:(UIButton*)sender
+- (IBAction) tweet:(UIButton*)sender
 {
+	if(tweetField.text.length == 0 )
+	{
+		return;
+	}
 	[tweetField resignFirstResponder];
 	NSString *hashtag = [NSString stringWithFormat:@"#trueRSVP%@", event.eventID];
 	if(tweetField.text.length > 139-hashtag.length)
@@ -134,16 +159,30 @@
 	[lastTweet setValue:tweetField.text forKey:@"text"];
 	[tweets insertObject:lastTweet atIndex:0];
 	[tweetTable reloadData];
+	tweetField.text = @"";
 }
 #pragma mark - Twitter
+- (void)loggingOut
+{
+//	[[SettingsManager sharedSettingsManager].settings setObject:@"" forKey:@"twitterCache"];
+	[[SettingsManager sharedSettingsManager].settings removeObjectForKey:@"twitterCache"];
+	[self.navigationController popViewControllerAnimated:YES];
+}
 - (void)storeCachedTwitterOAuthData:(NSString *)data forUsername:(NSString *)username
 {
-	[[SettingsManager sharedSettingsManager].twitterCache setString:data];
+	[[SettingsManager sharedSettingsManager].settings setObject:data forKey:@"twitterCache"];
 	[[SettingsManager sharedSettingsManager] save];
 }
 - (NSString *)cachedTwitterOAuthDataForUsername:(NSString *)username
 {
-	return [SettingsManager sharedSettingsManager].twitterCache;
+//	NSLog(@"%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"twitterCache"]);
+	NSString *cache = (NSString*)[[SettingsManager sharedSettingsManager].settings objectForKey:@"twitterCache"];
+	if (cache.length > 0)
+	{
+		twitterLoginShown = YES;
+		return cache;
+	}
+	return @"nocache";
 }
 - (void)OAuthTwitterController:(SA_OAuthTwitterController *)controller authenticatedWithUsername:(NSString *)username
 {
@@ -151,8 +190,8 @@
 }
 - (void)updateStream
 {
-	NSURL *url = [NSURL URLWithString:@"http://search.twitter.com/search.json?q=%23deadmau5"];
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%23truersvp%@", event.eventID]];
+//	NSURL *url = [NSURL URLWithString:@"http://search.twitter.com/search.json?q=%23deadmau5"];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%%23truersvp%@", event.eventID]];
 //	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%23truersvp%@", event.eventID]]];
 	
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -200,15 +239,21 @@
 	{
 		[self updateStream];
 	}
-	if([lastTweet count] > 0)
-	{
-		return [tweets count]+1;
-	}
+//	if([lastTweet count] > 0)
+//	{
+//		return [tweets count]+1;
+//	}
 	return [tweets count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return 95.0;
+}
+#pragma mark - UITextField Delegate Methods
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	[self tweet:nil];
+	return NO;
 }
 #pragma mark - Other
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -243,6 +288,8 @@
 	[tweets release];
 	[tweetTable release];
 	[lastTweet release];
+	[logout release];
+	
     [super dealloc];
 }
 @end

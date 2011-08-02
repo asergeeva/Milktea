@@ -42,6 +42,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
 - (void)dismissCamera;
+- (IBAction)showLive:(UIButton*)sender;
 @property (nonatomic, retain) Event *eventHosting;
 //@property (nonatomic, retain) UILabel *dynamicRSVP;
 //@property (nonatomic, retain) UILabel *staticRSVP;

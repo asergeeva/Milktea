@@ -21,7 +21,6 @@
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
 	self.window.rootViewController = navController;
-
 //	[navController pushViewController:signVC animated:NO];
 	[signVC release];
 

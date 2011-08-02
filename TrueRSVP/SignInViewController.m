@@ -144,7 +144,8 @@
 		[alert release];
 		return;
 	}
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"login"]];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"login"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"login"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
 	
@@ -188,7 +189,8 @@
 		[mainVC release];
 //		ProfileViewController *profileVC = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
 //		[self.navigationController pushViewController:profileVC animated:YES];
-		[SettingsManager sharedSettingsManager].welcomeDismissed = NO;
+//		[SettingsManager sharedSettingsManager].welcomeDismissed = NO;
+//		[[[SettingsManager sharedSettingsManager] settings] setValue:NO forKey:@"welcomeDismissed"];
 	}
 	
 }

@@ -10,7 +10,7 @@
 #import "SA_OAuthTwitterEngine.h"
 #import "SA_OAuthTwitterController.h"
 #import "Event.h"
-@interface LiveViewController : UIViewController <SA_OAuthTwitterControllerDelegate, SA_OAuthTwitterEngineDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface LiveViewController : UIViewController <SA_OAuthTwitterControllerDelegate, SA_OAuthTwitterEngineDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {
 	UIView *liveEventBack;
 	IBOutlet UILabel *eventName;
@@ -20,6 +20,7 @@
 	IBOutlet UIButton *shareButton;
 	NSMutableArray *tweets;
 	IBOutlet UITableView *tweetTable;
+	UIBarButtonItem *logout;
 	SA_OAuthTwitterEngine *twit;
 	Event *event;
 	NSMutableDictionary *lastTweet;
@@ -33,5 +34,6 @@
 @property (nonatomic, retain) Event *event;
 @property (nonatomic, retain) NSMutableArray *tweets;
 @property (nonatomic, retain) NSMutableDictionary *lastTweet;
+@property (nonatomic, retain) UIBarButtonItem *logout;
 //@property (nonatomic, retain) IBOutlet MGTwitterEngine *twit;
 @end

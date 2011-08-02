@@ -128,7 +128,8 @@
 #pragma mark - Other
 - (void)refreshHosting
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"getHostingEvents/"]];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"getHostingEvents/"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getHostingEvents/"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request startSynchronous];
 	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];

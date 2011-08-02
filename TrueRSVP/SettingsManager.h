@@ -10,16 +10,10 @@
 
 @interface SettingsManager : NSObject
 {
-	BOOL welcomeDismissed;
-	NSMutableString *rootAddress;
-	NSMutableString *APILocation;
-	NSMutableString *twitterCache;
+	NSMutableDictionary *settings;
 }
 - (void)save;
 - (void)load;
 + (SettingsManager*)sharedSettingsManager;
-@property (nonatomic) BOOL welcomeDismissed;
-@property (nonatomic, retain) NSMutableString *rootAddress;
-@property (nonatomic, retain) NSMutableString *APILocation;
-@property (nonatomic, retain) NSMutableString *twitterCache;
+@property (nonatomic, retain) NSMutableDictionary *settings;
 @end

@@ -91,7 +91,7 @@
 	if (accessTokenString.length) {				
 		[_accessToken release];
 		_accessToken = [[OAToken alloc] initWithHTTPResponseBody: accessTokenString];
-		[self setUsername: [self extractUsernameFromHTTPBody: accessTokenString] password:nil];
+		[self setUsername: [self extractUsernameFromHTTPBody: accessTokenString] password: nil];
 		if (_accessToken.key && _accessToken.secret) return YES;
 	}
 	
@@ -200,7 +200,7 @@
 	NSString				*username = [self extractUsernameFromHTTPBody:dataString];
 
 	if (username.length > 0) {
-		[self setUsername: username password:nil];
+		[self setUsername: username password: nil];
 		if ([_delegate respondsToSelector: @selector(storeCachedTwitterOAuthData:forUsername:)]) [(id) _delegate storeCachedTwitterOAuthData: dataString forUsername: username];
 	}
 	
@@ -261,9 +261,9 @@
 	// modificaiton from the base clase
 	// the base class appends parameters here
 	// --------------------------------------------------------------------------------
-	    if (params) {
-	        fullPath = [self _queryStringWithBase:fullPath parameters:params prefixed:YES];
-	    }
+	//    if (params) {
+	//        fullPath = [self _queryStringWithBase:fullPath parameters:params prefixed:YES];
+	//    }
 	// --------------------------------------------------------------------------------
 
     NSString *urlString = [NSString stringWithFormat:@"%@://%@/%@", 
