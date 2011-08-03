@@ -90,23 +90,25 @@ BOOL uploading = NO;
 	tweetField.delegate = self;
 	self.navigationItem.title = @"Live Feed";
 	eventName.text = thisEvent.eventName;
-	liveEventBack.layer.cornerRadius = 5;
-	liveEventBack.layer.shadowOffset = CGSizeMake(0.0, 0.25);
-	liveEventBack.layer.shadowOpacity = 0.25;
-	liveEventBack.layer.shouldRasterize = YES;
-	liveEventBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+	if([UIDevice currentDevice].multitaskingSupported)
+	{
+		liveEventBack.layer.cornerRadius = 5;
+		liveEventBack.layer.shadowOffset = CGSizeMake(0.0, 0.25);
+		liveEventBack.layer.shadowOpacity = 0.25;
+		liveEventBack.layer.shouldRasterize = YES;
+		liveEventBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+	}
 	logoutButton.title = @"Logout";
 	logoutButton.target = self;
 	logoutButton.action = @selector(logout);
 //	[self.navigationItem setRightBarButtonItem:logout];
 	self.navigationItem.rightBarButtonItem = logoutButton;
 	
-	
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"MMMM d - hh:mm a";
 	eventDate.text = [df stringFromDate:thisEvent.eventDate];
 	[df release];
-	tweetTable.backgroundColor = [UIColor colorWithRed:0.925 green:0.914 blue:0.875 alpha:1.000];
+	tweetTable.backgroundColor = [UIColor colorWithRed:0.914 green:0.902 blue:0.863 alpha:1.000]; 
 	tweetTable.dataSource = self;
 	tweetTable.delegate = self;
 	CGRect rect = self.view.frame;

@@ -113,10 +113,13 @@
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor whiteColor];
 	label.font = [UIFont boldSystemFontOfSize:15];
-	label.layer.shadowOpacity = 0.2;
-	label.layer.shadowOffset = CGSizeMake(0.0, 2.0);
-	label.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-	label.layer.shouldRasterize = YES;
+	if([UIDevice currentDevice].multitaskingSupported)
+	{
+		label.layer.shadowOpacity = 0.2;
+		label.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+		label.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+		label.layer.shouldRasterize = YES;
+	}
 	NSString *selectedMonth = [hostingController.uniqueMonths objectAtIndex:section];
 	label.text = [HostingController getSectionText:selectedMonth];
 	[sectionView addSubview: label];

@@ -84,8 +84,8 @@
 		515A0E6513E15CA500C136D0 /* searchButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 515A0E6113E15CA500C136D0 /* searchButton.png */; };
 		515A0E6613E15CA500C136D0 /* searchButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515A0E6213E15CA500C136D0 /* searchButton@2x.png */; };
 		516F313013E660EF002A31F8 /* UITextViewUneditable.m in Sources */ = {isa = PBXBuildFile; fileRef = 516F312F13E660EF002A31F8 /* UITextViewUneditable.m */; };
-		517033EF13E90262007128BC /* messageButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 517033ED13E90262007128BC /* messageButton.png */; };
-		517033F013E90262007128BC /* messageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517033EE13E90262007128BC /* messageButton@2x.png */; };
+		517033F713E90721007128BC /* messageButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 517033F513E90721007128BC /* messageButton.png */; };
+		517033F813E90721007128BC /* messageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517033F613E90721007128BC /* messageButton@2x.png */; };
 		5173571413D7FAD100204AAF /* Profile_aboutTextView.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571213D7FAD100204AAF /* Profile_aboutTextView.png */; };
 		5173571513D7FAD100204AAF /* Profile_aboutTextView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571313D7FAD100204AAF /* Profile_aboutTextView@2x.png */; };
 		5173571D13D8117D00204AAF /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5173571C13D8117D00204AAF /* SettingsManager.m */; };
@@ -135,8 +135,6 @@
 		5198EE8913E8E05000AB1FE4 /* notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5198EE8713E8E05000AB1FE4 /* notification@2x.png */; };
 		5198EE9513E8EA0800AB1FE4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5198EE9313E8EA0800AB1FE4 /* Default.png */; };
 		5198EE9613E8EA0800AB1FE4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5198EE9413E8EA0800AB1FE4 /* Default@2x.png */; };
-		5198EE9913E8EA2100AB1FE4 /* SignIn_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 5198EE9713E8EA2100AB1FE4 /* SignIn_Background.png */; };
-		5198EE9A13E8EA2100AB1FE4 /* SignIn_Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5198EE9813E8EA2100AB1FE4 /* SignIn_Background@2x.png */; };
 		5199177B13E2AEB300C4A946 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5199177A13E2AEB300C4A946 /* libxml2.dylib */; };
 		5199178313E2AFDE00C4A946 /* LiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5199178113E2AFDE00C4A946 /* LiveViewController.m */; };
 		5199178413E2AFDE00C4A946 /* LiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5199178213E2AFDE00C4A946 /* LiveViewController.xib */; };
@@ -305,8 +303,8 @@
 		515A0E6213E15CA500C136D0 /* searchButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchButton@2x.png"; sourceTree = "<group>"; };
 		516F312E13E660EE002A31F8 /* UITextViewUneditable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextViewUneditable.h; sourceTree = "<group>"; };
 		516F312F13E660EF002A31F8 /* UITextViewUneditable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextViewUneditable.m; sourceTree = "<group>"; };
-		517033ED13E90262007128BC /* messageButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageButton.png; sourceTree = "<group>"; };
-		517033EE13E90262007128BC /* messageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageButton@2x.png"; sourceTree = "<group>"; };
+		517033F513E90721007128BC /* messageButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageButton.png; sourceTree = "<group>"; };
+		517033F613E90721007128BC /* messageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageButton@2x.png"; sourceTree = "<group>"; };
 		5173571213D7FAD100204AAF /* Profile_aboutTextView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile_aboutTextView.png; sourceTree = "<group>"; };
 		5173571313D7FAD100204AAF /* Profile_aboutTextView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_aboutTextView@2x.png"; sourceTree = "<group>"; };
 		5173571B13D8117D00204AAF /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
@@ -388,8 +386,6 @@
 		5198EE8713E8E05000AB1FE4 /* notification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification@2x.png"; sourceTree = "<group>"; };
 		5198EE9313E8EA0800AB1FE4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5198EE9413E8EA0800AB1FE4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		5198EE9713E8EA2100AB1FE4 /* SignIn_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignIn_Background.png; sourceTree = "<group>"; };
-		5198EE9813E8EA2100AB1FE4 /* SignIn_Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Background@2x.png"; sourceTree = "<group>"; };
 		5199177A13E2AEB300C4A946 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		5199178013E2AFDE00C4A946 /* LiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewController.h; sourceTree = "<group>"; };
 		5199178113E2AFDE00C4A946 /* LiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewController.m; sourceTree = "<group>"; };
@@ -814,8 +810,8 @@
 				514D992413E0FB9E0036AC40 /* firstNameButton@2x.png */,
 				514D991A13E0E3D90036AC40 /* lastNameButton.png */,
 				514D991B13E0E3D90036AC40 /* lastNameButton@2x.png */,
-				517033ED13E90262007128BC /* messageButton.png */,
-				517033EE13E90262007128BC /* messageButton@2x.png */,
+				517033F513E90721007128BC /* messageButton.png */,
+				517033F613E90721007128BC /* messageButton@2x.png */,
 				5198EE8613E8E05000AB1FE4 /* notification.png */,
 				5198EE8713E8E05000AB1FE4 /* notification@2x.png */,
 				5173571213D7FAD100204AAF /* Profile_aboutTextView.png */,
@@ -922,8 +918,6 @@
 				518E2DAC13D259EB0080E068 /* SignIn_Button@2x.png */,
 				518E2DC213D25FC10080E068 /* SignIn_Facebook.png */,
 				518E2DBF13D25EC80080E068 /* SignIn_Facebook@2x.png */,
-				5198EE9713E8EA2100AB1FE4 /* SignIn_Background.png */,
-				5198EE9813E8EA2100AB1FE4 /* SignIn_Background@2x.png */,
 			);
 			name = SignIn;
 			sourceTree = "<group>";
@@ -1171,10 +1165,8 @@
 				5198EE8913E8E05000AB1FE4 /* notification@2x.png in Resources */,
 				5198EE9513E8EA0800AB1FE4 /* Default.png in Resources */,
 				5198EE9613E8EA0800AB1FE4 /* Default@2x.png in Resources */,
-				5198EE9913E8EA2100AB1FE4 /* SignIn_Background.png in Resources */,
-				5198EE9A13E8EA2100AB1FE4 /* SignIn_Background@2x.png in Resources */,
-				517033EF13E90262007128BC /* messageButton.png in Resources */,
-				517033F013E90262007128BC /* messageButton@2x.png in Resources */,
+				517033F713E90721007128BC /* messageButton.png in Resources */,
+				517033F813E90721007128BC /* messageButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -38,6 +38,7 @@
 - (void)sortPressed:(UIButton*)sender;
 - (void)searchPressed:(UIButton*)sender;
 - (void)donePressed:(UISearchBar *)thisSearchBar;
+- (void)sendPressed:(UIButton*)sender;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)thisEvent;
 - (void)textFieldDidChange:(NSNotification*)bar;
 @property (nonatomic, retain) IBOutlet UILabel *eventCheck;

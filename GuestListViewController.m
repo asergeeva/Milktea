@@ -56,14 +56,18 @@ BOOL attendingAscending;
     }
     return self;
 }
+- (void)addEffects:(UIView*)view
+{
+	view.layer.cornerRadius = 5;
+	view.layer.shadowOpacity = 0.3;
+	view.layer.shadowOffset = CGSizeMake(0.0, 0.1);
+	view.layer.shadowRadius = 1;
+	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+	view.layer.shouldRasterize = YES;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//	navBar.hidden = YES;
-//	if(self.parentViewController.modalViewController == self)
-//	{
-//		navBar.hidden = NO;
-//	}
 	self.navigationItem.title = @"Guest List";
 	eventName.text = event.eventName;
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -71,23 +75,13 @@ BOOL attendingAscending;
 	eventDate.text = [df stringFromDate:event.eventDate];
 	[df release];
 	
-	CGFloat scale = [[UIScreen mainScreen] scale];
-	
 	guestTable.dataSource = self;
 	guestTable.delegate = self;
 	guestTable.backgroundColor = [UIColor clearColor];
 	guestTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-	eventNameBack.layer.cornerRadius = 5;
-	eventNameBack.layer.shadowOffset = CGSizeMake(0.0, 0.2);
-	eventNameBack.layer.shadowOpacity = 0.25;
-	eventNameBack.layer.shouldRasterize = YES;
-	eventNameBack.layer.rasterizationScale = scale;
+	guestTable.tag = 7777;
+
 	
-	eventCheckBack.layer.cornerRadius = 5;
-	eventCheckBack.layer.shadowOffset = CGSizeMake(0.0, 0.2);
-	eventCheckBack.layer.shadowOpacity = 0.25;
-	eventCheckBack.layer.shouldRasterize = YES;	
-	eventCheckBack.layer.rasterizationScale = scale;
 	UIView *header = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)] autorelease];
 	header.backgroundColor = [UIColor whiteColor];
 	header.layer.cornerRadius = 5;
@@ -95,12 +89,14 @@ BOOL attendingAscending;
 	searchHeader = [[[UIView alloc] initWithFrame:CGRectMake(10, 145, 300, 35)] autorelease];
 	[masterHeader addSubview:header];
 	[masterHeader sendSubviewToBack:header];
-	masterHeader.layer.cornerRadius = 5;
-	masterHeader.layer.shadowOffset = CGSizeMake(0.0, 0.2);
-	masterHeader.layer.shadowOpacity = 0.25;
-	masterHeader.layer.shouldRasterize = YES;	
-	masterHeader.layer.rasterizationScale = scale;
-
+	masterHeader.tag = 7770;
+	if([UIDevice currentDevice].multitaskingSupported)
+	{
+		[self addEffects:eventNameBack];
+		[self addEffects:eventCheckBack];
+		[self addEffects:guestTable];
+		[self addEffects:masterHeader];
+	}
 	UIButton *firstNameButton = [[[UIButton alloc] initWithFrame:CGRectMake(15, 10, 85, 21)] autorelease];
 	[firstNameButton setImage:[UIImage imageNamed:@"firstNameButton.png"] forState:UIControlStateNormal];
 	[firstNameButton addTarget:self action:@selector(sortPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -129,22 +125,15 @@ BOOL attendingAscending;
 		if([view isKindOfClass:[UITextField class]])
 		{
 			UITextField *temp = (UITextField*)view;
-//			temp.returnKeyType = UIReturnKeyDone;
-//			[temp addTarget:self action:@selector(donePressed:) forControlEvents:UIControlEventTouchUpInside];
 			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:@"UITextFieldTextDidChangeNotification" object:temp];	
-			
 			break;
 		}
 	}
+	
 	[searchHeader addSubview:searchBar];
 	[searchHeader addSubview:doneButton];
 	[searchHeader sendSubviewToBack:doneButton];
 	[self moveSearchOut:0];
-	guestTable.layer.shadowOffset = CGSizeMake(0.0, 0.3);
-	guestTable.layer.shadowOpacity = 0.25;
-	guestTable.layer.shouldRasterize = YES;
-	guestTable.layer.rasterizationScale = scale;
-	guestTable.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	
 	toolbar.barStyle = UIBarStyleBlack;
 	[searchButton setImage:[UIImage imageNamed:@"searchButton.png"] forState:UIControlStateNormal];
@@ -154,6 +143,8 @@ BOOL attendingAscending;
 	[toolbar addSubview:searchButton];
 	[toolbar addSubview:refreshButton];
 	[toolbar addSubview:sendButton];
+	
+	[sendButton addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
 	
 	[self.view addSubview:masterHeader];
 	[self.view addSubview:searchHeader];
@@ -329,6 +320,44 @@ BOOL attendingAscending;
 	[guestTable reloadData];
 	searchBar.text = @"";
 	[self.view bringSubviewToFront:toolbar];
+}
+- (void)sendPressed:(UIButton*)sender
+{
+	self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.914 green:0.902 blue:0.863 alpha:1.000];
+	[UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationCurveEaseInOut animations:^(void) {
+		for(UIView *view in self.view.subviews)
+		{
+			if(view.tag != 7777)
+			{
+				if(view.tag != 7770)
+				{
+					CGRect rect = view.frame;
+					rect.origin.x -= 480;
+					view.frame = rect;
+				}
+				else
+				{
+					CGRect rect = view.frame;
+					rect.origin.y -= 244;
+					view.frame = rect;					
+				}
+			}
+		}
+		CGRect rect = self.navigationController.navigationBar.frame;
+		rect.origin.y -= 50;
+		self.navigationController.navigationBar.frame = rect;
+	}completion:nil];
+	
+	[UIView animateWithDuration:0.75 delay:0.15 options:UIViewAnimationCurveEaseInOut animations:^(void) {
+		CGRect rect = self.view.frame;
+		rect.origin.y += 44;
+		self.view.bounds = rect;
+		rect = guestTable.frame;
+		rect.origin.y = 0;
+		rect.size.height = self.view.frame.size.height;
+		guestTable.frame = rect;
+	} completion:nil];
+	
 }
 #pragma mark - UITableView Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

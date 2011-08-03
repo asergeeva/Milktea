@@ -92,12 +92,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	[self refreshProfile];
-	whiteBackground.layer.cornerRadius = 5;
-	whiteBackground.layer.shadowOffset = CGSizeMake(0.0, 0.2);
-	whiteBackground.layer.shadowOpacity = 0.25;
-//	whiteBackground.clipsToBounds = YES;
+	if([UIDevice currentDevice].multitaskingSupported)
+	{
+		whiteBackground.layer.cornerRadius = 5;
+		whiteBackground.layer.shadowOffset = CGSizeMake(0.0, 0.2);
+		whiteBackground.layer.shadowOpacity = 0.25;
+		whiteBackground.layer.shouldRasterize = YES;
+	}
 	updateButton.layer.cornerRadius = 5;
 	updateButton.clipsToBounds = YES;
+	updateButton.layer.shouldRasterize = YES;
 }
 
 - (void)viewDidUnload

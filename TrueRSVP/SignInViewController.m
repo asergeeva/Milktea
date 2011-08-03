@@ -142,7 +142,6 @@
 		[alert release];
 		return;
 	}
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"login"]];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"login"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
@@ -176,19 +175,15 @@
 	}
 	else if ([status isEqualToString:@"status_loginSuccess"])
 	{
-//		UINavigationController *navController = self.navigationController;
-//		NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
-//		[controllers removeLastObject];
-//		navController.viewControllers = controllers;
+		UINavigationController *navController = self.navigationController;
+		NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
+		[controllers removeLastObject];
+		navController.viewControllers = controllers;
 		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
-		[self.navigationController pushViewController:mainVC animated:YES];
+//		[self.navigationController pushViewController:mainVC animated:YES];
+		[navController pushViewController:mainVC animated:YES];
 		[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
-//		[navController pushViewController:mainVC animated:YES];
 		[mainVC release];
-//		ProfileViewController *profileVC = [[ProfileViewController alloc]initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
-//		[self.navigationController pushViewController:profileVC animated:YES];
-//		[SettingsManager sharedSettingsManager].welcomeDismissed = NO;
-//		[[[SettingsManager sharedSettingsManager] settings] setValue:NO forKey:@"welcomeDismissed"];
 	}
 	
 }
@@ -213,6 +208,7 @@
 - (void)viewDidLoad
 {
 	self.navigationController.navigationBar.frame = CGRectMake(0, -44, 480, 44);
+	self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.235 green:0.600 blue:0.792 alpha:1.000];
 	txtUsername.alpha = 0;
 	txtPassword.alpha = 0;
 	loginButton.alpha = 0;
@@ -220,14 +216,12 @@
 	[UIView animateWithDuration:0.5 animations:^{
 			self.navigationController.navigationBar.frame = CGRectMake(0, 20, 320, 44);		
 	}];
-	[UIView animateWithDuration:0.15 animations:^{ } completion:^(BOOL finished) {
-		[UIView animateWithDuration:0.7 animations:^(void) {
+	[UIView animateWithDuration:0.7 delay:0.15 options:UIViewAnimationCurveEaseIn animations:^(void) {
 			txtUsername.alpha = 1;
 			txtPassword.alpha = 1;
 			loginButton.alpha = 1;
 			fbButton.alpha = 1;
-		}];
-	}];
+		} completion:nil];
 	
 	self.navigationController.navigationBar.autoresizesSubviews = NO;
 	self.navigationController.navigationBar.autoresizingMask = UIViewAutoresizingNone;

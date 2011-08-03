@@ -68,33 +68,29 @@
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
+- (void)addEffects:(UIView*)view
+{
+	view.layer.cornerRadius = 5;
+	view.layer.shadowOpacity = 0.3;
+	view.layer.shadowOffset = CGSizeMake(0.0, 0.1);
+	view.layer.shadowRadius = 1;
+	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+	view.layer.shouldRasterize = YES;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	self.navigationItem.title = @"Event Details";
     // Do any additional setup after loading the view from its nib.
-	CGSize shadowOffset = CGSizeMake(0.0, 0.2);
-	eventWhiteBack.layer.cornerRadius = 5;
-	eventWhiteBack.layer.shadowOpacity = 0.3;
-	eventWhiteBack.layer.shadowOffset = shadowOffset;
-	eventWhiteBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-	eventWhiteBack.layer.shouldRasterize = YES;
-	eventDescriptionWhiteBack.layer.cornerRadius = 5;
-	eventDescriptionWhiteBack.layer.shadowOpacity = 0.3;
-	eventDescriptionWhiteBack.layer.shadowOffset = shadowOffset;
-	eventDescriptionWhiteBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-	eventDescriptionWhiteBack.layer.shouldRasterize = YES;
-	buttonWhiteBack.layer.cornerRadius = 5;
-	buttonWhiteBack.layer.shadowOpacity = 0.3;
-	buttonWhiteBack.layer.shadowOffset = shadowOffset;
-	buttonWhiteBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-	buttonWhiteBack.layer.shouldRasterize = YES;
-	yourRSVPBack.layer.cornerRadius = 5;
-	yourRSVPBack.layer.shadowOpacity = 0.3;
-	yourRSVPBack.layer.shadowOffset = shadowOffset;
-	yourRSVPBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-	yourRSVPBack.layer.shouldRasterize = YES;
-		
+	if([UIDevice currentDevice].multitaskingSupported)
+	{
+		[self addEffects:eventWhiteBack];
+		[self addEffects:eventMapBack];
+		[self addEffects:eventDescriptionWhiteBack];
+		[self addEffects:buttonWhiteBack];
+		[self addEffects:yourRSVPBack];
+		[self addEffects:eventMap];
+	}
 	contact.layer.cornerRadius = 5;
 	contact.clipsToBounds = YES;
 	checkIn.layer.cornerRadius = 5;
@@ -214,25 +210,25 @@
 		live.frame = CGRectMake(319, 177, 150, 27);
 		contact.frame = CGRectMake(319, 143, 150, 27);
 		checkIn.frame = CGRectMake(319, 109, 150, 27);
-		eventDescriptionWhiteBack.frame = CGRectMake(0, 222, 480, 72);
-		eventDescription.frame = CGRectMake(15, 0, 455, 72);
+		eventDescriptionWhiteBack.frame = CGRectMake(0, 222, 480, 78);
+		eventDescription.frame = CGRectMake(5, 232, 455, 50);
 	}
 	else
 	{
 		eventWhiteBack.frame = CGRectMake(10, 54, 300, 40);
 		eventName.frame = CGRectMake(20, 57, 280, 21);
 		eventDate.frame = CGRectMake(20, 74, 280, 21);
-		yourRSVPBack.frame = CGRectMake(10, 105, 300, 40);
-		staticRSVP.frame = CGRectMake(10, 114, 300, 21);
-		dynamicRSVP.frame = CGRectMake(198,114, 94, 21);
-		eventMap.frame = CGRectMake(25, 235, 270, 72);
+		yourRSVPBack.frame = CGRectMake(10, 105, 300, 30);
+		staticRSVP.frame = CGRectMake(10, 109, 300, 21);
+		dynamicRSVP.frame = CGRectMake(198, 109, 94, 21);
+		eventMap.frame = CGRectMake(25, 223, 270, 80);
 		eventMapBack.frame = CGRectMake(500, 500, 300, 114);
-		buttonWhiteBack.frame = CGRectMake(55, 325, 210, 120);
-		live.frame = CGRectMake(70, 407, 180, 27);
-		contact.frame = CGRectMake(70, 372, 180, 27);
-		checkIn.frame = CGRectMake(70, 337, 180, 27);
-		eventDescriptionWhiteBack.frame = CGRectMake(10, 153, 300, 164);
-		eventDescription.frame = CGRectMake(0, 0, 300, 76);
+		buttonWhiteBack.frame = CGRectMake(55, 333, 210, 120);
+		live.frame = CGRectMake(70, 415, 180, 27);
+		contact.frame = CGRectMake(70, 380, 180, 27);
+		checkIn.frame = CGRectMake(70, 345, 180, 27);
+		eventDescriptionWhiteBack.frame = CGRectMake(10, 143, 300, 180);
+		eventDescription.frame = CGRectMake(16, 163, 286, 61);
 //		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];

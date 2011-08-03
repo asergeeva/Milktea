@@ -171,29 +171,28 @@
 
 	directions.enabled = NO;
 }
+- (void)addEffects:(UIView*)view
+{
+	view.layer.cornerRadius = 5;
+	view.layer.shadowOpacity = 0.3;
+	view.layer.shadowOffset = CGSizeMake(0.0, 0.1);
+	view.layer.shadowRadius = 1;
+	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+	view.layer.shouldRasterize = YES;
+}
 - (void)viewDidLoad
 {
 
     [super viewDidLoad];
 	//self.view.frame = self.navigationController.view.frame;
 	self.navigationItem.title = @"Event Details";
-	CGSize shadowOffset = CGSizeMake(0.0, 0.2);
-	eventWhiteBack.layer.cornerRadius = 5;
-	eventWhiteBack.layer.shadowOpacity = 0.3;
-	eventWhiteBack.layer.shadowOffset = shadowOffset;
-	eventWhiteBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-	eventWhiteBack.layer.shouldRasterize = YES;
-	eventDescriptionWhiteBack.layer.cornerRadius = 5;
-	eventDescriptionWhiteBack.layer.shadowOpacity = 0.3;
-	eventDescriptionWhiteBack.layer.shadowOffset = shadowOffset;
-	eventDescriptionWhiteBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-	eventDescriptionWhiteBack.layer.shouldRasterize = YES;
-	buttonWhiteBack.layer.cornerRadius = 5;
-	buttonWhiteBack.layer.shadowOpacity = 0.3;
-	buttonWhiteBack.layer.shadowOffset = shadowOffset;
-	buttonWhiteBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-	buttonWhiteBack.layer.shouldRasterize = YES;
-	
+	if([UIDevice currentDevice].multitaskingSupported)
+	{
+		[self addEffects:eventWhiteBack];
+		[self addEffects:eventDescriptionWhiteBack];
+		[self addEffects:buttonWhiteBack];
+		[self addEffects:eventMap];
+	}
 	contact.layer.cornerRadius = 5;
 	contact.clipsToBounds = YES;
 	directions.layer.cornerRadius = 5;
@@ -284,7 +283,7 @@
 	{
 		eventWhiteBack.frame = CGRectMake(5, 55, 165, 40);
 		buttonWhiteBack.frame = CGRectMake(5, 105, 165, 195);
-		eventDescriptionWhiteBack.frame = CGRectMake(175, 55, 300, 243);
+		eventDescriptionWhiteBack.frame = CGRectMake(175, 55, 300, 245);
 		eventName.frame = CGRectMake(12, 55, 150, 21);
 		eventDate.frame = CGRectMake(12, 74, 150, 21);
 		eventDescription.frame = CGRectMake(15, 5, 270, 80);
