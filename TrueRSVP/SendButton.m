@@ -1,15 +1,14 @@
 //
-//  CheckInButton.m
+//  SendButton.m
 //  TrueRSVP
 //
-//  Created by Nicholas C Chan on 7/29/11.
+//  Created by Nicholas C Chan on 8/3/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "CheckInButton.h"
+#import "SendButton.h"
 
-@implementation CheckInButton
-@synthesize eid;
+@implementation SendButton
 @synthesize uid;
 - (id)init
 {
@@ -22,7 +21,6 @@
 }
 - (void)dealloc
 {
-	[eid release];
 	[uid release];
 	[super dealloc];
 }

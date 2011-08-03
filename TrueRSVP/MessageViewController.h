@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface MessageViewController : UIViewController
-
+{
+	NSMutableArray *selectedFromList;
+}
+@property (nonatomic, retain) NSMutableArray *selectedFromList;
 @end

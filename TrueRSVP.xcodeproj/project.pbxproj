@@ -86,6 +86,9 @@
 		516F313013E660EF002A31F8 /* UITextViewUneditable.m in Sources */ = {isa = PBXBuildFile; fileRef = 516F312F13E660EF002A31F8 /* UITextViewUneditable.m */; };
 		517033F713E90721007128BC /* messageButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 517033F513E90721007128BC /* messageButton.png */; };
 		517033F813E90721007128BC /* messageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517033F613E90721007128BC /* messageButton@2x.png */; };
+		517033FB13E958F2007128BC /* SendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 517033FA13E958F2007128BC /* SendButton.m */; };
+		5170340213E95B89007128BC /* sendMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 5170340013E95B89007128BC /* sendMarker.png */; };
+		5170340313E95B89007128BC /* sendMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5170340113E95B89007128BC /* sendMarker@2x.png */; };
 		5173571413D7FAD100204AAF /* Profile_aboutTextView.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571213D7FAD100204AAF /* Profile_aboutTextView.png */; };
 		5173571513D7FAD100204AAF /* Profile_aboutTextView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571313D7FAD100204AAF /* Profile_aboutTextView@2x.png */; };
 		5173571D13D8117D00204AAF /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5173571C13D8117D00204AAF /* SettingsManager.m */; };
@@ -305,6 +308,10 @@
 		516F312F13E660EF002A31F8 /* UITextViewUneditable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextViewUneditable.m; sourceTree = "<group>"; };
 		517033F513E90721007128BC /* messageButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageButton.png; sourceTree = "<group>"; };
 		517033F613E90721007128BC /* messageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageButton@2x.png"; sourceTree = "<group>"; };
+		517033F913E958F2007128BC /* SendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendButton.h; sourceTree = "<group>"; };
+		517033FA13E958F2007128BC /* SendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendButton.m; sourceTree = "<group>"; };
+		5170340013E95B89007128BC /* sendMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sendMarker.png; sourceTree = "<group>"; };
+		5170340113E95B89007128BC /* sendMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendMarker@2x.png"; sourceTree = "<group>"; };
 		5173571213D7FAD100204AAF /* Profile_aboutTextView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile_aboutTextView.png; sourceTree = "<group>"; };
 		5173571313D7FAD100204AAF /* Profile_aboutTextView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_aboutTextView@2x.png"; sourceTree = "<group>"; };
 		5173571B13D8117D00204AAF /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
@@ -820,6 +827,8 @@
 				515A0E6013E15CA500C136D0 /* refreshButton@2x.png */,
 				515A0E6113E15CA500C136D0 /* searchButton.png */,
 				515A0E6213E15CA500C136D0 /* searchButton@2x.png */,
+				5170340013E95B89007128BC /* sendMarker.png */,
+				5170340113E95B89007128BC /* sendMarker@2x.png */,
 				512556FF13E8020A00469DAE /* uploading.png */,
 				5125570013E8020A00469DAE /* uploading@2x.png */,
 				51DEC44613DE706C004940A5 /* Buttons */,
@@ -969,6 +978,8 @@
 				51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */,
 				51ACEA4A13E354F200C206FD /* CheckInButton.h */,
 				51ACEA4B13E354F200C206FD /* CheckInButton.m */,
+				517033F913E958F2007128BC /* SendButton.h */,
+				517033FA13E958F2007128BC /* SendButton.m */,
 				511F360C13D58B0C00F7E748 /* Constants.h */,
 				511F360D13D58B0D00F7E748 /* Constants.m */,
 			);
@@ -1167,6 +1178,8 @@
 				5198EE9613E8EA0800AB1FE4 /* Default@2x.png in Resources */,
 				517033F713E90721007128BC /* messageButton.png in Resources */,
 				517033F813E90721007128BC /* messageButton@2x.png in Resources */,
+				5170340213E95B89007128BC /* sendMarker.png in Resources */,
+				5170340313E95B89007128BC /* sendMarker@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1246,6 +1259,7 @@
 				512556F313E7EAAD00469DAE /* RootViewController.m in Sources */,
 				512556F513E7EAAD00469DAE /* UploadMedia.m in Sources */,
 				512556FD13E7F78F00469DAE /* CameraViewController.m in Sources */,
+				517033FB13E958F2007128BC /* SendButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

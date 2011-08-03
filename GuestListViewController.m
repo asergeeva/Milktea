@@ -13,6 +13,7 @@
 #import "CJSONDeserializer.h"
 #import "ASIFormDataRequest.h"
 #import "CheckInButton.h"
+#import "SendButton.h"
 @implementation GuestListViewController
 @synthesize guestNameAttendance;
 @synthesize event;
@@ -32,9 +33,11 @@
 @synthesize searchHeader;
 @synthesize searchBar;
 @synthesize filteredArray;
+//@synthesize scale;
 BOOL fnameAscending;
 BOOL lnameAscending;
 BOOL attendingAscending;
+BOOL sendSelection = NO;
 #pragma mark - Loading
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)thisEvent
 {
@@ -180,6 +183,7 @@ BOOL attendingAscending;
 	[masterHeader release];
 	[searchHeader release];
 	[searchBar release];
+//	[scale release];
 	[super dealloc];
 }
 #pragma mark - Other
@@ -323,8 +327,10 @@ BOOL attendingAscending;
 }
 - (void)sendPressed:(UIButton*)sender
 {
+	sendSelection = YES;
 	self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.914 green:0.902 blue:0.863 alpha:1.000];
 	[UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationCurveEaseInOut animations:^(void) {
+//		scale = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 		for(UIView *view in self.view.subviews)
 		{
 			if(view.tag != 7777)
@@ -332,7 +338,7 @@ BOOL attendingAscending;
 				if(view.tag != 7770)
 				{
 					CGRect rect = view.frame;
-					rect.origin.x -= 480;
+					rect.origin.y += 480;
 					view.frame = rect;
 				}
 				else
@@ -341,35 +347,66 @@ BOOL attendingAscending;
 					rect.origin.y -= 244;
 					view.frame = rect;					
 				}
+//				[view removeFromSuperview];
+//				[scale addSubview:view];
 			}
 		}
-		CGRect rect = self.navigationController.navigationBar.frame;
-		rect.origin.y -= 50;
-		self.navigationController.navigationBar.frame = rect;
+//		CGRect rect = self.navigationController.navigationBar.frame;
+//		rect.origin.y -= 50;
+//		self.navigationController.navigationBar.frame = rect;
+//		[scale addSubview:self.navigationController.navigationBar];
+//		[self.view addSubview:scale];
+//		[self.view bringSubviewToFront:guestTable];
+//		scale.transform = CGAffineTransformMakeTranslation(0, 480);
+//		scale.alpha = 0.25;
 	}completion:nil];
 	
-	[UIView animateWithDuration:0.75 delay:0.15 options:UIViewAnimationCurveEaseInOut animations:^(void) {
-		CGRect rect = self.view.frame;
-		rect.origin.y += 44;
+	[UIView animateWithDuration:0.75 delay:0.05 options:UIViewAnimationCurveEaseInOut animations:^(void) {
+		CGRect rect = self.view.bounds;
+		rect.origin.y = 0;
 		self.view.bounds = rect;
 		rect = guestTable.frame;
 		rect.origin.y = 0;
 		rect.size.height = self.view.frame.size.height;
 		guestTable.frame = rect;
 	} completion:nil];
-	
+	[UIView animateWithDuration:0.75 delay:0.5 options:UIViewAnimationCurveEaseInOut animations:^(void) {	
+		[self.navigationController setNavigationBarHidden:YES animated:YES];
+	} completion:nil];
 }
 #pragma mark - UITableView Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	UITableViewCell *currentCell = [tableView cellForRowAtIndexPath:indexPath];
-	for (UIView *view in [currentCell.contentView subviews])
+	if(sendSelection)
 	{
-		if([view isKindOfClass:[CheckInButton class]])
+		[tableView deselectRowAtIndexPath:indexPath animated:NO];
+		for (UIView *view in [currentCell.contentView subviews])
 		{
-			[self checkboxPressed:(CheckInButton*)view];
-			return;
+			if([view isKindOfClass:[SendButton class]])
+			{
+				if(((SendButton*)view).selected)
+				{
+					((SendButton*)view).selected = NO;
+				}
+				else
+				{
+					((SendButton*)view).selected = YES;
+				}
+				return;
+			}
+		}
+	}
+	else
+	{
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		for (UIView *view in [currentCell.contentView subviews])
+		{
+			if([view isKindOfClass:[CheckInButton class]])
+			{
+				[self checkboxPressed:(CheckInButton*)view];
+				return;
+			}
 		}
 	}
 
@@ -395,6 +432,12 @@ BOOL attendingAscending;
 	{
 		attendee = ((Attendee*)[guestNameAttendance objectAtIndex:indexPath.row]);
 	}
+	SendButton *sendMarker = [[[SendButton alloc] initWithFrame:CGRectMake(2, 2, 17, 17)] autorelease];
+	sendMarker.tag = 5555;
+	[sendMarker setImage:[UIImage imageNamed:@"sendMarker.png"] forState:UIControlStateSelected];
+	sendMarker.uid = attendee.uid;
+	[attendeeCell.contentView addSubview:sendMarker];
+	
 	UILabel *fname = [[[UILabel alloc] initWithFrame:CGRectMake(20, 0, 60, 20)] autorelease];
 	fname.text = [NSString stringWithString:attendee.fname];
 	fname.textAlignment = UITextAlignmentLeft;

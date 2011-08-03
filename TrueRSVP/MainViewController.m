@@ -34,6 +34,7 @@ int pageNumber = 0;
 		hostingVC = [[HostingViewController alloc] initWithNibName:@"HostingViewController" bundle:[NSBundle mainBundle]];
 		attendingVC.delegate = self;
 		hostingVC.delegate = self;
+		segmentButtons = [[UIView alloc] init];
         // Custom initialization
     }
     return self;
@@ -121,12 +122,13 @@ int pageNumber = 0;
 	[hostingButton setImage:[UIImage imageNamed:@"hosting_selected.png"] forState:UIControlStateSelected];
 	hostingButton.frame = CGRectMake(133, 0, 68, 29);
 	[hostingButton addTarget:self action:@selector(hostingTabSelected:) forControlEvents:UIControlEventTouchUpInside];
-	segmentButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, 86)];
 	[segmentButtons addSubview:profileButton];
 	[segmentButtons addSubview:attendingButton];
 	[segmentButtons addSubview:hostingButton];
-	segmentButtons.bounds = CGRectMake(45, -29, segmentButtons.frame.size.width, segmentButtons.frame.size.height);
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:segmentButtons] autorelease];
+	segmentButtons.frame = CGRectMake(0, 0, 201, 30);
+//	segmentButtons.frame = CGRectMake(45, 44, segmentButtons.frame.size.width, segmentButtons.frame.size.height);
+	self.navigationItem.titleView = segmentButtons;
+//	[self.navigationController.navigationBar addSubview:segmentButtons];
 	self.navigationItem.hidesBackButton = YES;
 }
 #pragma mark - Navigation Controller Delegate methods

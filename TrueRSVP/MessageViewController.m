@@ -9,7 +9,7 @@
 #import "MessageViewController.h"
 
 @implementation MessageViewController
-
+@synthesize selectedFromList;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -48,4 +48,9 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc
+{
+	[selectedFromList release];
+	[super dealloc];
+}
 @end

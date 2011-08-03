@@ -34,6 +34,7 @@
 @synthesize buttonWhiteBack;
 @synthesize guestListVC;
 @synthesize reader;
+
 #pragma mark - Init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event
 {

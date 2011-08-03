@@ -30,6 +30,7 @@
 	UIView *searchHeader;
 	NSMutableArray *filteredArray;
 	NSMutableArray *guestNameAttendance;
+//	UIView *scale;
 	Event *event;
 }
 - (void)refreshGuestList;
@@ -58,5 +59,6 @@
 @property (nonatomic, retain) UIToolbar *toolbar;
 @property (nonatomic, retain) NSMutableArray *guestNameAttendance;
 @property (nonatomic, retain) NSMutableArray *filteredArray;
+//@property (nonatomic, retain) UIView *scale;
 @property (nonatomic, retain) Event *event;
 @end

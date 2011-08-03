@@ -81,6 +81,15 @@ BOOL uploading = NO;
 {
 	[tweetField resignFirstResponder];
 }
+- (void)addEffects:(UIView*)view
+{
+	view.layer.cornerRadius = 5;
+	view.layer.shadowOpacity = 0.3;
+	view.layer.shadowOffset = CGSizeMake(0.0, 0.1);
+	view.layer.shadowRadius = 1;
+	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+	view.layer.shouldRasterize = YES;
+}
 - (void)viewDidLoad
 {	
     [self resetUi];
@@ -92,11 +101,7 @@ BOOL uploading = NO;
 	eventName.text = thisEvent.eventName;
 	if([UIDevice currentDevice].multitaskingSupported)
 	{
-		liveEventBack.layer.cornerRadius = 5;
-		liveEventBack.layer.shadowOffset = CGSizeMake(0.0, 0.25);
-		liveEventBack.layer.shadowOpacity = 0.25;
-		liveEventBack.layer.shouldRasterize = YES;
-		liveEventBack.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+		[self addEffects:liveEventBack];
 	}
 	logoutButton.title = @"Logout";
 	logoutButton.target = self;
@@ -353,11 +358,10 @@ BOOL uploading = NO;
 	view.tag = 150;
 	cell.backgroundColor = [UIColor clearColor];
 	view.backgroundColor = [UIColor whiteColor];
-	view.layer.cornerRadius = 5;
-	view.layer.shadowOpacity = 0.25;
-	view.layer.shadowOffset = CGSizeMake(0.0, 0.2);
-	view.layer.shouldRasterize = YES;
-	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+	if([UIDevice currentDevice].multitaskingSupported)
+	{
+		[self addEffects:view];
+	}
 	[cell.contentView addSubview:view];
 	int index = indexPath.row;
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[[tweets objectAtIndex:index] objectForKey:@"profile_image_url"]]];
