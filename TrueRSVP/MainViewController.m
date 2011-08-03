@@ -54,29 +54,6 @@ int pageNumber = 0;
 	hostingVC.view.bounds = rect;
 	scrollView.contentSize = CGSizeMake(0, 0);
 	scrollView.contentOffset = CGPointMake(0.0, 0.0);
-//	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-//	{
-//		[scrollView setContentSize:CGSizeMake(1440, 1)];
-//		[scrollView setContentOffset:CGPointMake(480*pageNumber, 0)];
-//		CGRect frame = CGRectMake(0, 0, 480, 320);
-//		frame.origin.x = 480*pageNumber;
-//		[scrollView scrollRectToVisible:frame animated:YES];
-//		profileVC.view.frame = CGRectMake(0, 0, 480, 320);
-//		attendingVC.view.frame = CGRectMake(480, 0, 480, 320);
-//		hostingVC.view.frame = CGRectMake(960, 0, 480, 320);
-//	}
-//	else
-//	{
-//		[scrollView setContentSize:CGSizeMake(960, 1)];
-//		[scrollView setContentOffset:CGPointMake(320*pageNumber, 0)];
-//		CGRect frame = CGRectMake(0, 0, 320, 480);
-//		frame.origin.x = 320*pageNumber;
-//		[scrollView scrollRectToVisible:frame animated:YES];
-//		profileVC.view.frame = CGRectMake(0, 0, 320, 480);
-//		attendingVC.view.frame = CGRectMake(320, 0, 320, 480);
-//		hostingVC.view.frame = CGRectMake(640, 0, 320, 480);
-//	}
-//	[self resetScrollViewContentSize:[[UIApplication sharedApplication] statusBarOrientation]];
 	[scrollView addSubview:profileVC.view];
 	[scrollView addSubview:attendingVC.view];
 	[scrollView addSubview:hostingVC.view];
@@ -99,7 +76,6 @@ int pageNumber = 0;
 		default:
 			break;
 	}
-	//    pageControl.currentPage = page;
 }
 - (void)resetScrollViewContentSize:(UIInterfaceOrientation)toInterfaceOrientation
 {
@@ -149,7 +125,7 @@ int pageNumber = 0;
 	[segmentButtons addSubview:profileButton];
 	[segmentButtons addSubview:attendingButton];
 	[segmentButtons addSubview:hostingButton];
-	segmentButtons.bounds = CGRectMake(0, -29, segmentButtons.frame.size.width, segmentButtons.frame.size.height);
+	segmentButtons.bounds = CGRectMake(45, -29, segmentButtons.frame.size.width, segmentButtons.frame.size.height);
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:segmentButtons] autorelease];
 	self.navigationItem.hidesBackButton = YES;
 }
@@ -307,13 +283,9 @@ int pageNumber = 0;
 	CGRect viewFrame = self.view.frame;
     viewFrame.origin.y -= animatedDistance;
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.3];
-    
-    [self.view setFrame:viewFrame];
-    
-    [UIView commitAnimations];
+	[UIView animateWithDuration:0.3 animations:^(void) {    
+		[self.view setFrame:viewFrame];
+	}];
 	keyboardUp = YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -321,13 +293,9 @@ int pageNumber = 0;
 	CGRect viewFrame = self.view.frame;
     viewFrame.origin.y += animatedDistance;
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.3];
-    
-    [self.view setFrame:viewFrame];
-    
-    [UIView commitAnimations];
+	[UIView animateWithDuration:0.3 animations:^{
+		[self.view setFrame:viewFrame];
+	}];
 	keyboardUp = NO;
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView

@@ -128,14 +128,12 @@
 }
 - (void)dismissWelcome:(id)sender
 {
-	[UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationBeginsFromCurrentState:YES];
+	[UIView animateWithDuration:0.3 animations:^{
     CGRect rect = self.welcomeBar.frame;
 	rect.origin.y -= 44;
     self.welcomeBar.frame = rect; 
 	welcomeBar.layer.opacity = 0.0;
-    [UIView commitAnimations];
+	}];
 }
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
@@ -214,13 +212,12 @@
 		[label release];
 		
 		//Scroll down animation
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.3];
-		[UIView setAnimationBeginsFromCurrentState:YES];
-		rect = self.welcomeBar.frame;
-		rect.origin.y += self.navigationController.navigationBar.frame.size.height;
-		self.welcomeBar.frame = rect; 
-		[UIView commitAnimations];
+		[UIView animateWithDuration:0.3 animations:^{
+			CGRect rect = welcomeBar.frame;
+			rect = self.welcomeBar.frame;
+			rect.origin.y += self.navigationController.navigationBar.frame.size.height;
+			self.welcomeBar.frame = rect; 
+		}];
 		welcomeShown = YES;
 	}
 }

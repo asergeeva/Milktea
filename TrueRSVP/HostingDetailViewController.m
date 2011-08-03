@@ -304,7 +304,7 @@
 			if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
 			{
 				//				[self presentModalViewController:guestListVC animated:YES];
-				UIViewController *vc = [[UIViewController alloc] init];
+				UIViewController *vc = [[[UIViewController alloc] init] autorelease];
 				[self presentModalViewController:vc animated:NO];
 				[self dismissModalViewControllerAnimated:NO];
 			}	

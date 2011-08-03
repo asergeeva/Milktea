@@ -223,15 +223,12 @@ BOOL attendingAscending;
 }
 - (void)moveSearchOut:(float)duration
 {
-	[UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:duration];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-	
-	CGRect rect = searchHeader.frame;
-	rect.origin.x -= 400;
-	searchHeader.frame = rect;
-	searchHeader.layer.opacity = 0.0;
-	[UIView commitAnimations];
+	[UIView animateWithDuration:duration animations:^(void) {
+		CGRect rect = searchHeader.frame;
+		rect.origin.x -= 400;
+		searchHeader.frame = rect;
+		searchHeader.layer.opacity = 0.0;
+	}];
 }
 #pragma mark - UIButton Actions
 - (void)checkboxPressed:(CheckInButton*)sender
@@ -283,58 +280,51 @@ BOOL attendingAscending;
 {
 	searchHeader.hidden = NO;
 	[searchBar becomeFirstResponder];
-	[UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-	
-	CGRect rect = masterHeader.frame;
-	rect.origin.x += 400;
-	masterHeader.frame = rect;
-	
-	rect = searchHeader.frame;
-	rect.origin.x += 400;
-	searchHeader.frame = rect;
-	
-	rect = self.view.frame;
-	rect.origin.y -= 95;
-	self.view.frame = rect;
-	
-	rect = self.navigationController.view.frame;
-	rect.origin.y -= 44;
-	self.navigationController.view.frame = rect;
-	
-	rect = guestTable.frame;
-	rect.origin.y -= 11;
-	guestTable.frame = rect;
-	searchHeader.layer.opacity = 1.0;
-	[UIView commitAnimations];
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		CGRect rect = masterHeader.frame;
+		rect.origin.x += 400;
+		masterHeader.frame = rect;
+		
+		rect = searchHeader.frame;
+		rect.origin.x += 400;
+		searchHeader.frame = rect;
+		
+		rect = self.view.frame;
+		rect.origin.y -= 95;
+		self.view.frame = rect;
+		
+		rect = self.navigationController.view.frame;
+		rect.origin.y -= 44;
+		self.navigationController.view.frame = rect;
+		
+		rect = guestTable.frame;
+		rect.origin.y -= 11;
+		guestTable.frame = rect;
+		searchHeader.layer.opacity = 1.0;
+	}];
 	[self.view bringSubviewToFront:guestTable];
 }
 - (void)donePressed:(UISearchBar *)thisSearchBar
 {
 	[searchBar resignFirstResponder];
 	[self moveSearchOut:0.3];
-	[UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-	
-	CGRect rect = masterHeader.frame;
-	rect.origin.x -= 400;
-	masterHeader.frame = rect;
-	
-	rect = self.view.frame;
-	rect.origin.y += 95;
-	self.view.frame = rect;
-	
-	rect = self.navigationController.view.frame;
-	rect.origin.y += 44;
-	self.navigationController.view.frame = rect;
-	
-	rect = guestTable.frame;
-	rect.origin.y += 11;
-	guestTable.frame = rect;
-	
-	[UIView commitAnimations];
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		CGRect rect = masterHeader.frame;
+		rect.origin.x -= 400;
+		masterHeader.frame = rect;
+		
+		rect = self.view.frame;
+		rect.origin.y += 95;
+		self.view.frame = rect;
+		
+		rect = self.navigationController.view.frame;
+		rect.origin.y += 44;
+		self.navigationController.view.frame = rect;
+		
+		rect = guestTable.frame;
+		rect.origin.y += 11;
+		guestTable.frame = rect;	
+	}];
 	
 	[guestTable reloadData];
 	searchBar.text = @"";

@@ -123,6 +123,7 @@
 			[alert release];
 		}
 	}
+	[destinationLocation release];
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {

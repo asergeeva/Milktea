@@ -25,7 +25,7 @@
 	IBOutlet UITableView *tweetTable;
 	UIBarButtonItem *logoutButton;
 	Event *thisEvent;
-	NSMutableDictionary *lastTweet;
+//	NSMutableDictionary *lastTweet;
 //	UIAlertView *showUploadingMessage;
 //	UIImageView *uploadingMessage;
 	TwitterLoginPopup *loginPopup;
@@ -43,7 +43,7 @@
 @property (nonatomic, retain) IBOutlet UITableView *tweetTable;
 @property (nonatomic, retain) Event *thisEvent;
 @property (nonatomic, retain) NSMutableArray *tweets;
-@property (nonatomic, retain) NSMutableDictionary *lastTweet;
+//@property (nonatomic, retain) NSMutableDictionary *lastTweet;
 @property (nonatomic, retain) UIBarButtonItem *logoutButton;
 //@property (nonatomic, retain) UIImageView *uploadingMessage;
 //@property (nonatomic, retain) UIAlertView *showUploadingMessage;

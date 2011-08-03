@@ -23,7 +23,7 @@
 //@synthesize portraitView;
 //@synthesize landscapeView;
 @synthesize loginButton;
-
+@synthesize fbButton;
 - (void)dealloc
 {
 	[txtUsername release];
@@ -31,6 +31,7 @@
 //	[navBar release];
 	[loginButton release];
 	[facebook release];
+	[fbButton release];
     [super dealloc];
 }
 
@@ -81,35 +82,32 @@
 
 -(void)setViewMoveUp:(BOOL)moveUp
 {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-	
-    CGRect rect = self.view.frame;
-    if (moveUp)
-    {
-		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		CGRect rect = self.view.frame;
+		if (moveUp)
 		{
-			rect.origin.y -= 135.0;
+			if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
+			{
+				rect.origin.y -= 135.0;
+			}
+			else
+			{
+				rect.origin.y -= 95.0;
+			}	
 		}
 		else
 		{
-			rect.origin.y -= 95.0;
-		}	
-    }
-    else
-    {
-		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
-		{
-			rect.origin.y += 135.0;
+			if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
+			{
+				rect.origin.y += 135.0;
+			}
+			else
+			{
+				rect.origin.y += 95.0;
+			}	
 		}
-		else
-		{
-			rect.origin.y += 95.0;
-		}	
-    }
-    self.view.frame = rect; 
-    [UIView commitAnimations];
+		self.view.frame = rect; 
+	}];
 }
 - (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
 	for (UIView* view in self.view.subviews) {
@@ -214,6 +212,25 @@
 }
 - (void)viewDidLoad
 {
+	self.navigationController.navigationBar.frame = CGRectMake(0, -44, 480, 44);
+	txtUsername.alpha = 0;
+	txtPassword.alpha = 0;
+	loginButton.alpha = 0;
+	fbButton.alpha = 0;
+	[UIView animateWithDuration:0.5 animations:^{
+			self.navigationController.navigationBar.frame = CGRectMake(0, 20, 320, 44);		
+	}];
+	[UIView animateWithDuration:0.15 animations:^{ } completion:^(BOOL finished) {
+		[UIView animateWithDuration:0.7 animations:^(void) {
+			txtUsername.alpha = 1;
+			txtPassword.alpha = 1;
+			loginButton.alpha = 1;
+			fbButton.alpha = 1;
+		}];
+	}];
+	
+	self.navigationController.navigationBar.autoresizesSubviews = NO;
+	self.navigationController.navigationBar.autoresizingMask = UIViewAutoresizingNone;
 	facebook = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]).facebook;
 	CGRect rect = self.view.bounds;
 	rect.origin.y += self.navigationController.navigationBar.frame.size.height;
@@ -272,6 +289,7 @@
 		{
 			self.view.bounds = CGRectMake(-80.0, 89.0, 480.0, 320.0);
 		}
+		self.navigationController.navigationBar.frame = CGRectMake(0, -440, 480, 44);
 	}
 	else
 	{
@@ -284,7 +302,8 @@
 		{
 			self.view.bounds = CGRectMake(0.0, 44.0, 320.0, 480.0);
 		}
+		self.navigationController.navigationBar.frame = CGRectMake(0, 20, 320, 44);
 	}
-	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 @end

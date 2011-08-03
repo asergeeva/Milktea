@@ -14,6 +14,7 @@
 //	IBOutlet UINavigationBar *navBar;
 	IBOutlet UIButton *loginButton;
 	Facebook *facebook;
+	IBOutlet UIButton *fbButton;
 //	IBOutlet UIView *portraitView;
 //	IBOutlet UIView *landscapeView;
 }
@@ -27,6 +28,7 @@
 //@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) IBOutlet UIButton *loginButton;
 @property (nonatomic, retain) Facebook *facebook;
+@property (nonatomic, retain) IBOutlet UIButton *fbButton;
 //@property (nonatomic, retain) IBOutlet UIView *portraitView;
 //@property (nonatomic, retain) IBOutlet UIView *landscapeView;
 @end

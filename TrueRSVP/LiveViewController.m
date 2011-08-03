@@ -33,7 +33,7 @@
 @synthesize tweets;
 @synthesize tweetTable;
 @synthesize logoutButton;
-@synthesize lastTweet;
+//@synthesize lastTweet;
 //@synthesize uploadingMessage;
 BOOL twitterLoginShown = NO;
 BOOL uploading = NO;
@@ -45,7 +45,7 @@ BOOL uploading = NO;
     if (self) {
 		thisEvent = event;
 		tweets = [[NSMutableArray alloc] init];
-		lastTweet = [[NSMutableDictionary alloc] init];
+//		lastTweet = [[NSMutableDictionary alloc] init];
 		logoutButton = [[UIBarButtonItem alloc] init];
 		oAuth = [[OAuth alloc] initWithConsumerKey:OAUTH_CONSUMER_KEY andConsumerSecret:OAUTH_CONSUMER_SECRET];
 		[oAuth loadOAuthTwitterContextFromUserDefaults];
@@ -191,13 +191,13 @@ BOOL uploading = NO;
 
 - (IBAction)tweet:(UIButton*)sender
 {
-	NSString *postUrl = @"https://api.twitter.com/1/statuses/update.json";
-	ASIFormDataRequest *request = [[ASIFormDataRequest alloc]
-                                   initWithURL:[NSURL URLWithString:postUrl]];
 	if(tweetField.text.length == 0 )
 	{
 		return;
 	}
+	NSString *postUrl = @"https://api.twitter.com/1/statuses/update.json";
+	ASIFormDataRequest *request = [[ASIFormDataRequest alloc]
+                                   initWithURL:[NSURL URLWithString:postUrl]];
 	[tweetField resignFirstResponder];
 	NSString *hashtag = [NSString stringWithFormat:@"#trueRSVP%@", thisEvent.eventID];
 	if(tweetField.text.length > 139-hashtag.length)
@@ -208,12 +208,6 @@ BOOL uploading = NO;
 	{
 		tweetField.text = [NSString stringWithFormat:@"%@ %@", tweetField.text, hashtag];	
 	}
-	//	NSDictionary *dictionary = [[NSDictionary alloc] init];
-	[lastTweet removeAllObjects];
-	[lastTweet setValue:[[User sharedUser] picURL] forKey:@"profile_image_url"];
-	[lastTweet setValue:tweetField.text forKey:@"text"];
-	[tweets removeAllObjects];
-	[tweets insertObject:lastTweet atIndex:0];
 	[tweetTable reloadData];
 	
 	NSMutableDictionary *postInfo = [NSMutableDictionary
@@ -230,6 +224,7 @@ BOOL uploading = NO;
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+	[tweetField resignFirstResponder];
     ASIFormDataRequest *req = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://api.twitpic.com/2/upload.json"]];
     
     [req addRequestHeader:@"X-Auth-Service-Provider" value:@"https://api.twitter.com/1/account/verify_credentials.json"];
@@ -243,7 +238,7 @@ BOOL uploading = NO;
     // [req setPostValue:@"tweetmessage here" forKey:@"message"];
 	req.delegate = self;
     [req startAsynchronous];
-	UIView *blackView = [[UIView alloc] initWithFrame:self.view.frame];
+	UIView *blackView = [[[UIView alloc] initWithFrame:self.view.frame]autorelease];
 	CGRect rect = blackView.frame;
 	rect.origin.y += 44;
 	blackView.frame = rect;
@@ -251,18 +246,30 @@ BOOL uploading = NO;
 	blackView.tag = 7778;
 	blackView.alpha = 0;
 	[self.view addSubview:blackView];
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:1.0];
-	[UIView setAnimationDelegate:nil];
-	blackView.alpha = 0.5;
-	[UIView commitAnimations];
-	UIImageView *uploadingMessage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"uploading.png"]];
+	[UIView animateWithDuration:1.0 animations:^(void) {
+		blackView.alpha = 0.5;
+	}];
+	UIImageView *uploadingMessage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notification.png"]];
+
 	CGRect original = uploadingMessage.frame;
 	original.origin.x = rect.size.width/2 - original.size.width/2;
 	original.origin.y = rect.size.height/2 - original.size.height/2 + 44;
 	
 	uploadingMessage.frame = original;
 	uploadingMessage.tag = 7777;
+	
+	original.origin.x = original.size.width/2;
+	original.origin.y = original.size.height/2;
+	
+	UILabel *uploadingMessageLabel = [[[UILabel alloc] initWithFrame:original] autorelease];
+	uploadingMessageLabel.text = @"Uploading...";	
+	uploadingMessageLabel.backgroundColor = [UIColor clearColor];
+	uploadingMessageLabel.tag = 7777;
+	uploadingMessageLabel.textAlignment = UITextAlignmentCenter;
+	uploadingMessageLabel.textColor = [UIColor whiteColor];
+	uploadingMessageLabel.font = [UIFont systemFontOfSize:15];
+	[uploadingMessage addSubview:uploadingMessageLabel];
+	
 	[self.view addSubview:uploadingMessage];
 	self.view.userInteractionEnabled = NO;
 	self.navigationController.navigationBar.userInteractionEnabled = NO;
@@ -271,32 +278,25 @@ BOOL uploading = NO;
     [req release];
 	[self dismissModalViewControllerAnimated:YES];
 }
-- (void)removeBlackView
-{
-	[[self.view viewWithTag:7778] removeFromSuperview];
-}
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:1.0];
-	[UIView setAnimationDelegate:self];
-	[UIView setAnimationDidStopSelector:@selector(removeBlackView)];
-	[self.view viewWithTag:7778].alpha = 0.0;
-	[UIView commitAnimations];
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		[self.view viewWithTag:7778].alpha = 0.0;
+	} completion:^(BOOL finished) {
+		 [[self.view viewWithTag:7778] removeFromSuperview];
+	}];
+	
 	[[self.view viewWithTag:7777] removeFromSuperview];
 	self.view.userInteractionEnabled = YES;
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
-//	[uploadingMessage removeFromSuperview];
 	NSDictionary *twitpicResponse = [[request responseString] JSONValue];
     tweetField.text = [NSString stringWithFormat:@"%@ %@", [twitpicResponse valueForKey:@"url"], tweetField.text];
 }
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:1.0];
-	[UIView setAnimationDelegate:self];
-	[self.view viewWithTag:7778].alpha = 0.0;
-	[UIView commitAnimations];
+	[UIView animateWithDuration:1.0 animations:^(void) {
+		[self.view viewWithTag:7778].alpha = 0.0;
+	}];
 	self.view.userInteractionEnabled = YES;
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
 	[[self.view viewWithTag:7777] removeFromSuperview];
@@ -332,9 +332,7 @@ BOOL uploading = NO;
 #pragma mark - Twitter
 - (void)updateStream
 {
-//	NSURL *url = [NSURL URLWithString:@"http://search.twitter.com/search.json?q=%23deadmau5"];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%%23truersvp%@", thisEvent.eventID]];
-//	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%23truersvp%@", event.eventID]]];
 	
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	[request startSynchronous];
@@ -349,7 +347,7 @@ BOOL uploading = NO;
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell *cell = [[[UITableViewCell alloc] init] autorelease];
-	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 75)];
+	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 0, self.view.frame.size.width-20, 75)];
 	view.tag = 150;
 	cell.backgroundColor = [UIColor clearColor];
 	view.backgroundColor = [UIColor whiteColor];
@@ -360,10 +358,6 @@ BOOL uploading = NO;
 	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	[cell.contentView addSubview:view];
 	int index = indexPath.row;
-	if([lastTweet count] > 0 && indexPath.row != 0)
-	{
-		index++;
-	}
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[[tweets objectAtIndex:index] objectForKey:@"profile_image_url"]]];
 	[request startSynchronous];
 	UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 55, 55)] autorelease];
@@ -374,18 +368,12 @@ BOOL uploading = NO;
 	theTweet.text = [[tweets objectAtIndex:index] objectForKey:@"text"];
 	theTweet.font = [UIFont systemFontOfSize:12];
 	[view addSubview:theTweet];
+	[view release];
 	return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if([tweets count] <= 0)
-	{
-		[self updateStream];
-	}
-//	if([lastTweet count] > 0)
-//	{
-//		return [tweets count]+1;
-//	}
+	[self updateStream];
 	return [tweets count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -462,7 +450,7 @@ BOOL uploading = NO;
     [shareButton release];
 	[tweets release];
 	[tweetTable release];
-	[lastTweet release];
+//	[lastTweet release];
 	[logoutButton release];
 	[thisEvent release];
 //	[uploadingMessage release];
