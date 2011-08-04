@@ -8,6 +8,7 @@
 
 #import "HostingList.h"
 #import "SynthesizeSingleton.h"
+#import "Constants.h"
 @implementation HostingList
 SYNTHESIZE_SINGLETON_FOR_CLASS(HostingList);
 @synthesize eventsArray;
@@ -32,7 +33,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HostingList);
 		event.eventDescription = [dictionary objectForKey:@"description"];
 		event.eventAddress = [dictionary objectForKey:@"location_address"];
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-		dateFormatter.dateFormat = @"yyyy-MM-dd hh:mm:ss";
+		dateFormatter.dateFormat = dateFormatFromSQL;
 		event.eventDate = [dateFormatter dateFromString:[dictionary objectForKey:@"event_datetime"]];
 		[eventsArray addObject:event];
 		[event release];

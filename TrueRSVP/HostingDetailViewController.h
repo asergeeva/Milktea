@@ -43,6 +43,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
 - (void)dismissCamera;
 - (IBAction)showLive:(UIButton*)sender;
+- (IBAction)messagePressed:(UIButton*)sender;
 @property (nonatomic, retain) Event *eventHosting;
 //@property (nonatomic, retain) UILabel *dynamicRSVP;
 //@property (nonatomic, retain) UILabel *staticRSVP;

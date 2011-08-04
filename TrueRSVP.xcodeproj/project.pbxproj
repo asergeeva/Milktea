@@ -142,6 +142,17 @@
 		5199178313E2AFDE00C4A946 /* LiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5199178113E2AFDE00C4A946 /* LiveViewController.m */; };
 		5199178413E2AFDE00C4A946 /* LiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5199178213E2AFDE00C4A946 /* LiveViewController.xib */; };
 		5199178713E2B25500C4A946 /* cameraicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5199178613E2B25500C4A946 /* cameraicon.png */; };
+		519A0DEB13E9F44F0063695C /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DE913E9F44F0063695C /* backButton.png */; };
+		519A0DEC13E9F44F0063695C /* backButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DEA13E9F44F0063695C /* backButton@2x.png */; };
+		519A0DF213E9F46D0063695C /* selectAll.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DEE13E9F46D0063695C /* selectAll.png */; };
+		519A0DF313E9F46D0063695C /* selectAll@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DEF13E9F46D0063695C /* selectAll@2x.png */; };
+		519A0DF413E9F46D0063695C /* selectNone.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DF013E9F46D0063695C /* selectNone.png */; };
+		519A0DF513E9F46D0063695C /* selectNone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DF113E9F46D0063695C /* selectNone@2x.png */; };
+		519A0DF813E9F4BF0063695C /* 1px_whiteGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DF613E9F4BF0063695C /* 1px_whiteGradient.png */; };
+		519A0DF913E9F4BF0063695C /* 1px_whiteGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DF713E9F4BF0063695C /* 1px_whiteGradient@2x.png */; };
+		519A0DFC13EA28050063695C /* dropdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DFA13EA28050063695C /* dropdown.png */; };
+		519A0DFD13EA28050063695C /* dropdown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 519A0DFB13EA28050063695C /* dropdown@2x.png */; };
+		519A0E0013EAAFC30063695C /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 519A0DFE13EAAFC30063695C /* SFHFKeychainUtils.m */; };
 		519C557113DA04F900EE8E9A /* AttendanceList.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C557013DA04F900EE8E9A /* AttendanceList.m */; };
 		519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */; };
 		51ACEA4C13E354F200C206FD /* CheckInButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 51ACEA4B13E354F200C206FD /* CheckInButton.m */; };
@@ -398,6 +409,18 @@
 		5199178113E2AFDE00C4A946 /* LiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewController.m; sourceTree = "<group>"; };
 		5199178213E2AFDE00C4A946 /* LiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LiveViewController.xib; sourceTree = "<group>"; };
 		5199178613E2B25500C4A946 /* cameraicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraicon.png; sourceTree = "<group>"; };
+		519A0DE913E9F44F0063695C /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
+		519A0DEA13E9F44F0063695C /* backButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backButton@2x.png"; sourceTree = "<group>"; };
+		519A0DEE13E9F46D0063695C /* selectAll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectAll.png; sourceTree = "<group>"; };
+		519A0DEF13E9F46D0063695C /* selectAll@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectAll@2x.png"; sourceTree = "<group>"; };
+		519A0DF013E9F46D0063695C /* selectNone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectNone.png; sourceTree = "<group>"; };
+		519A0DF113E9F46D0063695C /* selectNone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectNone@2x.png"; sourceTree = "<group>"; };
+		519A0DF613E9F4BF0063695C /* 1px_whiteGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1px_whiteGradient.png; sourceTree = "<group>"; };
+		519A0DF713E9F4BF0063695C /* 1px_whiteGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1px_whiteGradient@2x.png"; sourceTree = "<group>"; };
+		519A0DFA13EA28050063695C /* dropdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropdown.png; sourceTree = "<group>"; };
+		519A0DFB13EA28050063695C /* dropdown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropdown@2x.png"; sourceTree = "<group>"; };
+		519A0DFE13EAAFC30063695C /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
+		519A0DFF13EAAFC30063695C /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		519C556F13DA04F900EE8E9A /* AttendanceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceList.h; sourceTree = "<group>"; };
 		519C557013DA04F900EE8E9A /* AttendanceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceList.m; sourceTree = "<group>"; };
 		519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController_Landscape.xib; sourceTree = "<group>"; };
@@ -800,9 +823,13 @@
 		518E2D9613D2527D0080E068 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				519A0DF613E9F4BF0063695C /* 1px_whiteGradient.png */,
+				519A0DF713E9F4BF0063695C /* 1px_whiteGradient@2x.png */,
 				514D992013E0E3E00036AC40 /* attendedButton.png */,
 				514D992113E0E3E00036AC40 /* attendedButton@2x.png */,
 				5199178613E2B25500C4A946 /* cameraicon.png */,
+				519A0DE913E9F44F0063695C /* backButton.png */,
+				519A0DEA13E9F44F0063695C /* backButton@2x.png */,
 				514D990413E0D9B50036AC40 /* checkbox.png */,
 				514D990513E0D9B50036AC40 /* checkbox@2x.png */,
 				514D990813E0DABD0036AC40 /* checkbox_checked.png */,
@@ -813,6 +840,8 @@
 				5198EE9413E8EA0800AB1FE4 /* Default@2x.png */,
 				51FD960B13E25D640044BB1D /* doneButton.png */,
 				51FD960C13E25D640044BB1D /* doneButton@2x.png */,
+				519A0DFA13EA28050063695C /* dropdown.png */,
+				519A0DFB13EA28050063695C /* dropdown@2x.png */,
 				514D991813E0E3D90036AC40 /* firstNameButton.png */,
 				514D992413E0FB9E0036AC40 /* firstNameButton@2x.png */,
 				514D991A13E0E3D90036AC40 /* lastNameButton.png */,
@@ -827,6 +856,10 @@
 				515A0E6013E15CA500C136D0 /* refreshButton@2x.png */,
 				515A0E6113E15CA500C136D0 /* searchButton.png */,
 				515A0E6213E15CA500C136D0 /* searchButton@2x.png */,
+				519A0DEE13E9F46D0063695C /* selectAll.png */,
+				519A0DEF13E9F46D0063695C /* selectAll@2x.png */,
+				519A0DF013E9F46D0063695C /* selectNone.png */,
+				519A0DF113E9F46D0063695C /* selectNone@2x.png */,
 				5170340013E95B89007128BC /* sendMarker.png */,
 				5170340113E95B89007128BC /* sendMarker@2x.png */,
 				512556FF13E8020A00469DAE /* uploading.png */,
@@ -982,6 +1015,8 @@
 				517033FA13E958F2007128BC /* SendButton.m */,
 				511F360C13D58B0C00F7E748 /* Constants.h */,
 				511F360D13D58B0D00F7E748 /* Constants.m */,
+				519A0DFE13EAAFC30063695C /* SFHFKeychainUtils.m */,
+				519A0DFF13EAAFC30063695C /* SFHFKeychainUtils.h */,
 			);
 			name = TrueRSVP_Shared;
 			path = TrueRSVP;
@@ -1180,6 +1215,16 @@
 				517033F813E90721007128BC /* messageButton@2x.png in Resources */,
 				5170340213E95B89007128BC /* sendMarker.png in Resources */,
 				5170340313E95B89007128BC /* sendMarker@2x.png in Resources */,
+				519A0DEB13E9F44F0063695C /* backButton.png in Resources */,
+				519A0DEC13E9F44F0063695C /* backButton@2x.png in Resources */,
+				519A0DF213E9F46D0063695C /* selectAll.png in Resources */,
+				519A0DF313E9F46D0063695C /* selectAll@2x.png in Resources */,
+				519A0DF413E9F46D0063695C /* selectNone.png in Resources */,
+				519A0DF513E9F46D0063695C /* selectNone@2x.png in Resources */,
+				519A0DF813E9F4BF0063695C /* 1px_whiteGradient.png in Resources */,
+				519A0DF913E9F4BF0063695C /* 1px_whiteGradient@2x.png in Resources */,
+				519A0DFC13EA28050063695C /* dropdown.png in Resources */,
+				519A0DFD13EA28050063695C /* dropdown@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1260,6 +1305,7 @@
 				512556F513E7EAAD00469DAE /* UploadMedia.m in Sources */,
 				512556FD13E7F78F00469DAE /* CameraViewController.m in Sources */,
 				517033FB13E958F2007128BC /* SendButton.m in Sources */,
+				519A0E0013EAAFC30063695C /* SFHFKeychainUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

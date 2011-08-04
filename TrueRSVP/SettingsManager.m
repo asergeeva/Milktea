@@ -16,8 +16,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 {
 	if((self = [super init]))
 	{
-		[self load];
 		settings = [[NSMutableDictionary alloc] init];
+		[self load];
 		if(![settings objectForKey:@"rootAddress"])
 		{
 			[settings setValue:@"http://192.168.1.135/Eventfii/" forKey:@"rootAddress"];

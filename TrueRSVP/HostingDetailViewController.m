@@ -258,6 +258,18 @@
 	[annotation release];
 }
 #pragma mark - Button Methods
+- (IBAction)messagePressed:(UIButton*)sender
+{
+	guestListVC = [[GuestListViewController alloc] initWithNibName:@"GuestListViewController" bundle:[NSBundle mainBundle] event:eventHosting];
+	guestListVC.showMessages = YES;
+	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+	{
+		UIViewController *vc = [[[UIViewController alloc] init] autorelease];
+		[self presentModalViewController:vc animated:NO];
+		[self dismissModalViewControllerAnimated:NO];
+	}	
+	[self.navigationController pushViewController:guestListVC animated:YES];
+}
 - (IBAction)showLive:(UIButton*)sender
 {
 	LiveViewController *liveVC = [[[LiveViewController alloc] initWithNibName:@"LiveViewController" bundle:[NSBundle mainBundle] event:eventHosting] autorelease];

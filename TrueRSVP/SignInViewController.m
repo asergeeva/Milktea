@@ -14,16 +14,17 @@
 #import "MainViewController.h"
 #import "SettingsManager.h"
 #import "DebugViewController.h"
+#import "SFHFKeychainUtils.h"
 //#import "ProfileViewController.h"
 @implementation SignInViewController
-@synthesize txtUsername;
-@synthesize txtPassword;
+//@synthesize txtUsername;
+//@synthesize txtPassword;
 //@synthesize navBar;
 @synthesize facebook;
 //@synthesize portraitView;
 //@synthesize landscapeView;
-@synthesize loginButton;
-@synthesize fbButton;
+//@synthesize loginButton;
+//@synthesize fbButton;
 - (void)dealloc
 {
 	[txtUsername release];
@@ -54,11 +55,17 @@
 {
 	if(textField == txtUsername)
 	{
-		[txtUsername becomeFirstResponder];
+		[textField resignFirstResponder];
+		[txtPassword becomeFirstResponder];
+		NSString *pass = [SFHFKeychainUtils getPasswordForUsername:txtUsername.text andServiceName:@"TrueRSVP" error:nil];
+		if(pass)
+		{
+			txtPassword.text = [SFHFKeychainUtils getPasswordForUsername:txtUsername.text andServiceName:@"TrueRSVP" error:nil];
+		}
 	}
 	else
 	{
-		[textField resignFirstResponder];
+		[txtPassword resignFirstResponder];
 		[self login:nil];
 	}
 	return NO;
@@ -82,32 +89,35 @@
 
 -(void)setViewMoveUp:(BOOL)moveUp
 {
-	[UIView animateWithDuration:0.3 animations:^(void) {
-		CGRect rect = self.view.frame;
-		if (moveUp)
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+	
+    CGRect rect = self.view.frame;
+    if (moveUp)
+    {
+		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
 		{
-			if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
-			{
-				rect.origin.y -= 135.0;
-			}
-			else
-			{
-				rect.origin.y -= 95.0;
-			}	
+			rect.origin.y -= 135.0;
 		}
 		else
 		{
-			if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
-			{
-				rect.origin.y += 135.0;
-			}
-			else
-			{
-				rect.origin.y += 95.0;
-			}	
+			rect.origin.y -= 95.0;
+		}	
+    }
+    else
+    {
+		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
+		{
+			rect.origin.y += 135.0;
 		}
-		self.view.frame = rect; 
-	}];
+		else
+		{
+			rect.origin.y += 95.0;
+		}	
+    }
+    self.view.frame = rect; 
+    [UIView commitAnimations];
 }
 - (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
 	for (UIView* view in self.view.subviews) {
@@ -129,8 +139,8 @@
 
 - (IBAction)login:(id)sender
 {
-	txtUsername.text = @"movingincircles@gmail.com";
-	txtPassword.text = @"supfoo";
+//	txtUsername.text = @"movingincircles@gmail.com";
+//	txtPassword.text = @"supfoo";
 	if([[txtPassword text] isEqualToString:@""] || [[txtUsername text] isEqualToString:@""])
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Blank" 
@@ -143,11 +153,18 @@
 		return;
 	}
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"login"]];
+	if([[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"] isEqualToString:@"http://dev.truersvp.com/api/"])
+	{
+		ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:[[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"]];
+		[req setAuthenticationScheme:(NSString*)kCFHTTPAuthenticationSchemeBasic];
+		[req setUseKeychainPersistence:YES];
+		[req shouldPresentAuthenticationDialog:YES];
+		[req startSynchronous];
+	}
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
-	
 	//MD5 encryption code
-	NSString *str = [txtPassword text];
+	NSString *str = txtPassword.text;
 	const char *cStr = [str UTF8String];
 	unsigned char result[16];
 	CC_MD5( cStr, strlen(cStr), result );
@@ -172,9 +189,13 @@
 											  otherButtonTitles:nil];
 		[alert show];
 		[alert release];
+		txtPassword.text = @"";
 	}
 	else if ([status isEqualToString:@"status_loginSuccess"])
 	{
+		[[SettingsManager sharedSettingsManager].settings setObject:txtUsername.text forKey:@"username"];
+		[[SettingsManager sharedSettingsManager] save];
+		[SFHFKeychainUtils storeUsername:txtUsername.text andPassword:txtPassword.text forServiceName:@"TrueRSVP" updateExisting:NO error:nil];
 		UINavigationController *navController = self.navigationController;
 		NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
 		[controllers removeLastObject];
@@ -207,6 +228,14 @@
 }
 - (void)viewDidLoad
 {
+	if([[SettingsManager sharedSettingsManager].settings objectForKey:@"username"])
+	{
+		txtUsername.text = [[SettingsManager sharedSettingsManager].settings objectForKey:@"username"];
+		if([SFHFKeychainUtils getPasswordForUsername:txtUsername.text andServiceName:@"TrueRSVP" error:nil])
+		{
+			txtPassword.text = [SFHFKeychainUtils getPasswordForUsername:txtUsername.text andServiceName:@"TrueRSVP" error:nil];
+		}
+	}
 	self.navigationController.navigationBar.frame = CGRectMake(0, -44, 480, 44);
 	self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.235 green:0.600 blue:0.792 alpha:1.000];
 	txtUsername.alpha = 0;

@@ -101,7 +101,7 @@
 	[self.delegate selectedEvent:attendingDetailVC];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 //	[attendingDetailVC release];
-//	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication]).navController pushViewController:attendingDetailVC animated:YES];
+//	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication]).navController `ViewController:attendingDetailVC animated:YES];
 	//	self.view = attendingDetailVC.view;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

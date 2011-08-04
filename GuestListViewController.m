@@ -5,7 +5,11 @@
 //  Created by Nicholas C Chan on 7/27/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
-
+#define TABLE_TAG 1
+#define SORT_TAG 2
+#define HEADER_TAG 3
+#define TOOLBAR_TAG 4
+#define TOOLBAR2_TAG 5
 #import "GuestListViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SettingsManager.h"
@@ -14,17 +18,18 @@
 #import "ASIFormDataRequest.h"
 #import "CheckInButton.h"
 #import "SendButton.h"
+#import "MessageViewController.h"
 @implementation GuestListViewController
 @synthesize guestNameAttendance;
 @synthesize event;
-@synthesize eventName;
-@synthesize eventDate;
-//@synthesize navBar;
-@synthesize eventNameBack;
-@synthesize eventCheckBack;
-@synthesize eventCheck;
-@synthesize guestTable;
+//@synthesize eventName;
+//@synthesize eventDate;
+//@synthesize eventNameBack;
+//@synthesize eventCheckBack;
+//@synthesize eventCheck;
+//@synthesize guestTable;
 @synthesize toolbar;
+@synthesize toolbar2;
 @synthesize searchButton;
 @synthesize refreshButton;
 @synthesize sendButton;
@@ -33,6 +38,8 @@
 @synthesize searchHeader;
 @synthesize searchBar;
 @synthesize filteredArray;
+@synthesize showMessages;
+//@synthesize selectionList;
 //@synthesize scale;
 BOOL fnameAscending;
 BOOL lnameAscending;
@@ -56,6 +63,8 @@ BOOL sendSelection = NO;
 		doneButton = [[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 44)];
 		searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 210, 44)];
 		filteredArray = [[NSMutableArray alloc] init];
+		selectionList = [[NSMutableArray alloc] init];
+		showMessages = NO;
     }
     return self;
 }
@@ -67,6 +76,21 @@ BOOL sendSelection = NO;
 	view.layer.shadowRadius = 1;
 	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	view.layer.shouldRasterize = YES;
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+	if(sendSelection)
+	{
+		[self backButtonPressed];
+	}
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+	if(showMessages)
+	{
+		[self sendPressed:nil];
+	}
+	[super viewDidAppear:animated];
 }
 - (void)viewDidLoad
 {
@@ -82,19 +106,19 @@ BOOL sendSelection = NO;
 	guestTable.delegate = self;
 	guestTable.backgroundColor = [UIColor clearColor];
 	guestTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-	guestTable.tag = 7777;
+	guestTable.tag = TABLE_TAG;
 
 	
 	UIView *header = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)] autorelease];
 	header.backgroundColor = [UIColor whiteColor];
-	header.layer.cornerRadius = 5;
 	masterHeader = [[[UIView alloc] initWithFrame:CGRectMake(10, 145, 300, 35)] autorelease];
 	searchHeader = [[[UIView alloc] initWithFrame:CGRectMake(10, 145, 300, 35)] autorelease];
 	[masterHeader addSubview:header];
 	[masterHeader sendSubviewToBack:header];
-	masterHeader.tag = 7770;
+	masterHeader.tag = HEADER_TAG;
 	if([UIDevice currentDevice].multitaskingSupported)
 	{
+		header.layer.cornerRadius = 5;
 		[self addEffects:eventNameBack];
 		[self addEffects:eventCheckBack];
 		[self addEffects:guestTable];
@@ -112,7 +136,6 @@ BOOL sendSelection = NO;
 	[attendedButton setImage:[UIImage imageNamed:@"attendedButton.png"] forState:UIControlStateNormal];
 	[attendedButton addTarget:self action:@selector(sortPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[header addSubview:attendedButton];
-
 	[doneButton setImage:[UIImage imageNamed: @"doneButton.png"] forState:UIControlStateNormal];
 	doneButton.backgroundColor = [UIColor whiteColor];
 	[doneButton addTarget:self action:@selector(donePressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -146,6 +169,7 @@ BOOL sendSelection = NO;
 	[toolbar addSubview:searchButton];
 	[toolbar addSubview:refreshButton];
 	[toolbar addSubview:sendButton];
+	toolbar.tag = TOOLBAR_TAG;
 	
 	[sendButton addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
 	
@@ -177,12 +201,14 @@ BOOL sendSelection = NO;
 //	[navBar release];
 	[guestNameAttendance release];
 	[toolbar release];
+	[toolbar2 release];
 	[searchButton release];
 	[refreshButton release];
 	[sendButton release];
 	[masterHeader release];
 	[searchHeader release];
 	[searchBar release];
+	[selectionList release];
 //	[scale release];
 	[super dealloc];
 }
@@ -325,54 +351,167 @@ BOOL sendSelection = NO;
 	searchBar.text = @"";
 	[self.view bringSubviewToFront:toolbar];
 }
+- (void)selectAllPressed
+{
+	[selectionList removeAllObjects];
+	for(Attendee *attendee in guestNameAttendance)
+	{
+		[selectionList addObject:attendee.uid];
+	}
+	[guestTable reloadData];
+}
+- (void)selectNonePressed
+{
+	[selectionList removeAllObjects];
+	[guestTable reloadData];	
+}
+- (void)backButtonPressed
+{
+	sendSelection = NO;
+	[selectionList removeAllObjects];
+	[guestTable reloadData];
+	[UIView animateWithDuration:0.75 delay:0 options:UIViewAnimationCurveEaseOut animations:^(void) {
+		for(UIView *view in self.view.subviews)
+		{
+			if(view.tag == TOOLBAR_TAG)
+			{
+				CGRect rect = view.frame;
+				rect.origin.y -= 480;
+				view.frame = rect;
+			}
+			else if(view.tag == HEADER_TAG)
+			{
+				CGRect rect = view.frame;
+				rect.origin.y = 145;
+				view.frame = rect;					
+			}
+			else if(view.tag == TOOLBAR2_TAG)
+			{
+				CGRect rect = view.frame;
+				rect.origin.y += 80;
+				view.frame = rect;				
+			}
+			else if(view.tag != TABLE_TAG)
+			{
+				CGRect rect = view.frame;
+				rect.origin.y += 244;
+				view.frame = rect;					
+			}
+
+		}
+	}completion:^(BOOL finished) {
+		if(finished)
+		{
+			[toolbar2 removeFromSuperview];
+			[toolbar2 release];
+		}
+	}];
+	[UIView animateWithDuration:0.5 delay:0.1 options:UIViewAnimationCurveEaseIn animations:^(void) {
+		CGRect rect = guestTable.frame;
+		rect.origin.y = 195;
+		rect.size.height = 362;
+		guestTable.frame = rect;	
+		[sendButton removeFromSuperview];
+		[toolbar addSubview:sendButton];	
+		rect = self.view.bounds;
+		rect.origin.y += 44;
+		self.view.bounds = rect;
+	} completion:^(BOOL finished) {
+		[sendButton removeTarget:self action:@selector(sendPressed2) forControlEvents:UIControlEventTouchUpInside];
+		[sendButton addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
+	}];
+	[self.navigationController setNavigationBarHidden:NO animated:YES];	
+}
+- (void)sendPressed2
+{
+	if(selectionList.count > 0)
+	{
+		[self.navigationController setNavigationBarHidden:NO animated:YES];	
+		MessageViewController *messageVC = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:[NSBundle mainBundle] list:selectionList event:event];
+		[self.navigationController pushViewController:messageVC animated:YES];
+		[messageVC release];
+	}
+	else
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Guest List" 
+														message:@"Please select at least one person to contact."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
+	showMessages = NO;
+}
 - (void)sendPressed:(UIButton*)sender
 {
 	sendSelection = YES;
 	self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.914 green:0.902 blue:0.863 alpha:1.000];
+//	[searchButton setImage:[UIImage imageNamed:@"searchButton.png"] forState:UIControlStateNormal];
+//	[searchButton addTarget:self action:@selector(searchPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationCurveEaseInOut animations:^(void) {
-//		scale = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 		for(UIView *view in self.view.subviews)
 		{
-			if(view.tag != 7777)
+			if(view.tag == TOOLBAR_TAG)
 			{
-				if(view.tag != 7770)
-				{
-					CGRect rect = view.frame;
-					rect.origin.y += 480;
-					view.frame = rect;
-				}
-				else
-				{
-					CGRect rect = view.frame;
-					rect.origin.y -= 244;
-					view.frame = rect;					
-				}
-//				[view removeFromSuperview];
-//				[scale addSubview:view];
+				CGRect rect = view.frame;
+				rect.origin.y += 480;
+				view.frame = rect;
+			}
+			else if(view.tag == HEADER_TAG)
+			{
+				CGRect rect = view.frame;
+				rect.origin.y = 10;
+				view.frame = rect;					
+			}
+			else if(view.tag != TABLE_TAG && view.tag != TOOLBAR2_TAG)
+			{
+
+				CGRect rect = view.frame;
+				rect.origin.y -= 244;
+				view.frame = rect;					
 			}
 		}
-//		CGRect rect = self.navigationController.navigationBar.frame;
-//		rect.origin.y -= 50;
-//		self.navigationController.navigationBar.frame = rect;
-//		[scale addSubview:self.navigationController.navigationBar];
-//		[self.view addSubview:scale];
-//		[self.view bringSubviewToFront:guestTable];
-//		scale.transform = CGAffineTransformMakeTranslation(0, 480);
-//		scale.alpha = 0.25;
 	}completion:nil];
 	
+	toolbar2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 516, 320, 44)];
+	toolbar2.barStyle = UIBarStyleBlack;
+	toolbar2.tag = TOOLBAR2_TAG;
+	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(4, -2, 49, 49)];
+	[backButton setImage:[UIImage imageNamed:@"backButton.png"] forState:UIControlStateNormal];
+	[backButton addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	UIButton *selectNone = [[UIButton alloc] initWithFrame:CGRectMake(70, -2, 63, 49)];
+	[selectNone setImage:[UIImage imageNamed:@"selectNone.png"] forState:UIControlStateNormal];
+	[selectNone addTarget:self action:@selector(selectNonePressed) forControlEvents:UIControlEventTouchUpInside];
+	UIButton *selectAll = [[UIButton alloc] initWithFrame:CGRectMake(155, -2, 49, 49)];
+	[selectAll setImage:[UIImage imageNamed:@"selectAll.png"] forState:UIControlStateNormal];
+	[selectAll addTarget:self action:@selector(selectAllPressed)forControlEvents:UIControlEventTouchUpInside];
+	[toolbar2 addSubview:backButton];
+	[toolbar2 addSubview:selectAll];
+	[toolbar2 addSubview:selectNone];
+	[backButton release];
+	[selectAll release];
+	[selectNone release];
+	[self.view addSubview:toolbar2];
+	toolbar2.alpha = 0;
+	[sendButton removeTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
+	[sendButton addTarget:self action:@selector(sendPressed2) forControlEvents:UIControlEventTouchUpInside];
 	[UIView animateWithDuration:0.75 delay:0.05 options:UIViewAnimationCurveEaseInOut animations:^(void) {
-		CGRect rect = self.view.bounds;
+		[sendButton removeFromSuperview];
+		[toolbar2 addSubview:sendButton];
+		CGRect rect = guestTable.frame;
+		rect.origin.y = 54;
+		rect.size.height = self.view.frame.size.height;
+		guestTable.frame = rect;		
+		rect = self.view.bounds;
 		rect.origin.y = 0;
 		self.view.bounds = rect;
-		rect = guestTable.frame;
-		rect.origin.y = 0;
-		rect.size.height = self.view.frame.size.height;
-		guestTable.frame = rect;
+		toolbar2.alpha = 1;
+		rect = toolbar2.frame;
+		rect.origin.y -= 100;
+		toolbar2.frame = rect;
 	} completion:nil];
-	[UIView animateWithDuration:0.75 delay:0.5 options:UIViewAnimationCurveEaseInOut animations:^(void) {	
-		[self.navigationController setNavigationBarHidden:YES animated:YES];
-	} completion:nil];
+	[self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 #pragma mark - UITableView Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -385,13 +524,16 @@ BOOL sendSelection = NO;
 		{
 			if([view isKindOfClass:[SendButton class]])
 			{
-				if(((SendButton*)view).selected)
+				SendButton *tempButton = (SendButton*)view;
+				if(tempButton.selected)
 				{
-					((SendButton*)view).selected = NO;
+					tempButton.selected = NO;
+					[selectionList removeObject:tempButton.uid];
 				}
 				else
 				{
-					((SendButton*)view).selected = YES;
+					tempButton.selected = YES;
+					[selectionList addObject:tempButton.uid];
 				}
 				return;
 			}
@@ -437,6 +579,11 @@ BOOL sendSelection = NO;
 	[sendMarker setImage:[UIImage imageNamed:@"sendMarker.png"] forState:UIControlStateSelected];
 	sendMarker.uid = attendee.uid;
 	[attendeeCell.contentView addSubview:sendMarker];
+	
+	if([selectionList containsObject:attendee.uid])
+	{
+		sendMarker.selected = YES;	
+	}
 	
 	UILabel *fname = [[[UILabel alloc] initWithFrame:CGRectMake(20, 0, 60, 20)] autorelease];
 	fname.text = [NSString stringWithString:attendee.fname];

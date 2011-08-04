@@ -12,32 +12,8 @@
 #import "Constants.h"
 #import "SettingsManager.h"
 @implementation ProfileViewController
-@synthesize nameLabel;
-@synthesize emailLabel;
-@synthesize cellLabel;
-@synthesize zipLabel;
-@synthesize twitterLabel;
-@synthesize aboutLabel;
-@synthesize emailTextField;
-@synthesize cellTextField;
-@synthesize zipTextField;
-@synthesize twitterTextField;
-@synthesize aboutTextView;
-@synthesize aboutImageView;
-@synthesize whiteBackground;
-@synthesize updateButton;
-@synthesize profilePic;
 @synthesize welcomeBar;
 @synthesize welcomeShown;
-//@synthesize view;
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//    }
-//    return self;
-//}
-
 - (void)dealloc
 {
 	[nameLabel release];
@@ -51,7 +27,7 @@
 	[zipTextField release];
 	[twitterTextField release];
 	[aboutTextView release];
-	[aboutImageView release];
+//	[aboutImageView release];
 	[whiteBackground release];;
 	[updateButton release];
 	[profilePic release];
@@ -102,6 +78,9 @@
 	updateButton.layer.cornerRadius = 5;
 	updateButton.clipsToBounds = YES;
 	updateButton.layer.shouldRasterize = YES;
+	aboutTextView.layer.cornerRadius = 5;
+	aboutTextView.layer.borderWidth = 2.0;
+	aboutTextView.layer.borderColor = [[UIColor grayColor] CGColor];
 }
 
 - (void)viewDidUnload
@@ -235,7 +214,7 @@
 	{
 		[self dismissWelcome:nil];
 		whiteBackground.frame = CGRectMake(4, 76, 210, 210);
-		aboutImageView.frame = CGRectMake(323, 120, 149, 79);
+//		aboutImageView.frame = CGRectMake(323, 120, 149, 79);
 		profilePic.frame = CGRectMake(16, 87, 188, 188);
 		emailTextField.frame = CGRectMake(222, 74, 250, 31);
 		cellTextField.frame = CGRectMake(222, 120, 93, 31);
@@ -254,7 +233,7 @@
 	else
 	{
 		whiteBackground.frame = CGRectMake(14, 120, 135, 135);
-		aboutImageView.frame = CGRectMake(13, 264, 136, 81);
+//		aboutImageView.frame = CGRectMake(13, 264, 136, 81);
 		profilePic.frame = CGRectMake(24, 131, 115, 115);
 		emailTextField.frame = CGRectMake(157, 134, 149, 31);
 		cellTextField.frame = CGRectMake(157, 193, 149, 31);

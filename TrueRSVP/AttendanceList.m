@@ -8,7 +8,7 @@
 
 #import "AttendanceList.h"
 #import "SynthesizeSingleton.h"
-
+#import "Constants.h"
 @implementation AttendanceList
 SYNTHESIZE_SINGLETON_FOR_CLASS(AttendanceList);
 @synthesize eventsArray;
@@ -33,7 +33,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AttendanceList);
 		event.eventDescription = [dictionary objectForKey:@"description"];
 		event.eventAddress = [dictionary objectForKey:@"location_address"];
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-		dateFormatter.dateFormat = @"yyyy-MM-dd hh:mm:ss";
+		dateFormatter.dateFormat = dateFormatFromSQL;
 		event.eventDate = [dateFormatter dateFromString:[dictionary objectForKey:@"event_datetime"]];
 		[eventsArray addObject:event];
 		[event release];

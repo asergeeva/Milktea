@@ -23,7 +23,7 @@
 	IBOutlet UITextField *zipTextField;
 	IBOutlet UITextField *twitterTextField;
 	IBOutlet UITextView *aboutTextView;
-	IBOutlet UIImageView *aboutImageView;
+//	IBOutlet UIImageView *aboutImageView;
 	IBOutlet UIView *whiteBackground;
 	IBOutlet UIButton *updateButton;
 	IBOutlet UIImageView *profilePic;
@@ -33,21 +33,6 @@
 }
 - (IBAction)updateProfile:(id)sender;
 - (void)dismissWelcome:(id)sender;
-@property (nonatomic, retain) IBOutlet UILabel *nameLabel;
-@property (nonatomic, retain) IBOutlet UILabel *emailLabel;
-@property (nonatomic, retain) IBOutlet UILabel *cellLabel;
-@property (nonatomic, retain) IBOutlet UILabel *zipLabel;
-@property (nonatomic, retain) IBOutlet UILabel *twitterLabel;
-@property (nonatomic, retain) IBOutlet UILabel *aboutLabel;
-@property (nonatomic, retain) IBOutlet UITextField *emailTextField;
-@property (nonatomic, retain) IBOutlet UITextField *cellTextField;
-@property (nonatomic, retain) IBOutlet UITextField *zipTextField;
-@property (nonatomic, retain) IBOutlet UITextField *twitterTextField;
-@property (nonatomic, retain) IBOutlet UITextView *aboutTextView;
-@property (nonatomic, retain) IBOutlet UIImageView *aboutImageView;
-@property (nonatomic, retain) IBOutlet UIView *whiteBackground;
-@property (nonatomic, retain) IBOutlet UIButton *updateButton;
-@property (nonatomic, retain) IBOutlet UIImageView *profilePic;
 @property (nonatomic, retain) UINavigationBar *welcomeBar;
 @property (nonatomic) BOOL welcomeShown;
 //@property (nonatomic, retain) IBOutlet DebugView *view;

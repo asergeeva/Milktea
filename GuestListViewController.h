@@ -26,10 +26,13 @@
 	UIButton *sendButton;
 	UISearchBar *searchBar;
 	UIToolbar *toolbar;
+	UIToolbar *toolbar2;
 	UIView *masterHeader;
 	UIView *searchHeader;
 	NSMutableArray *filteredArray;
 	NSMutableArray *guestNameAttendance;
+	NSMutableArray *selectionList;
+	BOOL showMessages;
 //	UIView *scale;
 	Event *event;
 }
@@ -40,15 +43,15 @@
 - (void)searchPressed:(UIButton*)sender;
 - (void)donePressed:(UISearchBar *)thisSearchBar;
 - (void)sendPressed:(UIButton*)sender;
+- (void)backButtonPressed;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)thisEvent;
 - (void)textFieldDidChange:(NSNotification*)bar;
-@property (nonatomic, retain) IBOutlet UILabel *eventCheck;
-@property (nonatomic, retain) IBOutlet UILabel *eventDate;
-@property (nonatomic, retain) IBOutlet UILabel *eventName;
-//@property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
-@property (nonatomic, retain) IBOutlet UITableView *guestTable;
-@property (nonatomic, retain) IBOutlet UIView *eventCheckBack;
-@property (nonatomic, retain) IBOutlet UIView *eventNameBack;
+//@property (nonatomic, retain) IBOutlet UILabel *eventCheck;
+//@property (nonatomic, retain) IBOutlet UILabel *eventDate;
+//@property (nonatomic, retain) IBOutlet UILabel *eventName;
+//@property (nonatomic, retain) IBOutlet UITableView *guestTable;
+//@property (nonatomic, retain) IBOutlet UIView *eventCheckBack;
+//@property (nonatomic, retain) IBOutlet UIView *eventNameBack;
 @property (nonatomic, retain) UIButton *doneButton;
 @property (nonatomic, retain) UIButton *refreshButton;
 @property (nonatomic, retain) UIButton *searchButton;
@@ -57,8 +60,12 @@
 @property (nonatomic, retain) UIView *masterHeader;
 @property (nonatomic, retain) UIView *searchHeader;
 @property (nonatomic, retain) UIToolbar *toolbar;
+@property (nonatomic, retain) UIToolbar *toolbar2;
 @property (nonatomic, retain) NSMutableArray *guestNameAttendance;
 @property (nonatomic, retain) NSMutableArray *filteredArray;
+@property (nonatomic) BOOL showMessages;
+//@property (nonatomic, retain) NSMutableArray *selectionList;
+
 //@property (nonatomic, retain) UIView *scale;
 @property (nonatomic, retain) Event *event;
 @end
