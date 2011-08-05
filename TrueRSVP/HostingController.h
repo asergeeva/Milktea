@@ -11,6 +11,5 @@
 @interface HostingController : ListController
 {
 }
-+ (NSString*)getSectionText:(NSString*)selectedMonth;
 - (void)refresh;
 @end

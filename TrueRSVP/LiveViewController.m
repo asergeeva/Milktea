@@ -33,11 +33,8 @@
 @synthesize tweets;
 @synthesize tweetTable;
 @synthesize logoutButton;
-//@synthesize lastTweet;
-//@synthesize uploadingMessage;
 BOOL twitterLoginShown = NO;
 BOOL uploading = NO;
-//@synthesize twit;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event
 {
@@ -45,22 +42,9 @@ BOOL uploading = NO;
     if (self) {
 		thisEvent = event;
 		tweets = [[NSMutableArray alloc] init];
-//		lastTweet = [[NSMutableDictionary alloc] init];
 		logoutButton = [[UIBarButtonItem alloc] init];
 		oAuth = [[OAuth alloc] initWithConsumerKey:OAUTH_CONSUMER_KEY andConsumerSecret:OAUTH_CONSUMER_SECRET];
 		[oAuth loadOAuthTwitterContextFromUserDefaults];
-//		UIImageView *uploadingMessage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"uploading.png"]];
-//		uploadingMessage.tag = 7777;
-//		showUploadingMessage = [[UIAlertView alloc] initWithTitle:@"Uploading" 
-//														message:@"Uploading picture, please wait..."
-//													   delegate:nil
-//											  cancelButtonTitle:nil
-//											  otherButtonTitles:nil];
-//		twit = [[MGTwitterEngine alloc] initWithDelegate:self];
-//		[twit setConsumerKey:@"oDMGOs0jPxFz7DDULHnw" secret:@"wHO9IHpUUkDIj1sGCs7YWRRUnKj4FMrmBrYwQGoMpw"];
-//		[twit setUsesSecureConnection:YES];
-//		[twit getXAuthAccessTokenForUsername:@"deadmau50r" password:@"deadmau5"];
-        // Custom initialization
     }
     return self;
 }
@@ -202,6 +186,7 @@ BOOL uploading = NO;
 	{
 		return;
 	}
+	
 	NSString *postUrl = @"https://api.twitter.com/1/statuses/update.json";
 	ASIFormDataRequest *request = [[ASIFormDataRequest alloc]
                                    initWithURL:[NSURL URLWithString:postUrl]];

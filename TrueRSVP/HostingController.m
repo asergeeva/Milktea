@@ -35,36 +35,5 @@
 	[[HostingList sharedHostingList] updateEventsList:hostingInfo];
 	eventArray = [HostingList sharedHostingList].eventsArray;
 }
-+ (NSString*)getSectionText:(NSString*)selectedMonth
-{
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-M/MM";
-	
-	NSDateFormatter *dfYear = [[NSDateFormatter alloc] init];
-	dfYear.dateFormat = @"yyyy";
-	
-	int year = [[selectedMonth substringToIndex:3] intValue];
-	
-	NSString *text;
-	if([selectedMonth isEqualToString:[df stringFromDate:[NSDate date]]])
-	{
-		text = @"   This Month";
-	}
-	else if (year != [[dfYear stringFromDate:[NSDate date]] intValue])
-	{
-		NSDate *fromString = [df dateFromString:selectedMonth];
-		df.dateFormat = @"   MMMM yyyy";
-		text = [df stringFromDate:fromString];
-	}
-	else
-	{
-		NSDate *fromString = [df dateFromString:selectedMonth];
-		df.dateFormat = @"   MMMM";
-		text = [df stringFromDate:fromString];
-	}
-	[df release];
-	[dfYear release];
-	return text;
-}
 @end
 

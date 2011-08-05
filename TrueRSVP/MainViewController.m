@@ -285,9 +285,13 @@ int pageNumber = 0;
 	CGRect viewFrame = self.view.frame;
     viewFrame.origin.y -= animatedDistance;
     
-	[UIView animateWithDuration:0.3 animations:^(void) {    
+	[UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void) {
 		[self.view setFrame:viewFrame];
-	}];
+	} completion:nil];
+	
+//	[UIView animateWithDuration:0.3 animations:^(void) {    
+//		[self.view setFrame:viewFrame];
+//	}];
 	keyboardUp = YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -295,9 +299,9 @@ int pageNumber = 0;
 	CGRect viewFrame = self.view.frame;
     viewFrame.origin.y += animatedDistance;
     
-	[UIView animateWithDuration:0.3 animations:^{
+	[UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void) {
 		[self.view setFrame:viewFrame];
-	}];
+	}completion:nil];
 	keyboardUp = NO;
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView

@@ -18,6 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	facebook = [[Facebook alloc] initWithAppId:@"122732554481304"];
+
 	// Override point for customization after application launch.
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
@@ -32,24 +33,29 @@
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
 	
-    // naively parse url
-    NSArray *urlComponents = [[url absoluteString] componentsSeparatedByString:@"?"];
-    NSArray *requestParameterChunks = [[urlComponents objectAtIndex:1] componentsSeparatedByString:@"&"];
-    for (NSString *chunk in requestParameterChunks) {
-        NSArray *keyVal = [chunk componentsSeparatedByString:@"="];
-        
-        if ([[keyVal objectAtIndex:0] isEqualToString:@"oauth_verifier"]) 
-		{
-			for(UIViewController *vc in navController.viewControllers)
+	if([[[url absoluteString] substringToIndex:2] isEqualToString:@"fb"])
+	{
+		[facebook handleOpenURL:url];
+	}
+	else
+	{
+		NSArray *urlComponents = [[url absoluteString] componentsSeparatedByString:@"?"];
+		NSArray *requestParameterChunks = [[urlComponents objectAtIndex:1] componentsSeparatedByString:@"&"];
+		for (NSString *chunk in requestParameterChunks) {
+			NSArray *keyVal = [chunk componentsSeparatedByString:@"="];
+			
+			if ([[keyVal objectAtIndex:0] isEqualToString:@"oauth_verifier"]) 
 			{
-				if([vc isKindOfClass:[LiveViewController class]])
+				for(UIViewController *vc in navController.viewControllers)
 				{
-					[(LiveViewController*)vc handleOAuthVerifier:[keyVal objectAtIndex:1]];
+					if([vc isKindOfClass:[LiveViewController class]])
+					{
+						[(LiveViewController*)vc handleOAuthVerifier:[keyVal objectAtIndex:1]];
+					}
 				}
-			}
-        }
-        
-    }
+			} 
+		}
+	}
     
     return YES;
 }

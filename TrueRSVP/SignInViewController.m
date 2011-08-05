@@ -5,26 +5,16 @@
 //  Created by movingincircles on 7/16/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
-//#import "Constants.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "SignInViewController.h"
-//#import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
-//#import "CJSONDeserializer.h"
+#import "ASIAuthenticationDialog.h"
 #import "MainViewController.h"
 #import "SettingsManager.h"
 #import "DebugViewController.h"
 #import "SFHFKeychainUtils.h"
-//#import "ProfileViewController.h"
 @implementation SignInViewController
-//@synthesize txtUsername;
-//@synthesize txtPassword;
-//@synthesize navBar;
 @synthesize facebook;
-//@synthesize portraitView;
-//@synthesize landscapeView;
-//@synthesize loginButton;
-//@synthesize fbButton;
 - (void)dealloc
 {
 	[txtUsername release];
@@ -66,7 +56,7 @@
 	else
 	{
 		[txtPassword resignFirstResponder];
-		[self login:nil];
+		[self loginPressed:nil];
 	}
 	return NO;
 }
@@ -89,35 +79,36 @@
 
 -(void)setViewMoveUp:(BOOL)moveUp
 {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-	
-    CGRect rect = self.view.frame;
-    if (moveUp)
-    {
-		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
-		{
-			rect.origin.y -= 135.0;
-		}
-		else
-		{
-			rect.origin.y -= 95.0;
-		}	
-    }
-    else
-    {
-		if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
-		{
-			rect.origin.y += 135.0;
-		}
-		else
-		{
-			rect.origin.y += 95.0;
-		}	
-    }
-    self.view.frame = rect; 
-    [UIView commitAnimations];
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:0.3];
+//    [UIView setAnimationBeginsFromCurrentState:YES];
+//	
+	[UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void) {
+			CGRect rect = self.view.frame;
+			if (moveUp)
+			{
+				if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
+				{
+					rect.origin.y -= 135.0;
+				}
+				else
+				{
+					rect.origin.y -= 95.0;
+				}	
+			}
+			else
+			{
+				if(UIDeviceOrientationIsPortrait(self.interfaceOrientation))
+				{
+					rect.origin.y += 135.0;
+				}
+				else
+				{
+					rect.origin.y += 95.0;
+				}	
+			}
+			self.view.frame = rect; 
+	}completion:nil];
 }
 - (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
 	for (UIView* view in self.view.subviews) {
@@ -136,11 +127,38 @@
     }
     return ret;
 }
-
-- (IBAction)login:(id)sender
+- (void)showMain
 {
-//	txtUsername.text = @"movingincircles@gmail.com";
-//	txtPassword.text = @"supfoo";
+	UINavigationController *navController = self.navigationController;
+	NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
+	[controllers removeLastObject];
+	navController.viewControllers = controllers;
+	MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
+	//		[self.navigationController pushViewController:mainVC animated:YES];
+	[navController pushViewController:mainVC animated:YES];
+	[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	[mainVC release];
+}
+- (BOOL)requiresAuth:(NSURL*)url
+{
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	[request startSynchronous];
+	if([request responseStatusCode] == 401)
+	{
+		return YES;
+	}
+	return NO;
+}
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+	[self login];
+}
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+	NSLog(@"Not Logged In");
+}
+- (void)login
+{
 	if([[txtPassword text] isEqualToString:@""] || [[txtUsername text] isEqualToString:@""])
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Blank" 
@@ -161,12 +179,12 @@
 	unsigned char result[16];
 	CC_MD5( cStr, strlen(cStr), result );
 	str = [NSString stringWithFormat:
-			@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
-			result[0], result[1], result[2], result[3], 
-			result[4], result[5], result[6], result[7],
-			result[8], result[9], result[10], result[11],
-			result[12], result[13], result[14], result[15]
-			]; 
+		   @"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+		   result[0], result[1], result[2], result[3], 
+		   result[4], result[5], result[6], result[7],
+		   result[8], result[9], result[10], result[11],
+		   result[12], result[13], result[14], result[15]
+		   ]; 
 	
 	[request setPostValue:str forKey:@"password"];	
 	[request startSynchronous];
@@ -187,15 +205,7 @@
 		[[SettingsManager sharedSettingsManager].settings setObject:txtUsername.text forKey:@"username"];
 		[[SettingsManager sharedSettingsManager] save];
 		[SFHFKeychainUtils storeUsername:txtUsername.text andPassword:txtPassword.text forServiceName:@"TrueRSVP" updateExisting:NO error:nil];
-		UINavigationController *navController = self.navigationController;
-		NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
-		[controllers removeLastObject];
-		navController.viewControllers = controllers;
-		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
-//		[self.navigationController pushViewController:mainVC animated:YES];
-		[navController pushViewController:mainVC animated:YES];
-		[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
-		[mainVC release];
+		[self showMain];
 	}
 	else
 	{
@@ -208,18 +218,36 @@
 		[alert release];
 	}
 }
+- (IBAction)loginPressed:(UIButton*)sender
+{
+	NSURL *url = [NSURL URLWithString:[[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"]];
+	if([self requiresAuth:url])
+	{
+		ASIHTTPRequest *request2 = [ASIHTTPRequest requestWithURL:url];
+		request2.delegate = self;
+		request2.shouldPresentAuthenticationDialog = YES;
+		[request2 startAsynchronous];
+	}
+	else
+	{
+		[self login];
+	}
+}
 - (IBAction)facebookLogin:(id)sender
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([defaults objectForKey:@"FBAccessTokenKey"] 
+	if (![facebook isSessionValid]) {
+		NSArray *permissions = [NSArray arrayWithObject:@"email"];
+		[facebook authorize:permissions delegate:self];
+	}
+	else if ([defaults objectForKey:@"FBAccessTokenKey"] 
 		&& [defaults objectForKey:@"FBExpirationDateKey"]) {
 		facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
 		facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-	}
-	if (![facebook isSessionValid]) {
-		[facebook authorize:nil delegate:self];
+		[facebook requestWithGraphPath:@"me" andDelegate:self];
 	}
 }
+
 - (void)showDebugView:(id)sender
 {
 	DebugViewController *debugVC = [[DebugViewController alloc] initWithNibName:@"DebugViewController" bundle:[NSBundle mainBundle]];
@@ -277,14 +305,27 @@
 {	
 	return [facebook handleOpenURL:url]; 
 }
-- (void)fbDidLogin 
+- (void)fbDidLogin
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];
+	[facebook requestWithGraphPath:@"me" andDelegate:self];
 }
-
+- (void)request:(FBRequest *)request didLoad:(id)result
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+	ASIFormDataRequest *_request = [ASIFormDataRequest requestWithURL:url];
+	[_request addPostValue:[result objectForKey:@"first_name"] forKey:@"fname"];
+	[_request addPostValue:[result objectForKey:@"last_name"] forKey:@"lname"];
+	[_request addPostValue:[result objectForKey:@"username"] forKey:@"fbid"];
+	[_request addPostValue:[result objectForKey:@"email"] forKey:@"email"];	
+	[_request addPostValue:@"1" forKey:@"isFB"];
+	[_request startSynchronous];
+	NSLog(@"%@", [_request responseString]);
+	[self showMain];
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];

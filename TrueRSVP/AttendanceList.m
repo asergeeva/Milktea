@@ -26,18 +26,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AttendanceList);
 {
 	for(NSDictionary *dictionary in eventsList)
 	{
+		NSMutableDictionary *temp = [dictionary mutableCopy];
+		for(NSString *s in dictionary)
+		{
+			if([dictionary objectForKey:s] == [NSNull null])
+			{
+				[temp removeObjectForKey:s];
+				[temp setValue:@"" forKey:s];
+			}
+		}
 		Event *event = [[Event alloc] init];
-		event.eventID = [dictionary objectForKey:@"id"];
-		event.eventOrganizer = [dictionary objectForKey:@"organizer"];
-		event.eventName = [dictionary objectForKey:@"title"];
-		event.eventDescription = [dictionary objectForKey:@"description"];
-		event.eventAddress = [dictionary objectForKey:@"location_address"];
+		event.eventID = [temp objectForKey:@"id"];
+		event.eventOrganizer = [temp objectForKey:@"organizer"];
+		event.eventName = [temp objectForKey:@"title"];
+		event.eventDescription = [temp objectForKey:@"description"];
+		event.eventAddress = [temp objectForKey:@"location_address"];
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
 		dateFormatter.dateFormat = dateFormatFromSQL;
-		event.eventDate = [dateFormatter dateFromString:[dictionary objectForKey:@"event_datetime"]];
+		event.eventDate = [dateFormatter dateFromString:[temp objectForKey:@"event_datetime"]];
 		[eventsArray addObject:event];
 		[event release];
 		[dateFormatter release];
+		[temp release];
 	}
 }
 - (void)dealloc

@@ -39,13 +39,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 }
 - (void)updateUser:(NSDictionary*)userInfo
 {
-	[uid setString:[userInfo objectForKey:@"id"]];
-	[fullName setString:[NSString stringWithFormat:@"%@ %@", [userInfo objectForKey:@"fname"], [userInfo objectForKey:@"lname"]]];
-	[email setString:[userInfo objectForKey:@"email"]];
-	[cell setString:[userInfo objectForKey:@"phone"]];
-	[zip setString:[userInfo objectForKey:@"zip"]];
-	[about setString:[userInfo objectForKey:@"about"]];
-	[twitter setString:[userInfo objectForKey:@"twitter"]];
+	NSMutableDictionary *temp = [userInfo mutableCopy];
+	for(NSString *s in userInfo)
+	{
+		if([userInfo objectForKey:s] == [NSNull null])
+		{
+			[temp removeObjectForKey:s];
+			[temp setValue:@"" forKey:s];
+		}
+	}
+	[uid setString:[temp objectForKey:@"id"]];
+	[fullName setString:[NSString stringWithFormat:@"%@ %@", [temp objectForKey:@"fname"], [temp objectForKey:@"lname"]]];
+	[email setString:[temp objectForKey:@"email"]];
+	[cell setString:[temp objectForKey:@"phone"]];
+	[zip setString:[temp objectForKey:@"zip"]];
+	[about setString:[temp objectForKey:@"about"]];
+	[twitter setString:[temp objectForKey:@"twitter"]];
+	[temp release];
 //	[picURL setString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager] rootAddress], @"upload/user/images/", uid, @".png"]];
 	[picURL setString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"], @"upload/user/images/", uid, @".png"]];
 	NSURL *url = [NSURL URLWithString:picURL];

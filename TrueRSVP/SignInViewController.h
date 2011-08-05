@@ -7,8 +7,8 @@
 //
 #import "TrueRSVPAppDelegate.h"
 #import <UIKit/UIKit.h>
-
-@interface SignInViewController : UIViewController <UITextFieldDelegate, FBSessionDelegate> {
+#import "ASIHTTPRequest.h"
+@interface SignInViewController : UIViewController <UITextFieldDelegate, FBSessionDelegate, FBRequestDelegate, ASIHTTPRequestDelegate> {
 	IBOutlet UITextField *txtUsername;
 	IBOutlet UITextField *txtPassword;
 	IBOutlet UIButton *loginButton;
@@ -16,8 +16,9 @@
 	Facebook *facebook;
 }
 - (void)showDebugView:(id)sender;
-- (IBAction)login:(id)sender;
+- (IBAction)loginPressed:(UIButton*)sender;
 - (IBAction)facebookLogin:(id)sender;
 - (void)setViewMoveUp:(BOOL)moveUp;
+- (void)login;
 @property (nonatomic, retain) Facebook *facebook;
 @end
