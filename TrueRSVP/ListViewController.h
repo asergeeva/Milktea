@@ -6,18 +6,14 @@
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-//#import <UIKit/UIKit.h>
-//#import "ListController.h"
-//@protocol ListDelegate
-//@optional
-//- (void)selectedEvent:(UIViewController*)viewController;
-//@end
-//@interface ListViewController : UIViewController
-//{
-//	IBOutlet UITableView *eventTableView;
-//	ListController *listController;
-//	id<ListDelegate> delegate;
-//}
-//@property (nonatomic, retain) ListController *listController;
-//@property (nonatomic, retain) IBOutlet UITableView *eventTableView;
-//@end
+#import <UIKit/UIKit.h>
+#import "ListController.h"
+#import <QuartzCore/QuartzCore.h>
+@interface ListViewController : UIViewController <UITableViewDelegate>
+{
+	IBOutlet UITableView *eventTableView;
+	ListController *listController;
+}
+@property (nonatomic, retain) ListController *listController;
+@property (nonatomic, retain) IBOutlet UITableView *eventTableView;
+@end

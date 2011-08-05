@@ -9,18 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "HostingController.h"
 #import "HostingDetailViewController.h"
+#import "ListViewController.h"
 @protocol HostingDelegate
 @optional
 - (void)selectedEvent:(UIViewController*)viewController;
 @end
-@interface HostingViewController : UIViewController <UITableViewDelegate>
+@interface HostingViewController : ListViewController
 {
 	HostingController *hostingController;
-	id<HostingDelegate> delegate;
 	HostingDetailViewController *hostingDetailVC;
+	id<HostingDelegate> delegate;
 }
-@property (nonatomic, retain) IBOutlet UITableView *eventTableView;
 @property (nonatomic, retain) HostingController *hostingController;
-@property (nonatomic, assign) id<HostingDelegate> delegate;
 @property (nonatomic, retain) HostingDetailViewController *hostingDetailVC;
+@property (nonatomic, assign) id<HostingDelegate> delegate;
 @end

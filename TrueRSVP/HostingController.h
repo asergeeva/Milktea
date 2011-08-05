@@ -10,11 +10,7 @@
 #import "ListController.h"
 @interface HostingController : ListController
 {
-//	NSMutableArray *uniqueMonths;
-//	NSMutableArray *eventSections;
 }
 + (NSString*)getSectionText:(NSString*)selectedMonth;
 - (void)refresh;
-//@property (nonatomic, retain) NSMutableArray *uniqueMonths;
-//@property (nonatomic, retain) NSMutableArray *eventSections;
 @end
