@@ -98,6 +98,8 @@
 		517AAA3413DACF9D00733342 /* AttendingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */; };
 		517AAA3613DACFE000733342 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AAA3513DACFE000733342 /* MapKit.framework */; };
 		517AAA4D13DAE42E00733342 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AAA4C13DAE42D00733342 /* CoreLocation.framework */; };
+		517C151B13EB70DA0028898E /* ListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C151A13EB70DA0028898E /* ListController.m */; };
+		517C151F13EB83530028898E /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C151E13EB83530028898E /* ListViewController.m */; };
 		517DED5113E6AAE400630487 /* LiveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517DED5013E6AAE400630487 /* LiveController.m */; };
 		518E2D7713D24FA60080E068 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7613D24FA60080E068 /* UIKit.framework */; };
 		518E2D7913D24FA60080E068 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7813D24FA60080E068 /* Foundation.framework */; };
@@ -334,6 +336,10 @@
 		517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingDetailViewController.xib; sourceTree = "<group>"; };
 		517AAA3513DACFE000733342 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		517AAA4C13DAE42D00733342 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		517C151913EB70DA0028898E /* ListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListController.h; sourceTree = "<group>"; };
+		517C151A13EB70DA0028898E /* ListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListController.m; sourceTree = "<group>"; };
+		517C151D13EB83530028898E /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
+		517C151E13EB83530028898E /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		517DED4F13E6AAE400630487 /* LiveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveController.h; sourceTree = "<group>"; };
 		517DED5013E6AAE400630487 /* LiveController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveController.m; sourceTree = "<group>"; };
 		518E2D7213D24FA60080E068 /* TrueRSVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueRSVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -761,23 +767,25 @@
 				51D84D4E13D90C42008A705B /* AttendingViewController.h */,
 				51D84D4F13D90C43008A705B /* AttendingViewController.m */,
 				51D84D5013D90C43008A705B /* AttendingViewController.xib */,
+				517C151D13EB83530028898E /* ListViewController.h */,
+				517C151E13EB83530028898E /* ListViewController.m */,
+				51DEC44013DE6F78004940A5 /* HostingViewController.h */,
+				51DEC44113DE6F78004940A5 /* HostingViewController.m */,
+				51DEC44213DE6F78004940A5 /* HostingViewController.xib */,
 				517AAA3013DACF9D00733342 /* AttendingDetailViewController.h */,
 				517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */,
 				517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */,
 				512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */,
+				51CC214D13DE954D00980FE8 /* HostingDetailViewController.h */,
+				51CC214E13DE954D00980FE8 /* HostingDetailViewController.m */,
+				51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */,
+				51EA19A213DFBF9000684A58 /* HostingDetailViewController_Landscape.xib */,
 				51B1859013E0A3F400FBDCC9 /* DebugViewController.h */,
 				51B1859113E0A3F400FBDCC9 /* DebugViewController.m */,
 				51B1859213E0A3F400FBDCC9 /* DebugViewController.xib */,
 				51EA19A513E0005B00684A58 /* GuestListViewController.h */,
 				51EA19A613E0005B00684A58 /* GuestListViewController.m */,
 				51EA19A713E0005B00684A58 /* GuestListViewController.xib */,
-				51DEC44013DE6F78004940A5 /* HostingViewController.h */,
-				51DEC44113DE6F78004940A5 /* HostingViewController.m */,
-				51DEC44213DE6F78004940A5 /* HostingViewController.xib */,
-				51EA19A213DFBF9000684A58 /* HostingDetailViewController_Landscape.xib */,
-				51CC214D13DE954D00980FE8 /* HostingDetailViewController.h */,
-				51CC214E13DE954D00980FE8 /* HostingDetailViewController.m */,
-				51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */,
 				5199178013E2AFDE00C4A946 /* LiveViewController.h */,
 				5199178113E2AFDE00C4A946 /* LiveViewController.m */,
 				5199178213E2AFDE00C4A946 /* LiveViewController.xib */,
@@ -974,7 +982,7 @@
 			name = Addons;
 			sourceTree = "<group>";
 		};
-		519C557613DA05A200EE8E9A /* Models */ = {
+		519C557613DA05A200EE8E9A /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
 				519C556F13DA04F900EE8E9A /* AttendanceList.h */,
@@ -989,7 +997,7 @@
 				511F360513D5801600F7E748 /* User.h */,
 				511F360613D5801700F7E748 /* User.m */,
 			);
-			name = Models;
+			name = Singletons;
 			sourceTree = "<group>";
 		};
 		51DEC44513DE6F9D004940A5 /* TrueRSVP_Shared */ = {
@@ -998,11 +1006,13 @@
 				516F312E13E660EE002A31F8 /* UITextViewUneditable.h */,
 				516F312F13E660EF002A31F8 /* UITextViewUneditable.m */,
 				519C557513DA058A00EE8E9A /* Addons */,
-				519C557613DA05A200EE8E9A /* Models */,
+				519C557613DA05A200EE8E9A /* Singletons */,
 				51B1859D13E0C7A200FBDCC9 /* Attendee.h */,
 				51B1859E13E0C7A300FBDCC9 /* Attendee.m */,
 				51AEC93B13DE62A200E2FB69 /* AttendingController.h */,
 				51AEC93C13DE62A200E2FB69 /* AttendingController.m */,
+				517C151913EB70DA0028898E /* ListController.h */,
+				517C151A13EB70DA0028898E /* ListController.m */,
 				517DED4F13E6AAE400630487 /* LiveController.h */,
 				517DED5013E6AAE400630487 /* LiveController.m */,
 				51DEC44713DE7EA7004940A5 /* HostingController.h */,
@@ -1306,6 +1316,8 @@
 				512556FD13E7F78F00469DAE /* CameraViewController.m in Sources */,
 				517033FB13E958F2007128BC /* SendButton.m in Sources */,
 				519A0E0013EAAFC30063695C /* SFHFKeychainUtils.m in Sources */,
+				517C151B13EB70DA0028898E /* ListController.m in Sources */,
+				517C151F13EB83530028898E /* ListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

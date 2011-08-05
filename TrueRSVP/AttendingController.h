@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@interface AttendingController : NSObject <UITableViewDataSource>
+#import "ListController.h"
+@interface AttendingController : ListController <UITableViewDataSource>
 {
-	NSMutableArray *uniqueMonths;
-	NSMutableArray *eventSections;
+//	NSMutableArray *uniqueMonths;
+//	NSMutableArray *eventSections;
 }
-- (void)refreshAttendance;
-@property (nonatomic, retain) NSMutableArray *uniqueMonths;
-@property (nonatomic, retain) NSMutableArray *eventSections;
+- (void)refresh;
+//@property (nonatomic, retain) NSMutableArray *uniqueMonths;
+//@property (nonatomic, retain) NSMutableArray *eventSections;
 @end

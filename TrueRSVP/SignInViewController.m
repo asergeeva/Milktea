@@ -153,14 +153,6 @@
 		return;
 	}
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"login"]];
-	if([[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"] isEqualToString:@"http://dev.truersvp.com/api/"])
-	{
-		ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:[[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"]];
-		[req setAuthenticationScheme:(NSString*)kCFHTTPAuthenticationSchemeBasic];
-		[req setUseKeychainPersistence:YES];
-		[req shouldPresentAuthenticationDialog:YES];
-		[req startSynchronous];
-	}
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
 	//MD5 encryption code
@@ -189,7 +181,6 @@
 											  otherButtonTitles:nil];
 		[alert show];
 		[alert release];
-		txtPassword.text = @"";
 	}
 	else if ([status isEqualToString:@"status_loginSuccess"])
 	{
@@ -206,7 +197,16 @@
 		[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 		[mainVC release];
 	}
-	
+	else
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" 
+														message:@"Cannot connect to TrueRSVP."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
 }
 - (IBAction)facebookLogin:(id)sender
 {

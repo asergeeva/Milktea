@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface HostingController : NSObject <UITableViewDataSource>
+#import "ListController.h"
+@interface HostingController : ListController
 {
-	NSMutableArray *uniqueMonths;
-	NSMutableArray *eventSections;
+//	NSMutableArray *uniqueMonths;
+//	NSMutableArray *eventSections;
 }
 + (NSString*)getSectionText:(NSString*)selectedMonth;
-- (void)refreshHosting;
-@property (nonatomic, retain) NSMutableArray *uniqueMonths;
-@property (nonatomic, retain) NSMutableArray *eventSections;
+- (void)refresh;
+//@property (nonatomic, retain) NSMutableArray *uniqueMonths;
+//@property (nonatomic, retain) NSMutableArray *eventSections;
 @end
