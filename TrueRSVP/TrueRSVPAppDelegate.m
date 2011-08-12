@@ -33,11 +33,11 @@
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
 	
-	if([[[url absoluteString] substringToIndex:2] isEqualToString:@"fb"])
+	if([[url absoluteString] hasPrefix:@"fb"])
 	{
 		[facebook handleOpenURL:url];
 	}
-	else
+	else if ([[url absoluteString] hasPrefix:@"trueRSVP://handleOAuthLogin"])
 	{
 		NSArray *urlComponents = [[url absoluteString] componentsSeparatedByString:@"?"];
 		NSArray *requestParameterChunks = [[urlComponents objectAtIndex:1] componentsSeparatedByString:@"&"];

@@ -36,12 +36,12 @@
 @synthesize reader;
 
 #pragma mark - Init
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-		eventHosting = event;
+//		eventHosting = event;
 		reader = [ZBarReaderViewController new];
 		reader.readerDelegate = self;
 		reader.showsZBarControls = NO;
@@ -68,6 +68,12 @@
 	[super viewWillAppear:animated];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[[UIApplication sharedApplication] setStatusBarHidden:NO];
+	eventName.text = eventHosting.eventName;
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd hh:mm a";
+	eventDate.text = [df stringFromDate:eventHosting.eventDate];
+	eventDescription.text = eventHosting.eventDescription;
+	[df release];
 }
 - (void)addEffects:(UIView*)view
 {
@@ -98,13 +104,6 @@
 	checkIn.clipsToBounds = YES;
 	live.layer.cornerRadius = 5;
 	live.clipsToBounds = YES;
-
-	eventName.text = eventHosting.eventName;
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-MM-dd hh:mm a";
-	eventDate.text = [df stringFromDate:eventHosting.eventDate];
-	eventDescription.text = eventHosting.eventDescription;
-	[df release];
 	
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
@@ -300,6 +299,37 @@
 	for(ZBarSymbol *symbol in results)
 	{
 		QRData.text = symbol.data;
+		NSArray *splitString = [QRData.text componentsSeparatedByString:@"-"];
+		if(splitString.count != 3)
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid QR Code" message:@"This QR code is invalid!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+		else if(![[splitString objectAtIndex:1] isEqualToString:eventHosting.eventID])
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid QR Code" message:@"This QR code is for another event!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+		else
+		{
+			NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+			
+			ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+			[request setPostValue:[splitString objectAtIndex:2] forKey:@"uid"];
+			[request setPostValue:[splitString objectAtIndex:1] forKey:@"eid"];
+			[request setPostValue:@"1" forKey:@"checkIn"];
+			[request startSynchronous];
+			
+			url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getUsername",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+			request = [ASIFormDataRequest requestWithURL:url];
+			[request setPostValue:[splitString objectAtIndex:2] forKey:@"uid"];
+			[request startSynchronous];
+			NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+			
+			QRData.text = [NSString stringWithFormat: @"Check-in:%@ %@", [dictionary objectForKey:@"fname"], [dictionary objectForKey:@"lname"]];
+		}
 	}
 	[reader dismissModalViewControllerAnimated:NO];
 	[self presentModalViewController:reader animated:NO];

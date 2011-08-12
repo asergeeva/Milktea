@@ -144,8 +144,6 @@
 }
 - (IBAction)updateProfile:(id)sender
 {	
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"setUserInfo"]]];
-	
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"setUserInfo"]]];
 	[request addPostValue:emailTextField.text forKey:@"email"];
 	[request addPostValue:aboutTextView.text forKey:@"about"];

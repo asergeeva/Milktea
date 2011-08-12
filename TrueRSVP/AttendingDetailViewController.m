@@ -170,6 +170,12 @@
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 
 	directions.enabled = NO;
+	eventName.text = eventAttending.eventName;
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd hh:mm a";
+	eventDate.text = [df stringFromDate:eventAttending.eventDate];
+	eventDescription.text = eventAttending.eventDescription;
+	[df release];
 }
 - (void)addEffects:(UIView*)view
 {
@@ -204,12 +210,7 @@
 	live.layer.cornerRadius = 5;
 	live.clipsToBounds = YES;
 	
-	eventName.text = eventAttending.eventName;
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-MM-dd hh:mm a";
-	eventDate.text = [df stringFromDate:eventAttending.eventDate];
-	eventDescription.text = eventAttending.eventDescription;
-	[df release];
+
 	
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;

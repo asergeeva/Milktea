@@ -43,7 +43,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AttendanceList);
 		event.eventAddress = [temp objectForKey:@"location_address"];
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
 		dateFormatter.dateFormat = dateFormatFromSQL;
-		event.eventDate = [dateFormatter dateFromString:[temp objectForKey:@"event_datetime"]];
+		if([[[temp objectForKey:@"event_datetime"] substringToIndex:4] isEqualToString:@"0000"])
+		{
+			event.eventDate = [dateFormatter dateFromString:@"1970-01-01 00:00:00"];
+		}
+		else
+		{
+			event.eventDate = [dateFormatter dateFromString:[temp objectForKey:@"event_datetime"]];
+		}
+//		event.eventDate = [dateFormatter dateFromString:[temp objectForKey:@"event_datetime"]];
 		[eventsArray addObject:event];
 		[event release];
 		[dateFormatter release];
