@@ -94,8 +94,7 @@
 - (IBAction)sendPressed:(UIButton*)sender
 {
 	if(!emailCheck.selected && !textCheck.selected)
-	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Messaging" 
+	{			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Messaging" 
 														message:@"Please select at least one form of messaging service."
 													   delegate:nil
 											  cancelButtonTitle:@"OK" 

@@ -229,8 +229,14 @@ BOOL sendSelection = NO;
 	{
 		Attendee *newAttendee = [[Attendee alloc] init];
 		newAttendee.uid = [dictionary objectForKey:@"id"];
-		newAttendee.fname = [dictionary objectForKey:@"fname"];
-		newAttendee.lname = [dictionary objectForKey:@"lname"];
+		if(((NSString*)[dictionary objectForKey:@"fname"]) != [NSNull null])
+			newAttendee.fname = [dictionary objectForKey:@"fname"];
+		else
+			newAttendee.fname = @" ";
+		if([dictionary objectForKey:@"lname"] != [NSNull null])
+			newAttendee.lname = [dictionary objectForKey:@"lname"];
+		else
+			newAttendee.lname = @" ";
 		newAttendee.isAttending = [[dictionary objectForKey:@"is_attending"] boolValue];
 		[guestNameAttendance addObject:newAttendee];
 		[newAttendee release];
