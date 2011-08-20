@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Event.h"
-@interface AttendanceList : NSObject <NSCoding>
+@interface AttendanceList : NSObject
 {
 	NSMutableArray *eventsArray;
 }

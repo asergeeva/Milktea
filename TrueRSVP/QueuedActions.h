@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "CheckIn.h"
 @interface QueuedActions : NSObject
-
+{
+	NSMutableArray *queue;
+}
++(QueuedActions*)sharedQueuedActions;
+- (void)addActionWithEID:(NSString*)eid userID:(NSString*)uid attendance:(BOOL)isAttending date:(NSDate*)date;
+- (void)save;
+- (void)load;
+@property (nonatomic, retain) NSMutableArray *queue;
 @end

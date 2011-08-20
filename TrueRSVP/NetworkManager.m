@@ -14,6 +14,7 @@
 #import "Reachability.h"
 #import "Attendee.h"
 #import "Constants.h"
+#import "QueuedActions.h"
 @implementation NetworkManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 //@synthesize formReq;
@@ -55,6 +56,7 @@ NSString *APILocation;
 	[profile addEntriesFromDictionary:[[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil]];
 	[[SettingsManager sharedSettingsManager] saveDictionary:profile withKey:@"profile"];
 	profileDone = YES;
+	[self processQueue];
 }
 - (void)didLoadHostingList:(ASIFormDataRequest*)request
 {
@@ -170,6 +172,47 @@ NSString *APILocation;
 	
 	[allQueue go];
 	
+}
+- (NSDate*)getDateForEID:(NSString*)eid uid:(NSString*)uid
+{
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getCheckInDate]]];
+	[request setPostValue:eid forKey:@"eid"];
+	[request setPostValue:uid forKey:@"uid"];
+//	[request setValue:eid forKey:@"eid"];
+//	[request setValue:uid forKey:@"uid"];
+	[request startSynchronous];
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+	NSDate *date = [df dateFromString:[[[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil] objectForKey:@"rsvp_time"]];
+	[df release];
+	return date;
+}
+- (void)checkInWithCheckIn:(CheckIn*)check
+{
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], checkInWithDate]]];
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//	df.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSZZZ";
+	df.dateFormat = @"YYYY-MM-dd HH:mm:ss";
+	[request setPostValue:[NSNumber numberWithBool:check.isAttending] forKey:@"checkIn"];
+	[request setPostValue:check.eid forKey:@"eid"];
+	[request setPostValue:check.uid forKey:@"uid"];
+	[request setPostValue:[df stringFromDate:check.date] forKey:@"date"];
+	[request startSynchronous];	
+	[df release];
+}
+- (void)processQueue
+{
+	while([[QueuedActions sharedQueuedActions].queue count])
+	{
+		CheckIn *check = [[QueuedActions sharedQueuedActions].queue objectAtIndex:0];
+		NSDate *date = [self getDateForEID:check.eid uid:check.uid];
+		if([date timeIntervalSince1970] < [check.date timeIntervalSince1970])
+		{
+			[self checkInWithCheckIn:check];
+		}
+		[[QueuedActions sharedQueuedActions].queue removeObjectAtIndex:0];
+	}
+	[[QueuedActions sharedQueuedActions] save];
 }
 - (BOOL)checkFilled
 {

@@ -39,6 +39,7 @@
 - (void)didLoadAttendingList:(ASIFormDataRequest*)request;
 - (void)refreshAll:(UIProgressView*)bar;
 - (BOOL)checkFilled;
+- (void)processQueue;
 //@property (nonatomic, retain) ASIFormDataRequest *formReq;
 //@property (nonatomic, retain) ASIHTTPRequest *httpReq;
 @property (nonatomic, retain) NSMutableDictionary *profile;

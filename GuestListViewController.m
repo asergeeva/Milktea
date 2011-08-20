@@ -20,6 +20,7 @@
 #import "CheckInButton.h"
 #import "SendButton.h"
 #import "MessageViewController.h"
+#import "QueuedActions.h"
 @implementation GuestListViewController
 @synthesize guestNameAttendance;
 @synthesize event;
@@ -280,6 +281,11 @@ BOOL sendSelection = NO;
 	}
 	[request startSynchronous];
 	((Attendee*)[guestNameAttendance objectAtIndex:sender.tag]).isAttending = sender.selected;
+	if([request error])
+	{
+		[[QueuedActions sharedQueuedActions] addActionWithEID:sender.eid userID:sender.uid attendance:sender.selected date:[NSDate date]];
+		[[QueuedActions sharedQueuedActions] load];
+	}
 }
 - (void)sortPressed:(UIButton*)sender
 {

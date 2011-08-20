@@ -19,6 +19,8 @@ extern NSString *const getHostingEvents;
 extern NSString *const getGuestList;
 extern NSString *const checkInByDistance;
 extern NSString *const checkIn;
+extern NSString *const checkInWithDate;
 extern NSString *const computeTrueRSVP;
 extern NSString *const sendMessage;
 extern NSString *const getUsername;
+extern NSString *const getCheckInDate;

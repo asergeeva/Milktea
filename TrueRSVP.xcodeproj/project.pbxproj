@@ -10,6 +10,7 @@
 		510F267213FF1B8E00776F65 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 510F267013FF1B8E00776F65 /* ProgressView.m */; };
 		510F267313FF1B8E00776F65 /* ProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 510F267113FF1B8E00776F65 /* ProgressView.xib */; };
 		510F267713FF7E5300776F65 /* QueuedActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 510F267613FF7E5200776F65 /* QueuedActions.m */; };
+		510F267A13FFB66C00776F65 /* CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 510F267913FFB66B00776F65 /* CheckIn.m */; };
 		51152E4113E787F800673391 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51152E4013E787F800673391 /* Security.framework */; };
 		511F35F913D5686300F7E748 /* attending_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 511F35ED13D5686300F7E748 /* attending_selected.png */; };
 		511F35FA13D5686300F7E748 /* attending_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 511F35EE13D5686300F7E748 /* attending_selected@2x.png */; };
@@ -212,6 +213,8 @@
 		510F267113FF1B8E00776F65 /* ProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressView.xib; sourceTree = "<group>"; };
 		510F267513FF7E5100776F65 /* QueuedActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueuedActions.h; sourceTree = "<group>"; };
 		510F267613FF7E5200776F65 /* QueuedActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueuedActions.m; sourceTree = "<group>"; };
+		510F267813FFB66A00776F65 /* CheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckIn.h; sourceTree = "<group>"; };
+		510F267913FFB66B00776F65 /* CheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckIn.m; sourceTree = "<group>"; };
 		51152E4013E787F800673391 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		511F35ED13D5686300F7E748 /* attending_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attending_selected.png; sourceTree = "<group>"; };
 		511F35EE13D5686300F7E748 /* attending_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "attending_selected@2x.png"; sourceTree = "<group>"; };
@@ -1010,6 +1013,8 @@
 			children = (
 				519C556F13DA04F900EE8E9A /* AttendanceList.h */,
 				519C557013DA04F900EE8E9A /* AttendanceList.m */,
+				510F267813FFB66A00776F65 /* CheckIn.h */,
+				510F267913FFB66B00776F65 /* CheckIn.m */,
 				51CC214A13DE919600980FE8 /* HostingList.h */,
 				51CC214B13DE919600980FE8 /* HostingList.m */,
 				5173571B13D8117D00204AAF /* SettingsManager.h */,
@@ -1354,6 +1359,7 @@
 				512A1ACD13FF112F00A10ECF /* Helper.m in Sources */,
 				510F267213FF1B8E00776F65 /* ProgressView.m in Sources */,
 				510F267713FF7E5300776F65 /* QueuedActions.m in Sources */,
+				510F267A13FFB66C00776F65 /* CheckIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
