@@ -284,7 +284,6 @@ BOOL sendSelection = NO;
 	if([request error])
 	{
 		[[QueuedActions sharedQueuedActions] addActionWithEID:sender.eid userID:sender.uid attendance:sender.selected date:[NSDate date]];
-		[[QueuedActions sharedQueuedActions] load];
 	}
 }
 - (void)sortPressed:(UIButton*)sender

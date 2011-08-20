@@ -102,7 +102,7 @@ NSString *APILocation;
 {
 	[attendingList removeAllObjects];
 	[attendingList addObjectsFromArray:[[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil]];
-	[[SettingsManager sharedSettingsManager] saveArray:hostingList withKey:@"attendingList"];
+	[[SettingsManager sharedSettingsManager] saveArray:attendingList withKey:@"attendingList"];
 	attendingDone = YES;
 //	[delegate progressCheck];
 }
@@ -180,7 +180,7 @@ NSString *APILocation;
 	[request setPostValue:uid forKey:@"uid"];
 //	[request setValue:eid forKey:@"eid"];
 //	[request setValue:uid forKey:@"uid"];
-	[request startSynchronous];
+	[request startSynchronous];	
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"YYYY-MM-dd HH:mm:ss";
 	NSDate *date = [df dateFromString:[[[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil] objectForKey:@"rsvp_time"]];

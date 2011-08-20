@@ -14,6 +14,7 @@
 #import "EventAnnotation.h"
 #import "SettingsManager.h"
 #import "LiveViewController.h"
+#import "QueuedActions.h"
 @implementation HostingDetailViewController
 @synthesize eventHosting;
 //@synthesize dynamicRSVP;
@@ -328,7 +329,16 @@
 			[request startSynchronous];
 			NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 			
-			QRData.text = [NSString stringWithFormat: @"Check-in:%@ %@", [dictionary objectForKey:@"fname"], [dictionary objectForKey:@"lname"]];
+			if([request error])
+			{
+				[[QueuedActions sharedQueuedActions] addActionWithEID:[splitString objectAtIndex:1] userID:[splitString objectAtIndex:2] attendance:YES date:[NSDate date]];
+				QRData.text = @"Queued checkin for next push";
+				
+			}
+			else
+			{
+				QRData.text = [NSString stringWithFormat: @"Check-in:%@ %@", [dictionary objectForKey:@"fname"], [dictionary objectForKey:@"lname"]];	
+			}
 		}
 	}
 	[reader dismissModalViewControllerAnimated:NO];
