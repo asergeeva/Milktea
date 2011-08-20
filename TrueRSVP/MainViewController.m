@@ -8,6 +8,7 @@
 #import "Constants.h"
 #import "MainViewController.h"
 #import "HostingDetailViewController.h"
+#import "ASIFormDataRequest.h"
 @implementation MainViewController
 @synthesize profileVC;
 @synthesize attendingVC;
@@ -19,7 +20,7 @@
 @synthesize animatedDistance;
 @synthesize scrollView;
 BOOL keyboardUp = NO;
-int pageNumber = 0;
+int pageNumber = 1;
 #pragma mark - Loading
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,7 +30,8 @@ int pageNumber = 0;
 		hostingButton = [[UIButton alloc] init];
 		attendingButton = [[UIButton alloc] init];
 		profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
-		profileButton.selected = YES;
+		//profileButton.selected = YES;
+		attendingButton.selected = YES;
 		attendingVC = [[AttendingViewController alloc] initWithNibName:@"AttendingViewController" bundle:[NSBundle mainBundle]];
 		hostingVC = [[HostingViewController alloc] initWithNibName:@"HostingViewController" bundle:[NSBundle mainBundle]];
 		attendingVC.delegate = self;
@@ -130,6 +132,7 @@ int pageNumber = 0;
 	self.navigationItem.titleView = segmentButtons;
 //	[self.navigationController.navigationBar addSubview:segmentButtons];
 	self.navigationItem.hidesBackButton = YES;
+	[profileVC.profilePic addTarget:self action:@selector(launchCamera) forControlEvents:UIControlEventTouchUpInside];
 }
 #pragma mark - Navigation Controller Delegate methods
 //Unfortunately there's an iOS bug where scrollview resets all subviews when popping viewcontroller
@@ -352,5 +355,30 @@ int pageNumber = 0;
 	[self resetRotation:attendingVC duration:duration];
 	[self resetRotation:hostingVC duration:duration];
 	[self resetScrollViewContentSize:toInterfaceOrientation];
+}
+#pragma mark - Other
+- (void)launchCamera
+{
+	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+	{
+		UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+		imagePicker.delegate = self;
+		imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+		[self presentModalViewController:imagePicker animated:YES];
+		[imagePicker release];
+	}
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	//Send data
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"], @"event/image/upload"]];
+	
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	UIImage *small = [UIImage imageWithCGImage:((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]).CGImage scale:0.5 orientation:UIImageOrientationUp];
+	[request setPostBody:[NSMutableData dataWithData:UIImageJPEGRepresentation(small, 0.2)]];
+	[request startSynchronous];
+	NSLog(@"%@", [request responseString]);
+	[self dismissModalViewControllerAnimated:YES];
+//	UIImageJPEGRepresentation(((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]), 0.8)	
 }
 @end

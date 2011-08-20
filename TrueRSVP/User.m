@@ -37,7 +37,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	}
 	return self;
 }
-- (void)updateUser:(NSDictionary*)userInfo
+- (void)updateUser:(NSMutableDictionary*)userInfo
 {
 	NSMutableDictionary *temp = [userInfo mutableCopy];
 	for(NSString *s in userInfo)
@@ -56,7 +56,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[about setString:[temp objectForKey:@"about"]];
 	[twitter setString:[temp objectForKey:@"twitter"]];
 	[temp release];
-//	[picURL setString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager] rootAddress], @"upload/user/images/", uid, @".png"]];
 	[picURL setString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"], @"upload/user/images/", uid, @".png"]];
 	NSURL *url = [NSURL URLWithString:picURL];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];

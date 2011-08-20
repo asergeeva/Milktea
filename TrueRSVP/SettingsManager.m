@@ -20,16 +20,35 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 		[self load];
 		if(![settings objectForKey:@"rootAddress"])
 		{
-			[settings setValue:@"http://192.168.1.135/Eventfii/" forKey:@"rootAddress"];
+			[settings setValue:@"http://192.168.1.136/Eventfii/" forKey:@"rootAddress"];
 		}
 		if(![settings objectForKey:@"APILocation"])
 		{
-			[settings setValue:@"http://192.168.1.135/Eventfii/api/" forKey:@"APILocation"];
+			[settings setValue:@"http://192.168.1.136/Eventfii/api/" forKey:@"APILocation"];
 		}
 		[self save];
-
 	}
 	return self;
+}
+- (void)saveDictionary:(NSMutableDictionary*)dictionary withKey:(NSString*)key
+{
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+	[[NSUserDefaults standardUserDefaults] setObject:data forKey:key];	
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+- (void)saveArray:(NSMutableArray*)array withKey:(NSString*)key
+{
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:array];
+	[[NSUserDefaults standardUserDefaults] setObject:data forKey:key];	
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+- (NSMutableDictionary*)loadDictionaryForKey:(NSString*)key
+{
+	return [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
+}
+- (NSMutableArray*)loadArrayForKey:(NSString*)key
+{
+	return [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:key]];
 }
 - (void)save
 {

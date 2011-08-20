@@ -62,9 +62,12 @@
 	[mailVC setSubject:[NSString stringWithFormat:@"Event: %@",eventName.text]];
 	NSDictionary *info = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	NSString *email = [info objectForKey:@"email"];
-	[mailVC setToRecipients:[NSArray arrayWithObject:email]];
-	[self presentModalViewController:mailVC animated:YES];
-	[mailVC release];
+	if(![request error])
+	{
+		[mailVC setToRecipients:[NSArray arrayWithObject:email]];
+		[self presentModalViewController:mailVC animated:YES];
+		[mailVC release];
+	}
 }
 - (IBAction)showMap:(UIButton*)sender
 {
@@ -74,7 +77,7 @@
 }
 - (IBAction)showRSVP:(UIButton*)sender
 {
-	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Update RSVP" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Yes, I'll absolutely be there", @"I'm Pretty sure I'll be there", @"I'll go unless my plans change", @"I probably can't go", @"No, but I'm a supporter", @"No, I'm not interested", nil];
+	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Update RSVP" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Absolutely", @"Pretty Sure", @"50/50", @"Most Likely Not", @"Raincheck", nil];
 	[sheet showInView:self.view];
 	[sheet release];
 }
@@ -145,9 +148,9 @@
 		case 4:
 			confidence = 4;
 			break;
-		case 5:
-			confidence = 1;
-			break;
+//		case 5:
+//			confidence = 1;
+//			break;
 		default:
 			return;
 			break;
@@ -169,7 +172,7 @@
 	[super viewWillAppear:animated];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 
-	directions.enabled = NO;
+//	directions.enabled = NO;
 	eventName.text = eventAttending.eventName;
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd hh:mm a";
@@ -270,7 +273,7 @@
 	EventAnnotation *annotation = [[EventAnnotation alloc] initWithName:eventName.text coordinate:coord];
 	[eventMap addAnnotation:annotation];
 	[annotation release];
-	directions.enabled = YES;
+//	directions.enabled = YES;
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

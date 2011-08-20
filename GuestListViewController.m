@@ -13,6 +13,7 @@
 #import "GuestListViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SettingsManager.h"
+#import "NetworkManager.h"
 #import "NSDictionary_JSONExtensions.h"
 #import "CJSONDeserializer.h"
 #import "ASIFormDataRequest.h"
@@ -219,29 +220,31 @@ BOOL sendSelection = NO;
 }
 - (void)refreshGuestList
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getGuestList"]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request addPostValue:event.eventID forKey:@"eid"];
-	[request startSynchronous];
-	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getGuestList"]];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	[request addPostValue:event.eventID forKey:@"eid"];
+//	[request startSynchronous];
+//	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
+	NSArray *guestNames = [[NetworkManager sharedNetworkManager].guestList objectForKey:event.eventID];
 	[guestNameAttendance removeAllObjects];
-	for (NSDictionary *dictionary in guestNames)
-	{
-		Attendee *newAttendee = [[Attendee alloc] init];
-		newAttendee.uid = [dictionary objectForKey:@"id"];
-		if(((NSString*)[dictionary objectForKey:@"fname"]) != [NSNull null])
-			newAttendee.fname = [dictionary objectForKey:@"fname"];
-		else
-			newAttendee.fname = @" ";
-		if([dictionary objectForKey:@"lname"] != [NSNull null])
-			newAttendee.lname = [dictionary objectForKey:@"lname"];
-		else
-			newAttendee.lname = @" ";
-		newAttendee.isAttending = [[dictionary objectForKey:@"is_attending"] boolValue];
-		[guestNameAttendance addObject:newAttendee];
-		[newAttendee release];
-	}
-
+//	for (NSDictionary *dictionary in guestNames)
+//	{
+//		Attendee *newAttendee = [[Attendee alloc] init];
+//		newAttendee.uid = [dictionary objectForKey:@"id"];
+//		//if(((NSString*)[dictionary objectForKey:@"fname"]) != [NSNull null])
+//		if((NSString*)[dictionary objectForKey:@"fname"])
+//			newAttendee.fname = [dictionary objectForKey:@"fname"];
+//		else
+//			newAttendee.fname = @" ";
+//		if([dictionary objectForKey:@"lname"] != [NSNull null])
+//			newAttendee.lname = [dictionary objectForKey:@"lname"];
+//		else
+//			newAttendee.lname = @" ";
+//		newAttendee.isAttending = [[dictionary objectForKey:@"is_attending"] boolValue];
+//		[guestNameAttendance addObject:newAttendee];
+//		[newAttendee release];
+//	}
+	[guestNameAttendance addObjectsFromArray:guestNames];
 	[guestTable reloadData];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

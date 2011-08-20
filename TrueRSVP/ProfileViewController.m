@@ -11,9 +11,11 @@
 #import "CJSONDeserializer.h"
 #import "Constants.h"
 #import "SettingsManager.h"
+#import "NetworkManager.h"
 @implementation ProfileViewController
 @synthesize welcomeBar;
 @synthesize welcomeShown;
+@synthesize profilePic;
 - (void)dealloc
 {
 	[nameLabel release];
@@ -27,11 +29,9 @@
 	[zipTextField release];
 	[twitterTextField release];
 	[aboutTextView release];
-//	[aboutImageView release];
 	[whiteBackground release];;
 	[updateButton release];
 	[profilePic release];
-//	[view release];
     [super dealloc];
 }
 
@@ -53,13 +53,12 @@
 
 - (void)refreshProfile
 {
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager] APILocation], @"getUserInfo"]];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getUserInfo"]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request startSynchronous];
-	NSDictionary *userInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getUserInfo"]];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	[request startSynchronous];
+//	NSDictionary *userInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	[User sharedUser].delegate = self;
-	[[User sharedUser] updateUser:userInfo];
+	[[User sharedUser] updateUser:[NetworkManager sharedNetworkManager].profile];
 	[self updatedImages];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
@@ -204,7 +203,8 @@
 }
 - (void)updatedImages
 {
-	profilePic.image = [User sharedUser].profilePic;
+//	profilePic..image = [User sharedUser].profilePic;
+	[profilePic setImage:[User sharedUser].profilePic forState:UIControlStateNormal];
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {

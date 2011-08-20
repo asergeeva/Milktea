@@ -11,7 +11,7 @@
 #import "ProfileViewController.h"
 #import "AttendingViewController.h"
 #import "HostingViewController.h"
-@interface MainViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, UIScrollViewDelegate, AttendingDelegate, HostingDelegate, UINavigationControllerDelegate> {
+@interface MainViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, UIScrollViewDelegate, AttendingDelegate, HostingDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
 //	IBOutlet UINavigationBar *navBar;
 	ProfileViewController *profileVC;
 	AttendingViewController *attendingVC;
@@ -27,6 +27,7 @@
 	IBOutlet UIScrollView *scrollView;
 //	IBOutlet UIPageControl *pageControl;
 }
+- (void)launchCamera;
 - (void)setTextFieldDelegates:(UIView*)mainView;
 - (void)profileTabSelected:(id)sender;
 - (void)attendingTabSelected:(id)sender;

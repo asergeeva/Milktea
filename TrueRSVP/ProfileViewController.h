@@ -26,7 +26,7 @@
 //	IBOutlet UIImageView *aboutImageView;
 	IBOutlet UIView *whiteBackground;
 	IBOutlet UIButton *updateButton;
-	IBOutlet UIImageView *profilePic;
+	IBOutlet UIButton *profilePic;
 	IBOutlet UIView *portrait;
 	BOOL welcomeShown;
 //	IBOutlet DebugView *view;
@@ -35,5 +35,6 @@
 - (void)dismissWelcome:(id)sender;
 @property (nonatomic, retain) UINavigationBar *welcomeBar;
 @property (nonatomic) BOOL welcomeShown;
+@property (nonatomic, retain) UIButton *profilePic;
 //@property (nonatomic, retain) IBOutlet DebugView *view;
 @end

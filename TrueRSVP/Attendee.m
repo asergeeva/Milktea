@@ -22,6 +22,21 @@
     
     return self;
 }
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+	self.uid = [aDecoder decodeObjectForKey:@"uid"];
+	self.fname = [aDecoder decodeObjectForKey:@"fname"];
+	self.lname = [aDecoder decodeObjectForKey:@"lname"];
+	self.isAttending = [aDecoder decodeBoolForKey:@"isAttending"];
+    return self;
+}
+- (void)encodeWithCoder:(NSCoder*)coder
+{
+	[coder encodeObject:uid forKey:@"uid"];
+	[coder encodeObject:fname forKey:@"fname"];
+	[coder encodeObject:lname forKey:@"lname"];
+	[coder encodeBool:isAttending forKey:@"isAttending"];
+}
 - (id)copyWithZone:(NSZone*)zone
 {
 	id copy;

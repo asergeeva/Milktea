@@ -5,7 +5,7 @@
 //  Created by movingincircles on 7/16/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
-#import <CommonCrypto/CommonDigest.h>
+
 #import "SignInViewController.h"
 #import "ASIFormDataRequest.h"
 #import "ASIAuthenticationDialog.h"
@@ -13,6 +13,9 @@
 #import "SettingsManager.h"
 #import "DebugViewController.h"
 #import "SFHFKeychainUtils.h"
+#import "Helper.h"
+//#import "NetworkManager.h"
+#import "ProgressView.h"
 @implementation SignInViewController
 @synthesize facebook;
 - (void)dealloc
@@ -116,17 +119,17 @@
 			[view resignFirstResponder];	
 	}	
 }
-+ (NSString*)md5HexDigest:(NSString*)input {
-    const char* str = [input UTF8String];
-    unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(str, strlen(str), result);
-	
-    NSMutableString *ret = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH*2];
-    for(int i = 0; i<CC_MD5_DIGEST_LENGTH; i++) {
-        [ret appendFormat:@"%02x",result[i]];
-    }
-    return ret;
-}
+//+ (NSString*)md5HexDigest:(NSString*)input {
+//    const char* str = [input UTF8String];
+//    unsigned char result[CC_MD5_DIGEST_LENGTH];
+//    CC_MD5(str, strlen(str), result);
+//	
+//    NSMutableString *ret = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH*2];
+//    for(int i = 0; i<CC_MD5_DIGEST_LENGTH; i++) {
+//        [ret appendFormat:@"%02x",result[i]];
+//    }
+//    return ret;
+//}
 - (void)showMain
 {
 	UINavigationController *navController = self.navigationController;
@@ -138,6 +141,12 @@
 	[navController pushViewController:mainVC animated:YES];
 	[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[mainVC release];
+}
+- (void)showProgress
+{
+	ProgressView *progressView = [[ProgressView alloc] initWithNibName:@"ProgressView" bundle:[NSBundle mainBundle]];
+	[self.navigationController pushViewController:progressView animated:NO];
+	[progressView release];
 }
 - (BOOL)requiresAuth:(NSURL*)url
 {
@@ -173,23 +182,12 @@
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"login"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
-	//MD5 encryption code
-	NSString *str = txtPassword.text;
-	const char *cStr = [str UTF8String];
-	unsigned char result[16];
-	CC_MD5( cStr, strlen(cStr), result );
-	str = [NSString stringWithFormat:
-		   @"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
-		   result[0], result[1], result[2], result[3], 
-		   result[4], result[5], result[6], result[7],
-		   result[8], result[9], result[10], result[11],
-		   result[12], result[13], result[14], result[15]
-		   ]; 
-	
-	[request setPostValue:str forKey:@"password"];	
+	request.useSessionPersistence = YES;
+	[request setPostValue:txtPassword.text forKey:@"pass"];	
 	[request startSynchronous];
+	
 	NSString *status = [request responseString];
-	NSLog(@"%@", status);
+	//NSLog(@"%@", status);
 	if ([status isEqualToString:@"status_loginFailed"])
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Incorrect" 
@@ -205,17 +203,30 @@
 		[[SettingsManager sharedSettingsManager].settings setObject:txtUsername.text forKey:@"username"];
 		[[SettingsManager sharedSettingsManager] save];
 		[SFHFKeychainUtils storeUsername:txtUsername.text andPassword:txtPassword.text forServiceName:@"TrueRSVP" updateExisting:NO error:nil];
-		[self showMain];
+//		UIProgressView *progress = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar] autorelease];
+//		[self.view addSubview:progress];
+//		[[NetworkManager sharedNetworkManager] refreshAll:progress];
+		[self showProgress];
+//		[self showMain];
 	}
 	else
 	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" 
-														message:@"Cannot connect to TrueRSVP."
-													   delegate:nil
-											  cancelButtonTitle:@"OK" 
-											  otherButtonTitles:nil];
-		[alert show];
-		[alert release];
+		NSNumber *checkOffline = [[SettingsManager sharedSettingsManager].settings objectForKey:@"Preloaded"];
+		if([checkOffline isEqual:[NSNumber numberWithBool:YES]])
+		{
+			[self showProgress];
+		}
+		else
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" 
+															message:@"Cannot connect to TrueRSVP."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+
 	}
 }
 - (IBAction)loginPressed:(UIButton*)sender
@@ -223,10 +234,10 @@
 	NSURL *url = [NSURL URLWithString:[[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"]];
 	if([self requiresAuth:url])
 	{
-		ASIHTTPRequest *request2 = [ASIHTTPRequest requestWithURL:url];
-		request2.delegate = self;
-		request2.shouldPresentAuthenticationDialog = YES;
-		[request2 startAsynchronous];
+		ASIHTTPRequest *loginRequest = [ASIHTTPRequest requestWithURL:url];
+		loginRequest.delegate = self;
+		loginRequest.shouldPresentAuthenticationDialog = YES;
+		[loginRequest startAsynchronous];
 	}
 	else
 	{
@@ -256,6 +267,7 @@
 }
 - (void)viewDidLoad
 {
+//	[self showDebugView:nil];
 	if([[SettingsManager sharedSettingsManager].settings objectForKey:@"username"])
 	{
 		txtUsername.text = [[SettingsManager sharedSettingsManager].settings objectForKey:@"username"];

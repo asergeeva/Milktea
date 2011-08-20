@@ -15,5 +15,9 @@
 - (void)save;
 - (void)load;
 + (SettingsManager*)sharedSettingsManager;
+- (void)saveDictionary:(NSMutableDictionary*)dictionary withKey:(NSString*)key;
+- (void)saveArray:(NSMutableArray*)array withKey:(NSString*)key;
+- (NSMutableDictionary*)loadDictionaryForKey:(NSString*)key;
+- (NSMutableArray*)loadArrayForKey:(NSString*)key;
 @property (nonatomic, retain) NSMutableDictionary *settings;
 @end

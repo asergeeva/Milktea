@@ -9,6 +9,7 @@
 #import "HostingController.h"
 #import "HostingList.h"
 #import "NSDictionary_JSONExtensions.h"
+#import "NetworkManager.h"
 @implementation HostingController
 #pragma mark - Init
 - (id)init
@@ -28,11 +29,11 @@
 #pragma mark - Other
 - (void)refresh
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getHostingEvents/"]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request startSynchronous];
-	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
-	[[HostingList sharedHostingList] updateEventsList:hostingInfo];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getHostingEvents/"]];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	[request startSynchronous];
+//	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
+	[[HostingList sharedHostingList] updateEventsList:[NetworkManager sharedNetworkManager].hostingList];
 	eventArray = [HostingList sharedHostingList].eventsArray;
 }
 @end

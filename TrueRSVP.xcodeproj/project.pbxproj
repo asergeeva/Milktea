@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510F267213FF1B8E00776F65 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 510F267013FF1B8E00776F65 /* ProgressView.m */; };
+		510F267313FF1B8E00776F65 /* ProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 510F267113FF1B8E00776F65 /* ProgressView.xib */; };
+		510F267713FF7E5300776F65 /* QueuedActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 510F267613FF7E5200776F65 /* QueuedActions.m */; };
 		51152E4113E787F800673391 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51152E4013E787F800673391 /* Security.framework */; };
 		511F35F913D5686300F7E748 /* attending_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 511F35ED13D5686300F7E748 /* attending_selected.png */; };
 		511F35FA13D5686300F7E748 /* attending_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 511F35EE13D5686300F7E748 /* attending_selected@2x.png */; };
@@ -56,6 +59,7 @@
 		512556FE13E7F78F00469DAE /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512556FC13E7F78E00469DAE /* CameraViewController.xib */; };
 		5125570113E8020A00469DAE /* uploading.png in Resources */ = {isa = PBXBuildFile; fileRef = 512556FF13E8020A00469DAE /* uploading.png */; };
 		5125570213E8020A00469DAE /* uploading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5125570013E8020A00469DAE /* uploading@2x.png */; };
+		512A1ACD13FF112F00A10ECF /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 512A1ACC13FF112E00A10ECF /* Helper.m */; };
 		514D990613E0D9B50036AC40 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990413E0D9B50036AC40 /* checkbox.png */; };
 		514D990713E0D9B50036AC40 /* checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990513E0D9B50036AC40 /* checkbox@2x.png */; };
 		514D990A13E0DABD0036AC40 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990813E0DABD0036AC40 /* checkbox_checked.png */; };
@@ -100,6 +104,9 @@
 		517AAA4D13DAE42E00733342 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AAA4C13DAE42D00733342 /* CoreLocation.framework */; };
 		517C151B13EB70DA0028898E /* ListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C151A13EB70DA0028898E /* ListController.m */; };
 		517C151F13EB83530028898E /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C151E13EB83530028898E /* ListViewController.m */; };
+		517D3F7913FE3C5200DA256B /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 517D3F7813FE3C5200DA256B /* icon.png */; };
+		517D3F7C13FE3C5500DA256B /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517D3F7B13FE3C5500DA256B /* icon@2x.png */; };
+		517D3F7F13FE64B000DA256B /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517D3F7E13FE64B000DA256B /* NetworkManager.m */; };
 		517DED5113E6AAE400630487 /* LiveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517DED5013E6AAE400630487 /* LiveController.m */; };
 		518E2D7713D24FA60080E068 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7613D24FA60080E068 /* UIKit.framework */; };
 		518E2D7913D24FA60080E068 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7813D24FA60080E068 /* Foundation.framework */; };
@@ -200,6 +207,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		510F266F13FF1B8E00776F65 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		510F267013FF1B8E00776F65 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		510F267113FF1B8E00776F65 /* ProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressView.xib; sourceTree = "<group>"; };
+		510F267513FF7E5100776F65 /* QueuedActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueuedActions.h; sourceTree = "<group>"; };
+		510F267613FF7E5200776F65 /* QueuedActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueuedActions.m; sourceTree = "<group>"; };
 		51152E4013E787F800673391 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		511F35ED13D5686300F7E748 /* attending_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attending_selected.png; sourceTree = "<group>"; };
 		511F35EE13D5686300F7E748 /* attending_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "attending_selected@2x.png"; sourceTree = "<group>"; };
@@ -271,6 +283,8 @@
 		512556FC13E7F78E00469DAE /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		512556FF13E8020A00469DAE /* uploading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uploading.png; sourceTree = "<group>"; };
 		5125570013E8020A00469DAE /* uploading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploading@2x.png"; sourceTree = "<group>"; };
+		512A1ACB13FF112E00A10ECF /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
+		512A1ACC13FF112E00A10ECF /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		514D990413E0D9B50036AC40 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		514D990513E0D9B50036AC40 /* checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox@2x.png"; sourceTree = "<group>"; };
 		514D990813E0DABD0036AC40 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked.png; sourceTree = "<group>"; };
@@ -340,6 +354,10 @@
 		517C151A13EB70DA0028898E /* ListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListController.m; sourceTree = "<group>"; };
 		517C151D13EB83530028898E /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
 		517C151E13EB83530028898E /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
+		517D3F7813FE3C5200DA256B /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
+		517D3F7B13FE3C5500DA256B /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
+		517D3F7D13FE64B000DA256B /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		517D3F7E13FE64B000DA256B /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		517DED4F13E6AAE400630487 /* LiveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveController.h; sourceTree = "<group>"; };
 		517DED5013E6AAE400630487 /* LiveController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveController.m; sourceTree = "<group>"; };
 		518E2D7213D24FA60080E068 /* TrueRSVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueRSVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -767,25 +785,28 @@
 				51D84D4E13D90C42008A705B /* AttendingViewController.h */,
 				51D84D4F13D90C43008A705B /* AttendingViewController.m */,
 				51D84D5013D90C43008A705B /* AttendingViewController.xib */,
-				517C151D13EB83530028898E /* ListViewController.h */,
-				517C151E13EB83530028898E /* ListViewController.m */,
-				51DEC44013DE6F78004940A5 /* HostingViewController.h */,
-				51DEC44113DE6F78004940A5 /* HostingViewController.m */,
-				51DEC44213DE6F78004940A5 /* HostingViewController.xib */,
 				517AAA3013DACF9D00733342 /* AttendingDetailViewController.h */,
 				517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */,
 				517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */,
 				512163EB13DC342100B5989E /* AttendingDetailViewController_Landscape.xib */,
-				51CC214D13DE954D00980FE8 /* HostingDetailViewController.h */,
-				51CC214E13DE954D00980FE8 /* HostingDetailViewController.m */,
-				51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */,
-				51EA19A213DFBF9000684A58 /* HostingDetailViewController_Landscape.xib */,
+				512556FA13E7F78C00469DAE /* CameraViewController.h */,
+				512556FB13E7F78D00469DAE /* CameraViewController.m */,
+				512556FC13E7F78E00469DAE /* CameraViewController.xib */,
 				51B1859013E0A3F400FBDCC9 /* DebugViewController.h */,
 				51B1859113E0A3F400FBDCC9 /* DebugViewController.m */,
 				51B1859213E0A3F400FBDCC9 /* DebugViewController.xib */,
 				51EA19A513E0005B00684A58 /* GuestListViewController.h */,
 				51EA19A613E0005B00684A58 /* GuestListViewController.m */,
 				51EA19A713E0005B00684A58 /* GuestListViewController.xib */,
+				51DEC44013DE6F78004940A5 /* HostingViewController.h */,
+				51DEC44113DE6F78004940A5 /* HostingViewController.m */,
+				51DEC44213DE6F78004940A5 /* HostingViewController.xib */,
+				51CC214D13DE954D00980FE8 /* HostingDetailViewController.h */,
+				51CC214E13DE954D00980FE8 /* HostingDetailViewController.m */,
+				51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */,
+				51EA19A213DFBF9000684A58 /* HostingDetailViewController_Landscape.xib */,
+				517C151D13EB83530028898E /* ListViewController.h */,
+				517C151E13EB83530028898E /* ListViewController.m */,
 				5199178013E2AFDE00C4A946 /* LiveViewController.h */,
 				5199178113E2AFDE00C4A946 /* LiveViewController.m */,
 				5199178213E2AFDE00C4A946 /* LiveViewController.xib */,
@@ -795,13 +816,13 @@
 				5125568213E7DB4E00469DAE /* MessageViewController.h */,
 				5125568313E7DB4E00469DAE /* MessageViewController.m */,
 				5125568413E7DB4E00469DAE /* MessageViewController.xib */,
-				512556FA13E7F78C00469DAE /* CameraViewController.h */,
-				512556FB13E7F78D00469DAE /* CameraViewController.m */,
-				512556FC13E7F78E00469DAE /* CameraViewController.xib */,
 				51F9BB7413D2AAB70017731B /* ProfileViewController.h */,
 				51F9BB7513D2AAB70017731B /* ProfileViewController.m */,
 				51F9BB7613D2AAB70017731B /* ProfileViewController.xib */,
 				519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */,
+				510F266F13FF1B8E00776F65 /* ProgressView.h */,
+				510F267013FF1B8E00776F65 /* ProgressView.m */,
+				510F267113FF1B8E00776F65 /* ProgressView.xib */,
 				518E2D8B13D24FA60080E068 /* SignInViewController.h */,
 				518E2D8C13D24FA60080E068 /* SignInViewController.m */,
 				518E2D8E13D24FA70080E068 /* SignInViewController.xib */,
@@ -831,6 +852,8 @@
 		518E2D9613D2527D0080E068 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				517D3F7B13FE3C5500DA256B /* icon@2x.png */,
+				517D3F7813FE3C5200DA256B /* icon.png */,
 				519A0DF613E9F4BF0063695C /* 1px_whiteGradient.png */,
 				519A0DF713E9F4BF0063695C /* 1px_whiteGradient@2x.png */,
 				514D992013E0E3E00036AC40 /* attendedButton.png */,
@@ -991,6 +1014,8 @@
 				51CC214B13DE919600980FE8 /* HostingList.m */,
 				5173571B13D8117D00204AAF /* SettingsManager.h */,
 				5173571C13D8117D00204AAF /* SettingsManager.m */,
+				517D3F7D13FE64B000DA256B /* NetworkManager.h */,
+				517D3F7E13FE64B000DA256B /* NetworkManager.m */,
 				511F361713D592AC00F7E748 /* SynthesizeSingleton.h */,
 				511F360513D5801600F7E748 /* User.h */,
 				511F360613D5801700F7E748 /* User.m */,
@@ -1009,22 +1034,26 @@
 				51B1859E13E0C7A300FBDCC9 /* Attendee.m */,
 				51AEC93B13DE62A200E2FB69 /* AttendingController.h */,
 				51AEC93C13DE62A200E2FB69 /* AttendingController.m */,
+				51ACEA4A13E354F200C206FD /* CheckInButton.h */,
+				51ACEA4B13E354F200C206FD /* CheckInButton.m */,
+				511F360C13D58B0C00F7E748 /* Constants.h */,
+				511F360D13D58B0D00F7E748 /* Constants.m */,
 				51F222BD13DA4CDE00D2A834 /* Event.h */,
 				51F222BE13DA4CDE00D2A834 /* Event.m */,
+				51D3F84D13DD5C7A00EBC93D /* EventAnnotation.h */,
+				51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */,
+				512A1ACB13FF112E00A10ECF /* Helper.h */,
+				512A1ACC13FF112E00A10ECF /* Helper.m */,
+				51DEC44713DE7EA7004940A5 /* HostingController.h */,
+				51DEC44813DE7EA8004940A5 /* HostingController.m */,
 				517C151913EB70DA0028898E /* ListController.h */,
 				517C151A13EB70DA0028898E /* ListController.m */,
 				517DED4F13E6AAE400630487 /* LiveController.h */,
 				517DED5013E6AAE400630487 /* LiveController.m */,
-				51DEC44713DE7EA7004940A5 /* HostingController.h */,
-				51DEC44813DE7EA8004940A5 /* HostingController.m */,
-				51D3F84D13DD5C7A00EBC93D /* EventAnnotation.h */,
-				51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */,
-				51ACEA4A13E354F200C206FD /* CheckInButton.h */,
-				51ACEA4B13E354F200C206FD /* CheckInButton.m */,
+				510F267513FF7E5100776F65 /* QueuedActions.h */,
+				510F267613FF7E5200776F65 /* QueuedActions.m */,
 				517033F913E958F2007128BC /* SendButton.h */,
 				517033FA13E958F2007128BC /* SendButton.m */,
-				511F360C13D58B0C00F7E748 /* Constants.h */,
-				511F360D13D58B0D00F7E748 /* Constants.m */,
 				519A0DFE13EAAFC30063695C /* SFHFKeychainUtils.m */,
 				519A0DFF13EAAFC30063695C /* SFHFKeychainUtils.h */,
 			);
@@ -1235,6 +1264,9 @@
 				519A0DF913E9F4BF0063695C /* 1px_whiteGradient@2x.png in Resources */,
 				519A0DFC13EA28050063695C /* dropdown.png in Resources */,
 				519A0DFD13EA28050063695C /* dropdown@2x.png in Resources */,
+				517D3F7913FE3C5200DA256B /* icon.png in Resources */,
+				517D3F7C13FE3C5500DA256B /* icon@2x.png in Resources */,
+				510F267313FF1B8E00776F65 /* ProgressView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1318,6 +1350,10 @@
 				519A0E0013EAAFC30063695C /* SFHFKeychainUtils.m in Sources */,
 				517C151B13EB70DA0028898E /* ListController.m in Sources */,
 				517C151F13EB83530028898E /* ListViewController.m in Sources */,
+				517D3F7F13FE64B000DA256B /* NetworkManager.m in Sources */,
+				512A1ACD13FF112F00A10ECF /* Helper.m in Sources */,
+				510F267213FF1B8E00776F65 /* ProgressView.m in Sources */,
+				510F267713FF7E5300776F65 /* QueuedActions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

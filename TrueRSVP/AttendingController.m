@@ -9,6 +9,7 @@
 #import "AttendingController.h"
 #import "AttendanceList.h"
 #import "NSDictionary_JSONExtensions.h"
+#import "NetworkManager.h"
 @implementation AttendingController
 #pragma mark - Init
 - (id)init
@@ -28,10 +29,10 @@
 #pragma mark - Other
 - (void)refresh
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getAttendingEvents/"]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request startSynchronous];
-	NSArray *attendanceInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getAttendingEvents/"]];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	[request startSynchronous];
+	NSArray *attendanceInfo = [NetworkManager sharedNetworkManager].attendingList;
 	[[AttendanceList sharedAttendanceList] updateEventsList:attendanceInfo];
 	eventArray = [AttendanceList sharedAttendanceList].eventsArray;
 }
