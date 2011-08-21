@@ -10,11 +10,15 @@
 #import "TrueRSVPViewController.h"
 #import "SignInViewController.h"
 #import "LiveViewController.h"
+//#import "Reachability.h"
+#import "QueuedActions.h"
+#import "NetworkManager.h"
 @implementation TrueRSVPAppDelegate
 @synthesize window=_window;
 @synthesize viewController=_viewController;
 @synthesize facebook;
 @synthesize navController;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	facebook = [[Facebook alloc] initWithAppId:@"122732554481304"];
@@ -41,9 +45,10 @@
 	{
 		NSArray *urlComponents = [[url absoluteString] componentsSeparatedByString:@"?"];
 		NSArray *requestParameterChunks = [[urlComponents objectAtIndex:1] componentsSeparatedByString:@"&"];
-		for (NSString *chunk in requestParameterChunks) {
+		for (NSString *chunk in requestParameterChunks) 
+		{
 			NSArray *keyVal = [chunk componentsSeparatedByString:@"="];
-			
+		
 			if ([[keyVal objectAtIndex:0] isEqualToString:@"oauth_verifier"]) 
 			{
 				for(UIViewController *vc in navController.viewControllers)
@@ -56,8 +61,7 @@
 			} 
 		}
 	}
-    
-    return YES;
+	return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -87,6 +91,10 @@
 	/*
 	 Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	 */
+	if([[NetworkManager sharedNetworkManager] isOnline])
+	{
+		[[NetworkManager sharedNetworkManager] processQueue];
+	}
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -6,9 +6,11 @@
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "Helper.h"
+#import "MiscHelper.h"
 #import <CommonCrypto/CommonDigest.h>
-@implementation Helper
+#import <CoreLocation/CoreLocation.h>
+#import "ASIHTTPRequest.h"
+@implementation MiscHelper
 
 - (id)init
 {
@@ -35,4 +37,12 @@
 		   ]; 
 	return str;
 }
+//+ (CLLocationCoordinate2D)getCoordsFromAddressRequest:(ASIHTTPRequest*)request
+//{
+////	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+//	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+//	lat = [[location objectForKey:@"lat"] floatValue];
+//	lng = [[location objectForKey:@"lng"] floatValue];
+//	return coord = CLLocationCoordinate2DMake(lat, lng);
+//}
 @end

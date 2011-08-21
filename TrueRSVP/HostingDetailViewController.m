@@ -15,6 +15,7 @@
 #import "SettingsManager.h"
 #import "LiveViewController.h"
 #import "QueuedActions.h"
+#import "NetworkManager.h"
 @implementation HostingDetailViewController
 @synthesize eventHosting;
 //@synthesize dynamicRSVP;
@@ -53,18 +54,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {	
-	NSString *urlAddress = [NSString stringWithFormat:@"%@computeTrueRSVP", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]];
-	NSURL *trueURL = [NSURL URLWithString:urlAddress];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:trueURL];
-	[request setPostValue:eventHosting.eventID forKey:@"eid"];
-	[request startSynchronous];
-	dynamicRSVP.text = [request responseString];
-	
-	urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventHosting.eventAddress];
-	NSURL *mapURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-	ASIHTTPRequest *requestMap = [ASIHTTPRequest requestWithURL:mapURL];
-	requestMap.delegate = self;
-	[requestMap startAsynchronous];
+	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self];
+	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventHosting.eventAddress delegate:self];
 
 	[super viewWillAppear:animated];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
@@ -204,7 +195,7 @@
 		eventDate.frame = CGRectMake(10, 71, 280, 21);
 		yourRSVPBack.frame = CGRectMake(308, 51, 172, 40);
 		staticRSVP.frame = CGRectMake(247, 59, 300, 21);
-		dynamicRSVP.frame = CGRectMake(0, 500, 94, 21);
+		dynamicRSVP.frame = CGRectMake(440, 60, 30, 21);
 		eventMap.frame = CGRectMake(8, 109, 284, 96);
 		eventMapBack.frame = CGRectMake(0, 100, 300, 114);
 		buttonWhiteBack.frame = CGRectMake(308, 100, 172, 114);
@@ -221,7 +212,7 @@
 		eventDate.frame = CGRectMake(20, 74, 280, 21);
 		yourRSVPBack.frame = CGRectMake(10, 105, 300, 30);
 		staticRSVP.frame = CGRectMake(10, 109, 300, 21);
-		dynamicRSVP.frame = CGRectMake(198, 109, 94, 21);
+		dynamicRSVP.frame = CGRectMake(198, 109, 30, 21);
 		eventMap.frame = CGRectMake(25, 223, 270, 80);
 		eventMapBack.frame = CGRectMake(500, 500, 300, 114);
 		buttonWhiteBack.frame = CGRectMake(55, 333, 210, 120);
@@ -242,7 +233,7 @@
     // Release any cached data, images, etc that aren't in use.
 }
 #pragma mark - ASIHTTP Delegate Methods
-- (void)requestFinished:(ASIHTTPRequest *)request
+- (void)mapRequestFinished:(ASIHTTPRequest *)request
 {
 	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
@@ -256,6 +247,14 @@
 	EventAnnotation *annotation = [[EventAnnotation alloc] initWithName:eventName.text coordinate:coord];
 	[eventMap addAnnotation:annotation];
 	[annotation release];
+}
+- (void)scoreLoadFinished:(ASIHTTPRequest*)request
+{
+	dynamicRSVP.text = [request responseString];
+}
+- (void)scoreLoadFailed:(ASIHTTPRequest*)request
+{
+	NSLog(@"Loading TrueRSVP score failed");
 }
 #pragma mark - Button Methods
 - (IBAction)messagePressed:(UIButton*)sender

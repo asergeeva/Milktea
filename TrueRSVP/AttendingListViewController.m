@@ -6,15 +6,15 @@
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "AttendingViewController.h"
+#import "AttendingListViewController.h"
 
 #import "User.h"
-#import "ASIFormDataRequest.h"
+//#import "ASIFormDataRequest.h"
 #import "Constants.h"
 
 #import "AttendanceList.h"
 #import "TrueRSVPAppDelegate.h"
-@implementation AttendingViewController
+@implementation AttendingListViewController
 @synthesize attendingController;
 @synthesize attendingDetailVC;
 @synthesize delegate;

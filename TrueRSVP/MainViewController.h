@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "ProfileViewController.h"
-#import "AttendingViewController.h"
+#import "AttendingListViewController.h"
 #import "HostingViewController.h"
 @interface MainViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, UIScrollViewDelegate, AttendingDelegate, HostingDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
 //	IBOutlet UINavigationBar *navBar;
 	ProfileViewController *profileVC;
-	AttendingViewController *attendingVC;
+	AttendingListViewController *attendingVC;
 	HostingViewController *hostingVC;
 //	UIView *attendingView;
 //	UIView *hostingView;
@@ -36,7 +36,7 @@
 - (void)resetRotation:(UIViewController*)viewController duration:(NSTimeInterval)duration;
 - (void)resetScrollViewContentSize:(UIInterfaceOrientation)toInterfaceOrientation;
 @property (nonatomic, retain) ProfileViewController *profileVC;
-@property (nonatomic, retain) AttendingViewController *attendingVC;
+@property (nonatomic, retain) AttendingListViewController *attendingVC;
 @property (nonatomic, retain) HostingViewController *hostingVC;
 @property (nonatomic, retain) UIView *segmentButtons;
 @property (nonatomic, retain) UIButton *profileButton;

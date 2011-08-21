@@ -10,6 +10,7 @@
 #import "AttendanceList.h"
 #import "NSDictionary_JSONExtensions.h"
 #import "NetworkManager.h"
+#import "LocationManager.h"
 @implementation AttendingController
 #pragma mark - Init
 - (id)init
@@ -35,5 +36,15 @@
 	NSArray *attendanceInfo = [NetworkManager sharedNetworkManager].attendingList;
 	[[AttendanceList sharedAttendanceList] updateEventsList:attendanceInfo];
 	eventArray = [AttendanceList sharedAttendanceList].eventsArray;
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd";
+	for(Event *event in eventArray)
+	{
+		if([[df stringFromDate:event.eventDate] isEqual:[df stringFromDate:[NSDate date]]])
+		{
+			[[LocationManager sharedLocationManager] addEvent:event];
+		}
+	}
+	[df release];
 }
 @end

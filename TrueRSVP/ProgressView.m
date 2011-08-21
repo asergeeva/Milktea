@@ -10,6 +10,7 @@
 #import "NetworkManager.h"
 #import "MainViewController.h"
 @implementation ProgressView
+@synthesize hostingList;
 @synthesize progressBar;
 NSTimer *timer;
 - (void)progressCheck
@@ -33,7 +34,7 @@ NSTimer *timer;
 }
 - (void)offlineMode
 {
-	if([[NetworkManager sharedNetworkManager] checkFilled])
+	if(![[NetworkManager sharedNetworkManager] isOnline])
 	{
 		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
 		[self.navigationController pushViewController:mainVC animated:YES];
@@ -46,6 +47,7 @@ NSTimer *timer;
 		[alert release];
 	}
 }	
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

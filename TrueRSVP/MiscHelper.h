@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Helper : NSObject
+@interface MiscHelper : NSObject
 + (NSString*)stringToMD5String:(NSString*)convertString;
+//+ (CLLocationCoordinate2D)getCoordsFromAddressRequest:(ASIHTTPRequest*)request;
 @end

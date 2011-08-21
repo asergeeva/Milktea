@@ -15,6 +15,8 @@
 #import "SettingsManager.h"
 #import "EventAnnotation.h"
 #import "LiveViewController.h"
+#import "NetworkManager.h"
+#import "MiscHelper.h"
 @implementation AttendingDetailViewController
 @synthesize eventAttending;
 @synthesize eventWhiteBack;
@@ -53,13 +55,11 @@
 }
 - (IBAction)showMail:(UIButton*)sender
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getOrganizerEmail", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventOrganizer] forKey:@"oid"];
-	[request startSynchronous];
+
 	MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
 	mailVC.mailComposeDelegate = self;
 	[mailVC setSubject:[NSString stringWithFormat:@"Event: %@",eventName.text]];
+	ASIHTTPRequest *request = [[NetworkManager sharedNetworkManager] getOrganizerEmailForOrganizerID:eventAttending.eventOrganizer];
 	NSDictionary *info = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	NSString *email = [info objectForKey:@"email"];
 	if(![request error])
@@ -67,6 +67,12 @@
 		[mailVC setToRecipients:[NSArray arrayWithObject:email]];
 		[self presentModalViewController:mailVC animated:YES];
 		[mailVC release];
+	}
+	else
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot Connect" message:@"Could not find the e-mail address for the organizer. Try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		[alert release];
 	}
 }
 - (IBAction)showMap:(UIButton*)sender
@@ -101,30 +107,31 @@
 	}
 	else
 	{
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkInByDistance",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
-		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-		[request setPostValue:eventAttending.eventID forKey:@"eid"];
-		[request startSynchronous];
-		if([[request responseString] isEqualToString:@"status_checkInSuccess"])
-		{
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-															message:@"You are now checked in!"
-														   delegate:nil
-												  cancelButtonTitle:@"OK" 
-												  otherButtonTitles:nil];
-			[alert show];
-			[alert release];
-		}
-		else
-		{
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-															message:@"Check-in unsuccessful. Try again later."
-														   delegate:nil
-												  cancelButtonTitle:@"OK" 
-												  otherButtonTitles:nil];
-			[alert show];
-			[alert release];
-		}
+		[[NetworkManager sharedNetworkManager] checkInWithEID:eventAttending.eventID];
+//		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkInByDistance",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+//		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//		[request setPostValue:eventAttending.eventID forKey:@"eid"];
+//		[request startSynchronous];
+//		if([[request responseString] isEqualToString:@"status_checkInSuccess"])
+//		{
+//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+//															message:@"You are now checked in!"
+//														   delegate:nil
+//												  cancelButtonTitle:@"OK" 
+//												  otherButtonTitles:nil];
+//			[alert show];
+//			[alert release];
+//		}
+//		else
+//		{
+//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+//															message:@"Check-in unsuccessful. Try again later."
+//														   delegate:nil
+//												  cancelButtonTitle:@"OK" 
+//												  otherButtonTitles:nil];
+//			[alert show];
+//			[alert release];
+//		}
 	}
 	[destinationLocation release];
 }
@@ -156,19 +163,17 @@
 			break;
 	}
 
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@setAttendanceForEvent", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]]];
-	[request setPostValue:[NSString stringWithFormat:@"%@", eventAttending.eventID] forKey:@"eid"];
-	[request setPostValue:[NSString stringWithFormat:@"%d", confidence] forKey:@"confidence"];
-	[request startAsynchronous];
+	[[NetworkManager sharedNetworkManager] setAttendanceWithEID:eventAttending.eventID confidence:[NSString stringWithFormat:@"%d", confidence]];
 //	NSLog(@"%@", [request responseString]);
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAttending.eventAddress];
-	NSURL *someURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:someURL];
-	request.delegate = self;
-	[request startAsynchronous];	
+//	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAttending.eventAddress];
+//	NSURL *someURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+//	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:someURL];
+//	request.delegate = self;
+//	[request startAsynchronous];
+	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventAttending.eventAddress delegate:self];
 	[super viewWillAppear:animated];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 
@@ -259,13 +264,14 @@
     // Release any cached data, images, etc that aren't in use.
 }
 #pragma mark - ASIHTTP Delegate Methods
-- (void)requestFinished:(ASIHTTPRequest *)request
+- (void)mapRequestFinished:(ASIHTTPRequest *)request
 {
 	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
 	lat = [[location objectForKey:@"lat"] floatValue];
 	lng = [[location objectForKey:@"lng"] floatValue];
 	CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat, lng);
+//	CLLocationCoordinate2D coord = [MiscHelper getCoordsFromAddressRequest:request];
 	MKCoordinateSpan span = MKCoordinateSpanMake(0.025, 0.025);
 	MKCoordinateRegion region = MKCoordinateRegionMake(coord, span);
 	eventMap.region = region;

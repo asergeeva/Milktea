@@ -16,5 +16,6 @@
 - (void)addActionWithEID:(NSString*)eid userID:(NSString*)uid attendance:(BOOL)isAttending date:(NSDate*)date;
 - (void)save;
 - (void)load;
+- (void)processQueue;
 @property (nonatomic, retain) NSMutableArray *queue;
 @end

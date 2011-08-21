@@ -15,6 +15,8 @@
 #import "Attendee.h"
 #import "Constants.h"
 #import "QueuedActions.h"
+#import <CoreLocation/CoreLocation.h>
+#import "QueuedActions.h"
 @implementation NetworkManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 //@synthesize formReq;
@@ -26,7 +28,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 @synthesize hostingList;
 //@synthesize hostingDetails;
 @synthesize delegate;
-NSString *APILocation;
+@synthesize connectionMonitor;
+//NSString *APILocation;
 - (id)init
 {
     self = [super init];
@@ -45,9 +48,42 @@ NSString *APILocation;
 		hostingDone = NO;
 		
 		sm = [[SettingsManager sharedSettingsManager].settings retain];
-		APILocation = [NSString stringWithFormat:@"%@", [sm objectForKey:@"APILocation"]];
+		connectionMonitor = [Reachability reachabilityForInternetConnection];
+		[connectionMonitor startNotifier];
+		[[NSNotificationCenter defaultCenter]
+		 addObserver: self
+		 selector: @selector(connectivityChanged:)
+		 name:  kReachabilityChangedNotification
+		 object: connectionMonitor];
+//		APILocation = [NSString stringWithFormat:@"%@", [sm objectForKey:@"APILocation"]];
     }
     return self;
+}
+- (void)connectivityChanged:(NSNotification*)notice
+{
+	//	Reachability *r = (Reachability*)[notice object];
+	//	if([r currentReachabilityStatus] == NotReachable)
+	//	{
+//	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//	[alert show];
+//	[alert release];
+	//	}
+}
+- (BOOL)isOnline
+{
+	if([connectionMonitor currentReachabilityStatus] == NotReachable)
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		[alert release];
+	}
+	else
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Internet" message:@"Internet Found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		[alert release];
+	}
+	return ([connectionMonitor currentReachabilityStatus] != NotReachable);
 }
 - (void)didLoadProfile:(ASIFormDataRequest*)request
 {
@@ -56,7 +92,8 @@ NSString *APILocation;
 	[profile addEntriesFromDictionary:[[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil]];
 	[[SettingsManager sharedSettingsManager] saveDictionary:profile withKey:@"profile"];
 	profileDone = YES;
-	[self processQueue];
+	[[QueuedActions sharedQueuedActions] processQueue];
+//	[self processQueue];
 }
 - (void)didLoadHostingList:(ASIFormDataRequest*)request
 {
@@ -110,6 +147,58 @@ NSString *APILocation;
 {
 
 }
+- (void)updateProfileWithEmail:(NSString*)email about:(NSString*)about cell:(NSString*)cell zip:(NSString*)zip twitter:(NSString*)twitter delegate:(UIViewController*)viewController
+{
+	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], setUserInfo]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request addPostValue:email forKey:@"email"];
+	[request addPostValue:about forKey:@"about"];
+	[request addPostValue:cell forKey:@"cell"];
+	[request addPostValue:zip forKey:@"zip"];
+	[request addPostValue:twitter forKey:@"twitter"];
+	request.delegate = viewController;
+	[request startAsynchronous];
+}
+- (ASIHTTPRequest*)getOrganizerEmailForOrganizerID:(NSString*)oid
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getOrganizerEmail]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:[NSString stringWithFormat:@"%@", oid] forKey:@"oid"];
+	[request startSynchronous];
+	return request;
+}
+- (void)getMapWithAddress:(NSString*)eventAddress delegate:(UIViewController*)viewController
+{
+	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAddress];
+	NSURL *mapURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+	ASIHTTPRequest *requestMap = [ASIHTTPRequest requestWithURL:mapURL];
+	[requestMap setDidFinishSelector:@selector(mapRequestFinished:)];
+	requestMap.delegate = viewController;
+	[requestMap startAsynchronous];
+}
+- (CLLocationCoordinate2D)getCoordsFromAddress:(NSString*)eventAddress
+{
+	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAddress];
+	NSURL *mapURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:mapURL];
+	[request setDidFinishSelector:@selector(mapRequestFinished:)];
+	[request startSynchronous];	
+	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+	float lat = [[location objectForKey:@"lat"] floatValue];
+	float lng = [[location objectForKey:@"lng"] floatValue];
+	return CLLocationCoordinate2DMake(lat, lng);
+}
+- (void)getScoreWithEID:(NSString*)eid delegate:(UIViewController*)viewController
+{
+	NSURL *trueURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], computeTrueRSVP]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:trueURL];
+	[request setPostValue:eid forKey:@"eid"];
+	request.delegate = viewController;
+	[request setDidFinishSelector:@selector(scoreLoadFinished:)];
+	[request setDidFailSelector:@selector(scoreLoadFailed:)];
+	[request startAsynchronous];
+}
 - (void)didFailedLoadingProfile:(ASIFormDataRequest*)request
 {
 	NSLog(@"Profile failed");
@@ -149,14 +238,14 @@ NSString *APILocation;
 {
 	ASINetworkQueue *allQueue = [ASINetworkQueue queue];
 	[allQueue setDownloadProgressDelegate:bar];
-	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, getUserInfo]];
+	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getUserInfo]];
 	ASIFormDataRequest *profileReq = [ASIFormDataRequest requestWithURL:profileURL];
 	[profileReq setDelegate:self];
 	[profileReq setDidFinishSelector:@selector(didLoadProfile:)];
 	[profileReq setDidFailSelector:@selector(didFailedLoadingProfile:)];
 	[allQueue addOperation:profileReq];
 	
-	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", APILocation, getHostingEvents]];
+	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getHostingEvents]];
 	ASIFormDataRequest *hostingListReq = [ASIFormDataRequest requestWithURL:hostingListURL];
 	[hostingListReq setDelegate:self];
 	[hostingListReq setDidFinishSelector:@selector(didLoadHostingList:)];
@@ -171,7 +260,6 @@ NSString *APILocation;
 	[allQueue addOperation:attendingListReq];
 	
 	[allQueue go];
-	
 }
 - (NSDate*)getDateForEID:(NSString*)eid uid:(NSString*)uid
 {
@@ -187,7 +275,7 @@ NSString *APILocation;
 	[df release];
 	return date;
 }
-- (void)checkInWithCheckIn:(CheckIn*)check
+- (void)checkInDateWithCheckIn:(CheckIn*)check
 {
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], checkInWithDate]]];
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -200,6 +288,51 @@ NSString *APILocation;
 	[request startSynchronous];	
 	[df release];
 }
+//- (void)checkInDistanceWithEID:(NSString*)eid delegate:(id)receiver
+//{
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkInByDistance",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	[request setPostValue:eid forKey:@"eid"];
+//	request.delegate = receiver;
+//	[request startAsynchronous];
+//}
+- (ASIHTTPRequest*)checkInWithEID:(NSString*)eid uid:(NSString*)uid checkInValue:(NSString*)checkInValue
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[sm objectForKey:@"APILocation"], checkIn]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:eid forKey:@"eid"];
+	[request setPostValue:uid forKey:@"uid"];
+	[request setPostValue:checkInValue forKey:@"checkIn"];
+	[request startSynchronous];
+	return request;
+}
+- (void)checkInWithEID:(NSString*)eid
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[sm objectForKey:@"APILocation"], @"checkInByDistance"]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:eid forKey:@"eid"];
+	[request startSynchronous];
+	if([[request responseString] isEqualToString:@"status_checkInSuccess"])
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+														message:@"You are now checked in!"
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
+	else
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+														message:@"Check-in unsuccessful. Try again later."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
+}
 - (void)processQueue
 {
 	while([[QueuedActions sharedQueuedActions].queue count])
@@ -208,7 +341,7 @@ NSString *APILocation;
 		NSDate *date = [self getDateForEID:check.eid uid:check.uid];
 		if([date timeIntervalSince1970] < [check.date timeIntervalSince1970])
 		{
-			[self checkInWithCheckIn:check];
+			[self checkInDateWithCheckIn:check];
 		}
 		[[QueuedActions sharedQueuedActions].queue removeObjectAtIndex:0];
 	}
@@ -217,6 +350,14 @@ NSString *APILocation;
 - (BOOL)checkFilled
 {
 	return (profileDone && attendingDone && hostingDone);
+}
+- (void)setAttendanceWithEID:(NSString*)eid confidence:(NSString*)confidence
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], setAttendanceForEvent]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:eid forKey:@"eid"];
+	[request setPostValue:confidence forKey:@"confidence"];
+	[request startAsynchronous];
 }
 - (void)dealloc
 {

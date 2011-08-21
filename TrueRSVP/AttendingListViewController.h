@@ -14,7 +14,7 @@
 @optional
 - (void)selectedEvent:(UIViewController*)viewController;
 @end
-@interface AttendingViewController : ListViewController
+@interface AttendingListViewController : ListViewController
 {
 	AttendingController *attendingController;
 	AttendingDetailViewController *attendingDetailVC;

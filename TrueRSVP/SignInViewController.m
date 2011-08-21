@@ -13,9 +13,11 @@
 #import "SettingsManager.h"
 #import "DebugViewController.h"
 #import "SFHFKeychainUtils.h"
-#import "Helper.h"
-//#import "NetworkManager.h"
+#import "MiscHelper.h"
+#import "NetworkManager.h"
 #import "ProgressView.h"
+#import "LocationManager.h"
+//#import "TrueRSVPAppDelegate.h"
 @implementation SignInViewController
 @synthesize facebook;
 - (void)dealloc
@@ -226,7 +228,6 @@
 			[alert show];
 			[alert release];
 		}
-
 	}
 }
 - (IBAction)loginPressed:(UIButton*)sender
@@ -268,6 +269,7 @@
 - (void)viewDidLoad
 {
 //	[self showDebugView:nil];
+//	TrueRSVPAppDelegate *app = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]);
 	if([[SettingsManager sharedSettingsManager].settings objectForKey:@"username"])
 	{
 		txtUsername.text = [[SettingsManager sharedSettingsManager].settings objectForKey:@"username"];

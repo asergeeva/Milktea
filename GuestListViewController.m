@@ -264,22 +264,26 @@ BOOL sendSelection = NO;
 #pragma mark - UIButton Actions
 - (void)checkboxPressed:(CheckInButton*)sender
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
 
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request setPostValue:sender.uid forKey:@"uid"];
-	[request setPostValue:sender.eid forKey:@"eid"];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	[request setPostValue:sender.uid forKey:@"uid"];
+//	[request setPostValue:sender.eid forKey:@"eid"];
+	NSString *checkInValue;
 	if(sender.isSelected)
 	{
-		[request setPostValue:@"0" forKey:@"checkIn"];
+//		[request setPostValue:@"0" forKey:@"checkIn"];
+		checkInValue = @"0";
 		sender.selected = NO;
 	}
 	else
 	{
-		[request setPostValue:@"1" forKey:@"checkIn"];
+//		[request setPostValue:@"1" forKey:@"checkIn"];
+		checkInValue = @"1";
 		sender.selected = YES;
 	}
-	[request startSynchronous];
+//	[request startSynchronous];
+	ASIHTTPRequest *request = [[NetworkManager sharedNetworkManager] checkInWithEID:sender.eid uid:sender.uid checkInValue:checkInValue];
 	((Attendee*)[guestNameAttendance objectAtIndex:sender.tag]).isAttending = sender.selected;
 	if([request error])
 	{

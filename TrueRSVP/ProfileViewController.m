@@ -119,22 +119,19 @@
 }
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-	if([request.responseString isEqualToString:@"status_updateCompleted"])
-	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Profile" 
-														message:@"Profile has been updated."
-													   delegate:nil
-											  cancelButtonTitle:@"OK" 
-											  otherButtonTitles:nil];
-		[alert show];
-		[alert release];
-		[self refreshProfile];
-	}
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Profile" 
+													message:@"Profile has been updated."
+												   delegate:nil
+										  cancelButtonTitle:@"OK" 
+										  otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+	[self refreshProfile];
 }
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Profile" 
-													message:@"Update failed, please try again later."
+													message:@"Profile update failed, please try again later."
 												   delegate:nil
 										  cancelButtonTitle:@"OK" 
 										  otherButtonTitles:nil];
@@ -143,14 +140,15 @@
 }
 - (IBAction)updateProfile:(id)sender
 {	
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"setUserInfo"]]];
-	[request addPostValue:emailTextField.text forKey:@"email"];
-	[request addPostValue:aboutTextView.text forKey:@"about"];
-	[request addPostValue:cellTextField.text forKey:@"cell"];
-	[request addPostValue:zipTextField.text forKey:@"zip"];
-	[request addPostValue:twitterTextField.text forKey:@"twitter"];
-	request.delegate = self;
-	[request startAsynchronous];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"setUserInfo"]]];
+//	[request addPostValue:emailTextField.text forKey:@"email"];
+//	[request addPostValue:aboutTextView.text forKey:@"about"];
+//	[request addPostValue:cellTextField.text forKey:@"cell"];
+//	[request addPostValue:zipTextField.text forKey:@"zip"];
+//	[request addPostValue:twitterTextField.text forKey:@"twitter"];
+//	request.delegate = self;
+//	[request startAsynchronous];
+	[[NetworkManager sharedNetworkManager] updateProfileWithEmail:emailTextField.text about:aboutTextView.text cell:cellTextField.text zip:zipTextField.text twitter:twitterTextField.text delegate:self];
 }
 - (void)updatedStrings
 {

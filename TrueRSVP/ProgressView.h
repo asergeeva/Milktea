@@ -10,8 +10,9 @@
 #import "NetworkManager.h"
 @interface ProgressView : UIViewController <NetworkManagerDelegate>  {
 	UIProgressView *progressBar;
+	NSMutableArray *hostingList;
 }
 
 @property (nonatomic, retain) IBOutlet UIProgressView *progressBar;
-
+@property (nonatomic, retain) NSMutableArray *hostingList;
 @end

@@ -60,7 +60,7 @@
 		512556FE13E7F78F00469DAE /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 512556FC13E7F78E00469DAE /* CameraViewController.xib */; };
 		5125570113E8020A00469DAE /* uploading.png in Resources */ = {isa = PBXBuildFile; fileRef = 512556FF13E8020A00469DAE /* uploading.png */; };
 		5125570213E8020A00469DAE /* uploading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5125570013E8020A00469DAE /* uploading@2x.png */; };
-		512A1ACD13FF112F00A10ECF /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 512A1ACC13FF112E00A10ECF /* Helper.m */; };
+		512A1ACD13FF112F00A10ECF /* MiscHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 512A1ACC13FF112E00A10ECF /* MiscHelper.m */; };
 		514D990613E0D9B50036AC40 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990413E0D9B50036AC40 /* checkbox.png */; };
 		514D990713E0D9B50036AC40 /* checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990513E0D9B50036AC40 /* checkbox@2x.png */; };
 		514D990A13E0DABD0036AC40 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990813E0DABD0036AC40 /* checkbox_checked.png */; };
@@ -99,6 +99,7 @@
 		5173571D13D8117D00204AAF /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5173571C13D8117D00204AAF /* SettingsManager.m */; };
 		5173572013D81CAA00204AAF /* Profile_X.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571E13D81CAA00204AAF /* Profile_X.png */; };
 		5173572113D81CAA00204AAF /* Profile_X@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5173571F13D81CAA00204AAF /* Profile_X@2x.png */; };
+		517A2D641400AE8700A3A51A /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517A2D631400AE8700A3A51A /* LocationManager.m */; };
 		517AAA3313DACF9D00733342 /* AttendingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */; };
 		517AAA3413DACF9D00733342 /* AttendingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */; };
 		517AAA3613DACFE000733342 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517AAA3513DACFE000733342 /* MapKit.framework */; };
@@ -179,8 +180,8 @@
 		51CC215113DE954D00980FE8 /* HostingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */; };
 		51D3F84F13DD5C7A00EBC93D /* EventAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */; };
 		51D84D4D13D8F411008A705B /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */; };
-		51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D84D4F13D90C43008A705B /* AttendingViewController.m */; };
-		51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51D84D5013D90C43008A705B /* AttendingViewController.xib */; };
+		51D84D5113D90C43008A705B /* AttendingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51D84D4F13D90C43008A705B /* AttendingListViewController.m */; };
+		51D84D5213D90C43008A705B /* AttendingListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51D84D5013D90C43008A705B /* AttendingListViewController.xib */; };
 		51DEC44313DE6F78004940A5 /* HostingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DEC44113DE6F78004940A5 /* HostingViewController.m */; };
 		51DEC44413DE6F78004940A5 /* HostingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51DEC44213DE6F78004940A5 /* HostingViewController.xib */; };
 		51DEC44913DE7EA9004940A5 /* HostingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DEC44813DE7EA8004940A5 /* HostingController.m */; };
@@ -288,8 +289,8 @@
 		512556FC13E7F78E00469DAE /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		512556FF13E8020A00469DAE /* uploading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uploading.png; sourceTree = "<group>"; };
 		5125570013E8020A00469DAE /* uploading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploading@2x.png"; sourceTree = "<group>"; };
-		512A1ACB13FF112E00A10ECF /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
-		512A1ACC13FF112E00A10ECF /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
+		512A1ACB13FF112E00A10ECF /* MiscHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; path = MiscHelper.h; sourceTree = "<group>"; };
+		512A1ACC13FF112E00A10ECF /* MiscHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscHelper.m; sourceTree = "<group>"; };
 		514D990413E0D9B50036AC40 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		514D990513E0D9B50036AC40 /* checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox@2x.png"; sourceTree = "<group>"; };
 		514D990813E0DABD0036AC40 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked.png; sourceTree = "<group>"; };
@@ -350,6 +351,8 @@
 		5173571C13D8117D00204AAF /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		5173571E13D81CAA00204AAF /* Profile_X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile_X.png; sourceTree = "<group>"; };
 		5173571F13D81CAA00204AAF /* Profile_X@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile_X@2x.png"; sourceTree = "<group>"; };
+		517A2D621400AE8700A3A51A /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		517A2D631400AE8700A3A51A /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		517AAA3013DACF9D00733342 /* AttendingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingDetailViewController.h; sourceTree = "<group>"; };
 		517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingDetailViewController.m; sourceTree = "<group>"; };
 		517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingDetailViewController.xib; sourceTree = "<group>"; };
@@ -474,9 +477,9 @@
 		51D3F84D13DD5C7A00EBC93D /* EventAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAnnotation.h; sourceTree = "<group>"; };
 		51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAnnotation.m; sourceTree = "<group>"; };
 		51D84D4C13D8F411008A705B /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
-		51D84D4E13D90C42008A705B /* AttendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingViewController.h; sourceTree = "<group>"; };
-		51D84D4F13D90C43008A705B /* AttendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingViewController.m; sourceTree = "<group>"; };
-		51D84D5013D90C43008A705B /* AttendingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingViewController.xib; sourceTree = "<group>"; };
+		51D84D4E13D90C42008A705B /* AttendingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingListViewController.h; sourceTree = "<group>"; };
+		51D84D4F13D90C43008A705B /* AttendingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingListViewController.m; sourceTree = "<group>"; };
+		51D84D5013D90C43008A705B /* AttendingListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendingListViewController.xib; sourceTree = "<group>"; };
 		51DEC44013DE6F78004940A5 /* HostingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostingViewController.h; sourceTree = "<group>"; };
 		51DEC44113DE6F78004940A5 /* HostingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostingViewController.m; sourceTree = "<group>"; };
 		51DEC44213DE6F78004940A5 /* HostingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HostingViewController.xib; sourceTree = "<group>"; };
@@ -789,9 +792,9 @@
 		518E2D7C13D24FA60080E068 /* TrueRSVP_iPhone */ = {
 			isa = PBXGroup;
 			children = (
-				51D84D4E13D90C42008A705B /* AttendingViewController.h */,
-				51D84D4F13D90C43008A705B /* AttendingViewController.m */,
-				51D84D5013D90C43008A705B /* AttendingViewController.xib */,
+				51D84D4E13D90C42008A705B /* AttendingListViewController.h */,
+				51D84D4F13D90C43008A705B /* AttendingListViewController.m */,
+				51D84D5013D90C43008A705B /* AttendingListViewController.xib */,
 				517AAA3013DACF9D00733342 /* AttendingDetailViewController.h */,
 				517AAA3113DACF9D00733342 /* AttendingDetailViewController.m */,
 				517AAA3213DACF9D00733342 /* AttendingDetailViewController.xib */,
@@ -1047,14 +1050,16 @@
 				51AEC93C13DE62A200E2FB69 /* AttendingController.m */,
 				51ACEA4A13E354F200C206FD /* CheckInButton.h */,
 				51ACEA4B13E354F200C206FD /* CheckInButton.m */,
+				517A2D621400AE8700A3A51A /* LocationManager.h */,
+				517A2D631400AE8700A3A51A /* LocationManager.m */,
 				511F360C13D58B0C00F7E748 /* Constants.h */,
 				511F360D13D58B0D00F7E748 /* Constants.m */,
 				51F222BD13DA4CDE00D2A834 /* Event.h */,
 				51F222BE13DA4CDE00D2A834 /* Event.m */,
 				51D3F84D13DD5C7A00EBC93D /* EventAnnotation.h */,
 				51D3F84E13DD5C7A00EBC93D /* EventAnnotation.m */,
-				512A1ACB13FF112E00A10ECF /* Helper.h */,
-				512A1ACC13FF112E00A10ECF /* Helper.m */,
+				512A1ACB13FF112E00A10ECF /* MiscHelper.h */,
+				512A1ACC13FF112E00A10ECF /* MiscHelper.m */,
 				51DEC44713DE7EA7004940A5 /* HostingController.h */,
 				51DEC44813DE7EA8004940A5 /* HostingController.m */,
 				517C151913EB70DA0028898E /* ListController.h */,
@@ -1203,7 +1208,7 @@
 				5173571513D7FAD100204AAF /* Profile_aboutTextView@2x.png in Resources */,
 				5173572013D81CAA00204AAF /* Profile_X.png in Resources */,
 				5173572113D81CAA00204AAF /* Profile_X@2x.png in Resources */,
-				51D84D5213D90C43008A705B /* AttendingViewController.xib in Resources */,
+				51D84D5213D90C43008A705B /* AttendingListViewController.xib in Resources */,
 				519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */,
 				5151F61B13DABCB100D6D9FF /* OrangeBackground_1px.png in Resources */,
 				5151F61C13DABCB100D6D9FF /* OrangeBackground_1px@2x.png in Resources */,
@@ -1328,7 +1333,7 @@
 				511F360713D5801700F7E748 /* User.m in Sources */,
 				511F360E13D58B0D00F7E748 /* Constants.m in Sources */,
 				5173571D13D8117D00204AAF /* SettingsManager.m in Sources */,
-				51D84D5113D90C43008A705B /* AttendingViewController.m in Sources */,
+				51D84D5113D90C43008A705B /* AttendingListViewController.m in Sources */,
 				519C557113DA04F900EE8E9A /* AttendanceList.m in Sources */,
 				51F222BF13DA4CDE00D2A834 /* Event.m in Sources */,
 				517AAA3313DACF9D00733342 /* AttendingDetailViewController.m in Sources */,
@@ -1364,10 +1369,11 @@
 				517C151B13EB70DA0028898E /* ListController.m in Sources */,
 				517C151F13EB83530028898E /* ListViewController.m in Sources */,
 				517D3F7F13FE64B000DA256B /* NetworkManager.m in Sources */,
-				512A1ACD13FF112F00A10ECF /* Helper.m in Sources */,
+				512A1ACD13FF112F00A10ECF /* MiscHelper.m in Sources */,
 				510F267213FF1B8E00776F65 /* ProgressView.m in Sources */,
 				510F267713FF7E5300776F65 /* QueuedActions.m in Sources */,
 				510F267A13FFB66C00776F65 /* CheckIn.m in Sources */,
+				517A2D641400AE8700A3A51A /* LocationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
