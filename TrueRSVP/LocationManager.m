@@ -84,6 +84,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 }
 -(void)dealloc
 {
+	manager.delegate = nil;
 	[manager release];
 	[eventArray release];
 	[super dealloc];

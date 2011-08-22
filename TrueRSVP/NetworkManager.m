@@ -29,6 +29,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 @synthesize hostingList;
 @synthesize delegate;
 @synthesize connectionMonitor;
+//BOOL test = NO;
 - (id)init
 {
     self = [super init];
@@ -43,15 +44,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		profileDone = NO;
 		attendingDone = NO;
 		hostingDone = NO;
-		
-		sm = [[SettingsManager sharedSettingsManager].settings retain];
+		sm = [SettingsManager sharedSettingsManager].settings;
 		connectionMonitor = [Reachability reachabilityForInternetConnection];
 		[connectionMonitor startNotifier];
-//		[[NSNotificationCenter defaultCenter]
-//		 addObserver: self
-//		 selector: @selector(connectivityChanged:)
-//		 name:  kReachabilityChangedNotification
-//		 object: connectionMonitor];
+		[[NSNotificationCenter defaultCenter]
+		 addObserver: self
+		 selector: @selector(connectivityChanged:)
+		 name:  kReachabilityChangedNotification
+		 object: connectionMonitor];
 //		APILocation = [NSString stringWithFormat:@"%@", [sm objectForKey:@"APILocation"]];
     }
     return self;
@@ -61,9 +61,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	//	Reachability *r = (Reachability*)[notice object];
 	//	if([r currentReachabilityStatus] == NotReachable)
 	//	{
-//	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//	[alert show];
-//	[alert release];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+	[alert show];
+	[alert release];
 	//	}
 }
 - (BOOL)isOnline
@@ -72,9 +72,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[connectionMonitor startNotifier];
 	if([connectionMonitor currentReachabilityStatus] == NotReachable)
 	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-		[alert show];
-		[alert release];
+//		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//		[alert show];
+//		[alert release];
 	}
 	else
 	{
@@ -86,12 +86,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)didFinishLoadProfile:(ASIFormDataRequest*)request
 {
-//	[delegate progressCheck];
 	[profile removeAllObjects];
 	[profile addEntriesFromDictionary:[[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil]];
 	[[SettingsManager sharedSettingsManager] saveDictionary:profile withKey:@"profile"];
 	profileDone = YES;
 	[[QueuedActions sharedQueuedActions] processQueue];
+	[delegate progressCheck];
 }
 - (void)didFinishLoadHosting:(ASIFormDataRequest*)request
 {
@@ -131,6 +131,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	}
 	[[SettingsManager sharedSettingsManager] saveDictionary:guestList withKey:@"guestList"];
 	hostingDone = YES;
+	[delegate progressCheck];
 }
 - (void)didFinishLoadAttending:(ASIFormDataRequest *)request
 {
@@ -138,6 +139,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[attendingList addObjectsFromArray:[[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil]];
 	[[SettingsManager sharedSettingsManager] saveArray:attendingList withKey:@"attendingList"];
 	attendingDone = YES;
+	[delegate progressCheck];
 }
 - (void)didFailLoadProfile:(ASIFormDataRequest*)request
 {
@@ -239,32 +241,32 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request startAsynchronous];
 }
 
-- (void)refreshAll:(UIProgressView*)bar 
+- (void)refreshAll:(UIProgressView*)bar
 {
 	ASINetworkQueue *allQueue = [ASINetworkQueue queue];
 	[allQueue reset];
-	[allQueue setDownloadProgressDelegate:bar];
+
 	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getUserInfo]];
 	ASIFormDataRequest *profileReq = [ASIFormDataRequest requestWithURL:profileURL];
 	profileReq.delegate = self;
 	profileReq.didFinishSelector = @selector(didFinishLoadProfile:);
 	profileReq.didFailSelector = @selector(didFailLoadProfile:);
-	[allQueue addOperation:profileReq];
 	
 	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getHostingEvents]];
 	ASIFormDataRequest *hostingListReq = [ASIFormDataRequest requestWithURL:hostingListURL];
-	[hostingListReq setDelegate:self];
-	[hostingListReq setDidFinishSelector:@selector(didFinishLoadHosting:)];
-	[hostingListReq setDidFailSelector:@selector(didFailedLoadHosting:)];
-	[allQueue addOperation:hostingListReq];
+	hostingListReq.delegate = self;
+	hostingListReq.didFinishSelector = @selector(didFinishLoadHosting:);
+	hostingListReq.didFailSelector = @selector(didFailSelector:);
 	
-	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], getAttendingEvents]];
+	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getAttendingEvents]];
 	ASIFormDataRequest *attendingListReq = [ASIFormDataRequest requestWithURL:attendingListURL];
-	[attendingListReq setDelegate:self];
-	[attendingListReq setDidFinishSelector:@selector(didFinishLoadAttending:)];
-	[attendingListReq setDidFailSelector:@selector(didFailLoadAttending:)];
+	attendingListReq.delegate = self;
+	attendingListReq.didFinishSelector = @selector(didFinishLoadAttending:);
+	attendingListReq.didFailSelector = @selector(didFailLoadAttending:);
+	[allQueue addOperation:profileReq];
+	[allQueue addOperation:hostingListReq];
 	[allQueue addOperation:attendingListReq];
-	
+
 	[allQueue go];
 }
 - (NSDate*)getDateForEID:(NSString*)eid uid:(NSString*)uid
@@ -390,7 +392,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (BOOL)checkFilled
 {
-	return (profileDone && attendingDone && hostingDone);
+	if(profileDone && attendingDone && hostingDone)
+	{
+		profileDone = NO;
+		attendingDone = NO;
+		hostingDone = NO;
+		return YES;
+	}
+	return NO;
 }
 - (void)setAttendanceWithEID:(NSString*)eid confidence:(NSString*)confidence
 {
@@ -410,7 +419,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 //	[attendingDetails release];
 	[hostingList release];
 //	[hostingDetails release];
-	[sm release];
+//	[sm release];
 	[super dealloc];
 }
 @end

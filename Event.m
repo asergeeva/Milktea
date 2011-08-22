@@ -31,11 +31,11 @@
 - (void)dealloc
 {
 	[eventID release];
-	[eventOrganizer release];
+//	[eventOrganizer release];
 	[eventName release];
 	[eventDescription release];
 	[eventAddress release];
-	[eventDate release];
+//	[eventDate release];
 	[super dealloc];
 }
 @end

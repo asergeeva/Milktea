@@ -22,8 +22,8 @@
 }
 - (void)dealloc
 {
-	[eid release];
-	[uid release];
+//	[eid release];
+//	[uid release];
 	[super dealloc];
 }
 @end

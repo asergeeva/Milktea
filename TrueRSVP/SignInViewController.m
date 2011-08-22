@@ -14,12 +14,12 @@
 #import "DebugViewController.h"
 #import "SFHFKeychainUtils.h"
 #import "MiscHelper.h"
-#import "NetworkManager.h"
 #import "ProgressView.h"
 #import "LocationManager.h"
 //#import "TrueRSVPAppDelegate.h"
 @implementation SignInViewController
 @synthesize facebook;
+//@synthesize timer;
 - (void)dealloc
 {
 	[txtUsername release];
@@ -45,6 +45,33 @@
 //	}
 //	return self;
 //}
+- (void)progressCheck
+{
+	if([[NetworkManager sharedNetworkManager] checkFilled])
+	{
+		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
+		[self.navigationController pushViewController:mainVC animated:YES];
+		[mainVC release];
+		[[SettingsManager sharedSettingsManager].settings setObject:[NSNumber numberWithBool:TRUE] forKey:@"Preloaded"];
+		[[SettingsManager sharedSettingsManager] save];
+//		[timer invalidate];
+	}
+}
+- (void)offlineMode
+{
+	if(![[NetworkManager sharedNetworkManager] isOnline])
+	{
+		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
+		[self.navigationController pushViewController:mainVC animated:YES];
+		[mainVC release];
+		//		[timer invalidate];
+		[[SettingsManager sharedSettingsManager].settings setObject:[NSNumber numberWithBool:TRUE] forKey:@"Preloaded"];
+		[[SettingsManager sharedSettingsManager] save];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"No internet connection detected. Going offline. Some features are disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
+}	
 #pragma mark - View lifecycle
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -134,21 +161,29 @@
 //}
 //- (void)showMain
 //{
-//	UINavigationController *navController = self.navigationController;
-//	NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
-//	[controllers removeLastObject];
-//	navController.viewControllers = controllers;
+////	UINavigationController *navController = self.navigationController;
+////	NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
+////	[controllers removeLastObject];
+////	navController.viewControllers = controllers;
 //	MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
 //	//		[self.navigationController pushViewController:mainVC animated:YES];
-//	[navController pushViewController:mainVC animated:YES];
+////	[navController pushViewController:mainVC animated:YES];
+//	[self.navigationController pushViewController:mainVC
+//										 animated:YES];
 //	[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 //	[mainVC release];
 //}
+//- (void)showProgress
+//{
+//	ProgressView *progressView = [[ProgressView alloc] initWithNibName:@"ProgressView" bundle:[NSBundle mainBundle]];
+//	[self.navigationController pushViewController:progressView animated:NO];
+//	[progressView release];
+//}
 - (void)showProgress
 {
-	ProgressView *progressView = [[ProgressView alloc] initWithNibName:@"ProgressView" bundle:[NSBundle mainBundle]];
-	[self.navigationController pushViewController:progressView animated:NO];
-	[progressView release];
+	[NetworkManager sharedNetworkManager].delegate = self;
+	[[NetworkManager sharedNetworkManager] refreshAll:nil];
+//	timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(progressCheck) userInfo:nil repeats:YES];	
 }
 - (BOOL)requiresAuth:(NSURL*)url
 {
@@ -209,6 +244,7 @@
 //		[self.view addSubview:progress];
 //		[[NetworkManager sharedNetworkManager] refreshAll:progress];
 		[self showProgress];
+//		[[NetworkManager sharedNetworkManager] refreshAll:nil];
 //		[self showMain];
 	}
 	else
@@ -265,6 +301,11 @@
 	DebugViewController *debugVC = [[DebugViewController alloc] initWithNibName:@"DebugViewController" bundle:[NSBundle mainBundle]];
 	[self presentModalViewController:debugVC animated:YES];
 	[debugVC release];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+	[ASIHTTPRequest clearSession];
+	[super viewWillAppear:animated];
 }
 - (void)viewDidLoad
 {

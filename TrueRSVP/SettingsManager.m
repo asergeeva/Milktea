@@ -1,4 +1,4 @@
-//
+
 //  SettingsManager.m
 //  TrueRSVP
 //
@@ -59,7 +59,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 {
 	if([[NSUserDefaults standardUserDefaults] objectForKey:@"settings"])
 	{
-		settings = [[[NSUserDefaults standardUserDefaults] objectForKey:@"settings"] mutableCopy];
+		[settings removeAllObjects];
+		[settings addEntriesFromDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"settings"]];
+//		settings = [[[NSUserDefaults standardUserDefaults] objectForKey:@"settings"] mutableCopy];
 	}
 }
 - (void)dealloc

@@ -25,6 +25,7 @@
 	UIButton *hostingButton;
 	CGFloat animatedDistance;
 	IBOutlet UIScrollView *scrollView;
+	int pageNumber;
 //	IBOutlet UIPageControl *pageControl;
 }
 - (void)launchCamera;
@@ -44,4 +45,5 @@
 @property (nonatomic, retain) UIButton *hostingButton;
 @property (nonatomic) CGFloat animatedDistance;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
+@property (nonatomic) int pageNumber;
 @end

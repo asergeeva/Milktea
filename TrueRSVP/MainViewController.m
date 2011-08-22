@@ -19,8 +19,8 @@
 @synthesize attendingButton;
 @synthesize animatedDistance;
 @synthesize scrollView;
+@synthesize pageNumber;
 BOOL keyboardUp = NO;
-int pageNumber = 1;
 #pragma mark - Loading
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,13 +30,16 @@ int pageNumber = 1;
 		hostingButton = [[UIButton alloc] init];
 		attendingButton = [[UIButton alloc] init];
 		profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
-		//profileButton.selected = YES;
-		attendingButton.selected = YES;
+
 		attendingVC = [[AttendingListViewController alloc] initWithNibName:@"AttendingListViewController" bundle:[NSBundle mainBundle]];
 		hostingVC = [[HostingViewController alloc] initWithNibName:@"HostingViewController" bundle:[NSBundle mainBundle]];
 		attendingVC.delegate = self;
 		hostingVC.delegate = self;
+		
 		segmentButtons = [[UIView alloc] init];
+	
+		pageNumber = 1;
+		attendingButton.selected = YES;
         // Custom initialization
     }
     return self;
@@ -186,13 +189,13 @@ int pageNumber = 1;
 - (void)dealloc
 {
 	[profileVC release];
-	[attendingVC release];
-	[hostingVC release];
+//	[attendingVC release];
+//	[hostingVC release];
 	[segmentButtons release];
 	[profileButton release];
 	[hostingButton release];
 	[attendingButton release];
-	[scrollView release];
+//	[scrollView release];
     [super dealloc];
 }
 

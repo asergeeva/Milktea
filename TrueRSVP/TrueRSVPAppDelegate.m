@@ -18,7 +18,7 @@
 @synthesize viewController=_viewController;
 @synthesize facebook;
 @synthesize navController;
-
+BOOL didEnterBackground = NO;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	facebook = [[Facebook alloc] initWithAppId:@"122732554481304"];
@@ -69,6 +69,7 @@
 	 Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 	 Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 	 */
+	didEnterBackground = YES;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -100,7 +101,14 @@
 	}
 	else
 	{
-		[navController popToRootViewControllerAnimated:YES];
+		if(didEnterBackground)
+		{
+			[navController popToRootViewControllerAnimated:YES];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signed out" message:@"You have beened signed out. Please log in again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+			didEnterBackground = NO;
+		}
 	}
 }
 

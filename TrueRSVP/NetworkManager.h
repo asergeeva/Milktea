@@ -14,6 +14,7 @@
 @class OAuth;
 @class ASIFormDataRequest;
 @class ASIHTTPRequest;
+//@class ASINetworkQueue;
 @protocol NetworkManagerDelegate
 @optional
 - (void)progressCheck;
@@ -34,6 +35,7 @@
 	Reachability *r;
 	id<NetworkManagerDelegate> delegate;
 	Reachability *connectionMonitor;
+//	ASINetworkQueue *allQueue;
 }
 + (NetworkManager*)sharedNetworkManager;
 - (void)didFinishLoadProfile:(ASIFormDataRequest*)request;
@@ -43,6 +45,7 @@
 - (void)didFailLoadHosting:(ASIFormDataRequest*)request;
 - (void)didFailLoadAttending:(ASIFormDataRequest*)request;
 
+//- (void)refreshAll:(UIProgressView*)bar;
 - (void)refreshAll:(UIProgressView*)bar;
 - (BOOL)checkFilled;
 - (BOOL)isSessionAlive;

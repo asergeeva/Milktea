@@ -29,7 +29,7 @@
 	IBOutlet UIButton *profilePic;
 	IBOutlet UIView *portrait;
 	BOOL welcomeShown;
-	IBOutlet UIButton *test;
+	IBOutlet UIButton *signOut;
 //	IBOutlet DebugView *view;
 }
 - (IBAction)popAll:(id)sender;

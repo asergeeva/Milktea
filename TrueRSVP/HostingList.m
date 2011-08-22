@@ -24,6 +24,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HostingList);
 }
 - (void)updateEventsList:(NSArray*)eventsList
 {
+	[eventsArray removeAllObjects];
 	for(NSDictionary *dictionary in eventsList)
 	{
 		NSMutableDictionary *temp = [dictionary mutableCopy];

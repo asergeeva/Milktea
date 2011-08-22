@@ -33,7 +33,7 @@
 	[whiteBackground release];;
 	[updateButton release];
 	[profilePic release];
-    [test release];
+    [signOut release];
     [super dealloc];
 }
 
@@ -54,7 +54,6 @@
 }
 - (IBAction)popAll:(id)sender
 {
-//	[self.navigationController popToRootViewControllerAnimated:YES];
 	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication].delegate).navController popToRootViewControllerAnimated:YES];
 }
 - (void)refreshProfile
@@ -96,8 +95,8 @@
 	whiteBackground = nil;
 	[portrait release];
 	portrait = nil;
-    [test release];
-    test = nil;
+    [signOut release];
+    signOut = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -232,6 +231,7 @@
 		zipLabel.frame = CGRectMake(222, 148, 42, 21);
 		twitterLabel.frame = CGRectMake(222, 196, 105, 21);
 		updateButton.frame = CGRectMake(253, 253, 183, 27);
+		signOut.frame = CGRectMake(500, 500, 0, 0);
 		self.view.frame = CGRectMake(-2.0, 10.0, 480.0, 320.0);
 	}
 	else
@@ -251,6 +251,7 @@
 		twitterLabel.frame = CGRectMake(157, 297, 105, 21);
 		updateButton.frame = CGRectMake(69, 374, 183, 27);
 		aboutLabel.frame = CGRectMake(400, 0, 0, 0);
+		signOut.frame = CGRectMake(69, 409, 183, 27);
 		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];

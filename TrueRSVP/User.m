@@ -66,7 +66,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 - (void)requestFinished:(ASIHTTPRequest*)request
 {
 	
-	profilePic = [[UIImage alloc] initWithData:[request responseData]];
+	profilePic = [[[UIImage alloc] initWithData:[request responseData]] autorelease];
 	[self.delegate updatedImages];
 }
 - (void)requestFailed:(ASIHTTPRequest*)request
@@ -80,7 +80,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[cell release];
 	[zip release];
 	[twitter release];
-	[profilePic release];
+//	[profilePic release];
 	[about release];
 	[picURL release];
 	[super dealloc];

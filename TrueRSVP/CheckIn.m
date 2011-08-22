@@ -40,9 +40,9 @@
 }
 - (void)dealloc
 {
-	[eid release];
-	[uid release];
-	[date release];
+//	[eid release];
+//	[uid release];
+//	[date release];
 	[super dealloc];
 }
 @end
