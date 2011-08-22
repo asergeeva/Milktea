@@ -49,9 +49,9 @@
 }
 - (void)dealloc
 {
-//	[uid release];
-//	[fname release];
-//	[lname release];
+	[uid release];
+	[fname release];
+	[lname release];
 	[super dealloc];
 }
 @end

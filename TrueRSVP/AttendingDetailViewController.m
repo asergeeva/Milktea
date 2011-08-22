@@ -230,7 +230,6 @@
 	[eventDescriptionWhiteBack release];
 	[eventName release];
 	[eventDate release];
-	[eventDescriptionWhiteBack release];
 	[eventDescription release];
 	[eventMap release];
 	[contact release];
@@ -240,6 +239,7 @@
 	[live release];
 	[buttonWhiteBack release];
 	[organizerEmail release];
+	
 //	[someURL release];
 //	[address release];
 	[super dealloc];

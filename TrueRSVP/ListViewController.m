@@ -75,7 +75,7 @@
 {
 	UIView *sectionView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)] autorelease];
 	sectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"OrangeBackground_1px.png"]];
-	UILabel *label = [[UILabel alloc] initWithFrame:sectionView.frame];
+	UILabel *label = [[[UILabel alloc] initWithFrame:sectionView.frame] autorelease];
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor whiteColor];
 	label.font = [UIFont boldSystemFontOfSize:15];
@@ -100,7 +100,6 @@
 		label.text = [df stringFromDate:fromString];
 	}
 	[sectionView addSubview: label];
-	[label release];
 	[df release];
 	return sectionView;
 }

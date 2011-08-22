@@ -250,7 +250,7 @@
 - (void)dealloc
 {
 	[selectedFromList release];
-	[_event release];
+//	[_event release];
 	
     [eventWhiteBack release];
 	[eventName release];

@@ -30,7 +30,6 @@ BOOL keyboardUp = NO;
 		hostingButton = [[UIButton alloc] init];
 		attendingButton = [[UIButton alloc] init];
 		profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
-
 		attendingVC = [[AttendingListViewController alloc] initWithNibName:@"AttendingListViewController" bundle:[NSBundle mainBundle]];
 		hostingVC = [[HostingViewController alloc] initWithNibName:@"HostingViewController" bundle:[NSBundle mainBundle]];
 		attendingVC.delegate = self;
@@ -189,13 +188,13 @@ BOOL keyboardUp = NO;
 - (void)dealloc
 {
 	[profileVC release];
-//	[attendingVC release];
-//	[hostingVC release];
+	[attendingVC release];
+	[hostingVC release];
 	[segmentButtons release];
 	[profileButton release];
 	[hostingButton release];
 	[attendingButton release];
-//	[scrollView release];
+	[scrollView release];
     [super dealloc];
 }
 

@@ -82,6 +82,9 @@
 	updateButton.layer.cornerRadius = 5;
 	updateButton.clipsToBounds = YES;
 	updateButton.layer.shouldRasterize = YES;
+	signOut.layer.cornerRadius = 5;
+	signOut.clipsToBounds = YES;
+	signOut.layer.shouldRasterize = YES;
 	aboutTextView.layer.cornerRadius = 5;
 	aboutTextView.layer.borderWidth = 2.0;
 	aboutTextView.layer.borderColor = [[UIColor grayColor] CGColor];

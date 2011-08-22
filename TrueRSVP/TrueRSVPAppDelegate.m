@@ -104,9 +104,9 @@ BOOL didEnterBackground = NO;
 		if(didEnterBackground)
 		{
 			[navController popToRootViewControllerAnimated:YES];
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signed out" message:@"You have beened signed out. Please log in again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[alert show];
-			[alert release];
+//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Signed out" message:@"You have beened signed out. Please log in again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//			[alert show];
+//			[alert release];
 			didEnterBackground = NO;
 		}
 	}

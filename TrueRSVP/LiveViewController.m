@@ -453,7 +453,7 @@ BOOL uploading = NO;
 	[tweetTable release];
 //	[lastTweet release];
 	[logoutButton release];
-	[thisEvent release];
+//	[thisEvent release];
 //	[uploadingMessage release];
 //	[showUploadingMessage release];
 	[oAuth release];
