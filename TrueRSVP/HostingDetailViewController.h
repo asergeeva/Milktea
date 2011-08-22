@@ -44,6 +44,10 @@
 - (void)dismissCamera;
 - (IBAction)showLive:(UIButton*)sender;
 - (IBAction)messagePressed:(UIButton*)sender;
+- (void)mapRequestFinished:(ASIHTTPRequest *)request;
+- (void)mapRequestFailed:(ASIHTTPRequest *)request;
+- (void)scoreLoadFinished:(ASIHTTPRequest*)request;
+- (void)scoreLoadFailed:(ASIHTTPRequest*)request;
 @property (nonatomic, retain) Event *eventHosting;
 //@property (nonatomic, retain) UILabel *dynamicRSVP;
 //@property (nonatomic, retain) UILabel *staticRSVP;

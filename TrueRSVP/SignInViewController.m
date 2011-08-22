@@ -132,18 +132,18 @@
 //    }
 //    return ret;
 //}
-- (void)showMain
-{
-	UINavigationController *navController = self.navigationController;
-	NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
-	[controllers removeLastObject];
-	navController.viewControllers = controllers;
-	MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
-	//		[self.navigationController pushViewController:mainVC animated:YES];
-	[navController pushViewController:mainVC animated:YES];
-	[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
-	[mainVC release];
-}
+//- (void)showMain
+//{
+//	UINavigationController *navController = self.navigationController;
+//	NSMutableArray *controllers = [[self.navigationController.viewControllers mutableCopy] autorelease];
+//	[controllers removeLastObject];
+//	navController.viewControllers = controllers;
+//	MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
+//	//		[self.navigationController pushViewController:mainVC animated:YES];
+//	[navController pushViewController:mainVC animated:YES];
+//	[mainVC willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+//	[mainVC release];
+//}
 - (void)showProgress
 {
 	ProgressView *progressView = [[ProgressView alloc] initWithNibName:@"ProgressView" bundle:[NSBundle mainBundle]];
@@ -333,12 +333,12 @@
 	ASIFormDataRequest *_request = [ASIFormDataRequest requestWithURL:url];
 	[_request addPostValue:[result objectForKey:@"first_name"] forKey:@"fname"];
 	[_request addPostValue:[result objectForKey:@"last_name"] forKey:@"lname"];
-	[_request addPostValue:[result objectForKey:@"username"] forKey:@"fbid"];
+	[_request addPostValue:[result objectForKey:@"id"] forKey:@"fbid"];
 	[_request addPostValue:[result objectForKey:@"email"] forKey:@"email"];	
 	[_request addPostValue:@"1" forKey:@"isFB"];
 	[_request startSynchronous];
 	NSLog(@"%@", [_request responseString]);
-	[self showMain];
+	[self showProgress];
 }
 - (void)viewDidUnload
 {

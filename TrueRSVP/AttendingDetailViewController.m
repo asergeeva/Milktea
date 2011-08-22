@@ -95,7 +95,19 @@
 {
 	CLLocation *destinationLocation = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
 	CLLocationDistance distance = [destinationLocation distanceFromLocation:eventMap.userLocation.location];
-	if(distance > 3218)
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd";
+	if(![[df stringFromDate:eventAttending.eventDate] isEqualToString:[df stringFromDate:[NSDate date]]])
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+														message:@"You must only check-in on the event date."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];		
+	}
+	else if(distance > 3218)
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
 														message:@"You are either too far or GPS is currently inaccurate. Try again when you are closer to the event."
@@ -108,32 +120,9 @@
 	else
 	{
 		[[NetworkManager sharedNetworkManager] checkInWithEID:eventAttending.eventID];
-//		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkInByDistance",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
-//		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//		[request setPostValue:eventAttending.eventID forKey:@"eid"];
-//		[request startSynchronous];
-//		if([[request responseString] isEqualToString:@"status_checkInSuccess"])
-//		{
-//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-//															message:@"You are now checked in!"
-//														   delegate:nil
-//												  cancelButtonTitle:@"OK" 
-//												  otherButtonTitles:nil];
-//			[alert show];
-//			[alert release];
-//		}
-//		else
-//		{
-//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-//															message:@"Check-in unsuccessful. Try again later."
-//														   delegate:nil
-//												  cancelButtonTitle:@"OK" 
-//												  otherButtonTitles:nil];
-//			[alert show];
-//			[alert release];
-//		}
 	}
 	[destinationLocation release];
+	[df release];
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -173,7 +162,7 @@
 //	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:someURL];
 //	request.delegate = self;
 //	[request startAsynchronous];
-	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventAttending.eventAddress delegate:self];
+	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventAttending.eventAddress delegate:self finishedSelector:@selector(mapRequestFinished:) failedSelector:@selector(mapRequestFailed:)];
 	[super viewWillAppear:animated];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 
@@ -280,6 +269,10 @@
 	[eventMap addAnnotation:annotation];
 	[annotation release];
 //	directions.enabled = YES;
+}
+- (void)mapRequestFailed:(ASIHTTPRequest *)request
+{
+	
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

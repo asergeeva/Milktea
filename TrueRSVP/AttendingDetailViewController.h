@@ -42,6 +42,8 @@
 - (IBAction)showMap:(UIButton*)sender;
 - (IBAction)showRSVP:(UIButton*)sender;
 - (IBAction)checkIn:(UIButton*)sender;
+- (void)mapRequestFinished:(ASIHTTPRequest *)request;
+- (void)mapRequestFailed:(ASIHTTPRequest *)request;
 @property (nonatomic, retain) Event *eventAttending;
 @property (nonatomic, retain) IBOutlet UIView *eventWhiteBack;
 @property (nonatomic, retain) IBOutlet UILabel *eventName;

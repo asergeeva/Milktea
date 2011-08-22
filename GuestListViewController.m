@@ -5,11 +5,7 @@
 //  Created by Nicholas C Chan on 7/27/11.
 //  Copyright 2011 Komocode. All rights reserved.
 //
-#define TABLE_TAG 1
-#define SORT_TAG 2
-#define HEADER_TAG 3
-#define TOOLBAR_TAG 4
-#define TOOLBAR2_TAG 5
+#import "Constants.h"
 #import "GuestListViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SettingsManager.h"
@@ -573,7 +569,7 @@ BOOL sendSelection = NO;
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 20;
+	return 30;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -592,7 +588,7 @@ BOOL sendSelection = NO;
 	{
 		attendee = ((Attendee*)[guestNameAttendance objectAtIndex:indexPath.row]);
 	}
-	SendButton *sendMarker = [[[SendButton alloc] initWithFrame:CGRectMake(2, 2, 17, 17)] autorelease];
+	SendButton *sendMarker = [[[SendButton alloc] initWithFrame:CGRectMake(2, 7, 17, 17)] autorelease];
 	sendMarker.tag = 5555;
 	[sendMarker setImage:[UIImage imageNamed:@"sendMarker.png"] forState:UIControlStateSelected];
 	sendMarker.uid = attendee.uid;
@@ -603,21 +599,21 @@ BOOL sendSelection = NO;
 		sendMarker.selected = YES;	
 	}
 	
-	UILabel *fname = [[[UILabel alloc] initWithFrame:CGRectMake(20, 0, 60, 20)] autorelease];
+	UILabel *fname = [[[UILabel alloc] initWithFrame:CGRectMake(20, 5, 60, 20)] autorelease];
 	fname.text = [NSString stringWithString:attendee.fname];
 	fname.textAlignment = UITextAlignmentLeft;
 	fname.textColor = [UIColor blackColor];
 	fname.font = [UIFont systemFontOfSize:12];
 	[attendeeCell.contentView addSubview:fname];
 	
-	UILabel *lname = [[[UILabel alloc] initWithFrame:CGRectMake(120, 0, 60, 20)]autorelease];
+	UILabel *lname = [[[UILabel alloc] initWithFrame:CGRectMake(120, 5, 60, 20)]autorelease];
 	lname.text = [NSString stringWithString:attendee.lname];
 	lname.textAlignment = UITextAlignmentCenter;
 	lname.textColor = [UIColor blackColor];
 	lname.font = [UIFont systemFontOfSize:12];
 	[attendeeCell.contentView addSubview:lname];
 	
-	CheckInButton *checkbox = [[[CheckInButton alloc] initWithFrame:CGRectMake(240, 0, 16, 20)] autorelease];
+	CheckInButton *checkbox = [[[CheckInButton alloc] initWithFrame:CGRectMake(240, 5, 16, 20)] autorelease];
 	checkbox.tag = indexPath.row;
 	[checkbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
 	[checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];

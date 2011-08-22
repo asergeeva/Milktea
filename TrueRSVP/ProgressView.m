@@ -72,6 +72,7 @@ NSTimer *timer;
     [super viewDidLoad];
 	[NetworkManager sharedNetworkManager].delegate = self;
 	[[NetworkManager sharedNetworkManager] refreshAll:progressBar];
+	[[NetworkManager sharedNetworkManager] refreshAll:progressBar];
 	self.navigationController.navigationItem.hidesBackButton = YES;
 	timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(progressCheck) userInfo:nil repeats:YES];
     // Do any additional setup after loading the view from its nib.

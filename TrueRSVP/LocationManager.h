@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "Event.h"
-#import "NetworkManager.h"
+#import "ASIHTTPRequest.h"
+@class Event;
 @interface LocationManager : NSObject <CLLocationManagerDelegate, ASIHTTPRequestDelegate>
 {
 	CLLocationManager *manager;

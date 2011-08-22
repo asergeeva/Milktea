@@ -7,6 +7,13 @@
 //
 //extern NSString *const rootAddress;
 //extern NSString *const APILocation;
+#define TABLE_TAG 1
+#define SORT_TAG 2
+#define HEADER_TAG 3
+#define TOOLBAR_TAG 4
+#define TOOLBAR2_TAG 5
+#define BLACKVIEW_TAG 6
+#define UPLOADMESSAGE_TAG 7
 extern NSString *const consumerKey;
 extern NSString *const consumerSecret;
 extern NSString *const dateFormatFromSQL;
@@ -24,3 +31,4 @@ extern NSString *const computeTrueRSVP;
 extern NSString *const sendMessage;
 extern NSString *const getUsername;
 extern NSString *const getCheckInDate;
+extern NSString *const twitPicKey;

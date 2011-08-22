@@ -11,6 +11,9 @@
 #import "ASIFormDataRequest.h"
 #import "CJSONDeserializer.h"
 #import "SettingsManager.h"
+#import "NetworkManager.h"
+#import "Event.h"
+#import "Constants.h"
 @implementation MessageViewController
 @synthesize selectedFromList;
 @synthesize eventName;
@@ -103,29 +106,76 @@
 		[alert release];
 		return;
 	}
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@sendMessage", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	for(int i = 0; i < selectedFromList.count; i++)
-	{
-		[request setPostValue:[selectedFromList objectAtIndex:i] forKey:[NSString stringWithFormat:@"uid[%i]", i]];
-	}
-	[request setPostValue:_event.eventID forKey:@"eventId"];
-	[request setPostValue:[NSString stringWithFormat:@"Event: %@", eventName.text] forKey:@"reminderSubject"];
-	[request setPostValue:messageTextView.text forKey:@"reminderContent"];
+	NSString *type = @"";
 	if(emailCheck.selected && textCheck.selected)
 	{
-		[request setPostValue:@"both" forKey:@"form"];
+		type = @"both";
 	}
 	else if(emailCheck.selected)
 	{
-		[request setPostValue:@"email" forKey:@"form"];
+		type = @"email";
 	}
 	else if(textCheck.selected)
 	{
-		[request setPostValue:@"text" forKey:@"form"];
+		type = @"text";
 	}
-	[request startSynchronous];
-	NSLog(@"%@", [request responseString]);
+	[[NetworkManager sharedNetworkManager] sendMessageWithEventName:eventName.text eid:_event.eventID content:messageTextView.text selectionList:selectedFromList messageType:type delegate:self finishedSelector:@selector(sendFinished:) failedSelector:@selector(sendFailed:)];
+
+//	UIView *blackView = [[[UIView alloc] initWithFrame:CGRectMake(10, 200, 200, 200)]autorelease];
+//	CGRect rect = blackView.frame;
+////	rect.origin.y += 44;
+//	blackView.frame = rect;
+//	blackView.backgroundColor = [UIColor blackColor];
+//	blackView.tag = BLACKVIEW_TAG;
+//	blackView.alpha = 0;
+//	[self.view addSubview:blackView];
+//	[UIView animateWithDuration:1.0 animations:^(void) {
+//		blackView.alpha = 0.5;
+//	}];
+	
+	UIImageView *uploadingMessage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notification.png"]];
+	
+	CGRect original = uploadingMessage.frame;
+	original.origin.x = self.view.frame.size.width/2 - original.size.width/2;
+	original.origin.y = self.view.frame.size.height/2 - original.size.height/2;
+	
+	uploadingMessage.frame = original;
+	uploadingMessage.tag = UPLOADMESSAGE_TAG;
+	
+	original.origin.x = 0;
+	original.origin.y = 0;
+	
+	UILabel *uploadingMessageLabel = [[[UILabel alloc] initWithFrame:original] autorelease];
+	uploadingMessageLabel.text = @"Sending...";	
+	uploadingMessageLabel.backgroundColor = [UIColor clearColor];
+	uploadingMessageLabel.tag = UPLOADMESSAGE_TAG;
+	uploadingMessageLabel.textAlignment = UITextAlignmentCenter;
+	uploadingMessageLabel.textColor = [UIColor whiteColor];
+	uploadingMessageLabel.font = [UIFont systemFontOfSize:15];
+	[uploadingMessage addSubview:uploadingMessageLabel];
+	
+	[self.view addSubview:uploadingMessage];
+	self.view.userInteractionEnabled = NO;
+	self.navigationController.navigationBar.userInteractionEnabled = NO;
+	[uploadingMessage release];
+
+
+}
+- (void)sendFinished:(ASIHTTPRequest*)request
+{
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		[self.view viewWithTag:BLACKVIEW_TAG].alpha = 0.0;
+	} completion:^(BOOL finished) {
+		[[self.view viewWithTag:BLACKVIEW_TAG] removeFromSuperview];
+	}];
+	
+	[[self.view viewWithTag:UPLOADMESSAGE_TAG] removeFromSuperview];
+	self.view.userInteractionEnabled = YES;
+	self.navigationController.navigationBar.userInteractionEnabled = YES;
+}
+- (void)sendFailed:(ASIHTTPRequest*)request
+{
+	
 }
 - (void)viewDidLoad
 {

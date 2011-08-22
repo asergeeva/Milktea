@@ -9,6 +9,8 @@
 #import "LocationManager.h"
 #import "SynthesizeSingleton.h"
 #import "MiscHelper.h"
+#import "NetworkManager.h"
+#import "Event.h"
 @implementation LocationManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 @synthesize manager;
@@ -51,7 +53,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
 	UILocalNotification *notify =[[UILocalNotification alloc] init];
-	notify.alertAction = [[NSString alloc] initWithString: @"Entered"];
+	notify.alertAction = [[[NSString alloc] initWithString: @"Entered"] autorelease];
 	notify.fireDate = nil;
 	notify.alertBody = [NSString stringWithFormat:@"Entered"];
 	notify.soundName = UILocalNotificationDefaultSoundName;
@@ -65,7 +67,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
 	UILocalNotification *notify =[[UILocalNotification alloc] init];
-	notify.alertAction = [[NSString alloc] initWithString: @"Entered"];
+	notify.alertAction = [[[NSString alloc] initWithString: @"Entered"] autorelease];
 	notify.fireDate = nil;
 	notify.alertBody = [NSString stringWithFormat:@"Entered"];
 	notify.soundName = UILocalNotificationDefaultSoundName;

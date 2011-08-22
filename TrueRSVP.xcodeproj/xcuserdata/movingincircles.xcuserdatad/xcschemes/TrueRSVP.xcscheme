@@ -51,7 +51,7 @@
          <EnvironmentVariable
             key = "NSZombiesEnabled"
             value = "YES"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>

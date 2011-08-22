@@ -11,9 +11,7 @@
 #import "CustomLoginPopup.h"
 #import "TwitterLoginPopup.h"
 #import "JSON.h"
-
-
-
+#import "NetworkManager.h"
 #import "LiveViewController.h"
 #import "SettingsManager.h"
 #import "Constants.h"
@@ -21,6 +19,9 @@
 #import "CJSONDeserializer.h"
 #import <QuartzCore/QuartzCore.h>
 #import "User.h"
+
+
+
 @interface LiveViewController (PrivateMethods)
 
 - (void)resetUi;
@@ -217,25 +218,26 @@ BOOL uploading = NO;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
 	[tweetField resignFirstResponder];
-    ASIFormDataRequest *req = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://api.twitpic.com/2/upload.json"]];
-    
-    [req addRequestHeader:@"X-Auth-Service-Provider" value:@"https://api.twitter.com/1/account/verify_credentials.json"];
-    [req addRequestHeader:@"X-Verify-Credentials-Authorization"
-                    value:[oAuth oAuthHeaderForMethod:@"GET"
-                                               andUrl:@"https://api.twitter.com/1/account/verify_credentials.json"
-                                            andParams:nil]];    
-    
-    [req setData:UIImageJPEGRepresentation(((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]), 0.8) forKey:@"media"];
-    [req setPostValue:@"e668abdf76a647a1ec1ccfcbbd857878" forKey:@"key"];
-    // [req setPostValue:@"tweetmessage here" forKey:@"message"];
-	req.delegate = self;
-    [req startAsynchronous];
+//    ASIFormDataRequest *req = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://api.twitpic.com/2/upload.json"]];
+//    
+//    [req addRequestHeader:@"X-Auth-Service-Provider" value:@"https://api.twitter.com/1/account/verify_credentials.json"];
+//    [req addRequestHeader:@"X-Verify-Credentials-Authorization"
+//                    value:[oAuth oAuthHeaderForMethod:@"GET"
+//                                               andUrl:@"https://api.twitter.com/1/account/verify_credentials.json"
+//                                            andParams:nil]];    
+//    
+//    [req setData:UIImageJPEGRepresentation(((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]), 0.8) forKey:@"media"];
+//    [req setPostValue:@"e668abdf76a647a1ec1ccfcbbd857878" forKey:@"key"];
+//    // [req setPostValue:@"tweetmessage here" forKey:@"message"];
+//	req.delegate = self;
+//    [req startAsynchronous];
+	[[NetworkManager sharedNetworkManager] uploadPhoto:UIImageJPEGRepresentation(((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]), 0.8) oauth:oAuth delegate:self finishedSelector:@selector(uploadPhotoFinished:) failedSelector:@selector(uploadPhotoFailed:)];
 	UIView *blackView = [[[UIView alloc] initWithFrame:self.view.frame]autorelease];
 	CGRect rect = blackView.frame;
 	rect.origin.y += 44;
 	blackView.frame = rect;
 	blackView.backgroundColor = [UIColor blackColor];
-	blackView.tag = 7778;
+	blackView.tag = BLACKVIEW_TAG;
 	blackView.alpha = 0;
 	[self.view addSubview:blackView];
 	[UIView animateWithDuration:1.0 animations:^(void) {
@@ -248,15 +250,15 @@ BOOL uploading = NO;
 	original.origin.y = rect.size.height/2 - original.size.height/2 + 44;
 	
 	uploadingMessage.frame = original;
-	uploadingMessage.tag = 7777;
+	uploadingMessage.tag = UPLOADMESSAGE_TAG;
 	
-	original.origin.x = original.size.width/2;
-	original.origin.y = original.size.height/2;
+	original.origin.x = 0;
+	original.origin.y = 0;
 	
 	UILabel *uploadingMessageLabel = [[[UILabel alloc] initWithFrame:original] autorelease];
 	uploadingMessageLabel.text = @"Uploading...";	
 	uploadingMessageLabel.backgroundColor = [UIColor clearColor];
-	uploadingMessageLabel.tag = 7777;
+	uploadingMessageLabel.tag = UPLOADMESSAGE_TAG;
 	uploadingMessageLabel.textAlignment = UITextAlignmentCenter;
 	uploadingMessageLabel.textColor = [UIColor whiteColor];
 	uploadingMessageLabel.font = [UIFont systemFontOfSize:15];
@@ -267,31 +269,31 @@ BOOL uploading = NO;
 	self.navigationController.navigationBar.userInteractionEnabled = NO;
 	[uploadingMessage release];
 	
-    [req release];
+//    [req release];
 	[self dismissModalViewControllerAnimated:YES];
 }
-- (void)requestFinished:(ASIHTTPRequest *)request
+- (void)uploadPhotoFinished:(ASIHTTPRequest *)request
 {
 	[UIView animateWithDuration:0.3 animations:^(void) {
-		[self.view viewWithTag:7778].alpha = 0.0;
+		[self.view viewWithTag:BLACKVIEW_TAG].alpha = 0.0;
 	} completion:^(BOOL finished) {
-		 [[self.view viewWithTag:7778] removeFromSuperview];
+		 [[self.view viewWithTag:BLACKVIEW_TAG] removeFromSuperview];
 	}];
 	
-	[[self.view viewWithTag:7777] removeFromSuperview];
+	[[self.view viewWithTag:UPLOADMESSAGE_TAG] removeFromSuperview];
 	self.view.userInteractionEnabled = YES;
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
 	NSDictionary *twitpicResponse = [[request responseString] JSONValue];
     tweetField.text = [NSString stringWithFormat:@"%@ %@", [twitpicResponse valueForKey:@"url"], tweetField.text];
 }
-- (void)requestFailed:(ASIHTTPRequest *)request
+- (void)uploadPhotoFailed:(ASIHTTPRequest *)request
 {
 	[UIView animateWithDuration:1.0 animations:^(void) {
-		[self.view viewWithTag:7778].alpha = 0.0;
+		[self.view viewWithTag:BLACKVIEW_TAG].alpha = 0.0;
 	}];
 	self.view.userInteractionEnabled = YES;
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
-	[[self.view viewWithTag:7777] removeFromSuperview];
+	[[self.view viewWithTag:UPLOADMESSAGE_TAG] removeFromSuperview];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" 
 													message:@"There was an error uploading your picture. Try again."
 												   delegate:nil
@@ -324,16 +326,24 @@ BOOL uploading = NO;
 #pragma mark - Twitter
 - (void)updateStream
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%%23truersvp%@", thisEvent.eventID]];
-	
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	[request startSynchronous];
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%%23truersvp%@", thisEvent.eventID]];
+//	
+//	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//	[request startSynchronous];
+	[[NetworkManager sharedNetworkManager] updateStreamWithEID:thisEvent.eventID delegate:self finishedSelector:@selector(updateStreamSuccess:) failedSelector:@selector(updateStreamFailed:)];
+}
+- (void)updateStreamFinished:(ASIHTTPRequest*)request
+{
 	NSArray *temp = [[[CJSONDeserializer deserializer] deserialize:[request responseData] error:nil] objectForKey:@"results"];
 	[tweets removeAllObjects];
 	for(NSDictionary *dictionary in temp)
 	{
 		[tweets addObject:dictionary];
 	}
+}
+- (void)updateStreamFailed:(ASIHTTPRequest*)request
+{
+	NSLog(@"Update Stream Failed");
 }
 #pragma mark - UITableView methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -29,8 +29,10 @@
 	IBOutlet UIButton *profilePic;
 	IBOutlet UIView *portrait;
 	BOOL welcomeShown;
+	IBOutlet UIButton *test;
 //	IBOutlet DebugView *view;
 }
+- (IBAction)popAll:(id)sender;
 - (IBAction)updateProfile:(id)sender;
 - (void)dismissWelcome:(id)sender;
 @property (nonatomic, retain) UINavigationBar *welcomeBar;

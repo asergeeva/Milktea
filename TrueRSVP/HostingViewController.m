@@ -41,6 +41,7 @@
 
 - (void)dealloc
 {
+//	[eventTableView release];
 	[hostingController release];
 	[hostingDetailVC release];
 	[super dealloc];

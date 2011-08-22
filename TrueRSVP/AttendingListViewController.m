@@ -37,6 +37,7 @@
 }
 - (void)dealloc
 {
+//	[eventTableView release];
 	[attendingController release];
 	[attendingDetailVC release];
 	[super dealloc];

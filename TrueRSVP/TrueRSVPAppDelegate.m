@@ -91,9 +91,16 @@
 	/*
 	 Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	 */
-	if([[NetworkManager sharedNetworkManager] isOnline])
+	if([[NetworkManager sharedNetworkManager] isSessionAlive])
 	{
-		[[NetworkManager sharedNetworkManager] processQueue];
+		if([[NetworkManager sharedNetworkManager] isOnline])
+		{
+			[[NetworkManager sharedNetworkManager] processQueue];
+		}
+	}
+	else
+	{
+		[navController popToRootViewControllerAnimated:YES];
 	}
 }
 

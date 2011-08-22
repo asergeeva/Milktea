@@ -8,13 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
+         filePath = "TrueRSVP/AttendanceList.m"
+         timestampString = "335691695.91333"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "280"
-         endingLineNumber = "280"
-         landmarkName = "-checkInDateWithCheckIn:"
+         startingLineNumber = "20"
+         endingLineNumber = "20"
+         landmarkName = "-init"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -22,13 +22,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
+         filePath = "TrueRSVP/AttendanceList.m"
+         timestampString = "335691776.746455"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "331"
-         endingLineNumber = "331"
-         landmarkName = "-processQueue"
+         startingLineNumber = "64"
+         endingLineNumber = "64"
+         landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -36,13 +36,27 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
+         filePath = "TrueRSVP/AttendanceList.m"
+         timestampString = "335691904.467687"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "268"
-         endingLineNumber = "268"
-         landmarkName = "-getDateForEID:uid:"
+         startingLineNumber = "56"
+         endingLineNumber = "56"
+         landmarkName = "-updateEventsList:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TrueRSVP/AttendanceList.m"
+         timestampString = "335691962.991081"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "27"
+         endingLineNumber = "27"
+         landmarkName = "-updateEventsList:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -50,92 +64,8 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "330"
-         endingLineNumber = "330"
-         landmarkName = "-processQueue"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "275"
-         endingLineNumber = "275"
-         landmarkName = "-getDateForEID:uid:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "276"
-         endingLineNumber = "276"
-         landmarkName = "-getDateForEID:uid:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "336"
-         endingLineNumber = "336"
-         landmarkName = "-processQueue"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "325"
-         endingLineNumber = "325"
-         landmarkName = "-checkInWithEID:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "289"
-         endingLineNumber = "289"
-         landmarkName = "-checkInDateWithCheckIn:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/HostingController.m"
-         timestampString = "335532468.577452"
+         filePath = "TrueRSVP/AttendingController.m"
+         timestampString = "335691990.442091"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "36"
@@ -148,13 +78,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
+         filePath = "TrueRSVP/AttendanceList.m"
+         timestampString = "335692081.020976"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "249"
-         endingLineNumber = "249"
-         landmarkName = "-refreshAll:"
+         startingLineNumber = "28"
+         endingLineNumber = "28"
+         landmarkName = "-updateEventsList:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -162,111 +92,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/ProfileViewController.m"
-         timestampString = "335579659.242522"
+         filePath = "TrueRSVP/AttendanceList.m"
+         timestampString = "335692081.990529"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "151"
-         endingLineNumber = "151"
-         landmarkName = "-updateProfile:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "153"
-         endingLineNumber = "153"
-         landmarkName = "-updateProfileWithEmail:about:cell:zip:twitter:delegate:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/ProfileViewController.m"
-         timestampString = "335579659.242522"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "133"
-         endingLineNumber = "133"
-         landmarkName = "-requestFailed:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335601723.922349"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "179"
-         endingLineNumber = "179"
-         landmarkName = "-getCoordsFromAddress:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/SignInViewController.m"
-         timestampString = "335597421.003277"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "272"
-         endingLineNumber = "272"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/SignInViewController.m"
-         timestampString = "335597421.003277"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "273"
-         endingLineNumber = "273"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/TrueRSVPAppDelegate.m"
-         timestampString = "335600568.393076"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
-         landmarkName = "-application:didFinishLaunchingWithOptions:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/SignInViewController.m"
-         timestampString = "335597893.986364"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "216"
-         endingLineNumber = "216"
-         landmarkName = "-login"
+         startingLineNumber = "29"
+         endingLineNumber = "29"
+         landmarkName = "-updateEventsList:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

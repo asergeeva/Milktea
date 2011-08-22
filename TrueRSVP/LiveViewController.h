@@ -39,6 +39,10 @@
 - (void)login;
 - (IBAction)cameraPressed:(id)sender;
 - (void)logout;
+- (void)uploadPhotoFinished:(ASIHTTPRequest *)request;
+- (void)uploadPhotoFailed:(ASIHTTPRequest *)request;
+- (void)updateStreamFinished:(ASIHTTPRequest*)request;
+- (void)updateStreamFailed:(ASIHTTPRequest*)request;
 @property (nonatomic, retain) IBOutlet UIView *liveEventBack;
 @property (nonatomic, retain) IBOutlet UITableView *tweetTable;
 @property (nonatomic, retain) Event *thisEvent;

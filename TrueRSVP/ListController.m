@@ -30,7 +30,7 @@
 {
 	[uniqueMonths release];
 	[eventSections release];
-	[eventArray release];
+//	[eventArray release];
 	[super dealloc];
 }
 #pragma mark - UITableViewDataSource

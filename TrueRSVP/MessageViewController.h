@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Event.h"
+@class Event;
+@class ASIHTTPRequest;
 @interface MessageViewController : UIViewController <UITextViewDelegate>
 {
 	NSMutableArray *selectedFromList;
@@ -32,6 +33,8 @@
 - (IBAction)emailPressed:(UIButton*)sender;
 - (IBAction)textPressed:(UIButton*)sender;
 - (IBAction)sendPressed:(UIButton*)sender;
+- (void)sendFinished:(ASIHTTPRequest*)request;
+- (void)sendFailed:(ASIHTTPRequest*)request;
 @property (nonatomic, copy) NSMutableArray *selectedFromList;
 @property (nonatomic, retain) Event *_event;
 @property (nonatomic, retain) IBOutlet UILabel *eventName;

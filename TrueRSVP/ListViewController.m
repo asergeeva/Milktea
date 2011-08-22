@@ -39,8 +39,8 @@
 
 - (void)dealloc
 {
-	[eventTableView release];
-	[listController release];
+//	[eventTableView release];
+//	[listController release];
 	[super dealloc];
 }
 #pragma mark - View Delegate Methods

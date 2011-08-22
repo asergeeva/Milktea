@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "SettingsManager.h"
 #import "NetworkManager.h"
+#import "TrueRSVPAppDelegate.h"
 @implementation ProfileViewController
 @synthesize welcomeBar;
 @synthesize welcomeShown;
@@ -32,6 +33,7 @@
 	[whiteBackground release];;
 	[updateButton release];
 	[profilePic release];
+    [test release];
     [super dealloc];
 }
 
@@ -50,7 +52,11 @@
 			[view resignFirstResponder];	
 	}	
 }
-
+- (IBAction)popAll:(id)sender
+{
+//	[self.navigationController popToRootViewControllerAnimated:YES];
+	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication].delegate).navController popToRootViewControllerAnimated:YES];
+}
 - (void)refreshProfile
 {
 //	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getUserInfo"]];
@@ -90,6 +96,8 @@
 	whiteBackground = nil;
 	[portrait release];
 	portrait = nil;
+    [test release];
+    test = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

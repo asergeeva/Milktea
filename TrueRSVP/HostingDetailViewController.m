@@ -54,8 +54,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {	
-	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self];
-	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventHosting.eventAddress delegate:self];
+	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self finishedSelector:@selector(scoreLoadFinished:) failedSelector:@selector(scoreLoadFailed:)];
+	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventHosting.eventAddress delegate:self finishedSelector:@selector(mapRequestFinished:) failedSelector:@selector(mapRequestFailed:)];
 
 	[super viewWillAppear:animated];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
@@ -247,6 +247,10 @@
 	EventAnnotation *annotation = [[EventAnnotation alloc] initWithName:eventName.text coordinate:coord];
 	[eventMap addAnnotation:annotation];
 	[annotation release];
+}
+- (void)mapRequestFailed:(ASIHTTPRequest *)request
+{
+	
 }
 - (void)scoreLoadFinished:(ASIHTTPRequest*)request
 {

@@ -6,43 +6,40 @@
 //  Copyright 2011 Komocode. All rights reserved.
 //
 
-#import "NetworkManager.h"
-#import "SynthesizeSingleton.h"
-#import "CJSONDeserializer.h"
-#import "NSDictionary_JSONExtensions.h"
-#import "SettingsManager.h"
-#import "Reachability.h"
+#import "ASIFormDataRequest.h"
+#import "ASIHTTPRequest.h"
+#import "ASINetworkQueue.h"
 #import "Attendee.h"
+#import "CJSONDeserializer.h"
 #import "Constants.h"
+#import "CheckIn.h"
+#import "NetworkManager.h"
+#import "NSDictionary_JSONExtensions.h"
+#import "Reachability.h"
+#import "SettingsManager.h"
+#import "SynthesizeSingleton.h"
+#import "OAuth.h"
 #import "QueuedActions.h"
-#import <CoreLocation/CoreLocation.h>
-#import "QueuedActions.h"
+
 @implementation NetworkManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
-//@synthesize formReq;
-//@synthesize httpReq;
 @synthesize profile;
 @synthesize attendingList;
 @synthesize guestList;
-//@synthesize attendingDetails;
 @synthesize hostingList;
-//@synthesize hostingDetails;
 @synthesize delegate;
 @synthesize connectionMonitor;
-//NSString *APILocation;
 - (id)init
 {
     self = [super init];
     if (self) {
         // Initialization code here.
-		formReq = [[ASIFormDataRequest alloc] init];
-		httpReq = [[ASIHTTPRequest alloc] init];
+//		formReq = [[ASIFormDataRequest alloc] init];
+//		httpReq = [[ASIHTTPRequest alloc] init];
 		profile = [[NSMutableDictionary alloc] init];
 		attendingList = [[NSMutableArray alloc] init];
 		guestList = [[NSMutableDictionary alloc] init];
-//		attendingDetails = [[NSMutableDictionary alloc] init];
 		hostingList = [[NSMutableArray alloc] init];
-//		hostingDetails = [[NSMutableDictionary alloc] init];
 		profileDone = NO;
 		attendingDone = NO;
 		hostingDone = NO;
@@ -50,11 +47,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		sm = [[SettingsManager sharedSettingsManager].settings retain];
 		connectionMonitor = [Reachability reachabilityForInternetConnection];
 		[connectionMonitor startNotifier];
-		[[NSNotificationCenter defaultCenter]
-		 addObserver: self
-		 selector: @selector(connectivityChanged:)
-		 name:  kReachabilityChangedNotification
-		 object: connectionMonitor];
+//		[[NSNotificationCenter defaultCenter]
+//		 addObserver: self
+//		 selector: @selector(connectivityChanged:)
+//		 name:  kReachabilityChangedNotification
+//		 object: connectionMonitor];
 //		APILocation = [NSString stringWithFormat:@"%@", [sm objectForKey:@"APILocation"]];
     }
     return self;
@@ -71,6 +68,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (BOOL)isOnline
 {
+	connectionMonitor = [Reachability reachabilityForInternetConnection];
+	[connectionMonitor startNotifier];
 	if([connectionMonitor currentReachabilityStatus] == NotReachable)
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -79,13 +78,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	}
 	else
 	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Internet" message:@"Internet Found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-		[alert show];
-		[alert release];
+//		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Internet" message:@"Internet Found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//		[alert show];
+//		[alert release];
 	}
 	return ([connectionMonitor currentReachabilityStatus] != NotReachable);
 }
-- (void)didLoadProfile:(ASIFormDataRequest*)request
+- (void)didFinishLoadProfile:(ASIFormDataRequest*)request
 {
 //	[delegate progressCheck];
 	[profile removeAllObjects];
@@ -93,12 +92,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[[SettingsManager sharedSettingsManager] saveDictionary:profile withKey:@"profile"];
 	profileDone = YES;
 	[[QueuedActions sharedQueuedActions] processQueue];
-//	[self processQueue];
 }
-- (void)didLoadHostingList:(ASIFormDataRequest*)request
+- (void)didFinishLoadHosting:(ASIFormDataRequest*)request
 {
-//	[delegate progressCheck];
-//	[hostingList addObjectsFromArray:[[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil]];
 	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
 	[hostingList removeAllObjects];
 	[hostingList addObjectsFromArray:hostingInfo];
@@ -131,21 +127,63 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 			[newAttendee release];
 		}
 		[guestList setObject:guestNameAttendance forKey:[dictionary objectForKey:@"id"]];
+		[guestNameAttendance release]; ////????????????????
 	}
 	[[SettingsManager sharedSettingsManager] saveDictionary:guestList withKey:@"guestList"];
 	hostingDone = YES;
 }
-- (void)didLoadAttendingList:(ASIFormDataRequest *)request
+- (void)didFinishLoadAttending:(ASIFormDataRequest *)request
 {
 	[attendingList removeAllObjects];
 	[attendingList addObjectsFromArray:[[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil]];
 	[[SettingsManager sharedSettingsManager] saveArray:attendingList withKey:@"attendingList"];
 	attendingDone = YES;
-//	[delegate progressCheck];
 }
-- (void)refreshProfile
+- (void)didFailLoadProfile:(ASIFormDataRequest*)request
 {
-
+	NSLog(@"Profile failed");
+	[profile removeAllObjects];
+	if([[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"profile"])
+	{
+		[profile addEntriesFromDictionary:[[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"profile"]];
+	}
+	profileDone = YES;
+	[delegate offlineMode];
+	
+}
+- (void)didFailLoadAttending:(ASIFormDataRequest*)request
+{
+	NSLog(@"Attending List failed");
+	[attendingList removeAllObjects];
+	if([[SettingsManager sharedSettingsManager] loadArrayForKey:@"attendingList"])
+	{
+		[attendingList addObjectsFromArray:[[SettingsManager sharedSettingsManager] loadArrayForKey:@"attendingList"]];
+	}
+	attendingDone = YES;
+	[delegate offlineMode];
+}
+- (void)didFailLoadHosting:(ASIFormDataRequest*)request
+{
+	NSLog(@"Hosting List failed");
+	[hostingList removeAllObjects];
+	if ([[SettingsManager sharedSettingsManager] loadArrayForKey:@"hostingList"])
+	{
+		[hostingList addObjectsFromArray:[[SettingsManager sharedSettingsManager] loadArrayForKey:@"hostingList"]];
+	}
+	[guestList addEntriesFromDictionary:[[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"guestList"]];
+	hostingDone = YES;
+	[delegate offlineMode];
+}
+- (BOOL)isSessionAlive
+{
+	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getUserInfo]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];	
+	[request startSynchronous];
+	if([[request responseString] isEqualToString:@"false"])
+	{
+		return NO;
+	}
+	return YES;
 }
 - (void)updateProfileWithEmail:(NSString*)email about:(NSString*)about cell:(NSString*)cell zip:(NSString*)zip twitter:(NSString*)twitter delegate:(UIViewController*)viewController
 {
@@ -167,21 +205,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request startSynchronous];
 	return request;
 }
-- (void)getMapWithAddress:(NSString*)eventAddress delegate:(UIViewController*)viewController
-{
-	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAddress];
-	NSURL *mapURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-	ASIHTTPRequest *requestMap = [ASIHTTPRequest requestWithURL:mapURL];
-	[requestMap setDidFinishSelector:@selector(mapRequestFinished:)];
-	requestMap.delegate = viewController;
-	[requestMap startAsynchronous];
-}
-- (CLLocationCoordinate2D)getCoordsFromAddress:(NSString*)eventAddress
+- (void)getMapWithAddress:(NSString*)eventAddress delegate:(UIViewController*)viewController finishedSelector:(SEL)finished failedSelector:(SEL)failed
 {
 	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAddress];
 	NSURL *mapURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:mapURL];
-	[request setDidFinishSelector:@selector(mapRequestFinished:)];
+	request.didFinishSelector = finished;
+	request.didFailSelector = failed;
+	request.delegate = viewController;
+	[request startAsynchronous];
+}
+
+- (CLLocationCoordinate2D)getCoordsFromAddress:(NSString*)eventAddress //finishedSelector:(SEL)finished failedSelector:(SEL)failed
+{
+	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAddress];
+	NSURL *mapURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:mapURL];
 	[request startSynchronous];	
 	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
@@ -189,74 +228,41 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	float lng = [[location objectForKey:@"lng"] floatValue];
 	return CLLocationCoordinate2DMake(lat, lng);
 }
-- (void)getScoreWithEID:(NSString*)eid delegate:(UIViewController*)viewController
+- (void)getScoreWithEID:(NSString*)eid delegate:(UIViewController*)viewController finishedSelector:(SEL)finished failedSelector:(SEL)failed
 {
 	NSURL *trueURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], computeTrueRSVP]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:trueURL];
 	[request setPostValue:eid forKey:@"eid"];
 	request.delegate = viewController;
-	[request setDidFinishSelector:@selector(scoreLoadFinished:)];
-	[request setDidFailSelector:@selector(scoreLoadFailed:)];
+	request.didFinishSelector = finished;
+	request.didFailSelector = failed;
 	[request startAsynchronous];
 }
-- (void)didFailedLoadingProfile:(ASIFormDataRequest*)request
-{
-	NSLog(@"Profile failed");
-	[profile removeAllObjects];
-	if([[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"profile"])
-		{
-			[profile addEntriesFromDictionary:[[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"profile"]];
-		}
-	profileDone = YES;
-		[delegate offlineMode];
 
-}
-- (void)didFailedLoadingAttending:(ASIFormDataRequest*)request
-{
-	NSLog(@"Attending List failed");
-	[attendingList removeAllObjects];
-	if([[SettingsManager sharedSettingsManager] loadArrayForKey:@"attendingList"])
-	{
-		[attendingList addObjectsFromArray:[[SettingsManager sharedSettingsManager] loadArrayForKey:@"attendingList"]];
-	}
-	attendingDone = YES;
-	[delegate offlineMode];
-}
-- (void)didFailedLoadingHosting:(ASIFormDataRequest*)request
-{
-	NSLog(@"Hosting List failed");
-	[hostingList removeAllObjects];
-	if ([[SettingsManager sharedSettingsManager] loadArrayForKey:@"hostingList"])
-	{
-		[hostingList addObjectsFromArray:[[SettingsManager sharedSettingsManager] loadArrayForKey:@"hostingList"]];
-	}
-	[guestList addEntriesFromDictionary:[[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"guestList"]];
-	hostingDone = YES;
-	[delegate offlineMode];
-}
-- (void)refreshAll:(UIProgressView*)bar
+- (void)refreshAll:(UIProgressView*)bar 
 {
 	ASINetworkQueue *allQueue = [ASINetworkQueue queue];
+	[allQueue reset];
 	[allQueue setDownloadProgressDelegate:bar];
 	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getUserInfo]];
 	ASIFormDataRequest *profileReq = [ASIFormDataRequest requestWithURL:profileURL];
-	[profileReq setDelegate:self];
-	[profileReq setDidFinishSelector:@selector(didLoadProfile:)];
-	[profileReq setDidFailSelector:@selector(didFailedLoadingProfile:)];
+	profileReq.delegate = self;
+	profileReq.didFinishSelector = @selector(didFinishLoadProfile:);
+	profileReq.didFailSelector = @selector(didFailLoadProfile:);
 	[allQueue addOperation:profileReq];
 	
 	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getHostingEvents]];
 	ASIFormDataRequest *hostingListReq = [ASIFormDataRequest requestWithURL:hostingListURL];
 	[hostingListReq setDelegate:self];
-	[hostingListReq setDidFinishSelector:@selector(didLoadHostingList:)];
-	[hostingListReq setDidFailSelector:@selector(didFailedLoadingHosting:)];
+	[hostingListReq setDidFinishSelector:@selector(didFinishLoadHosting:)];
+	[hostingListReq setDidFailSelector:@selector(didFailedLoadHosting:)];
 	[allQueue addOperation:hostingListReq];
 	
 	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], getAttendingEvents]];
 	ASIFormDataRequest *attendingListReq = [ASIFormDataRequest requestWithURL:attendingListURL];
 	[attendingListReq setDelegate:self];
-	[attendingListReq setDidFinishSelector:@selector(didLoadAttendingList:)];
-	[attendingListReq setDidFailSelector:@selector(didFailedLoadingAttending:)];
+	[attendingListReq setDidFinishSelector:@selector(didFinishLoadAttending:)];
+	[attendingListReq setDidFailSelector:@selector(didFailLoadAttending:)];
 	[allQueue addOperation:attendingListReq];
 	
 	[allQueue go];
@@ -266,20 +272,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getCheckInDate]]];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:uid forKey:@"uid"];
-//	[request setValue:eid forKey:@"eid"];
-//	[request setValue:uid forKey:@"uid"];
 	[request startSynchronous];	
+
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"YYYY-MM-dd HH:mm:ss";
 	NSDate *date = [df dateFromString:[[[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil] objectForKey:@"rsvp_time"]];
 	[df release];
+	
 	return date;
 }
 - (void)checkInDateWithCheckIn:(CheckIn*)check
 {
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], checkInWithDate]]];
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-//	df.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSZZZ";
 	df.dateFormat = @"YYYY-MM-dd HH:mm:ss";
 	[request setPostValue:[NSNumber numberWithBool:check.isAttending] forKey:@"checkIn"];
 	[request setPostValue:check.eid forKey:@"eid"];
@@ -288,14 +293,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request startSynchronous];	
 	[df release];
 }
-//- (void)checkInDistanceWithEID:(NSString*)eid delegate:(id)receiver
-//{
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkInByDistance",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//	[request setPostValue:eid forKey:@"eid"];
-//	request.delegate = receiver;
-//	[request startAsynchronous];
-//}
+
 - (ASIHTTPRequest*)checkInWithEID:(NSString*)eid uid:(NSString*)uid checkInValue:(NSString*)checkInValue
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[sm objectForKey:@"APILocation"], checkIn]];
@@ -333,6 +331,49 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		[alert release];
 	}
 }
+- (void)uploadPhoto:(NSData*)imageData oauth:(OAuth*)oAuth delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
+{
+	ASIFormDataRequest *req = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://api.twitpic.com/2/upload.json"]];
+    [req addRequestHeader:@"X-Auth-Service-Provider" value:@"https://api.twitter.com/1/account/verify_credentials.json"];
+    [req addRequestHeader:@"X-Verify-Credentials-Authorization"
+                    value:[oAuth oAuthHeaderForMethod:@"GET"
+                                               andUrl:@"https://api.twitter.com/1/account/verify_credentials.json"
+                                            andParams:nil]];    
+    
+    [req setData:imageData forKey:@"media"];
+    [req setPostValue:twitPicKey forKey:@"key"];
+	req.delegate = receiver;
+	[req setDidFinishSelector:finished];
+	[req setDidFailSelector:failed];
+
+    [req startAsynchronous];
+}
+- (void)updateStreamWithEID:(NSString*)eid delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%%23truersvp%@", eid]];
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	request.delegate = receiver;
+	request.didFinishSelector = finished;
+	request.didFailSelector = failed;
+	[request startSynchronous];
+}
+- (void)sendMessageWithEventName:(NSString*)eventName eid:(NSString*)eid content:(NSString*)message selectionList:(NSArray*)selectedFromList messageType:(NSString*)type delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], sendMessage]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	for(int i = 0; i < selectedFromList.count; i++)
+	{
+		[request setPostValue:[selectedFromList objectAtIndex:i] forKey:[NSString stringWithFormat:@"uid[%i]", i]];
+	}
+	[request setPostValue:eid forKey:@"eventId"];
+	[request setPostValue:[NSString stringWithFormat:@"Event: %@", eventName] forKey:@"reminderSubject"];
+	[request setPostValue:message forKey:@"reminderContent"];
+	[request setPostValue:type forKey:@"form"];
+	request.delegate = receiver;
+	request.didFinishSelector = finished;
+	request.didFailSelector = failed;
+	[request startAsynchronous];
+}
 - (void)processQueue
 {
 	while([[QueuedActions sharedQueuedActions].queue count])
@@ -361,8 +402,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)dealloc
 {
-	[formReq release];
-	[httpReq release];
+//	[formReq release];
+//	[httpReq release];
 	[profile release];
 	[attendingList release];
 	[guestList release];
