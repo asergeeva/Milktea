@@ -9,13 +9,13 @@
 #import "HostingController.h"
 #import "HostingList.h"
 #import "NSDictionary_JSONExtensions.h"
-#import "NetworkManager.h"
 @implementation HostingController
 #pragma mark - Init
 - (id)init
 {
     self = [super init];
     if (self) {
+		[NetworkManager sharedNetworkManager].hostingDelegate = self;
 		[self refresh];
     }
     
@@ -27,6 +27,10 @@
 	[super dealloc];
 }
 #pragma mark - Other
+- (void)updateHosting
+{
+	[self refresh];
+}
 - (void)refresh
 {
 //	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getHostingEvents/"]];

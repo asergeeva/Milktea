@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "ListController.h"
-@interface HostingController : ListController
+#import "NetworkManager.h"
+@interface HostingController : ListController <NetworkManagerHostingDelegate>
 {
 }
 - (void)refresh;

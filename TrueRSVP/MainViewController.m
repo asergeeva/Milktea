@@ -21,6 +21,7 @@
 @synthesize scrollView;
 @synthesize pageNumber;
 BOOL keyboardUp = NO;
+BOOL offlineWarning = NO;
 #pragma mark - Loading
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -108,6 +109,17 @@ BOOL keyboardUp = NO;
 		attendingVC.view.frame = CGRectMake(320, 0, 320, 480);
 		hostingVC.view.frame = CGRectMake(640, 0, 320, 480);
 	}	
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+	if(![[NetworkManager sharedNetworkManager] isOnline] && !offlineWarning)
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"No internet connection detected. Going offline. Some features are disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+		offlineWarning = YES;
+	}
+	[super viewDidAppear:animated];
 }
 - (void)viewDidLoad
 {

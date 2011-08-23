@@ -22,7 +22,7 @@
 - (IBAction)facebookLogin:(id)sender;
 - (void)setViewMoveUp:(BOOL)moveUp;
 - (void)login;
-- (void)progressCheck;
+- (void)progressFinished;
 @property (nonatomic, retain) Facebook *facebook;
 //@property (nonatomic, assign) NSTimer *timer;
 @end

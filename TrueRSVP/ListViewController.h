@@ -13,7 +13,15 @@
 {
 	IBOutlet UITableView *eventTableView;
 	ListController *listController;
+	UIView *refreshHeaderView;
+	BOOL isDragging;
+    BOOL isLoading;
 }
+- (void)addPullRefreshHeader:(UITableView*)tableView;
+- (void)startLoading;
+- (void)stopLoading;
+- (void)refresh;
 @property (nonatomic, retain) ListController *listController;
 @property (nonatomic, retain) IBOutlet UITableView *eventTableView;
+@property (nonatomic, retain) UIView *refreshHeaderView;
 @end

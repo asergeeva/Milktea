@@ -7,10 +7,13 @@
 //
 
 #import "ListViewController.h"
-
+#import "NetworkManager.h"
+#define REFRESH_HEADER_HEIGHT 20.0f
 @implementation ListViewController
 @synthesize eventTableView;
 @synthesize listController;
+@synthesize refreshHeaderView;
+
 #pragma mark - Init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +33,7 @@
 {
     [super viewDidLoad];
 	eventTableView.delaysContentTouches = NO;
+	[self addPullRefreshHeader:eventTableView];
 }
 #pragma mark - Unloading
 - (void)viewDidUnload
@@ -41,6 +45,7 @@
 {
 //	[eventTableView release];
 //	[listController release];
+	[refreshHeaderView release];
 	[super dealloc];
 }
 #pragma mark - View Delegate Methods
@@ -102,5 +107,76 @@
 	[sectionView addSubview: label];
 	[df release];
 	return sectionView;
+}
+- (void)addPullRefreshHeader:(UITableView*)tableView
+{
+	refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT)];
+	refreshHeaderView.backgroundColor = [UIColor clearColor];
+	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0-REFRESH_HEADER_HEIGHT + 23, 320, 17)] autorelease];
+	refreshLabel.text = @"Refresh";
+	refreshLabel.font = [UIFont systemFontOfSize:12];
+	refreshLabel.textAlignment = UITextAlignmentCenter;
+	[refreshHeaderView addSubview:refreshLabel];
+	[tableView addSubview:refreshHeaderView];
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (isLoading) return;
+    isDragging = YES;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (isLoading) 
+	{
+        // Update the content inset, good for section headers
+        if (scrollView.contentOffset.y > 0)
+            self.eventTableView.contentInset = UIEdgeInsetsZero;
+        else if (scrollView.contentOffset.y >= -REFRESH_HEADER_HEIGHT)
+            self.eventTableView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+    } 
+//	else if (isDragging && scrollView.contentOffset.y < 0) 
+//	{
+//    
+//	}
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate 
+{
+    if (isLoading) 
+	{
+		return;
+	}
+    isDragging = NO;
+    if (scrollView.contentOffset.y <= -REFRESH_HEADER_HEIGHT) 
+	{
+        [self startLoading];
+    }
+}
+- (void)startLoading 
+{
+    isLoading = YES;
+	[UIView animateWithDuration:0.5 animations:^(void) 
+	{
+		self.eventTableView.contentInset = UIEdgeInsetsMake(0, REFRESH_HEADER_HEIGHT, 0, 0);		
+	}];
+    [self refresh];
+}
+
+- (void)stopLoading 
+{
+	[eventTableView reloadData];
+    isLoading = NO;
+	[UIView animateWithDuration:0.3 animations:^(void) 
+	{
+		self.eventTableView.contentInset = UIEdgeInsetsZero;
+	}];
+}
+
+- (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context 
+{
+
+}
+
+- (void)refresh 
+{
+	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:self completion:@selector(stopLoading)];
+//	[self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0];
 }
 @end

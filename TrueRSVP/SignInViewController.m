@@ -45,31 +45,30 @@
 //	}
 //	return self;
 //}
-- (void)progressCheck
+- (void)progressFinished
 {
-	if([[NetworkManager sharedNetworkManager] checkFilled])
-	{
+		[NetworkManager sharedNetworkManager].delegate = nil;
 		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
 		[self.navigationController pushViewController:mainVC animated:YES];
 		[mainVC release];
 		[[SettingsManager sharedSettingsManager].settings setObject:[NSNumber numberWithBool:TRUE] forKey:@"Preloaded"];
 		[[SettingsManager sharedSettingsManager] save];
 //		[timer invalidate];
-	}
 }
 - (void)offlineMode
 {
-	if(![[NetworkManager sharedNetworkManager] isOnline])
+	if(![[NetworkManager sharedNetworkManager] isOnline] && [[NetworkManager sharedNetworkManager] checkFilled])
 	{
-		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
-		[self.navigationController pushViewController:mainVC animated:YES];
-		[mainVC release];
+//		[NetworkManager sharedNetworkManager].delegate = nil;
+//		[[SettingsManager sharedSettingsManager].settings setObject:[NSNumber numberWithBool:TRUE] forKey:@"Preloaded"];
+//		[[SettingsManager sharedSettingsManager] save];
+//		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
+//		[self.navigationController pushViewController:mainVC animated:YES];
+//		[mainVC release];
 		//		[timer invalidate];
-		[[SettingsManager sharedSettingsManager].settings setObject:[NSNumber numberWithBool:TRUE] forKey:@"Preloaded"];
-		[[SettingsManager sharedSettingsManager] save];
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"No internet connection detected. Going offline. Some features are disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-		[alert release];
+//		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"No internet connection detected. Going offline. Some features are disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//		[alert show];
+//		[alert release];
 	}
 }	
 #pragma mark - View lifecycle
@@ -182,7 +181,7 @@
 - (void)showProgress
 {
 	[NetworkManager sharedNetworkManager].delegate = self;
-	[[NetworkManager sharedNetworkManager] refreshAll:nil];
+	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:nil completion:nil];
 //	timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(progressCheck) userInfo:nil repeats:YES];	
 }
 - (BOOL)requiresAuth:(NSURL*)url

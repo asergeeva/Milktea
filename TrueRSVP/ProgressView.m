@@ -81,7 +81,7 @@
 }
 - (void)viewDidAppear:(BOOL)animated
 {
-	[[NetworkManager sharedNetworkManager] refreshAll:progressBar];
+//	[[NetworkManager sharedNetworkManager] refreshAll:progressBar];
 	timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(progressCheck) userInfo:nil repeats:YES];	
 	[super viewDidAppear:animated];
 }

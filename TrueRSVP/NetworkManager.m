@@ -28,6 +28,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 @synthesize guestList;
 @synthesize hostingList;
 @synthesize delegate;
+@synthesize profileDelegate;
+@synthesize attendingDelegate;
+@synthesize hostingDelegate;
 @synthesize connectionMonitor;
 //BOOL test = NO;
 - (id)init
@@ -91,7 +94,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[[SettingsManager sharedSettingsManager] saveDictionary:profile withKey:@"profile"];
 	profileDone = YES;
 	[[QueuedActions sharedQueuedActions] processQueue];
-	[delegate progressCheck];
+	[profileDelegate updateProfile];
+	[self checkFilled];
+//	[delegate progressCheck];
 }
 - (void)didFinishLoadHosting:(ASIFormDataRequest*)request
 {
@@ -131,7 +136,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	}
 	[[SettingsManager sharedSettingsManager] saveDictionary:guestList withKey:@"guestList"];
 	hostingDone = YES;
-	[delegate progressCheck];
+	[hostingDelegate updateHosting];
+	[self checkFilled];
+//	[delegate progressCheck];
 }
 - (void)didFinishLoadAttending:(ASIFormDataRequest *)request
 {
@@ -139,7 +146,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[attendingList addObjectsFromArray:[[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil]];
 	[[SettingsManager sharedSettingsManager] saveArray:attendingList withKey:@"attendingList"];
 	attendingDone = YES;
-	[delegate progressCheck];
+	[attendingDelegate updateAttending];
+	[self checkFilled];
+//	[delegate progressCheck];
 }
 - (void)didFailLoadProfile:(ASIFormDataRequest*)request
 {
@@ -150,7 +159,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		[profile addEntriesFromDictionary:[[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"profile"]];
 	}
 	profileDone = YES;
-	[delegate offlineMode];
+	[self checkFilled];
+//	[delegate offlineMode];
 	
 }
 - (void)didFailLoadAttending:(ASIFormDataRequest*)request
@@ -162,7 +172,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		[attendingList addObjectsFromArray:[[SettingsManager sharedSettingsManager] loadArrayForKey:@"attendingList"]];
 	}
 	attendingDone = YES;
-	[delegate offlineMode];
+	[self checkFilled];
+//	[delegate offlineMode];
 }
 - (void)didFailLoadHosting:(ASIFormDataRequest*)request
 {
@@ -174,7 +185,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	}
 	[guestList addEntriesFromDictionary:[[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"guestList"]];
 	hostingDone = YES;
-	[delegate offlineMode];
+	[self checkFilled];
+//	[delegate offlineMode];
 }
 - (BOOL)isSessionAlive
 {
@@ -241,7 +253,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request startAsynchronous];
 }
 
-- (void)refreshAll:(UIProgressView*)bar
+- (void)refreshAllWithDelegate:(UIViewController*)receiver completion:(SEL)finished
 {
 	ASINetworkQueue *allQueue = [ASINetworkQueue queue];
 	[allQueue reset];
@@ -256,7 +268,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	ASIFormDataRequest *hostingListReq = [ASIFormDataRequest requestWithURL:hostingListURL];
 	hostingListReq.delegate = self;
 	hostingListReq.didFinishSelector = @selector(didFinishLoadHosting:);
-	hostingListReq.didFailSelector = @selector(didFailSelector:);
+	hostingListReq.didFailSelector = @selector(didFailLoadHosting:);
 	
 	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getAttendingEvents]];
 	ASIFormDataRequest *attendingListReq = [ASIFormDataRequest requestWithURL:attendingListURL];
@@ -266,7 +278,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[allQueue addOperation:profileReq];
 	[allQueue addOperation:hostingListReq];
 	[allQueue addOperation:attendingListReq];
-
+	if(finished && receiver)
+	{
+		allQueue.delegate = receiver;
+		allQueue.queueDidFinishSelector = finished;
+	}
 	[allQueue go];
 }
 - (NSDate*)getDateForEID:(NSString*)eid uid:(NSString*)uid
@@ -397,6 +413,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		profileDone = NO;
 		attendingDone = NO;
 		hostingDone = NO;
+		[delegate progressFinished];
 		return YES;
 	}
 	return NO;

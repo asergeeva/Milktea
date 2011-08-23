@@ -9,7 +9,6 @@
 #import "AttendingController.h"
 #import "AttendanceList.h"
 #import "NSDictionary_JSONExtensions.h"
-#import "NetworkManager.h"
 #import "LocationManager.h"
 @implementation AttendingController
 #pragma mark - Init
@@ -17,6 +16,7 @@
 {
     self = [super init];
     if (self) {
+		[NetworkManager sharedNetworkManager].attendingDelegate = self;
 		[self refresh];
     }
     
@@ -26,6 +26,10 @@
 - (void)dealloc
 {
 	[super dealloc];
+}
+- (void)updateAttending
+{
+	[self refresh];
 }
 #pragma mark - Other
 - (void)refresh

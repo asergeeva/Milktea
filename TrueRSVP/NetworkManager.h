@@ -17,9 +17,25 @@
 //@class ASINetworkQueue;
 @protocol NetworkManagerDelegate
 @optional
-- (void)progressCheck;
+- (void)progressFinished;
 - (void)offlineMode;
 @end
+
+@protocol NetworkManagerProfileDelegate
+@required
+- (void)updateProfile;
+@end
+
+@protocol NetworkManagerAttendingDelegate
+@required
+- (void)updateAttending;
+@end
+
+@protocol NetworkManagerHostingDelegate
+@required
+- (void)updateHosting;
+@end
+
 @interface NetworkManager : NSObject
 {
 //	ASIFormDataRequest *formReq;
@@ -46,7 +62,7 @@
 - (void)didFailLoadAttending:(ASIFormDataRequest*)request;
 
 //- (void)refreshAll:(UIProgressView*)bar;
-- (void)refreshAll:(UIProgressView*)bar;
+- (void)refreshAllWithDelegate:(UIViewController*)receiver completion:(SEL)finished;
 - (BOOL)checkFilled;
 - (BOOL)isSessionAlive;
 - (void)processQueue;
@@ -72,5 +88,8 @@
 @property (nonatomic, retain) NSMutableArray *hostingList;
 @property (nonatomic, retain) NSMutableDictionary *guestList;
 @property (nonatomic, assign) id<NetworkManagerDelegate> delegate;
+@property (nonatomic, assign) id<NetworkManagerProfileDelegate> profileDelegate;
+@property (nonatomic, assign) id<NetworkManagerAttendingDelegate> attendingDelegate;
+@property (nonatomic, assign) id<NetworkManagerHostingDelegate> hostingDelegate;
 @property (nonatomic, retain) Reachability *connectionMonitor;
 @end
