@@ -83,7 +83,35 @@
 }
 - (IBAction)showRSVP:(UIButton*)sender
 {
-	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Update RSVP" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Absolutely", @"Pretty Sure", @"50/50", @"Most Likely Not", @"Raincheck", nil];
+	NSString *absolutely = @"Absolutely";
+	NSString *prettySure = @"Pretty Sure";
+	NSString *fifty = @"50/50";
+	NSString *likelyNot = @"Most Likely Not";
+	NSString *rainCheck = @"Raincheck";
+	if([[NetworkManager sharedNetworkManager] isOnline])
+	{
+		switch([[NetworkManager sharedNetworkManager] getAttendanceForEvent:eventAttending.eventID])
+		{
+			case 90:
+				absolutely = [NSString stringWithFormat:@"*%@",absolutely];
+				break;
+			case 65:
+				prettySure = [NSString stringWithFormat:@"*%@", prettySure];
+				break;
+			case 35:
+				fifty = [NSString stringWithFormat:@"*%@", fifty];
+				break;
+			case 15:
+				likelyNot = [NSString stringWithFormat:@"*%@", likelyNot];
+				break;
+			case 4:
+				rainCheck = [NSString stringWithFormat:@"*%@", rainCheck];
+				break;
+			default:
+				break;
+		}
+	}
+	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Update RSVP" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:absolutely, prettySure, fifty, likelyNot, rainCheck, nil];
 	[sheet showInView:self.view];
 	[sheet release];
 }
@@ -148,7 +176,7 @@
 //			confidence = 1;
 //			break;
 		default:
-			return;
+			confidence = 5;
 			break;
 	}
 

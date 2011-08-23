@@ -14,6 +14,9 @@
 #define TOOLBAR2_TAG 5
 #define BLACKVIEW_TAG 6
 #define UPLOADMESSAGE_TAG 7
+
+#define REFRESH_HEADER_HEIGHT 20.0f
+
 extern NSString *const consumerKey;
 extern NSString *const consumerSecret;
 extern NSString *const dateFormatFromSQL;
@@ -21,6 +24,7 @@ extern NSString *const getUserInfo;
 extern NSString *const setUserInfo;
 extern NSString *const getOrganizerEmail;
 extern NSString *const getAttendingEvents;
+extern NSString *const getAttendanceForEvent;
 extern NSString *const setAttendanceForEvent;
 extern NSString *const getHostingEvents;
 extern NSString *const getGuestList;

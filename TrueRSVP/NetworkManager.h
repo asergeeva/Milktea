@@ -66,7 +66,7 @@
 - (BOOL)checkFilled;
 - (BOOL)isSessionAlive;
 - (void)processQueue;
-
+- (int)getAttendanceForEvent:(NSString*)eid;
 - (void)getScoreWithEID:(NSString*)eid delegate:(UIViewController*)viewController finishedSelector:(SEL)finished failedSelector:(SEL)failed;
 - (void)getMapWithAddress:(NSString*)eventAddress delegate:(UIViewController*)viewController finishedSelector:(SEL)finished failedSelector:(SEL)failed;
 - (ASIHTTPRequest*)getOrganizerEmailForOrganizerID:(NSString*)oid;

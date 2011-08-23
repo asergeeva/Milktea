@@ -16,6 +16,7 @@ NSString *const getUserInfo = @"getUserInfo";
 NSString *const setUserInfo = @"setUserInfo";
 NSString *const getOrganizerEmail = @"getOrganizerEmail";
 NSString *const getAttendingEvents = @"getAttendingEvents";
+NSString *const getAttendanceForEvent = @"getAttendanceForEvent";
 NSString *const setAttendanceForEvent = @"setAttendanceForEvent";
 NSString *const getHostingEvents = @"getHostingEvents";
 NSString *const getGuestList = @"getGuestList";

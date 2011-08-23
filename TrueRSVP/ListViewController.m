@@ -8,7 +8,7 @@
 
 #import "ListViewController.h"
 #import "NetworkManager.h"
-#define REFRESH_HEADER_HEIGHT 20.0f
+#import "Constants.h"
 @implementation ListViewController
 @synthesize eventTableView;
 @synthesize listController;
@@ -115,7 +115,7 @@
 	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0-REFRESH_HEADER_HEIGHT + 23, 320, 17)] autorelease];
 	refreshLabel.text = @"Refresh";
 	refreshLabel.font = [UIFont systemFontOfSize:12];
-	refreshLabel.textAlignment = UITextAlignmentCenter;
+	refreshLabel.textAlignment = UITextAlignmentLeft;
 	[refreshHeaderView addSubview:refreshLabel];
 	[tableView addSubview:refreshHeaderView];
 }

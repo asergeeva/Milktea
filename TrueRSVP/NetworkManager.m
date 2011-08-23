@@ -211,6 +211,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	request.delegate = viewController;
 	[request startAsynchronous];
 }
+- (int)getAttendanceForEvent:(NSString*)eid
+{
+	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getAttendanceForEvent]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:eid forKey:@"eid"];
+	[request startSynchronous];
+	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	NSLog(@"%@", [dictionary objectForKey:@"confidence"]);
+	return [[dictionary objectForKey:@"confidence"] intValue];
+}
 - (ASIHTTPRequest*)getOrganizerEmailForOrganizerID:(NSString*)oid
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getOrganizerEmail]];
@@ -424,7 +434,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:confidence forKey:@"confidence"];
-	[request startAsynchronous];
+	[request startSynchronous];
 }
 - (void)dealloc
 {
