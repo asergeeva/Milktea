@@ -170,7 +170,6 @@
 		519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */; };
 		51ACEA4C13E354F200C206FD /* CheckInButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 51ACEA4B13E354F200C206FD /* CheckInButton.m */; };
 		51AEC93D13DE62A200E2FB69 /* AttendingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51AEC93C13DE62A200E2FB69 /* AttendingController.m */; };
-		51B02D2A140383AF009CC196 /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 51B02D29140383AF009CC196 /* 8.jpg */; };
 		51B1859313E0A3F500FBDCC9 /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B1859113E0A3F400FBDCC9 /* DebugViewController.m */; };
 		51B1859413E0A3F500FBDCC9 /* DebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51B1859213E0A3F400FBDCC9 /* DebugViewController.xib */; };
 		51B1859813E0A4C900FBDCC9 /* debugBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 51B1859613E0A4C900FBDCC9 /* debugBackground.png */; };
@@ -465,7 +464,6 @@
 		51ACEA4B13E354F200C206FD /* CheckInButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInButton.m; sourceTree = "<group>"; };
 		51AEC93B13DE62A200E2FB69 /* AttendingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingController.h; sourceTree = "<group>"; };
 		51AEC93C13DE62A200E2FB69 /* AttendingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingController.m; sourceTree = "<group>"; };
-		51B02D29140383AF009CC196 /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
 		51B1859013E0A3F400FBDCC9 /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
 		51B1859113E0A3F400FBDCC9 /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
 		51B1859213E0A3F400FBDCC9 /* DebugViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugViewController.xib; sourceTree = "<group>"; };
@@ -874,7 +872,6 @@
 			children = (
 				517D3F7B13FE3C5500DA256B /* icon@2x.png */,
 				517D3F7813FE3C5200DA256B /* icon.png */,
-				51B02D29140383AF009CC196 /* 8.jpg */,
 				519A0DF613E9F4BF0063695C /* 1px_whiteGradient.png */,
 				519A0DF713E9F4BF0063695C /* 1px_whiteGradient@2x.png */,
 				514D992013E0E3E00036AC40 /* attendedButton.png */,
@@ -1297,7 +1294,6 @@
 				5184E1EA13FFD0E100273641 /* Back.png in Resources */,
 				5184E1EB13FFD0E100273641 /* Back@2x.png in Resources */,
 				51C4B4E1140353130068FA02 /* WelcomeViewController.xib in Resources */,
-				51B02D2A140383AF009CC196 /* 8.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
