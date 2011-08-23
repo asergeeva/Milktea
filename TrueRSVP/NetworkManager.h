@@ -50,6 +50,9 @@
 	BOOL hostingDone;
 	Reachability *r;
 	id<NetworkManagerDelegate> delegate;
+	id<NetworkManagerProfileDelegate> profileDelegate;
+	id<NetworkManagerHostingDelegate> hostingDelegate;
+	id<NetworkManagerAttendingDelegate> attendingDelegate;
 	Reachability *connectionMonitor;
 //	ASINetworkQueue *allQueue;
 }
@@ -81,8 +84,9 @@
 - (void)connectivityChanged:(NSNotification*)notice;
 - (void)updateStreamWithEID:(NSString*)eid delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed;
 - (void)sendMessageWithEventName:(NSString*)eventName eid:(NSString*)eid content:(NSString*)message selectionList:(NSArray*)selectedFromList messageType:(NSString*)type delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed;
+- (NSString*)getUsernameWithUID:(NSString*)uid;
 - (BOOL)isOnline;
-
+- (void)uploadProfilePicWithImage:(UIImage*)image filename:(NSString*)filename delegate:(UIViewController*)receiver finishedSelector:(SEL)finish;
 @property (nonatomic, retain) NSMutableDictionary *profile;
 @property (nonatomic, retain) NSMutableArray *attendingList;
 @property (nonatomic, retain) NSMutableArray *hostingList;

@@ -13,7 +13,8 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "ASIFormDataRequest.h"
 #import "UITextViewUneditable.h"
-@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ASIHTTPRequestDelegate>
+#import "ZBarReaderViewController.h"
+@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ASIHTTPRequestDelegate, ZBarReaderDelegate>
 {
 	Event *eventAttending;
 	IBOutlet UIView *eventWhiteBack;
@@ -34,9 +35,12 @@
 	float lat;
 	float lng;
 //	NSMutableString *address;
-
+	ZBarReaderViewController *reader;
+//	UILabel *QRData;
 }
+- (void)dismissCamera;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (IBAction)showLive:(UIButton*)sender;
 - (IBAction)showMail:(UIButton*)sender;
 - (IBAction)showMap:(UIButton*)sender;
@@ -61,6 +65,6 @@
 //@property (nonatomic, retain) NSURL *someURL;
 @property (nonatomic) float lat;
 @property (nonatomic) float lng;
-
+@property (nonatomic, retain) ZBarReaderViewController *reader;
 //@property (nonatomic, retain) NSMutableString *address;
 @end

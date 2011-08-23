@@ -8,13 +8,41 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335754826.832995"
+         filePath = "TrueRSVP/User.m"
+         timestampString = "335785378.107359"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "433"
-         endingLineNumber = "433"
-         landmarkName = "-setAttendanceWithEID:confidence:"
+         startingLineNumber = "65"
+         endingLineNumber = "65"
+         landmarkName = "-updatePic"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TrueRSVP/User.m"
+         timestampString = "335785041.196226"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "67"
+         endingLineNumber = "67"
+         landmarkName = "-updatePic"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TrueRSVP/User.m"
+         timestampString = "335785041.196226"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "68"
+         endingLineNumber = "68"
+         landmarkName = "-updatePic"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -23,12 +51,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335754993.142821"
+         timestampString = "335784220.348482"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "437"
-         endingLineNumber = "437"
-         landmarkName = "-setAttendanceWithEID:confidence:"
+         startingLineNumber = "148"
+         endingLineNumber = "148"
+         landmarkName = "-didFinishLoadHosting:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -36,13 +64,27 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335755446.488383"
+         filePath = "TrueRSVP/User.m"
+         timestampString = "335785273.221213"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "438"
-         endingLineNumber = "438"
-         landmarkName = "-setAttendanceWithEID:confidence:"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
+         landmarkName = "-updateUser:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "TrueRSVP/User.m"
+         timestampString = "335785378.767539"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
+         landmarkName = "-updatePic"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

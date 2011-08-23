@@ -55,23 +55,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[zip setString:[temp objectForKey:@"zip"]];
 	[about setString:[temp objectForKey:@"about"]];
 	[twitter setString:[temp objectForKey:@"twitter"]];
+	[picURL setString:[temp objectForKey:@"pic"]];
 	[temp release];
-	[picURL setString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"], @"upload/user/images/", uid, @".png"]];
-	NSURL *url = [NSURL URLWithString:picURL];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	request.delegate = self;
-	[request startAsynchronous];
+	[self updatePic];
+//	[picURL setString:[NSString stringWithFormat:@"%@%@%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"], @"upload/user/", uid, @".png"]];
 	[self.delegate updatedStrings];
 }
-- (void)requestFinished:(ASIHTTPRequest*)request
+- (void)updatePic
 {
-	
-	profilePic = [[[UIImage alloc] initWithData:[request responseData]] autorelease];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithString:picURL]];
+	profilePic = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
 	[self.delegate updatedImages];
-}
-- (void)requestFailed:(ASIHTTPRequest*)request
-{
-	
 }
 - (void)dealloc
 {

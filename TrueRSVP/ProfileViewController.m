@@ -56,12 +56,9 @@
 {
 	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication].delegate).navController popToRootViewControllerAnimated:YES];
 }
+
 - (void)refreshProfile
 {
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getUserInfo"]];
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//	[request startSynchronous];
-//	NSDictionary *userInfo = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	[User sharedUser].delegate = self;
 	[[User sharedUser] updateUser:[NetworkManager sharedNetworkManager].profile];
 	[self updatedImages];
@@ -150,14 +147,6 @@
 }
 - (IBAction)updateProfile:(id)sender
 {	
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"setUserInfo"]]];
-//	[request addPostValue:emailTextField.text forKey:@"email"];
-//	[request addPostValue:aboutTextView.text forKey:@"about"];
-//	[request addPostValue:cellTextField.text forKey:@"cell"];
-//	[request addPostValue:zipTextField.text forKey:@"zip"];
-//	[request addPostValue:twitterTextField.text forKey:@"twitter"];
-//	request.delegate = self;
-//	[request startAsynchronous];
 	[[NetworkManager sharedNetworkManager] updateProfileWithEmail:emailTextField.text about:aboutTextView.text cell:cellTextField.text zip:zipTextField.text twitter:twitterTextField.text delegate:self];
 }
 - (void)updatedStrings
@@ -211,7 +200,6 @@
 }
 - (void)updatedImages
 {
-//	profilePic..image = [User sharedUser].profilePic;
 	[profilePic setImage:[User sharedUser].profilePic forState:UIControlStateNormal];
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -220,7 +208,6 @@
 	{
 		[self dismissWelcome:nil];
 		whiteBackground.frame = CGRectMake(4, 76, 210, 210);
-//		aboutImageView.frame = CGRectMake(323, 120, 149, 79);
 		profilePic.frame = CGRectMake(16, 87, 188, 188);
 		emailTextField.frame = CGRectMake(222, 74, 250, 31);
 		cellTextField.frame = CGRectMake(222, 120, 93, 31);
@@ -240,7 +227,6 @@
 	else
 	{
 		whiteBackground.frame = CGRectMake(14, 120, 135, 135);
-//		aboutImageView.frame = CGRectMake(13, 264, 136, 81);
 		profilePic.frame = CGRectMake(24, 131, 115, 115);
 		emailTextField.frame = CGRectMake(157, 134, 149, 31);
 		cellTextField.frame = CGRectMake(157, 193, 149, 31);

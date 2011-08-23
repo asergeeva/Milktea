@@ -28,6 +28,7 @@
 }
 + (User*)sharedUser;
 - (void)updateUser:(NSDictionary*)userInfo;
+- (void)updatePic;
 @property (nonatomic, retain) NSMutableString *uid;
 @property (nonatomic, retain) NSMutableString *fullName;
 @property (nonatomic, retain) NSMutableString *email;

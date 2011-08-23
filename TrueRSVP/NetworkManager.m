@@ -98,6 +98,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[self checkFilled];
 //	[delegate progressCheck];
 }
+- (NSString*)getUsernameWithUID:(NSString*)uid
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[sm objectForKey:@"APILocation"], getUsername]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:uid forKey:@"uid"];
+	[request startSynchronous];
+	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	return [NSString stringWithFormat:@"%@ %@", [dictionary objectForKey:@"fname"], [dictionary objectForKey:@"lname"]];
+}
 - (void)didFinishLoadHosting:(ASIFormDataRequest*)request
 {
 	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
@@ -385,6 +394,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	request.didFailSelector = failed;
 	[request startSynchronous];
 }
+- (void)uploadProfilePicWithImage:(UIImage*)image filename:(NSString*)filename delegate:(UIViewController*)receiver finishedSelector:(SEL)finish
+{
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], @"uploadImage"]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setData:UIImageJPEGRepresentation(image, 0.75) withFileName:@"8.jpg" andContentType:@"image/jpeg" forKey:@"qqfile"];
+	request.delegate = receiver;
+	request.didFinishSelector = finish;
+	[request startAsynchronous];
+}
 - (void)sendMessageWithEventName:(NSString*)eventName eid:(NSString*)eid content:(NSString*)message selectionList:(NSArray*)selectedFromList messageType:(NSString*)type delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], sendMessage]];
@@ -434,7 +452,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:confidence forKey:@"confidence"];
-	[request startSynchronous];
+	[request startAsynchronous];
 }
 - (void)dealloc
 {

@@ -17,6 +17,8 @@
 #import "LiveViewController.h"
 #import "NetworkManager.h"
 #import "MiscHelper.h"
+#import "QueuedActions.h"
+#import "User.h"
 @implementation AttendingDetailViewController
 @synthesize eventAttending;
 @synthesize eventWhiteBack;
@@ -34,16 +36,36 @@
 @synthesize lng;
 @synthesize buttonWhiteBack;
 @synthesize organizerEmail;
+@synthesize reader;
 //@synthesize address;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self) 
+	{
         // Custom initialization
 		eventAttending = event;
-		[eventAttending retain];
+		//[eventAttending retain];
+		reader = [ZBarReaderViewController new];
+		reader.readerDelegate = self;
+		reader.showsZBarControls = NO;
+		[reader.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
+		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
 //		address = [[NSMutableString alloc] init];
+    }
+    return self;
+}
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) 
+	{
+		reader = [ZBarReaderViewController new];
+		reader.readerDelegate = self;
+		reader.showsZBarControls = NO;
+		[reader.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
+		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
     }
     return self;
 }
@@ -135,15 +157,32 @@
 		[alert show];
 		[alert release];		
 	}
-	else if(distance > 3218)
+	else if(distance > 3218 || distance < 0)
 	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-														message:@"You are either too far or GPS is currently inaccurate. Try again when you are closer to the event."
-													   delegate:nil
-											  cancelButtonTitle:@"OK" 
-											  otherButtonTitles:nil];
-		[alert show];
-		[alert release];
+		if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+		{ 
+			[self presentModalViewController:reader animated:YES];
+		}
+		else if(distance < 0)
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+															message:@"Unable to locate your position. Please enable location services for this app."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];	
+		}
+		else
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+															message:@"You are either too far or GPS is currently inaccurate. Try again when you are closer to the event."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
 	}
 	else
 	{
@@ -151,6 +190,47 @@
 	}
 	[destinationLocation release];
 	[df release];
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	id<NSFastEnumeration> results = [info objectForKey: ZBarReaderControllerResults];
+	for(ZBarSymbol *symbol in results)
+	{
+		NSString *QRData = symbol.data;
+//		QRData.text = symbol.data;
+		NSArray *splitString = [QRData componentsSeparatedByString:@"-"];
+		if(splitString.count != 3)
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid QR Code" message:@"This QR code is invalid!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+		else if(![[splitString objectAtIndex:1] isEqualToString:eventAttending.eventID])
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid QR Code" message:@"This QR code is for another event!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+		else
+		{
+			if(![[NetworkManager sharedNetworkManager] isOnline])
+			{
+				[[QueuedActions sharedQueuedActions] addActionWithEID:[splitString objectAtIndex:1] userID:[User sharedUser].uid attendance:YES date:[NSDate date]];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"You'll be checked-in the next time you connect to the internet." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+				[alert release];
+			}
+			else
+			{
+				[[NetworkManager sharedNetworkManager] checkInWithEID:[splitString objectAtIndex:1] uid:[User sharedUser].uid checkInValue:@"1"];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In!" message:@"You have been checked-in!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+				[alert release];
+			}
+		}
+	}
+	[reader dismissModalViewControllerAnimated:YES];
+//	[self presentModalViewController:reader animated:NO];
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -211,6 +291,10 @@
 	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	view.layer.shouldRasterize = YES;
 }
+- (void)dismissCamera
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
 - (void)viewDidLoad
 {
 
@@ -235,14 +319,23 @@
 	live.layer.cornerRadius = 5;
 	live.clipsToBounds = YES;
 	
-
-	
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
 	eventMap.scrollEnabled = YES;
 	CGRect rect = self.view.frame;
 	rect.origin.y += 44;
 	self.view.bounds = rect;
+	
+	UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 450, 320, 30)] autorelease];
+	view.backgroundColor = [UIColor whiteColor];
+	UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 70, 30)];
+//	QRData = [[UILabel alloc] initWithFrame:CGRectMake(70, 1, 250, 30)];
+	[doneButton setImage:[UIImage imageNamed:@"doneButton.png"] forState:UIControlStateNormal];
+	[doneButton addTarget:self action:@selector(dismissCamera) forControlEvents:UIControlEventTouchUpInside];
+	[view addSubview:doneButton];
+//	[view addSubview:QRData];
+	[doneButton release];
+	reader.cameraOverlayView = view;
 }
 
 - (void)viewDidUnload
@@ -254,7 +347,7 @@
 
 - (void)dealloc
 {
-	[eventAttending release];
+//	[eventAttending release];
 	[eventDescriptionWhiteBack release];
 	[eventName release];
 	[eventDate release];
@@ -267,6 +360,8 @@
 	[live release];
 	[buttonWhiteBack release];
 	[organizerEmail release];
+	[reader release];
+//	[QRData release];
 	
 //	[someURL release];
 //	[address release];

@@ -318,21 +318,14 @@
 		}
 		else
 		{
-			NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+//			NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];		
+//			ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//			[request setPostValue:[splitString objectAtIndex:2] forKey:@"uid"];
+//			[request setPostValue:[splitString objectAtIndex:1] forKey:@"eid"];
+//			[request setPostValue:@"1" forKey:@"checkIn"];
+//			[request startSynchronous];
 			
-			ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-			[request setPostValue:[splitString objectAtIndex:2] forKey:@"uid"];
-			[request setPostValue:[splitString objectAtIndex:1] forKey:@"eid"];
-			[request setPostValue:@"1" forKey:@"checkIn"];
-			[request startSynchronous];
-			
-			url = [NSURL URLWithString:[NSString stringWithFormat:@"%@getUsername",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
-			request = [ASIFormDataRequest requestWithURL:url];
-			[request setPostValue:[splitString objectAtIndex:2] forKey:@"uid"];
-			[request startSynchronous];
-			NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-			
-			if([request error])
+			if(![[NetworkManager sharedNetworkManager] isOnline])
 			{
 				[[QueuedActions sharedQueuedActions] addActionWithEID:[splitString objectAtIndex:1] userID:[splitString objectAtIndex:2] attendance:YES date:[NSDate date]];
 				QRData.text = @"Queued checkin for next push";
@@ -340,7 +333,8 @@
 			}
 			else
 			{
-				QRData.text = [NSString stringWithFormat: @"Check-in:%@ %@", [dictionary objectForKey:@"fname"], [dictionary objectForKey:@"lname"]];	
+				[[NetworkManager sharedNetworkManager] checkInWithEID:[splitString objectAtIndex:1] uid:[splitString objectAtIndex:2] checkInValue:@"1"];	
+				QRData.text = [NSString stringWithFormat: @"Check-in:%@", [[NetworkManager sharedNetworkManager] getUsernameWithUID:[splitString objectAtIndex:2]]];	
 			}
 		}
 	}

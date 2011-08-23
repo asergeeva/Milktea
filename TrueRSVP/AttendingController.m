@@ -25,6 +25,7 @@
 #pragma mark - Unload
 - (void)dealloc
 {
+	[NetworkManager sharedNetworkManager].attendingDelegate = nil;
 	[super dealloc];
 }
 - (void)updateAttending

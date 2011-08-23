@@ -64,16 +64,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 	[self.manager stopMonitoringForRegion:region];
 	
 }
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-{
-	UILocalNotification *notify =[[UILocalNotification alloc] init];
-	notify.alertAction = [[[NSString alloc] initWithString: @"Entered"] autorelease];
-	notify.fireDate = nil;
-	notify.alertBody = [NSString stringWithFormat:@"Entered"];
-	notify.soundName = UILocalNotificationDefaultSoundName;
-	[[UIApplication sharedApplication] presentLocalNotificationNow:notify];
-	[notify release];
-}
+//- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+//{
+//	UILocalNotification *notify =[[UILocalNotification alloc] init];
+//	notify.alertAction = [[[NSString alloc] initWithString: @"Entered"] autorelease];
+//	notify.fireDate = nil;
+//	notify.alertBody = [NSString stringWithFormat:@"Entered"];
+//	notify.soundName = UILocalNotificationDefaultSoundName;
+//	[[UIApplication sharedApplication] presentLocalNotificationNow:notify];
+//	[notify release];
+//}
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
 	

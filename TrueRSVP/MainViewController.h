@@ -29,6 +29,7 @@
 //	IBOutlet UIPageControl *pageControl;
 }
 - (void)launchCamera;
+//- (void)updatedImages;
 - (void)setTextFieldDelegates:(UIView*)mainView;
 - (void)profileTabSelected:(id)sender;
 - (void)attendingTabSelected:(id)sender;

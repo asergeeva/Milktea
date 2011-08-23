@@ -24,6 +24,7 @@
 #pragma mark - Unload
 - (void)dealloc
 {
+	[NetworkManager sharedNetworkManager].hostingDelegate = nil;
 	[super dealloc];
 }
 #pragma mark - Other

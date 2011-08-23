@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "HostingDetailViewController.h"
 #import "ASIFormDataRequest.h"
+#import "WelcomeViewController.h"
 @implementation MainViewController
 @synthesize profileVC;
 @synthesize attendingVC;
@@ -38,8 +39,8 @@ BOOL offlineWarning = NO;
 		
 		segmentButtons = [[UIView alloc] init];
 	
-		pageNumber = 1;
-		attendingButton.selected = YES;
+		pageNumber = 0;
+		profileButton.selected = YES;
         // Custom initialization
     }
     return self;
@@ -119,12 +120,28 @@ BOOL offlineWarning = NO;
 		[alert release];
 		offlineWarning = YES;
 	}
+	if(![[SettingsManager sharedSettingsManager].settings objectForKey:@"didShowWelcome"])
+	{
+		WelcomeViewController *welcome = [[WelcomeViewController alloc] initWithNibName:@"WelcomeViewController" bundle:[NSBundle mainBundle] name:[User sharedUser].fullName  mainVC:self];
+		[self presentModalViewController:welcome animated:YES];
+		[welcome release];
+		[[SettingsManager sharedSettingsManager].settings setObject:@"1" forKey:@"didShowWelcome"];
+		[[SettingsManager sharedSettingsManager] save];
+	}
+	[self resetRotation:profileVC duration:0.3];
+	[self resetRotation:attendingVC duration:0.3];
+	[self resetRotation:hostingVC duration:0.3];
+	[self resetScrollViewContentSize:[[UIApplication sharedApplication] statusBarOrientation]];
 	[super viewDidAppear:animated];
+	
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	[self setupScrolling];
+//	CGRect frame = scrollView.frame;
+//	frame.origin.x = 0;
+
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
 	[profileButton setImage:[UIImage imageNamed:@"profile.png"] forState:UIControlStateNormal];
 	[profileButton setImage:[UIImage imageNamed:@"profile_selected.png"] forState:UIControlStateSelected];
@@ -371,28 +388,102 @@ BOOL offlineWarning = NO;
 	[self resetScrollViewContentSize:toInterfaceOrientation];
 }
 #pragma mark - Other
-- (void)launchCamera
+- (void)finishedUploadingPic
 {
-	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-	{
-		UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-		imagePicker.delegate = self;
-		imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-		[self presentModalViewController:imagePicker animated:YES];
-		[imagePicker release];
-	}
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		[self.view viewWithTag:BLACKVIEW_TAG].alpha = 0.0;
+	} completion:^(BOOL finished) {
+		[[self.view viewWithTag:BLACKVIEW_TAG] removeFromSuperview];
+	}];
+	
+	[[self.view viewWithTag:UPLOADMESSAGE_TAG] removeFromSuperview];
+	self.view.userInteractionEnabled = YES;
+	self.navigationController.navigationBar.userInteractionEnabled = YES;
+	[profileVC updatedImages];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-	//Send data
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"], @"event/image/upload"]];
 	
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	UIImage *small = [UIImage imageWithCGImage:((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]).CGImage scale:0.5 orientation:UIImageOrientationUp];
-	[request setPostBody:[NSMutableData dataWithData:UIImageJPEGRepresentation(small, 0.2)]];
-	[request startSynchronous];
-	NSLog(@"%@", [request responseString]);
-	[self dismissModalViewControllerAnimated:YES];
-//	UIImageJPEGRepresentation(((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]), 0.8)	
+	[[NetworkManager sharedNetworkManager] uploadProfilePicWithImage:((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]) filename:[User sharedUser].uid delegate:self finishedSelector:@selector(finishedUploadingPic)] ;
+	[picker dismissModalViewControllerAnimated:YES];
+	
+	UIView *blackView = [[[UIView alloc] initWithFrame:self.view.frame]autorelease];
+	CGRect rect = blackView.frame;
+	rect.origin.y = 0;
+	blackView.frame = rect;
+	blackView.backgroundColor = [UIColor blackColor];
+	blackView.tag = BLACKVIEW_TAG;
+	blackView.alpha = 0;
+	[self.view addSubview:blackView];
+	[UIView animateWithDuration:1.0 animations:^(void) {
+		blackView.alpha = 0.5;
+	}];
+	UIImageView *uploadingMessage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notification.png"]];
+	
+	CGRect original = uploadingMessage.frame;
+	original.origin.x = rect.size.width/2 - original.size.width/2;
+	original.origin.y = rect.size.height/2 - original.size.height/2 + 44;
+	
+	uploadingMessage.frame = original;
+	uploadingMessage.tag = UPLOADMESSAGE_TAG;
+	
+	original.origin.x = 0;
+	original.origin.y = 0;
+	
+	UILabel *uploadingMessageLabel = [[[UILabel alloc] initWithFrame:original] autorelease];
+	uploadingMessageLabel.text = @"Uploading...";	
+	uploadingMessageLabel.backgroundColor = [UIColor clearColor];
+	uploadingMessageLabel.tag = UPLOADMESSAGE_TAG;
+	uploadingMessageLabel.textAlignment = UITextAlignmentCenter;
+	uploadingMessageLabel.textColor = [UIColor whiteColor];
+	uploadingMessageLabel.font = [UIFont systemFontOfSize:15];
+	[uploadingMessage addSubview:uploadingMessageLabel];
+	
+	[self.view addSubview:uploadingMessage];
+	[self.view addSubview:uploadingMessage];
+	self.view.userInteractionEnabled = NO;
+	self.navigationController.navigationBar.userInteractionEnabled = NO;
+	[uploadingMessage release];
+	
 }
+- (void)launchCamera
+{
+	[profileVC dismissWelcome:nil];
+	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+	{
+		UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+		imagePickerController.delegate = self;
+		imagePickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;
+		[self presentModalViewController:imagePickerController animated:YES];   
+		[imagePickerController release];
+		//[imagePickerController release];
+	}
+}
+//{
+////	self.view.userInteractionEnabled = NO;
+////	self.navigationController.view.userInteractionEnabled = NO;
+////	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+////	{
+////		UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+////		imagePicker.delegate = self;
+////		imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+////		[self presentModalViewController:imagePicker animated:YES];
+////		[imagePicker release];
+////	}
+////	self.view.userInteractionEnabled = YES;
+////	self.navigationController.view.userInteractionEnabled = YES;
+//}
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{
+//	//Send data
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"], @"event/image/upload"]];
+//	
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	UIImage *small = [UIImage imageWithCGImage:((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]).CGImage scale:0.5 orientation:UIImageOrientationUp];
+//	[request setPostBody:[NSMutableData dataWithData:UIImageJPEGRepresentation(small, 0.2)]];
+//	[request startSynchronous];
+//	NSLog(@"%@", [request responseString]);
+//	[self dismissModalViewControllerAnimated:YES];
+////	UIImageJPEGRepresentation(((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]), 0.8)	
+//}
 @end

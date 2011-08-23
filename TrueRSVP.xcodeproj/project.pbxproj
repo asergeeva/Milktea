@@ -170,11 +170,14 @@
 		519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */; };
 		51ACEA4C13E354F200C206FD /* CheckInButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 51ACEA4B13E354F200C206FD /* CheckInButton.m */; };
 		51AEC93D13DE62A200E2FB69 /* AttendingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51AEC93C13DE62A200E2FB69 /* AttendingController.m */; };
+		51B02D2A140383AF009CC196 /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 51B02D29140383AF009CC196 /* 8.jpg */; };
 		51B1859313E0A3F500FBDCC9 /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B1859113E0A3F400FBDCC9 /* DebugViewController.m */; };
 		51B1859413E0A3F500FBDCC9 /* DebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51B1859213E0A3F400FBDCC9 /* DebugViewController.xib */; };
 		51B1859813E0A4C900FBDCC9 /* debugBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 51B1859613E0A4C900FBDCC9 /* debugBackground.png */; };
 		51B1859913E0A4C900FBDCC9 /* debugBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51B1859713E0A4C900FBDCC9 /* debugBackground@2x.png */; };
 		51B1859F13E0C7A300FBDCC9 /* Attendee.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B1859E13E0C7A300FBDCC9 /* Attendee.m */; };
+		51C4B4E0140353130068FA02 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51C4B4DE140353120068FA02 /* WelcomeViewController.m */; };
+		51C4B4E1140353130068FA02 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51C4B4DF140353130068FA02 /* WelcomeViewController.xib */; };
 		51CC214C13DE919600980FE8 /* HostingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CC214B13DE919600980FE8 /* HostingList.m */; };
 		51CC215013DE954D00980FE8 /* HostingDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51CC214E13DE954D00980FE8 /* HostingDetailViewController.m */; };
 		51CC215113DE954D00980FE8 /* HostingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51CC214F13DE954D00980FE8 /* HostingDetailViewController.xib */; };
@@ -462,6 +465,7 @@
 		51ACEA4B13E354F200C206FD /* CheckInButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInButton.m; sourceTree = "<group>"; };
 		51AEC93B13DE62A200E2FB69 /* AttendingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingController.h; sourceTree = "<group>"; };
 		51AEC93C13DE62A200E2FB69 /* AttendingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendingController.m; sourceTree = "<group>"; };
+		51B02D29140383AF009CC196 /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
 		51B1859013E0A3F400FBDCC9 /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
 		51B1859113E0A3F400FBDCC9 /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
 		51B1859213E0A3F400FBDCC9 /* DebugViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugViewController.xib; sourceTree = "<group>"; };
@@ -469,6 +473,9 @@
 		51B1859713E0A4C900FBDCC9 /* debugBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "debugBackground@2x.png"; sourceTree = "<group>"; };
 		51B1859D13E0C7A200FBDCC9 /* Attendee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendee.h; sourceTree = "<group>"; };
 		51B1859E13E0C7A300FBDCC9 /* Attendee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendee.m; sourceTree = "<group>"; };
+		51C4B4DD140353120068FA02 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
+		51C4B4DE140353120068FA02 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
+		51C4B4DF140353130068FA02 /* WelcomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
 		51CC214A13DE919600980FE8 /* HostingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostingList.h; sourceTree = "<group>"; };
 		51CC214B13DE919600980FE8 /* HostingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostingList.m; sourceTree = "<group>"; };
 		51CC214D13DE954D00980FE8 /* HostingDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostingDetailViewController.h; sourceTree = "<group>"; };
@@ -841,6 +848,9 @@
 				51F9BB4213D2623A0017731B /* TrueRSVPViewController.xib */,
 				518E2D8513D24FA60080E068 /* TrueRSVPAppDelegate.h */,
 				518E2D8613D24FA60080E068 /* TrueRSVPAppDelegate.m */,
+				51C4B4DD140353120068FA02 /* WelcomeViewController.h */,
+				51C4B4DE140353120068FA02 /* WelcomeViewController.m */,
+				51C4B4DF140353130068FA02 /* WelcomeViewController.xib */,
 				518E2D8813D24FA60080E068 /* MainWindow.xib */,
 				518E2D7D13D24FA60080E068 /* Supporting Files */,
 			);
@@ -864,6 +874,7 @@
 			children = (
 				517D3F7B13FE3C5500DA256B /* icon@2x.png */,
 				517D3F7813FE3C5200DA256B /* icon.png */,
+				51B02D29140383AF009CC196 /* 8.jpg */,
 				519A0DF613E9F4BF0063695C /* 1px_whiteGradient.png */,
 				519A0DF713E9F4BF0063695C /* 1px_whiteGradient@2x.png */,
 				514D992013E0E3E00036AC40 /* attendedButton.png */,
@@ -1285,6 +1296,8 @@
 				5184E1E713FFD08900273641 /* Default@2x.png in Resources */,
 				5184E1EA13FFD0E100273641 /* Back.png in Resources */,
 				5184E1EB13FFD0E100273641 /* Back@2x.png in Resources */,
+				51C4B4E1140353130068FA02 /* WelcomeViewController.xib in Resources */,
+				51B02D2A140383AF009CC196 /* 8.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1374,6 +1387,7 @@
 				510F267713FF7E5300776F65 /* QueuedActions.m in Sources */,
 				510F267A13FFB66C00776F65 /* CheckIn.m in Sources */,
 				517A2D641400AE8700A3A51A /* LocationManager.m in Sources */,
+				51C4B4E0140353130068FA02 /* WelcomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
