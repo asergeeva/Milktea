@@ -13,6 +13,7 @@
 #import "SettingsManager.h"
 #import "NetworkManager.h"
 #import "TrueRSVPAppDelegate.h"
+#import "LocationManager.h"
 @implementation ProfileViewController
 @synthesize welcomeBar;
 @synthesize welcomeShown;
@@ -54,6 +55,7 @@
 }
 - (IBAction)popAll:(id)sender
 {
+	[[LocationManager sharedLocationManager] removeAllEvents];
 	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication].delegate).navController popToRootViewControllerAnimated:YES];
 }
 
@@ -82,6 +84,7 @@
 	signOut.layer.cornerRadius = 5;
 	signOut.clipsToBounds = YES;
 	signOut.layer.shouldRasterize = YES;
+	signOut.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	aboutTextView.layer.cornerRadius = 5;
 	aboutTextView.layer.borderWidth = 2.0;
 	aboutTextView.layer.borderColor = [[UIColor grayColor] CGColor];

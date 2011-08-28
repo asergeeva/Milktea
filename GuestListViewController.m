@@ -222,6 +222,7 @@ BOOL sendSelection = NO;
 //	[request addPostValue:event.eventID forKey:@"eid"];
 //	[request startSynchronous];
 //	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
+	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:nil completion:nil];
 	NSArray *guestNames = [[NetworkManager sharedNetworkManager].guestList objectForKey:event.eventID];
 	[guestNameAttendance removeAllObjects];
 //	for (NSDictionary *dictionary in guestNames)

@@ -12,21 +12,24 @@
 @implementation SettingsManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 @synthesize settings;
+@synthesize username;
 - (id)init
 {
 	if((self = [super init]))
 	{
 		settings = [[NSMutableDictionary alloc] init];
-		[self load];
-		if(![settings objectForKey:@"rootAddress"])
+		username = [[NSMutableString alloc] initWithString:@""];
+		//[self load];
+//		[self loadAddress];
+		if(![[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"])
 		{
-			[settings setValue:@"http://192.168.1.136/Eventfii/" forKey:@"rootAddress"];
+			[[NSUserDefaults standardUserDefaults] setValue:@"http://192.168.1.136/Eventfii/" forKey:@"rootAddress"];
 		}
-		if(![settings objectForKey:@"APILocation"])
+		if(![[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"])
 		{
-			[settings setValue:@"http://192.168.1.136/Eventfii/api/" forKey:@"APILocation"];
+			[[NSUserDefaults standardUserDefaults] setValue:@"http://192.168.1.136/Eventfii/api/" forKey:@"APILocation"];
 		}
-		[self save];
+		//[self save];
 	}
 	return self;
 }
@@ -52,21 +55,26 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 }
 - (void)save
 {
-	[[NSUserDefaults standardUserDefaults] setObject:settings forKey:@"settings"];
+	[[NSUserDefaults standardUserDefaults] setObject:settings forKey:username];
+	[[NSUserDefaults standardUserDefaults] setValue:[settings objectForKey:@"rootAddress"] forKey:@"rootAddress"];
+		[[NSUserDefaults standardUserDefaults] setValue:[settings objectForKey:@"APILocation"] forKey:@"APILocation"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)load
 {
-	if([[NSUserDefaults standardUserDefaults] objectForKey:@"settings"])
+	if([[NSUserDefaults standardUserDefaults] objectForKey:username])
 	{
 		[settings removeAllObjects];
-		[settings addEntriesFromDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"settings"]];
+		[settings addEntriesFromDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:username]];
+		[settings setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"] forKey:@"rootAddress"];
+		[settings setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"] forKey:@"APILocation"];
 //		settings = [[[NSUserDefaults standardUserDefaults] objectForKey:@"settings"] mutableCopy];
 	}
 }
 - (void)dealloc
 {
 	[settings release];
+	[username release];
 //	[rootAddress release];
 //	[APILocation release];
 //	[twitterCache release];

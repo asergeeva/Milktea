@@ -7,8 +7,6 @@
 //
 
 #import "Constants.h"
-//NSString *const rootAddress = @"http://192.168.1.135/Eventfii/";
-//NSString *const APILocation = @"http://192.168.1.135/Eventfii/api/";
 NSString *const consumerKey = @"49GGk6xk9KVZmoZBfPQtmg";
 NSString *const consumerSecret = @"thhxyKdhVWmyRjbTRZdS4QuaaTowVKbMw6ZKxglBCk";
 NSString *const dateFormatFromSQL = @"yyyy-MM-dd HH:mm:ss";

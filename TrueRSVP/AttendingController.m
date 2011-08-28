@@ -35,9 +35,6 @@
 #pragma mark - Other
 - (void)refresh
 {
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getAttendingEvents/"]];
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//	[request startSynchronous];
 	NSArray *attendanceInfo = [NetworkManager sharedNetworkManager].attendingList;
 	[[AttendanceList sharedAttendanceList] updateEventsList:attendanceInfo];
 	eventArray = [AttendanceList sharedAttendanceList].eventsArray;

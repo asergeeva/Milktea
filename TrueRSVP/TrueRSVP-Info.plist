@@ -6,8 +6,6 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>UIPrerenderedIcon</key>
-	<true/>
 	<key>CFBundleDocumentTypes</key>
 	<array/>
 	<key>CFBundleExecutable</key>
@@ -37,11 +35,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.komodrone.TrueRSVP</string>
+			<string>com.komodrone.milktea</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>trueRSVP</string>
-				<string>fb122732554481304</string>
+				<string>fb166527620083686</string>
 			</array>
 		</dict>
 	</array>
@@ -51,6 +49,8 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

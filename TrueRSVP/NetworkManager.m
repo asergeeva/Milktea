@@ -20,7 +20,7 @@
 #import "SynthesizeSingleton.h"
 #import "OAuth.h"
 #import "QueuedActions.h"
-
+#import "LocationManager.h"
 @implementation NetworkManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 @synthesize profile;
@@ -87,6 +87,47 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	}
 	return ([connectionMonitor currentReachabilityStatus] != NotReachable);
 }
+- (NSString*)getUsernameWithUID:(NSString*)uid
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[sm objectForKey:@"APILocation"], getUsername]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setPostValue:uid forKey:@"uid"];
+	[request startSynchronous];
+	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	return [NSString stringWithFormat:@"%@ %@", [dictionary objectForKey:@"fname"], [dictionary objectForKey:@"lname"]];
+}
+- (void)refreshAllWithDelegate:(UIViewController*)receiver completion:(SEL)finished
+{
+	ASINetworkQueue *allQueue = [ASINetworkQueue queue];
+	[allQueue reset];
+	
+	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getUserInfo]];
+	ASIFormDataRequest *profileReq = [ASIFormDataRequest requestWithURL:profileURL];
+	profileReq.delegate = self;
+	profileReq.didFinishSelector = @selector(didFinishLoadProfile:);
+	profileReq.didFailSelector = @selector(didFailLoadProfile:);
+	
+	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getHostingEvents]];
+	ASIFormDataRequest *hostingListReq = [ASIFormDataRequest requestWithURL:hostingListURL];
+	hostingListReq.delegate = self;
+	hostingListReq.didFinishSelector = @selector(didFinishLoadHosting:);
+	hostingListReq.didFailSelector = @selector(didFailLoadHosting:);
+	
+	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getAttendingEvents]];
+	ASIFormDataRequest *attendingListReq = [ASIFormDataRequest requestWithURL:attendingListURL];
+	attendingListReq.delegate = self;
+	attendingListReq.didFinishSelector = @selector(didFinishLoadAttending:);
+	attendingListReq.didFailSelector = @selector(didFailLoadAttending:);
+	[allQueue addOperation:profileReq];
+	[allQueue addOperation:hostingListReq];
+	[allQueue addOperation:attendingListReq];
+	if(finished && receiver)
+	{
+		allQueue.delegate = receiver;
+		allQueue.queueDidFinishSelector = finished;
+	}
+	[allQueue go];
+}
 - (void)didFinishLoadProfile:(ASIFormDataRequest*)request
 {
 	[profile removeAllObjects];
@@ -97,15 +138,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[profileDelegate updateProfile];
 	[self checkFilled];
 //	[delegate progressCheck];
-}
-- (NSString*)getUsernameWithUID:(NSString*)uid
-{
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[sm objectForKey:@"APILocation"], getUsername]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request setPostValue:uid forKey:@"uid"];
-	[request startSynchronous];
-	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-	return [NSString stringWithFormat:@"%@ %@", [dictionary objectForKey:@"fname"], [dictionary objectForKey:@"lname"]];
 }
 - (void)didFinishLoadHosting:(ASIFormDataRequest*)request
 {
@@ -271,39 +303,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	request.didFailSelector = failed;
 	[request startAsynchronous];
 }
-
-- (void)refreshAllWithDelegate:(UIViewController*)receiver completion:(SEL)finished
-{
-	ASINetworkQueue *allQueue = [ASINetworkQueue queue];
-	[allQueue reset];
-
-	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getUserInfo]];
-	ASIFormDataRequest *profileReq = [ASIFormDataRequest requestWithURL:profileURL];
-	profileReq.delegate = self;
-	profileReq.didFinishSelector = @selector(didFinishLoadProfile:);
-	profileReq.didFailSelector = @selector(didFailLoadProfile:);
-	
-	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getHostingEvents]];
-	ASIFormDataRequest *hostingListReq = [ASIFormDataRequest requestWithURL:hostingListURL];
-	hostingListReq.delegate = self;
-	hostingListReq.didFinishSelector = @selector(didFinishLoadHosting:);
-	hostingListReq.didFailSelector = @selector(didFailLoadHosting:);
-	
-	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getAttendingEvents]];
-	ASIFormDataRequest *attendingListReq = [ASIFormDataRequest requestWithURL:attendingListURL];
-	attendingListReq.delegate = self;
-	attendingListReq.didFinishSelector = @selector(didFinishLoadAttending:);
-	attendingListReq.didFailSelector = @selector(didFailLoadAttending:);
-	[allQueue addOperation:profileReq];
-	[allQueue addOperation:hostingListReq];
-	[allQueue addOperation:attendingListReq];
-	if(finished && receiver)
-	{
-		allQueue.delegate = receiver;
-		allQueue.queueDidFinishSelector = finished;
-	}
-	[allQueue go];
-}
 - (NSDate*)getDateForEID:(NSString*)eid uid:(NSString*)uid
 {
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getCheckInDate]]];
@@ -356,6 +355,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 											  otherButtonTitles:nil];
 		[alert show];
 		[alert release];
+		[[LocationManager sharedLocationManager] removeEvent:eid];
 	}
 	else
 	{

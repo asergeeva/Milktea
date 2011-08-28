@@ -11,6 +11,7 @@
 @interface SettingsManager : NSObject
 {
 	NSMutableDictionary *settings;
+	NSMutableString *username;
 }
 - (void)save;
 - (void)load;
@@ -20,4 +21,5 @@
 - (NSMutableDictionary*)loadDictionaryForKey:(NSString*)key;
 - (NSMutableArray*)loadArrayForKey:(NSString*)key;
 @property (nonatomic, retain) NSMutableDictionary *settings;
+@property (nonatomic, retain) NSMutableString *username;
 @end

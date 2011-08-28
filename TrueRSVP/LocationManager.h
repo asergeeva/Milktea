@@ -17,6 +17,9 @@
 }
 + (LocationManager*)sharedLocationManager;
 - (void)addEvent:(Event*)event;
+- (void)removeAllEvents;
+- (void)removeIrrelevantEvents;
+- (void)removeEvent:(NSString*)eventID;
 @property (nonatomic, retain) CLLocationManager *manager;
 @property (nonatomic, retain) NSMutableArray *eventArray;
 @end

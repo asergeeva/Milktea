@@ -8,13 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/User.m"
-         timestampString = "335785378.107359"
+         filePath = "TrueRSVP/LocationManager.m"
+         timestampString = "336224779.19984"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "65"
-         endingLineNumber = "65"
-         landmarkName = "-updatePic"
+         startingLineNumber = "112"
+         endingLineNumber = "112"
+         landmarkName = "-locationManager:didEnterRegion:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -22,13 +22,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/User.m"
-         timestampString = "335785041.196226"
+         filePath = "TrueRSVP/LocationManager.m"
+         timestampString = "336224779.19984"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "67"
-         endingLineNumber = "67"
-         landmarkName = "-updatePic"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
+         landmarkName = "-locationManager:didExitRegion:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -36,13 +36,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/User.m"
-         timestampString = "335785041.196226"
+         filePath = "TrueRSVP/LocationManager.m"
+         timestampString = "336224779.19984"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "68"
-         endingLineNumber = "68"
-         landmarkName = "-updatePic"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
+         landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -50,13 +50,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/NetworkManager.m"
-         timestampString = "335784220.348482"
+         filePath = "TrueRSVP/LocationManager.m"
+         timestampString = "336224779.19984"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "148"
-         endingLineNumber = "148"
-         landmarkName = "-didFinishLoadHosting:"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
+         landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -64,27 +64,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "TrueRSVP/User.m"
-         timestampString = "335785273.221213"
+         filePath = "TrueRSVP/LocationManager.m"
+         timestampString = "336225157.324294"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "58"
-         endingLineNumber = "58"
-         landmarkName = "-updateUser:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "TrueRSVP/User.m"
-         timestampString = "335785378.767539"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "66"
-         endingLineNumber = "66"
-         landmarkName = "-updatePic"
+         startingLineNumber = "126"
+         endingLineNumber = "126"
+         landmarkName = "-locationManager:didExitRegion:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

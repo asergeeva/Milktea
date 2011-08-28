@@ -13,6 +13,7 @@
 //#import "Reachability.h"
 #import "QueuedActions.h"
 #import "NetworkManager.h"
+#import "LocationManager.h"
 @implementation TrueRSVPAppDelegate
 @synthesize window=_window;
 @synthesize viewController=_viewController;
@@ -21,10 +22,10 @@
 BOOL didEnterBackground = NO;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	facebook = [[Facebook alloc] initWithAppId:@"122732554481304"];
 
 	// Override point for customization after application launch.
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
+	facebook = [[Facebook alloc] initWithAppId:@"166527620083686" andDelegate:signVC];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
 	self.window.rootViewController = navController;
 //	[navController pushViewController:signVC animated:NO];
@@ -92,6 +93,7 @@ BOOL didEnterBackground = NO;
 	/*
 	 Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	 */
+	[[LocationManager sharedLocationManager] removeIrrelevantEvents];
 	if([[NetworkManager sharedNetworkManager] isSessionAlive])
 	{
 		if([[NetworkManager sharedNetworkManager] isOnline])
@@ -119,6 +121,7 @@ BOOL didEnterBackground = NO;
 	 Save data if appropriate.
 	 See also applicationDidEnterBackground:.
 	 */
+	[[LocationManager sharedLocationManager] removeAllEvents];
 }
 
 - (void)dealloc

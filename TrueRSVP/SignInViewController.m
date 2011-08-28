@@ -204,6 +204,10 @@
 }
 - (void)login
 {
+	[[SettingsManager sharedSettingsManager].username setString:txtUsername.text];
+	[[SettingsManager sharedSettingsManager] load];
+	[txtUsername resignFirstResponder];
+	[txtPassword resignFirstResponder];
 	if([[txtPassword text] isEqualToString:@""] || [[txtUsername text] isEqualToString:@""])
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Blank" 
@@ -285,7 +289,7 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if (![facebook isSessionValid]) {
 		NSArray *permissions = [NSArray arrayWithObject:@"email"];
-		[facebook authorize:permissions delegate:self];
+		[facebook authorize:permissions];
 	}
 	else if ([defaults objectForKey:@"FBAccessTokenKey"] 
 		&& [defaults objectForKey:@"FBExpirationDateKey"]) {
@@ -309,6 +313,8 @@
 - (void)viewDidLoad
 {
 //	[self showDebugView:nil];
+	txtUsername.text = @"movingincircles@gmail.com";
+	txtPassword.text = @"supfoo";
 //	TrueRSVPAppDelegate *app = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]);
 	if([[SettingsManager sharedSettingsManager].settings objectForKey:@"username"])
 	{
