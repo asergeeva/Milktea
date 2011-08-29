@@ -88,6 +88,7 @@
 - (NSString*)getUsernameWithUID:(NSString*)uid;
 - (BOOL)isOnline;
 - (void)uploadProfilePicWithImage:(UIImage*)image filename:(NSString*)filename delegate:(UIViewController*)receiver finishedSelector:(SEL)finish;
+- (void)checkInWithEID:(NSString*)eid;
 - (void)checkInWithEID:(NSString*)eid showErrorNotification:(BOOL)showNotification;
 @property (nonatomic, retain) NSMutableDictionary *profile;
 @property (nonatomic, retain) NSMutableArray *attendingList;

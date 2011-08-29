@@ -345,7 +345,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	[self checkInWithEID:eid showErrorNotification:YES];
 }
-- (void)checkInWithEID:(NSString*)eid showNotification:(BOOL)showErrorNotification
+- (void)checkInWithEID:(NSString*)eid showErrorNotification:(BOOL)showNotification;
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], @"checkInByDistance"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
@@ -365,7 +365,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	}
 	else
 	{
-		if(showErrorNotification)
+		if(showNotification)
 		{
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
 															message:@"Check-in unsuccessful. Try again later."

@@ -448,6 +448,7 @@ BOOL offlineWarning = NO;
 }
 - (void)launchCamera
 {
+	NSLog(@"Test1");
 	[profileVC dismissWelcome:nil];
 	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
 	{
@@ -458,6 +459,17 @@ BOOL offlineWarning = NO;
 		[imagePickerController release];
 		//[imagePickerController release];
 	}
+	else
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No camera detected"
+														message:@"There's no camera detected."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];	
+	}
+	NSLog(@"Test2");
 }
 //{
 ////	self.view.userInteractionEnabled = NO;
