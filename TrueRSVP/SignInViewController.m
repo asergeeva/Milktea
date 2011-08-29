@@ -271,7 +271,7 @@
 }
 - (IBAction)loginPressed:(UIButton*)sender
 {
-	NSURL *url = [NSURL URLWithString:[[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"]];
+	NSURL *url = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"]];
 	if([self requiresAuth:url])
 	{
 		ASIHTTPRequest *loginRequest = [ASIHTTPRequest requestWithURL:url];
@@ -384,7 +384,21 @@
 	[_request addPostValue:@"1" forKey:@"isFB"];
 	[_request startSynchronous];
 	NSLog(@"%@", [_request responseString]);
-	[self showProgress];
+	if([_request isEqual:@"status_doesNotExist"])
+	{
+		[facebook logout:self];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Found" 
+														message:@"Unable to locate your account. Please goto http://www.truersvp.com to register."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
+	else
+	{
+		[self showProgress];
+	}
 }
 - (void)viewDidUnload
 {

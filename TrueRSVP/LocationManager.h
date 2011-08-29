@@ -16,6 +16,7 @@
 	NSMutableArray *eventArray;
 }
 + (LocationManager*)sharedLocationManager;
+- (Event*)getEvent:(NSString*)eid;
 - (void)addEvent:(Event*)event;
 - (void)removeAllEvents;
 - (void)removeIrrelevantEvents;

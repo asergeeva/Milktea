@@ -118,7 +118,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 	[[UIApplication sharedApplication] presentLocalNotificationNow:notify];
 	[notify release];
 //	[[NetworkManager sharedNetworkManager] checkInDistanceWithEID:[self getEvent:region.identifier].eventID delegate:self];
-	[[NetworkManager sharedNetworkManager] checkInWithEID:[self getEvent:region.identifier].eventID];
+	[[NetworkManager sharedNetworkManager] checkInWithEID:[self getEvent:region.identifier].eventID showErrorNotification:NO];
 	[eventArray removeObject:region];
 	[self.manager stopMonitoringForRegion:region];
 	

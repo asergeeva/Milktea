@@ -21,6 +21,7 @@
 #import "OAuth.h"
 #import "QueuedActions.h"
 #import "LocationManager.h"
+#import "Event.h"
 @implementation NetworkManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 @synthesize profile;
@@ -38,7 +39,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
     self = [super init];
     if (self) {
         // Initialization code here.
-//		formReq = [[ASIFormDataRequest alloc] init];
+//		formReq = [[ASIFomrDataRequest alloc] init];
 //		httpReq = [[ASIHTTPRequest alloc] init];
 		profile = [[NSMutableDictionary alloc] init];
 		attendingList = [[NSMutableArray alloc] init];
@@ -342,14 +343,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)checkInWithEID:(NSString*)eid
 {
+	[self checkInWithEID:eid showErrorNotification:YES];
+}
+- (void)checkInWithEID:(NSString*)eid showNotification:(BOOL)showErrorNotification
+{
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], @"checkInByDistance"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:eid forKey:@"eid"];
 	[request startSynchronous];
 	if([[request responseString] isEqualToString:@"status_checkInSuccess"])
 	{
+		Event *checkedInEvent = [[LocationManager sharedLocationManager] getEvent:eid];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-														message:@"You are now checked in!"
+														message:[NSString stringWithFormat:@"You are now checked into: %@", checkedInEvent.eventName]
 													   delegate:nil
 											  cancelButtonTitle:@"OK" 
 											  otherButtonTitles:nil];
@@ -359,13 +365,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	}
 	else
 	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-														message:@"Check-in unsuccessful. Try again later."
-													   delegate:nil
-											  cancelButtonTitle:@"OK" 
-											  otherButtonTitles:nil];
-		[alert show];
-		[alert release];
+		if(showErrorNotification)
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+															message:@"Check-in unsuccessful. Try again later."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
 	}
 }
 - (void)uploadPhoto:(NSData*)imageData oauth:(OAuth*)oAuth delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
