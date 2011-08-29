@@ -34,10 +34,6 @@
 }
 - (void)refresh
 {
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getHostingEvents/"]];
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//	[request startSynchronous];
-//	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
 	[[HostingList sharedHostingList] updateEventsList:[NetworkManager sharedNetworkManager].hostingList];
 	eventArray = [HostingList sharedHostingList].eventsArray;
 }

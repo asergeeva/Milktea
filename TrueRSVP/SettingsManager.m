@@ -56,8 +56,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 - (void)save
 {
 	[[NSUserDefaults standardUserDefaults] setObject:settings forKey:username];
-	[[NSUserDefaults standardUserDefaults] setValue:[settings objectForKey:@"rootAddress"] forKey:@"rootAddress"];
-		[[NSUserDefaults standardUserDefaults] setValue:[settings objectForKey:@"APILocation"] forKey:@"APILocation"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)load
@@ -66,9 +64,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 	{
 		[settings removeAllObjects];
 		[settings addEntriesFromDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:username]];
-		[settings setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"] forKey:@"rootAddress"];
-		[settings setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"] forKey:@"APILocation"];
-//		settings = [[[NSUserDefaults standardUserDefaults] objectForKey:@"settings"] mutableCopy];
 	}
 }
 - (void)dealloc

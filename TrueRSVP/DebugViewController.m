@@ -22,9 +22,11 @@
 }
 - (IBAction)dismissDebug:(id)sender
 {
-	[[SettingsManager sharedSettingsManager].settings setObject:debugAddress.text forKey:@"rootAddress"];
-	[[SettingsManager sharedSettingsManager].settings setObject:[NSString stringWithFormat:@"%@api/", debugAddress.text] forKey:@"APILocation"];
-	[[SettingsManager sharedSettingsManager] save];
+//	[[SettingsManager sharedSettingsManager] setObject:debugAddress.text forKey:@"rootAddress"];
+	[[NSUserDefaults standardUserDefaults] setValue:debugAddress.text forKey:@"rootAddress"];
+	[[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%@api/", debugAddress.text] forKey:@"APILocation"];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+//	[[SettingsManager sharedSettingsManager] save];
 	[self dismissModalViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning
@@ -52,7 +54,7 @@
 {
     [super viewDidLoad];
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"debugBackground.png"]];
-	debugAddress.text = [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"];
+	debugAddress.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"];
 	debugAddress.returnKeyType = UIReturnKeyDone;
 	debugAddress.delegate = self;
     // Do any additional setup after loading the view from its nib.

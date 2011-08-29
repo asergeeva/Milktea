@@ -45,6 +45,7 @@
 	NSMutableArray *hostingList;
 	NSMutableDictionary *sm;
 	NSMutableDictionary *guestList;
+	NSUserDefaults *ud;
 	BOOL profileDone;
 	BOOL attendingDone;
 	BOOL hostingDone;

@@ -101,7 +101,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 		CLLocation *center = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
 		if([newLocation distanceFromLocation:center]/1000 < 6)
 		{
-			[self locationManager:manager didEnterRegion:region];
+			[self locationManager:self.manager didEnterRegion:region];
 		}
 		[center release];
 			

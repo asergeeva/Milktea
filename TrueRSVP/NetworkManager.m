@@ -48,6 +48,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		attendingDone = NO;
 		hostingDone = NO;
 		sm = [SettingsManager sharedSettingsManager].settings;
+		ud = [NSUserDefaults standardUserDefaults];
 		connectionMonitor = [Reachability reachabilityForInternetConnection];
 		[connectionMonitor startNotifier];
 		[[NSNotificationCenter defaultCenter]
@@ -55,7 +56,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		 selector: @selector(connectivityChanged:)
 		 name:  kReachabilityChangedNotification
 		 object: connectionMonitor];
-//		APILocation = [NSString stringWithFormat:@"%@", [sm objectForKey:@"APILocation"]];
     }
     return self;
 }
@@ -89,7 +89,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (NSString*)getUsernameWithUID:(NSString*)uid
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[sm objectForKey:@"APILocation"], getUsername]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[ud objectForKey:@"APILocation"], getUsername]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:uid forKey:@"uid"];
 	[request startSynchronous];
@@ -101,19 +101,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	ASINetworkQueue *allQueue = [ASINetworkQueue queue];
 	[allQueue reset];
 	
-	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getUserInfo]];
+	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getUserInfo]];
 	ASIFormDataRequest *profileReq = [ASIFormDataRequest requestWithURL:profileURL];
 	profileReq.delegate = self;
 	profileReq.didFinishSelector = @selector(didFinishLoadProfile:);
 	profileReq.didFailSelector = @selector(didFailLoadProfile:);
 	
-	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getHostingEvents]];
+	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getHostingEvents]];
 	ASIFormDataRequest *hostingListReq = [ASIFormDataRequest requestWithURL:hostingListURL];
 	hostingListReq.delegate = self;
 	hostingListReq.didFinishSelector = @selector(didFinishLoadHosting:);
 	hostingListReq.didFailSelector = @selector(didFailLoadHosting:);
 	
-	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getAttendingEvents]];
+	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getAttendingEvents]];
 	ASIFormDataRequest *attendingListReq = [ASIFormDataRequest requestWithURL:attendingListURL];
 	attendingListReq.delegate = self;
 	attendingListReq.didFinishSelector = @selector(didFinishLoadAttending:);
@@ -150,7 +150,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	{
 		NSMutableArray *guestNameAttendance = [[NSMutableArray alloc] init];
 		
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], getGuestList]];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getGuestList]];
 		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 		[request addPostValue:[dictionary objectForKey:@"id"] forKey:@"eid"];
 		[request startSynchronous];
@@ -231,7 +231,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (BOOL)isSessionAlive
 {
-	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getUserInfo]];
+	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getUserInfo]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];	
 	[request startSynchronous];
 	if([[request responseString] isEqualToString:@"false"])
@@ -242,7 +242,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)updateProfileWithEmail:(NSString*)email about:(NSString*)about cell:(NSString*)cell zip:(NSString*)zip twitter:(NSString*)twitter delegate:(UIViewController*)viewController
 {
-	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], setUserInfo]];
+	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], setUserInfo]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request addPostValue:email forKey:@"email"];
 	[request addPostValue:about forKey:@"about"];
@@ -254,7 +254,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (int)getAttendanceForEvent:(NSString*)eid
 {
-	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getAttendanceForEvent]];
+	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getAttendanceForEvent]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:eid forKey:@"eid"];
 	[request startSynchronous];
@@ -264,7 +264,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (ASIHTTPRequest*)getOrganizerEmailForOrganizerID:(NSString*)oid
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getOrganizerEmail]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getOrganizerEmail]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[NSString stringWithFormat:@"%@", oid] forKey:@"oid"];
 	[request startSynchronous];
@@ -295,7 +295,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)getScoreWithEID:(NSString*)eid delegate:(UIViewController*)viewController finishedSelector:(SEL)finished failedSelector:(SEL)failed
 {
-	NSURL *trueURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], computeTrueRSVP]];
+	NSURL *trueURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], computeTrueRSVP]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:trueURL];
 	[request setPostValue:eid forKey:@"eid"];
 	request.delegate = viewController;
@@ -305,7 +305,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (NSDate*)getDateForEID:(NSString*)eid uid:(NSString*)uid
 {
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], getCheckInDate]]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getCheckInDate]]];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:uid forKey:@"uid"];
 	[request startSynchronous];	
@@ -319,7 +319,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)checkInDateWithCheckIn:(CheckIn*)check
 {
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], checkInWithDate]]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], checkInWithDate]]];
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"YYYY-MM-dd HH:mm:ss";
 	[request setPostValue:[NSNumber numberWithBool:check.isAttending] forKey:@"checkIn"];
@@ -332,7 +332,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 
 - (ASIHTTPRequest*)checkInWithEID:(NSString*)eid uid:(NSString*)uid checkInValue:(NSString*)checkInValue
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[sm objectForKey:@"APILocation"], checkIn]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], checkIn]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:uid forKey:@"uid"];
@@ -342,7 +342,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)checkInWithEID:(NSString*)eid
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[sm objectForKey:@"APILocation"], @"checkInByDistance"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], @"checkInByDistance"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:eid forKey:@"eid"];
 	[request startSynchronous];
@@ -396,7 +396,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)uploadProfilePicWithImage:(UIImage*)image filename:(NSString*)filename delegate:(UIViewController*)receiver finishedSelector:(SEL)finish
 {
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], @"uploadImage"]];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], @"uploadImage"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setData:UIImageJPEGRepresentation(image, 0.75) withFileName:@"8.jpg" andContentType:@"image/jpeg" forKey:@"qqfile"];
 	request.delegate = receiver;
@@ -405,7 +405,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)sendMessageWithEventName:(NSString*)eventName eid:(NSString*)eid content:(NSString*)message selectionList:(NSArray*)selectedFromList messageType:(NSString*)type delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], sendMessage]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], sendMessage]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	for(int i = 0; i < selectedFromList.count; i++)
 	{
@@ -448,7 +448,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)setAttendanceWithEID:(NSString*)eid confidence:(NSString*)confidence
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [sm objectForKey:@"APILocation"], setAttendanceForEvent]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], setAttendanceForEvent]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:confidence forKey:@"confidence"];

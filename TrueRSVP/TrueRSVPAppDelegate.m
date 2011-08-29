@@ -25,7 +25,7 @@ BOOL didEnterBackground = NO;
 
 	// Override point for customization after application launch.
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
-	facebook = [[Facebook alloc] initWithAppId:@"166527620083686" andDelegate:signVC];
+	facebook = [[Facebook alloc] initWithAppId:@"256152217746559" andDelegate:signVC];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
 	self.window.rootViewController = navController;
 //	[navController pushViewController:signVC animated:NO];

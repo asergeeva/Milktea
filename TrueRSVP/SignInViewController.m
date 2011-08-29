@@ -219,7 +219,7 @@
 		[alert release];
 		return;
 	}
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"login"]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"], @"login"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
 	request.useSessionPersistence = YES;
@@ -375,7 +375,7 @@
 }
 - (void)request:(FBRequest *)request didLoad:(id)result
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"]]];
 	ASIFormDataRequest *_request = [ASIFormDataRequest requestWithURL:url];
 	[_request addPostValue:[result objectForKey:@"first_name"] forKey:@"fname"];
 	[_request addPostValue:[result objectForKey:@"last_name"] forKey:@"lname"];

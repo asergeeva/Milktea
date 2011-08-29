@@ -317,14 +317,7 @@
 			[alert release];
 		}
 		else
-		{
-//			NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];		
-//			ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//			[request setPostValue:[splitString objectAtIndex:2] forKey:@"uid"];
-//			[request setPostValue:[splitString objectAtIndex:1] forKey:@"eid"];
-//			[request setPostValue:@"1" forKey:@"checkIn"];
-//			[request startSynchronous];
-			
+		{			
 			if(![[NetworkManager sharedNetworkManager] isOnline])
 			{
 				[[QueuedActions sharedQueuedActions] addActionWithEID:[splitString objectAtIndex:1] userID:[splitString objectAtIndex:2] attendance:YES date:[NSDate date]];

@@ -217,31 +217,9 @@ BOOL sendSelection = NO;
 }
 - (void)refreshGuestList
 {
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"], @"getGuestList"]];
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//	[request addPostValue:event.eventID forKey:@"eid"];
-//	[request startSynchronous];
-//	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
 	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:nil completion:nil];
 	NSArray *guestNames = [[NetworkManager sharedNetworkManager].guestList objectForKey:event.eventID];
 	[guestNameAttendance removeAllObjects];
-//	for (NSDictionary *dictionary in guestNames)
-//	{
-//		Attendee *newAttendee = [[Attendee alloc] init];
-//		newAttendee.uid = [dictionary objectForKey:@"id"];
-//		//if(((NSString*)[dictionary objectForKey:@"fname"]) != [NSNull null])
-//		if((NSString*)[dictionary objectForKey:@"fname"])
-//			newAttendee.fname = [dictionary objectForKey:@"fname"];
-//		else
-//			newAttendee.fname = @" ";
-//		if([dictionary objectForKey:@"lname"] != [NSNull null])
-//			newAttendee.lname = [dictionary objectForKey:@"lname"];
-//		else
-//			newAttendee.lname = @" ";
-//		newAttendee.isAttending = [[dictionary objectForKey:@"is_attending"] boolValue];
-//		[guestNameAttendance addObject:newAttendee];
-//		[newAttendee release];
-//	}
 	[guestNameAttendance addObjectsFromArray:guestNames];
 	[guestTable reloadData];
 }
@@ -261,25 +239,17 @@ BOOL sendSelection = NO;
 #pragma mark - UIButton Actions
 - (void)checkboxPressed:(CheckInButton*)sender
 {
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@checkIn",[[SettingsManager sharedSettingsManager].settings objectForKey:@"APILocation"]]];
-
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//	[request setPostValue:sender.uid forKey:@"uid"];
-//	[request setPostValue:sender.eid forKey:@"eid"];
 	NSString *checkInValue;
 	if(sender.isSelected)
 	{
-//		[request setPostValue:@"0" forKey:@"checkIn"];
 		checkInValue = @"0";
 		sender.selected = NO;
 	}
 	else
 	{
-//		[request setPostValue:@"1" forKey:@"checkIn"];
 		checkInValue = @"1";
 		sender.selected = YES;
 	}
-//	[request startSynchronous];
 	ASIHTTPRequest *request = [[NetworkManager sharedNetworkManager] checkInWithEID:sender.eid uid:sender.uid checkInValue:checkInValue];
 	((Attendee*)[guestNameAttendance objectAtIndex:sender.tag]).isAttending = sender.selected;
 	if([request error])
