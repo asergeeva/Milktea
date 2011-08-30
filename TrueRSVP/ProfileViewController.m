@@ -150,6 +150,12 @@
 }
 - (IBAction)updateProfile:(id)sender
 {	
+	
+	[[User sharedUser].email setString:emailTextField.text];	
+	[[User sharedUser].cell setString:cellTextField.text];	
+	[[User sharedUser].zip setString:zipTextField.text];	
+	[[User sharedUser].twitter setString:twitterTextField.text];	
+	[[User sharedUser].about setString:aboutTextView.text];	
 	[[NetworkManager sharedNetworkManager] updateProfileWithEmail:emailTextField.text about:aboutTextView.text cell:cellTextField.text zip:zipTextField.text twitter:twitterTextField.text delegate:self];
 }
 - (void)updatedStrings

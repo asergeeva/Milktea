@@ -83,13 +83,14 @@
 - (void)setAttendanceWithEID:(NSString*)eid confidence:(NSString*)confidence;
 - (NSDate*)getDateForEID:(NSString*)eid uid:(NSString*)uid;
 - (void)connectivityChanged:(NSNotification*)notice;
-- (void)updateStreamWithEID:(NSString*)eid delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed;
+- (void)updateStreamWithHashtag:(NSString*)hashtag delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed;
 - (void)sendMessageWithEventName:(NSString*)eventName eid:(NSString*)eid content:(NSString*)message selectionList:(NSArray*)selectedFromList messageType:(NSString*)type delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed;
 - (NSString*)getUsernameWithUID:(NSString*)uid;
 - (BOOL)isOnline;
 - (void)uploadProfilePicWithImage:(UIImage*)image filename:(NSString*)filename delegate:(UIViewController*)receiver finishedSelector:(SEL)finish;
 - (void)checkInWithEID:(NSString*)eid;
 - (void)checkInWithEID:(NSString*)eid showErrorNotification:(BOOL)showNotification;
+- (void)isCheckedInWithEID:(NSString*)eid didFinish:(SEL)finished delegate:(id)receiver;
 @property (nonatomic, retain) NSMutableDictionary *profile;
 @property (nonatomic, retain) NSMutableArray *attendingList;
 @property (nonatomic, retain) NSMutableArray *hostingList;

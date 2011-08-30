@@ -403,8 +403,21 @@ BOOL offlineWarning = NO;
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-	
-	[[NetworkManager sharedNetworkManager] uploadProfilePicWithImage:((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]) filename:[User sharedUser].uid delegate:self finishedSelector:@selector(finishedUploadingPic)] ;
+	UIImage *pic = ((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]);
+	UIImage *uploadPic;
+	if(pic.size.width > 800)
+	{
+		CGSize newSize = CGSizeMake(pic.size.width/2, pic.size.height/2);
+		UIGraphicsBeginImageContext( newSize );
+		[pic drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+		uploadPic = UIGraphicsGetImageFromCurrentImageContext();
+		UIGraphicsEndImageContext();
+	}
+	else
+	{
+		uploadPic = pic;
+	}
+	[[NetworkManager sharedNetworkManager] uploadProfilePicWithImage: uploadPic filename:[User sharedUser].uid delegate:self finishedSelector:@selector(finishedUploadingPic)] ;
 	[picker dismissModalViewControllerAnimated:YES];
 	
 	UIView *blackView = [[[UIView alloc] initWithFrame:self.view.frame]autorelease];

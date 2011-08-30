@@ -64,7 +64,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 - (void)updatePic
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithString:picURL]];
-	profilePic = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+	UIImage *pic = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+	float multiplier = 1.0;
+	if(fabs(pic.size.width - 115) > fabs(pic.size.height - 115))
+	{
+		if(pic.size.width > 115)
+		{
+			multiplier = 115.0/pic.size.width;
+		}
+	}
+	else
+	{
+		if(pic.size.height > 115)
+		{
+			multiplier = 115.0/pic.size.height;
+		}
+	}
+	CGSize newSize = CGSizeMake(pic.size.width * multiplier, pic.size.height * multiplier);
+	UIGraphicsBeginImageContext( newSize );
+	[pic drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+	profilePic = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+//	profilePic = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
 	[self.delegate updatedImages];
 }
 - (void)dealloc

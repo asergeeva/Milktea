@@ -7,8 +7,8 @@
 //
 
 #import "Constants.h"
-NSString *const consumerKey = @"49GGk6xk9KVZmoZBfPQtmg";
-NSString *const consumerSecret = @"thhxyKdhVWmyRjbTRZdS4QuaaTowVKbMw6ZKxglBCk";
+NSString *const consumerKey = @"ZJMtzKDqSB7aIkZKQxbDg";
+NSString *const consumerSecret = @"o5HbajxQKedg0dSUjxdvrq81EKUe6lOPuw9Dxbvs4E";
 NSString *const dateFormatFromSQL = @"yyyy-MM-dd HH:mm:ss";
 NSString *const getUserInfo = @"getUserInfo";
 NSString *const setUserInfo = @"setUserInfo";

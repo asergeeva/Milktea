@@ -35,12 +35,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 //}
 - (void)addEvent:(Event*)event
 {
-	CLLocationCoordinate2D coords = [[NetworkManager sharedNetworkManager] getCoordsFromAddress:event.eventAddress];
-	CLRegion *region = [[[CLRegion alloc] initCircularRegionWithCenter:CLLocationCoordinate2DMake(coords.latitude, coords.longitude) radius:5000 identifier:event.eventID] autorelease];
-	[manager startMonitoringForRegion:region desiredAccuracy:1.0];
-	[eventArray addObject:event];
-	[manager setPurpose:@"We need your permission to check you in automatically as soon as you are near the event."];
-	[manager startUpdatingLocation];
+	if(![self getEvent:event.eventID])
+	{
+		CLLocationCoordinate2D coords = [[NetworkManager sharedNetworkManager] getCoordsFromAddress:event.eventAddress];
+		CLRegion *region = [[[CLRegion alloc] initCircularRegionWithCenter:CLLocationCoordinate2DMake(coords.latitude, coords.longitude) radius:5000 identifier:event.eventID] autorelease];
+		[manager startMonitoringForRegion:region desiredAccuracy:1.0];
+		[eventArray addObject:event];
+		[manager setPurpose:@"We need your permission to check you in automatically as soon as you are near the event."];
+		[manager startUpdatingLocation];
+	}
 	
 }
 - (void)removeEvent:(NSString*)eventID
@@ -121,6 +124,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 	[[NetworkManager sharedNetworkManager] checkInWithEID:[self getEvent:region.identifier].eventID showErrorNotification:NO];
 	[eventArray removeObject:region];
 	[self.manager stopMonitoringForRegion:region];
+	NSSet *regions = manager.monitoredRegions;
+	for(CLRegion *reg in regions)
+	{
+		NSLog(@"%@", reg.identifier);
+	}
 	
 }
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region

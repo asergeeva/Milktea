@@ -15,6 +15,7 @@
 	NSMutableString *eventName;
 	NSMutableString *eventDescription;
 	NSMutableString *eventAddress;
+	NSMutableString *eventTwitter;
 	NSDate *eventDate;
 }
 @property (nonatomic, retain) NSMutableString *eventID;
@@ -22,5 +23,6 @@
 @property (nonatomic, retain) NSMutableString *eventName;
 @property (nonatomic, retain) NSMutableString *eventDescription;
 @property (nonatomic, retain) NSMutableString *eventAddress;
+@property (nonatomic, retain) NSMutableString *eventTwitter;
 @property (nonatomic, retain) NSDate *eventDate;
 @end

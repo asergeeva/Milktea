@@ -16,6 +16,7 @@
 #import "MiscHelper.h"
 #import "ProgressView.h"
 #import "LocationManager.h"
+#import "FlurryAnalytics.h"
 //#import "TrueRSVPAppDelegate.h"
 @implementation SignInViewController
 @synthesize facebook;
@@ -271,6 +272,7 @@
 }
 - (IBAction)loginPressed:(UIButton*)sender
 {
+	[FlurryAnalytics logEvent:@"SIGNIN_REGULAR_LOGIN"];
 	NSURL *url = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"]];
 	if([self requiresAuth:url])
 	{
@@ -286,6 +288,7 @@
 }
 - (IBAction)facebookLogin:(id)sender
 {
+	[FlurryAnalytics logEvent:@"SIGNIN_FB_LOGIN"];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if (![facebook isSessionValid]) {
 		NSArray *permissions = [NSArray arrayWithObject:@"email"];
@@ -375,6 +378,8 @@
 }
 - (void)request:(FBRequest *)request didLoad:(id)result
 {
+	[[SettingsManager sharedSettingsManager].username setString:[result objectForKey:@"email"]];
+	[[SettingsManager sharedSettingsManager] load];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"]]];
 	ASIFormDataRequest *_request = [ASIFormDataRequest requestWithURL:url];
 	[_request addPostValue:[result objectForKey:@"first_name"] forKey:@"fname"];
@@ -384,7 +389,7 @@
 	[_request addPostValue:@"1" forKey:@"isFB"];
 	[_request startSynchronous];
 	NSLog(@"%@", [_request responseString]);
-	if([_request isEqual:@"status_doesNotExist"])
+	if([[_request responseString ]isEqual:@"status_doesNotExist"])
 	{
 		[facebook logout:self];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Found" 

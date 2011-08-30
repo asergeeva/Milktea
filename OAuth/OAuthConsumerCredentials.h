@@ -8,5 +8,5 @@
 
 //#error Replace these with your own app credentials, then remove this error.
 
-#define OAUTH_CONSUMER_KEY @"oDMGOs0jPxFz7DDULHnw"
-#define OAUTH_CONSUMER_SECRET @"wHO9IHpUUkDIj1sGCs7YWRRUnKj4FMrmBrYwQGoMpw"
+#define OAUTH_CONSUMER_KEY @"ZJMtzKDqSB7aIkZKQxbDg"
+#define OAUTH_CONSUMER_SECRET @"o5HbajxQKedg0dSUjxdvrq81EKUe6lOPuw9Dxbvs4E"

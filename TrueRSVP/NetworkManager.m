@@ -354,6 +354,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	if([[request responseString] isEqualToString:@"status_checkInSuccess"])
 	{
 		Event *checkedInEvent = [[LocationManager sharedLocationManager] getEvent:eid];
+		if(!showNotification)
+		{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
 														message:[NSString stringWithFormat:@"You are now checked into: %@", checkedInEvent.eventName]
 													   delegate:nil
@@ -361,6 +363,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 											  otherButtonTitles:nil];
 		[alert show];
 		[alert release];
+		}
+		else
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In"
+															message:@"You are now checked in."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
 		[[LocationManager sharedLocationManager] removeEvent:eid];
 	}
 	else
@@ -394,9 +407,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 
     [req startAsynchronous];
 }
-- (void)updateStreamWithEID:(NSString*)eid delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
+- (void)updateStreamWithHashtag:(NSString*)hashtag delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%%23truersvp%@", eid]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%%23%@", hashtag]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	request.delegate = receiver;
 	request.didFinishSelector = finished;
@@ -462,6 +475,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:confidence forKey:@"confidence"];
 	[request startAsynchronous];
+}
+- (void)isCheckedInWithEID:(NSString*)eid didFinish:(SEL)finished delegate:(id)receiver
+{		
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getGuestList]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	request.delegate = receiver;
+	[request addPostValue:eid forKey:@"eid"];
+	[request startAsynchronous];
+	request.didFinishSelector = finished;
 }
 - (void)dealloc
 {

@@ -201,6 +201,7 @@
 		51EA19A313DFBF9000684A58 /* HostingDetailViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51EA19A213DFBF9000684A58 /* HostingDetailViewController_Landscape.xib */; };
 		51EA19A813E0005C00684A58 /* GuestListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51EA19A613E0005B00684A58 /* GuestListViewController.m */; };
 		51EA19A913E0005C00684A58 /* GuestListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51EA19A713E0005B00684A58 /* GuestListViewController.xib */; };
+		51ED3106140CE6680032E88D /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51ED3105140CE6680032E88D /* libFlurryAnalytics.a */; };
 		51F222BF13DA4CDE00D2A834 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F222BE13DA4CDE00D2A834 /* Event.m */; };
 		51F3B4A913D41384008ACF04 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F3B4A713D41384008ACF04 /* MainViewController.m */; };
 		51F3B4AA13D41384008ACF04 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51F3B4A813D41384008ACF04 /* MainViewController.xib */; };
@@ -518,6 +519,8 @@
 		51EA19A513E0005B00684A58 /* GuestListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GuestListViewController.h; path = ../GuestListViewController.h; sourceTree = "<group>"; };
 		51EA19A613E0005B00684A58 /* GuestListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GuestListViewController.m; path = ../GuestListViewController.m; sourceTree = "<group>"; };
 		51EA19A713E0005B00684A58 /* GuestListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GuestListViewController.xib; path = ../GuestListViewController.xib; sourceTree = "<group>"; };
+		51ED3104140CE6680032E88D /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		51ED3105140CE6680032E88D /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		51F222BD13DA4CDE00D2A834 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = ../Event.h; sourceTree = "<group>"; };
 		51F222BE13DA4CDE00D2A834 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Event.m; path = ../Event.m; sourceTree = "<group>"; };
 		51F3B4A613D41384008ACF04 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -556,6 +559,7 @@
 				5194222E13D39644008B5418 /* CFNetwork.framework in Frameworks */,
 				518E2D7713D24FA60080E068 /* UIKit.framework in Frameworks */,
 				515A0E5213E12BC800C136D0 /* libzbar.a in Frameworks */,
+				51ED3106140CE6680032E88D /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1038,6 +1042,7 @@
 		519C557513DA058A00EE8E9A /* Addons */ = {
 			isa = PBXGroup;
 			children = (
+				51ED3103140CE6680032E88D /* FlurryAnalytics */,
 				5194223B13D396FC008B5418 /* TouchJSON */,
 				5194221013D3961A008B5418 /* ASIHTTPRequest */,
 				51F9BB4513D26C820017731B /* Facebook */,
@@ -1116,6 +1121,15 @@
 				5173571F13D81CAA00204AAF /* Profile_X@2x.png */,
 			);
 			name = Buttons;
+			sourceTree = "<group>";
+		};
+		51ED3103140CE6680032E88D /* FlurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				51ED3104140CE6680032E88D /* FlurryAnalytics.h */,
+				51ED3105140CE6680032E88D /* libFlurryAnalytics.a */,
+			);
+			path = FlurryAnalytics;
 			sourceTree = "<group>";
 		};
 		51F9BB4513D26C820017731B /* Facebook */ = {
@@ -1454,6 +1468,7 @@
 					"\"$SDKROOT/usr/include/libxml2\"",
 					"$(inherited)",
 					"\"$(SRCROOT)/ZBarSDK\"",
+					"\"$(SRCROOT)/TrueRSVP/FlurryAnalytics\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1517,6 +1532,7 @@
 					"\"$SDKROOT/usr/include/libxml2\"",
 					"$(inherited)",
 					"\"$(SRCROOT)/ZBarSDK\"",
+					"\"$(SRCROOT)/TrueRSVP/FlurryAnalytics\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1546,6 +1562,7 @@
 					"\"$SDKROOT/usr/include/libxml2\"",
 					"$(inherited)",
 					"\"$(SRCROOT)/ZBarSDK\"",
+					"\"$(SRCROOT)/TrueRSVP/FlurryAnalytics\"",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

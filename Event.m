@@ -15,6 +15,7 @@
 @synthesize eventDescription;
 @synthesize eventAddress;
 @synthesize eventDate;
+@synthesize eventTwitter;
 - (id)init
 {
     self = [super init];
@@ -23,6 +24,7 @@
 		eventName = [[NSMutableString alloc] init];
 		eventDescription = [[NSMutableString alloc] init];
 		eventAddress = [[NSMutableString alloc] init];
+		eventTwitter = [[NSMutableString alloc] init];
 //		eventDate = [[NSDate alloc] init];
     }
     
@@ -35,6 +37,7 @@
 	[eventName release];
 	[eventDescription release];
 	[eventAddress release];
+	[eventTwitter release];
 //	[eventDate release];
 	[super dealloc];
 }

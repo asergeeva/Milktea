@@ -10,6 +10,8 @@
 #import "AttendanceList.h"
 #import "NSDictionary_JSONExtensions.h"
 #import "LocationManager.h"
+#import "User.h"
+#import "CJSONDeserializer.h"
 @implementation AttendingController
 #pragma mark - Init
 - (id)init
@@ -33,6 +35,25 @@
 	[self refresh];
 }
 #pragma mark - Other
+- (void)checkIfAttending:(ASIHTTPRequest*)request
+{
+	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
+	for (NSDictionary *dictionary in guestNames)
+	{
+		if([[dictionary objectForKey:@"id"] isEqual:[User sharedUser].uid])
+		{
+			if(![[dictionary objectForKey:@"is_attending"] isEqual:@"1"])
+			{
+				for(Event *event in eventArray)
+				{
+					if([event.eventID isEqual:[dictionary objectForKey:@"event_id"]])
+						[[LocationManager sharedLocationManager] addEvent:event];
+					break;
+				}
+			}
+		}
+	}
+}
 - (void)refresh
 {
 	NSArray *attendanceInfo = [NetworkManager sharedNetworkManager].attendingList;
@@ -40,11 +61,12 @@
 	eventArray = [AttendanceList sharedAttendanceList].eventsArray;
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd";
+	//REDO THIS USING NEW BACKEND
 	for(Event *event in eventArray)
 	{
 		if([[df stringFromDate:event.eventDate] isEqual:[df stringFromDate:[NSDate date]]])
 		{
-			[[LocationManager sharedLocationManager] addEvent:event];
+			[[NetworkManager sharedNetworkManager] isCheckedInWithEID:event.eventID didFinish:@selector(checkIfAttending:) delegate:self];
 		}
 	}
 	[df release];

@@ -42,6 +42,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AttendanceList);
 		event.eventName = [temp objectForKey:@"title"];
 		event.eventDescription = [temp objectForKey:@"description"];
 		event.eventAddress = [temp objectForKey:@"location_address"];
+		event.eventTwitter = [temp objectForKey:@"twitter"];
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
 		dateFormatter.dateFormat = dateFormatFromSQL;
 		if([[[temp objectForKey:@"event_datetime"] substringToIndex:4] isEqualToString:@"0000"])

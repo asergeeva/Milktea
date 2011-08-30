@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "ListController.h"
 #import "NetworkManager.h"
-@interface AttendingController : ListController <NetworkManagerAttendingDelegate>
+#import "ASIHTTPRequest.h"
+@interface AttendingController : ListController <NetworkManagerAttendingDelegate, ASIHTTPRequestDelegate>
 {
 }
 - (void)refresh;

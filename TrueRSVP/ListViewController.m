@@ -155,8 +155,13 @@
 	[UIView animateWithDuration:0.5 animations:^(void) 
 	{
 		self.eventTableView.contentInset = UIEdgeInsetsMake(0, REFRESH_HEADER_HEIGHT, 0, 0);		
+	} completion:^(BOOL finished) {
+		if(finished)
+		{
+			[self refresh];
+		}
 	}];
-    [self refresh];
+
 }
 
 - (void)stopLoading 

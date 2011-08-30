@@ -14,6 +14,7 @@
 #import "QueuedActions.h"
 #import "NetworkManager.h"
 #import "LocationManager.h"
+#import "FlurryAnalytics.h"
 @implementation TrueRSVPAppDelegate
 @synthesize window=_window;
 @synthesize viewController=_viewController;
@@ -22,7 +23,7 @@
 BOOL didEnterBackground = NO;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
+	[FlurryAnalytics startSession:@"6D2G4ACFWJTJ889295IM"];
 	// Override point for customization after application launch.
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
 	facebook = [[Facebook alloc] initWithAppId:@"256152217746559" andDelegate:signVC];

@@ -192,7 +192,7 @@ BOOL uploading = NO;
 	ASIFormDataRequest *request = [[ASIFormDataRequest alloc]
                                    initWithURL:[NSURL URLWithString:postUrl]];
 	[tweetField resignFirstResponder];
-	NSString *hashtag = [NSString stringWithFormat:@"#trueRSVP%@", thisEvent.eventID];
+	NSString *hashtag = thisEvent.eventTwitter;
 	if(tweetField.text.length > 139-hashtag.length)
 	{
 		tweetField.text = [NSString stringWithFormat:@"%@ %@", [tweetField.text substringToIndex:139-hashtag.length], hashtag];
@@ -330,7 +330,7 @@ BOOL uploading = NO;
 //	
 //	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 //	[request startSynchronous];
-	[[NetworkManager sharedNetworkManager] updateStreamWithEID:thisEvent.eventID delegate:self finishedSelector:@selector(updateStreamSuccess:) failedSelector:@selector(updateStreamFailed:)];
+	[[NetworkManager sharedNetworkManager] updateStreamWithHashtag:thisEvent.eventTwitter delegate:self finishedSelector:@selector(updateStreamSuccess:) failedSelector:@selector(updateStreamFailed:)];
 }
 - (void)updateStreamFinished:(ASIHTTPRequest*)request
 {
