@@ -8,6 +8,7 @@
 
 #import "WelcomeViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "FlurryAnalytics.h"
 @implementation WelcomeViewController
 @synthesize welcomeBar;
 @synthesize fullName;
@@ -35,11 +36,13 @@ BOOL welcomeShown = NO;
 #pragma mark - View lifecycle
 - (void)hostPressed
 {
+	[FlurryAnalytics logEvent:@"WELCOME_I_AM_HOST"];
 	[main hostingTabSelected:nil];
 	[main dismissModalViewControllerAnimated:YES];
 }
 - (void)attendeePressed
 {
+	[FlurryAnalytics logEvent:@"WELCOME_I_AM_ATTENDEE"];
 	[main attendingTabSelected:nil];
 	[main dismissModalViewControllerAnimated:YES];
 }

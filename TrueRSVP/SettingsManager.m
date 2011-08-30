@@ -8,7 +8,7 @@
 
 #import "SettingsManager.h"
 #import "SynthesizeSingleton.h"
-
+#import "FlurryAnalytics.h"
 @implementation SettingsManager
 SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 @synthesize settings;

@@ -12,7 +12,7 @@
 @class Event;
 @interface LocationManager : NSObject <CLLocationManagerDelegate, ASIHTTPRequestDelegate>
 {
-	CLLocationManager *manager;
+	CLLocationManager *_manager;
 	NSMutableArray *eventArray;
 }
 + (LocationManager*)sharedLocationManager;
@@ -21,6 +21,6 @@
 - (void)removeAllEvents;
 - (void)removeIrrelevantEvents;
 - (void)removeEvent:(NSString*)eventID;
-@property (nonatomic, retain) CLLocationManager *manager;
+@property (nonatomic, retain) CLLocationManager *_manager;
 @property (nonatomic, retain) NSMutableArray *eventArray;
 @end

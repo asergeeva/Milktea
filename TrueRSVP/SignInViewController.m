@@ -247,6 +247,7 @@
 //		UIProgressView *progress = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar] autorelease];
 //		[self.view addSubview:progress];
 //		[[NetworkManager sharedNetworkManager] refreshAll:progress];
+		[FlurryAnalytics setUserID:txtUsername.text];
 		[self showProgress];
 //		[[NetworkManager sharedNetworkManager] refreshAll:nil];
 //		[self showMain];
@@ -379,6 +380,7 @@
 - (void)request:(FBRequest *)request didLoad:(id)result
 {
 	[[SettingsManager sharedSettingsManager].username setString:[result objectForKey:@"email"]];
+	[FlurryAnalytics setUserID:[result objectForKey:@"email"]];
 	[[SettingsManager sharedSettingsManager] load];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"]]];
 	ASIFormDataRequest *_request = [ASIFormDataRequest requestWithURL:url];

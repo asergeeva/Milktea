@@ -263,6 +263,7 @@
 #pragma mark - Button Methods
 - (IBAction)messagePressed:(UIButton*)sender
 {
+	[FlurryAnalytics logEvent:@"HOSTING_DETAIL_MESSAGING_INITIATED"];
 	guestListVC = [[GuestListViewController alloc] initWithNibName:@"GuestListViewController" bundle:[NSBundle mainBundle] event:eventHosting];
 	guestListVC.showMessages = YES;
 	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))

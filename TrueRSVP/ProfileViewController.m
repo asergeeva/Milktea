@@ -55,6 +55,7 @@
 }
 - (IBAction)popAll:(id)sender
 {
+	[FlurryAnalytics logEvent:@"PROFILE_SIGNED_OUT"];
 	[[LocationManager sharedLocationManager] removeAllEvents];
 	[((TrueRSVPAppDelegate*)[UIApplication sharedApplication].delegate).navController popToRootViewControllerAnimated:YES];
 }

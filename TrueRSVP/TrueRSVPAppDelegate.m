@@ -21,13 +21,18 @@
 @synthesize facebook;
 @synthesize navController;
 BOOL didEnterBackground = NO;
+void uncaughtExceptionHandler(NSException *exception) {
+    [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 	[FlurryAnalytics startSession:@"6D2G4ACFWJTJ889295IM"];
 	// Override point for customization after application launch.
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
 	facebook = [[Facebook alloc] initWithAppId:@"256152217746559" andDelegate:signVC];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
+	[FlurryAnalytics logAllPageViews:navController];
 	self.window.rootViewController = navController;
 //	[navController pushViewController:signVC animated:NO];
 	[signVC release];

@@ -244,11 +244,13 @@ BOOL sendSelection = NO;
 	{
 		checkInValue = @"0";
 		sender.selected = NO;
+		[FlurryAnalytics logEvent:@"GUESTLIST_CHECKBOX_UNCHECKIN"];
 	}
 	else
 	{
 		checkInValue = @"1";
 		sender.selected = YES;
+		[FlurryAnalytics logEvent:@"GUESTLIST_CHECKBOX_CHECKIN"];
 	}
 	ASIHTTPRequest *request = [[NetworkManager sharedNetworkManager] checkInWithEID:sender.eid uid:sender.uid checkInValue:checkInValue];
 	((Attendee*)[guestNameAttendance objectAtIndex:sender.tag]).isAttending = sender.selected;
@@ -284,6 +286,7 @@ BOOL sendSelection = NO;
 }
 -(void)searchPressed:(UIButton*)sender
 {
+	[FlurryAnalytics logEvent:@"GUESTLIST_SEARCH_PRESSED"];
 	searchHeader.hidden = NO;
 	[searchBar becomeFirstResponder];
 	[UIView animateWithDuration:0.3 animations:^(void) {
@@ -338,6 +341,7 @@ BOOL sendSelection = NO;
 }
 - (void)selectAllPressed
 {
+	[FlurryAnalytics logEvent:@"GUESTLIST_SELECT_ALL"];
 	[selectionList removeAllObjects];
 	for(Attendee *attendee in guestNameAttendance)
 	{
@@ -347,6 +351,7 @@ BOOL sendSelection = NO;
 }
 - (void)selectNonePressed
 {
+	[FlurryAnalytics logEvent:@"GUESTLIST_SELECT_NONE"];
 	[selectionList removeAllObjects];
 	[guestTable reloadData];	
 }

@@ -19,6 +19,7 @@
 #import "MiscHelper.h"
 #import "QueuedActions.h"
 #import "User.h"
+#import "FlurryAnalytics.h"
 @implementation AttendingDetailViewController
 @synthesize eventAttending;
 @synthesize eventWhiteBack;
@@ -71,13 +72,14 @@
 }
 - (IBAction)showLive:(UIButton*)sender
 {
+	[FlurryAnalytics logEvent:@"ATTENDEE_CHECK_LIVE_FEED"];
 	LiveViewController *liveVC = [[[LiveViewController alloc] initWithNibName:@"LiveViewController" bundle:[NSBundle mainBundle] event:eventAttending] autorelease];
 	[self.navigationController pushViewController:liveVC animated:YES];
 	
 }
 - (IBAction)showMail:(UIButton*)sender
 {
-
+	[FlurryAnalytics logEvent:@"ATTENDEE_EMAIL_ORGANIZER"];
 	MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
 	mailVC.mailComposeDelegate = self;
 	[mailVC setSubject:[NSString stringWithFormat:@"Event: %@",eventName.text]];
@@ -100,6 +102,7 @@
 - (IBAction)showMap:(UIButton*)sender
 {
 //	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?ll=%f,%f", lat, lng]];
+	[FlurryAnalytics logEvent:@"ATTENDEE_LAUNCHED_GOOGLEMAPS"];
 	NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"http://maps.google.com/maps?q=%@", eventAttending.eventAddress] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 	[[UIApplication sharedApplication] openURL:url];
 }
@@ -149,6 +152,7 @@
 	df.dateFormat = @"yyyy-MM-dd";
 	if(![[df stringFromDate:eventAttending.eventDate] isEqualToString:[df stringFromDate:[NSDate date]]])
 	{
+		[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_WRONGDATE"];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
 														message:@"You must only check-in on the event date."
 													   delegate:nil
@@ -165,6 +169,7 @@
 		}
 		else if(distance < 0)
 		{
+			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_UNLOCATABLE"];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
 															message:@"Unable to locate your position. Please enable location services for this app."
 														   delegate:nil
@@ -175,6 +180,7 @@
 		}
 		else
 		{
+			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_TOOFAR"];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
 															message:@"You are either too far or GPS is currently inaccurate. Try again when you are closer to the event."
 														   delegate:nil
@@ -201,12 +207,14 @@
 		NSArray *splitString = [QRData componentsSeparatedByString:@"-"];
 		if(splitString.count != 3)
 		{
+			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_QR_INVALID_CODE_UNKNOWN"];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid QR Code" message:@"This QR code is invalid!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
 			[alert release];
 		}
 		else if(![[splitString objectAtIndex:1] isEqualToString:eventAttending.eventID])
 		{
+			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_QR_INVALID_CODE_ANOTHER_EVENT"];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid QR Code" message:@"This QR code is for another event!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
 			[alert release];
@@ -215,6 +223,7 @@
 		{
 			if(![[NetworkManager sharedNetworkManager] isOnline])
 			{
+				[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_QR_OFFLINE"];
 				[[QueuedActions sharedQueuedActions] addActionWithEID:[splitString objectAtIndex:1] userID:[User sharedUser].uid attendance:YES date:[NSDate date]];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"You'll be checked-in the next time you connect to the internet." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
@@ -222,6 +231,7 @@
 			}
 			else
 			{
+				[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_QR_SUCCESS"];
 				[[NetworkManager sharedNetworkManager] checkInWithEID:[splitString objectAtIndex:1] uid:[User sharedUser].uid checkInValue:@"1"];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checked In!" message:@"You have been checked-in!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
@@ -238,18 +248,23 @@
 	switch (buttonIndex)
 	{
 		case 0:
+			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF90"];
 			confidence = 90;
 			break;
 		case 1:
+			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF65"];
 			confidence = 65;
 			break;
 		case 2:
+			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF35"];
 			confidence = 35;
 			break;
 		case 3:
+			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF15"];
 			confidence = 15;
 			break;
 		case 4:
+			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF4"];
 			confidence = 4;
 			break;
 //		case 5:

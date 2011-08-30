@@ -356,6 +356,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		Event *checkedInEvent = [[LocationManager sharedLocationManager] getEvent:eid];
 		if(!showNotification)
 		{
+		[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_BACKGROUND_SUCCESS"];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
 														message:[NSString stringWithFormat:@"You are now checked into: %@", checkedInEvent.eventName]
 													   delegate:nil
@@ -366,6 +367,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		}
 		else
 		{
+			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_BYLOCATION_SUCCESS"];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In"
 															message:@"You are now checked in."
 														   delegate:nil
@@ -380,6 +382,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	{
 		if(showNotification)
 		{
+			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_UNSUCCESSFUL_UNKNOWN"];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
 															message:@"Check-in unsuccessful. Try again later."
 														   delegate:nil
@@ -418,7 +421,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)uploadProfilePicWithImage:(UIImage*)image filename:(NSString*)filename delegate:(UIViewController*)receiver finishedSelector:(SEL)finish
 {
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], @"uploadImage"]];
+	[FlurryAnalytics logEvent:@"PROFILE_UPDATE_PIC"];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], @"uploadImage"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setData:UIImageJPEGRepresentation(image, 0.75) withFileName:@"8.jpg" andContentType:@"image/jpeg" forKey:@"qqfile"];
 	request.delegate = receiver;

@@ -109,14 +109,17 @@
 	NSString *type = @"";
 	if(emailCheck.selected && textCheck.selected)
 	{
+		[FlurryAnalytics logEvent:@"MESSAGING_EMAIL_AND_TEXT_SENT"];
 		type = @"both";
 	}
 	else if(emailCheck.selected)
 	{
+		[FlurryAnalytics logEvent:@"MESSAGING_EMAIL_SENT"];
 		type = @"email";
 	}
 	else if(textCheck.selected)
 	{
+		[FlurryAnalytics logEvent:@"MESSAGING_TEXT_SENT"];
 		type = @"text";
 	}
 	[[NetworkManager sharedNetworkManager] sendMessageWithEventName:eventName.text eid:_event.eventID content:messageTextView.text selectionList:selectedFromList messageType:type delegate:self finishedSelector:@selector(sendFinished:) failedSelector:@selector(sendFailed:)];

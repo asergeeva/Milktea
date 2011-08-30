@@ -183,6 +183,7 @@ BOOL uploading = NO;
 
 - (IBAction)tweet:(UIButton*)sender
 {
+	[FlurryAnalytics logEvent:@"LIVE_TWEET_UPDATE_STATUS"];
 	if(tweetField.text.length == 0 )
 	{
 		return;
@@ -304,6 +305,7 @@ BOOL uploading = NO;
 }
 - (IBAction)cameraPressed:(id)sender
 {
+	[FlurryAnalytics logEvent:@"LIVE_TWEET_CAMERA_INITIATED"];
 	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
 	{
 		UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
