@@ -77,7 +77,9 @@ BOOL uploading = NO;
 }
 - (void)viewDidLoad
 {	
+	warning.alpha = 0.0;
     [self resetUi];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	twitterLoginShown = NO;
     [super viewDidLoad];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
@@ -170,6 +172,8 @@ BOOL uploading = NO;
     shareButton = nil;
 	[tweetTable release];
 	tweetTable = nil;
+	[warning release];
+	warning = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -183,6 +187,13 @@ BOOL uploading = NO;
 
 - (IBAction)tweet:(UIButton*)sender
 {
+	[UIView animateWithDuration:0.05 animations:^(void) {
+		warning.alpha = 1.0;
+	} completion:^(BOOL finished) {
+		[UIView animateWithDuration:3.0 animations:^(void) {
+			warning.alpha = 0.0;
+		}];
+	}];
 	[FlurryAnalytics logEvent:@"LIVE_TWEET_UPDATE_STATUS"];
 	if(tweetField.text.length == 0 )
 	{
@@ -196,11 +207,11 @@ BOOL uploading = NO;
 	NSString *hashtag = thisEvent.eventTwitter;
 	if(tweetField.text.length > 139-hashtag.length)
 	{
-		tweetField.text = [NSString stringWithFormat:@"%@ %@", [tweetField.text substringToIndex:139-hashtag.length], hashtag];
+		tweetField.text = [NSString stringWithFormat:@"%@ #%@", [tweetField.text substringToIndex:139-hashtag.length], hashtag];
 	}
 	else
 	{
-		tweetField.text = [NSString stringWithFormat:@"%@ %@", tweetField.text, hashtag];	
+		tweetField.text = [NSString stringWithFormat:@"%@ #%@", tweetField.text, hashtag];	
 	}
 	[tweetTable reloadData];
 	
@@ -332,7 +343,7 @@ BOOL uploading = NO;
 //	
 //	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 //	[request startSynchronous];
-	[[NetworkManager sharedNetworkManager] updateStreamWithHashtag:thisEvent.eventTwitter delegate:self finishedSelector:@selector(updateStreamSuccess:) failedSelector:@selector(updateStreamFailed:)];
+	[[NetworkManager sharedNetworkManager] updateStreamWithHashtag:thisEvent.eventTwitter delegate:self finishedSelector:@selector(updateStreamFinished:) failedSelector:@selector(updateStreamFailed:)];
 }
 - (void)updateStreamFinished:(ASIHTTPRequest*)request
 {
@@ -350,28 +361,47 @@ BOOL uploading = NO;
 #pragma mark - UITableView methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell *cell = [[[UITableViewCell alloc] init] autorelease];
-	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 0, self.view.frame.size.width-20, 75)];
-	view.tag = 150;
-	cell.backgroundColor = [UIColor clearColor];
-	view.backgroundColor = [UIColor whiteColor];
-	if([UIDevice currentDevice].multitaskingSupported)
-	{
-		[self addEffects:view];
-	}
-	[cell.contentView addSubview:view];
 	int index = indexPath.row;
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
+	UIView *tweetView;
+	UIImageView *imageView;
+	UITextView *theTweet;
+	if(!cell)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tweetCell"] autorelease];
+		cell.backgroundColor = [UIColor clearColor];
+		UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(10, 0, self.view.frame.size.width-20, 75)] autorelease];
+		tweetView = view;
+		view.tag = TWEET_CELL;
+		view.backgroundColor = [UIColor whiteColor];
+		if([UIDevice currentDevice].multitaskingSupported)
+		{
+			[self addEffects:view];
+		}
+		[cell.contentView addSubview:view];
+		imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 55, 55)] autorelease];
+		imageView.tag = TWEET_IMAGE_VIEW;
+		[tweetView addSubview:imageView];
+		
+		theTweet = [[[UITextView alloc] initWithFrame:CGRectMake(65, 10, 225, 65)] autorelease];
+		theTweet.tag = TWEET_CONTENTS;
+		theTweet.userInteractionEnabled = NO;
+		theTweet.font = [UIFont systemFontOfSize:12];
+		[tweetView addSubview:theTweet];
+	}
+	else
+	{
+		tweetView = [cell viewWithTag:TWEET_CELL];
+		imageView = (UIImageView*)[tweetView viewWithTag:TWEET_IMAGE_VIEW];
+		theTweet = (UITextView*)[tweetView viewWithTag:TWEET_CONTENTS];
+	}
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[[tweets objectAtIndex:index] objectForKey:@"profile_image_url"]]];
-	[request startSynchronous];
-	UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 55, 55)] autorelease];
-	imageView.image = [UIImage imageWithData:[request responseData]];
-	[view addSubview:imageView];
-	UITextView *theTweet = [[[UITextView alloc] initWithFrame:CGRectMake(65, 10, 225, 65)] autorelease];
-	theTweet.userInteractionEnabled = NO;
+	[request setCompletionBlock:^(void) {
+		imageView.image = [UIImage imageWithData:[request responseData]];
+	}];
+	[request startAsynchronous];
 	theTweet.text = [[tweets objectAtIndex:index] objectForKey:@"text"];
-	theTweet.font = [UIFont systemFontOfSize:12];
-	[view addSubview:theTweet];
-	[view release];
+//	imageView.image = [UIImage imageWithData:[request responseData]];
 	return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -415,7 +445,7 @@ BOOL uploading = NO;
 		{
 			for(UIView *view in cell.contentView.subviews)
 			{
-				if(view.tag == 150)
+				if(view.tag == TWEET_CELL)
 				{
 					CGRect rect = view.frame;
 					rect.size.width = 460;
@@ -433,7 +463,7 @@ BOOL uploading = NO;
 		{
 			for(UIView *view in cell.contentView.subviews)
 			{
-				if(view.tag == 150)
+				if(view.tag == TWEET_CELL)
 				{
 					CGRect rect = view.frame;
 					rect.size.width = 300;
@@ -460,6 +490,7 @@ BOOL uploading = NO;
 //	[showUploadingMessage release];
 	[oAuth release];
 	[loginPopup release];
+	[warning release];
     [super dealloc];
 }
 @end

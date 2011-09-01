@@ -12,6 +12,7 @@
 @synthesize uid;
 @synthesize fname;
 @synthesize lname;
+@synthesize email;
 @synthesize isAttending;
 - (id)init
 {
@@ -27,6 +28,7 @@
 	self.uid = [aDecoder decodeObjectForKey:@"uid"];
 	self.fname = [aDecoder decodeObjectForKey:@"fname"];
 	self.lname = [aDecoder decodeObjectForKey:@"lname"];
+	self.email = [aDecoder decodeObjectForKey:@"email"];
 	self.isAttending = [aDecoder decodeBoolForKey:@"isAttending"];
     return self;
 }
@@ -35,6 +37,7 @@
 	[coder encodeObject:uid forKey:@"uid"];
 	[coder encodeObject:fname forKey:@"fname"];
 	[coder encodeObject:lname forKey:@"lname"];
+	[coder encodeObject:email forKey:@"email"];
 	[coder encodeBool:isAttending forKey:@"isAttending"];
 }
 - (id)copyWithZone:(NSZone*)zone
@@ -44,6 +47,7 @@
 	[copy setUid:[self valueForKey:@"uid"]];
 	[copy setFname:[self valueForKey:@"fname"]];
 	[copy setLname:[self valueForKey:@"lname"]];
+	[copy setEmail:[self valueForKey:@"email"]];
 	[copy setIsAttending:[self isAttending]];
 	return copy;
 }
@@ -52,6 +56,7 @@
 	[uid release];
 	[fname release];
 	[lname release];
+	[email release];
 	[super dealloc];
 }
 @end

@@ -25,6 +25,7 @@
 	IBOutlet UITableView *tweetTable;
 	UIBarButtonItem *logoutButton;
 	Event *thisEvent;
+	IBOutlet UILabel *warning;
 //	NSMutableDictionary *lastTweet;
 //	UIAlertView *showUploadingMessage;
 //	UIImageView *uploadingMessage;

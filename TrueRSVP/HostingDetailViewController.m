@@ -250,7 +250,7 @@
 }
 - (void)mapRequestFailed:(ASIHTTPRequest *)request
 {
-	
+	NSLog(@"Loading Map failed");	
 }
 - (void)scoreLoadFinished:(ASIHTTPRequest*)request
 {
@@ -303,8 +303,7 @@
 	id<NSFastEnumeration> results = [info objectForKey: ZBarReaderControllerResults];
 	for(ZBarSymbol *symbol in results)
 	{
-		QRData.text = symbol.data;
-		NSArray *splitString = [QRData.text componentsSeparatedByString:@"-"];
+		NSArray *splitString = [((NSString*)symbol.data) componentsSeparatedByString:@"-"];
 		if(splitString.count != 3)
 		{
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid QR Code" message:@"This QR code is invalid!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -323,12 +322,11 @@
 			{
 				[[QueuedActions sharedQueuedActions] addActionWithEID:[splitString objectAtIndex:1] userID:[splitString objectAtIndex:2] attendance:YES date:[NSDate date]];
 				QRData.text = @"Queued checkin for next push";
-				
 			}
 			else
 			{
 				[[NetworkManager sharedNetworkManager] checkInWithEID:[splitString objectAtIndex:1] uid:[splitString objectAtIndex:2] checkInValue:@"1"];	
-				QRData.text = [NSString stringWithFormat: @"Check-in:%@", [[NetworkManager sharedNetworkManager] getUsernameWithUID:[splitString objectAtIndex:2]]];	
+				QRData.text = [NSString stringWithFormat: @"Checked in:%@", [[NetworkManager sharedNetworkManager] getUsernameWithUID:[splitString objectAtIndex:2]]];	
 			}
 		}
 	}

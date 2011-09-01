@@ -10,7 +10,9 @@
 //#import "AttendanceList.h"
 //#import "ASIFormDataRequest.h"
 //#import "SettingsManager.h"
+#import "Constants.h"
 #import "Event.h"
+#import <QuartzCore/QuartzCore.h>
 @implementation ListController
 @synthesize uniqueMonths;
 @synthesize eventSections;
@@ -29,6 +31,11 @@
 - (void)dealloc
 {
 	[uniqueMonths release];
+	for(NSMutableArray *array in eventSections)
+	{
+		[array removeAllObjects];
+//		[array release];
+	}
 	[eventSections release];
 //	[eventArray release];
 	[super dealloc];
@@ -36,34 +43,68 @@
 #pragma mark - UITableViewDataSource
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell *tableCell = [tableView dequeueReusableCellWithIdentifier:@"someCell"];
-	if(tableCell == nil)
+	UITableViewCell *tableCell;
+	
+	NSMutableArray *section = ((NSMutableArray*)[eventSections objectAtIndex:indexPath.section]);
+	Event *event = [section objectAtIndex:indexPath.row];
+	NSDateFormatter *df = [[NSDateFormatter alloc]init];
+	df.dateFormat = @"MMMM d - hh:mm a";
+	tableCell = [tableView dequeueReusableCellWithIdentifier:@"listCell"];
+	UILabel *title;
+	UILabel *date;
+	if(!tableCell)
 	{
-		tableCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"someCell"] autorelease];		
-		tableCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		tableCell.textLabel.font = [UIFont systemFontOfSize:14];
-		tableCell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];
-		tableCell.detailTextLabel.textColor = [UIColor grayColor];
-	}
-	Event *event = [((NSMutableArray*)[eventSections objectAtIndex:indexPath.section]) objectAtIndex:indexPath.row];
-	if(event.eventName.length > 15)
-	{
-		tableCell.textLabel.text = [NSString stringWithFormat:@" %@...", [event.eventName substringToIndex:14]];
+		tableCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"listCell"] autorelease];
+		tableCell.autoresizesSubviews = YES;
+		tableCell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		tableCell.backgroundColor = [UIColor clearColor];
+		UIView *backView = [[[UIView alloc] initWithFrame:CGRectMake(10, 5, 300, 40)] autorelease];
+		backView.backgroundColor = [UIColor whiteColor];
+		backView.layer.cornerRadius = 5;
+		backView.clipsToBounds = YES;
+		backView.layer.shouldRasterize = YES;
+		backView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		[tableCell.contentView addSubview:backView];
+		title = [[[UILabel alloc] initWithFrame:CGRectMake(40, 8, 220, 20)] autorelease];
+		title.tag = LIST_CELL_TITLE;
+		title.backgroundColor = [UIColor clearColor];
+		title.textAlignment = UITextAlignmentLeft;
+		title.textColor = [UIColor darkGrayColor];
+		title.font = [UIFont boldSystemFontOfSize:15];
+		[tableCell.contentView addSubview:title];
+		
+		date = [[[UILabel alloc] initWithFrame:CGRectMake(40, 24, 220, 20)] autorelease];
+		date.tag = LIST_CELL_DATE;
+		date.backgroundColor = [UIColor clearColor];
+		date.textAlignment = UITextAlignmentLeft;
+		date.textColor = [UIColor darkGrayColor];
+		date.font = [UIFont systemFontOfSize:10];
+		[tableCell.contentView addSubview:date];
+		
+		UIImageView *arrow = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]] autorelease];
+		arrow.frame = CGRectMake(backView.frame.size.width-arrow.frame.size.width-10, 15, arrow.frame.size.width, arrow.frame.size.height);
+		arrow.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		arrow.contentMode = UIViewContentModeRight;
+		[tableCell.contentView addSubview:arrow];
 	}
 	else
 	{
-		tableCell.textLabel.text = [NSString stringWithFormat:@" %@", event.eventName];
+		title = (UILabel*)[tableCell.contentView viewWithTag:LIST_CELL_TITLE];
+		date = (UILabel*)[tableCell.contentView viewWithTag:LIST_CELL_DATE];
 	}
-	
-	NSDateFormatter *df = [[NSDateFormatter alloc]init];
-	df.dateFormat = @"MMMM d - hh:mm a";
-	tableCell.detailTextLabel.text = [df stringFromDate:event.eventDate];
+	title.text = event.eventName;
+	date.text = [df stringFromDate:event.eventDate];
 	[df release];
 	return tableCell;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 //	NSArray *eventArray = [AttendanceList sharedAttendanceList].eventsArray;
+//	for(NSMutableArray *array in eventSections)
+//	{
+//		[array removeAllObjects];
+//	}
+//	[eventSections removeAllObjects];
 	for(Event *event in eventArray)
 	{
 		NSDate *date = event.eventDate;
@@ -72,16 +113,29 @@
 		if(![uniqueMonths containsObject:[df stringFromDate:date]])
 		{
 			[uniqueMonths addObject:[df stringFromDate:date]];
-			NSMutableArray *newSection = [[NSMutableArray alloc] init];
-			[eventSections addObject:newSection];
-			[newSection release];
+//			NSMutableArray *newSection = [[NSMutableArray alloc] init];
+//			[eventSections addObject:newSection];
+//			[newSection release];
 		}
 		[df release];
+	}
+	for(NSMutableArray *array in eventSections)
+	{
+		[array removeAllObjects];
+//		[array release];
+	}
+	for(NSString *string in uniqueMonths)
+	{
+		[eventSections addObject:[[NSMutableArray alloc] init]];
 	}
 	return uniqueMonths.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+//	for(NSMutableArray *array in eventSections)
+//	{
+//		[array removeAllObjects];
+//	}
 	NSString *selectedMonth = [uniqueMonths objectAtIndex:section];
 //	NSArray *eventArray = [AttendanceList sharedAttendanceList].eventsArray;
 	int counter = 0;

@@ -3,6 +3,17 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[AttendingController refresh]:AttendingController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "eventArray">
+            </PersistentString>
+            <PersistentString
+               value = "eventArray">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[Attendance updateAttendance:]:Attendance.m">
          <PersistentStrings>
             <PersistentString

@@ -14,6 +14,7 @@
 #import "NetworkManager.h"
 #import "Event.h"
 #import "Constants.h"
+#import "GuestListViewController.h"
 @implementation MessageViewController
 @synthesize selectedFromList;
 @synthesize eventName;
@@ -22,12 +23,14 @@
 //@synthesize emailCheck;
 //@synthesize textCheck;
 @synthesize _event;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil list:(NSMutableArray*)list event:(Event*)thisEvent
+@synthesize _guestVC;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil list:(NSMutableArray*)list event:(Event*)thisEvent guestViewController:(GuestListViewController*)guestVC
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		selectedFromList = [list mutableCopy];
 		_event = thisEvent;
+		_guestVC = guestVC;
         // Custom initialization
     }
     return self;
@@ -164,6 +167,11 @@
 
 
 }
+- (IBAction)selectionPressed:(id)sender
+{
+	_guestVC.showMessages = YES;
+	[self.navigationController popViewControllerAnimated:YES];
+}
 - (void)sendFinished:(ASIHTTPRequest*)request
 {
 	[UIView animateWithDuration:0.3 animations:^(void) {
@@ -175,14 +183,28 @@
 	[[self.view viewWithTag:UPLOADMESSAGE_TAG] removeFromSuperview];
 	self.view.userInteractionEnabled = YES;
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
+	NSLog(@"%@", [request responseString]);
 }
 - (void)sendFailed:(ASIHTTPRequest*)request
 {
 	
 }
+- (void)resignKeyboard
+{
+	if([messageTextView isFirstResponder])
+	{
+		[messageTextView resignFirstResponder];	
+	}
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[self resignKeyboard];
+	[super viewWillDisappear: animated];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	messageTextView.delegate = self;
 	sendButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BlueBackground_1px.png"]];
 	[textCheck setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];

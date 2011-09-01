@@ -417,7 +417,7 @@ BOOL sendSelection = NO;
 	if(selectionList.count > 0)
 	{
 		[self.navigationController setNavigationBarHidden:NO animated:YES];	
-		MessageViewController *messageVC = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:[NSBundle mainBundle] list:selectionList event:event];
+		MessageViewController *messageVC = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:[NSBundle mainBundle] list:selectionList event:event guestViewController:self];
 		[self.navigationController pushViewController:messageVC animated:YES];
 		[messageVC release];
 	}
@@ -549,11 +549,11 @@ BOOL sendSelection = NO;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell *attendeeCell = [[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, 300, 20)] autorelease];
-	attendeeCell.autoresizingMask = UIViewAutoresizingNone;
-	UIView *backView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-	backView.backgroundColor = [UIColor whiteColor];
-	attendeeCell.backgroundView = backView;
+	UITableViewCell *attendeeCell;
+	SendButton *sendMarker;
+	UILabel *fname;
+	UILabel *lname;
+	CheckInButton *checkbox;
 	
 	Attendee *attendee;
 	if([searchBar isFirstResponder] && searchBar.text.length != 0)
@@ -564,45 +564,78 @@ BOOL sendSelection = NO;
 	{
 		attendee = ((Attendee*)[guestNameAttendance objectAtIndex:indexPath.row]);
 	}
-	SendButton *sendMarker = [[[SendButton alloc] initWithFrame:CGRectMake(2, 7, 17, 17)] autorelease];
-	sendMarker.tag = 5555;
-	[sendMarker setImage:[UIImage imageNamed:@"sendMarker.png"] forState:UIControlStateSelected];
-	sendMarker.uid = attendee.uid;
-	[attendeeCell.contentView addSubview:sendMarker];
+	
+	attendeeCell = [guestTable dequeueReusableCellWithIdentifier:@"attendeeCell"];
+	
+	if([attendee.fname isEqual:[NSNull null]] || [attendee.lname isEqual:[NSNull null]])
+	{
+		attendee.fname = attendee.email;
+		attendee.lname = @"";
+	}
+	if([attendee.fname rangeOfString:@"@"].location == NSNotFound)
+	{
+		fname = [[[UILabel alloc] initWithFrame:CGRectMake(20, 5, 60, 20)] autorelease];
+		lname = [[[UILabel alloc] initWithFrame:CGRectMake(120, 5, 60, 20)]autorelease];
+	}
+	else
+	{
+		fname = [[[UILabel alloc] initWithFrame:CGRectMake(20, 5, 220, 20)] autorelease];
+		lname = [[[UILabel alloc] initWithFrame:CGRectMake(120, 5, 0, 20)]autorelease];
+	}
+	fname.text = [NSString stringWithString:attendee.fname];
+	fname.textAlignment = UITextAlignmentLeft;
+	fname.textColor = [UIColor blackColor];
+	fname.font = [UIFont systemFontOfSize:12];
+	
+	lname.text = [NSString stringWithString:attendee.lname];
+	lname.textAlignment = UITextAlignmentCenter;
+	lname.textColor = [UIColor blackColor];
+	lname.font = [UIFont systemFontOfSize:12];
+	
+	if(!attendeeCell)
+	{
+		attendeeCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"attendeeCell"] autorelease];
+		attendeeCell.frame = CGRectMake(0, 0, 300, 20);
+		attendeeCell.autoresizingMask = UIViewAutoresizingNone;
+		UIView *backView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+		backView.backgroundColor = [UIColor whiteColor];
+		attendeeCell.backgroundView = backView;
+		
+		sendMarker = [[[SendButton alloc] initWithFrame:CGRectMake(2, 7, 17, 17)] autorelease];
+		sendMarker.tag = GUEST_SEND_MARKER;
+		[sendMarker setImage:[UIImage imageNamed:@"sendMarker.png"] forState:UIControlStateSelected];
+		
+		checkbox = [[[CheckInButton alloc] initWithFrame:CGRectMake(240, 5, 20, 20)] autorelease];
+		[checkbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
+		[checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
+		[checkbox addTarget:self action:@selector(checkboxPressed:) forControlEvents:UIControlEventTouchUpInside];
+		checkbox.userInteractionEnabled = NO;
+		
+		[attendeeCell.contentView addSubview:sendMarker];
+		[attendeeCell.contentView addSubview:checkbox];
+	}
+	else
+	{
+		sendMarker = (SendButton*)[attendeeCell.contentView viewWithTag:GUEST_SEND_MARKER];
+		checkbox = (CheckInButton*)[attendeeCell.contentView viewWithTag:GUEST_CHECKBOX];
+	}
 	
 	if([selectionList containsObject:attendee.uid])
 	{
 		sendMarker.selected = YES;	
 	}
 	
-	UILabel *fname = [[[UILabel alloc] initWithFrame:CGRectMake(20, 5, 60, 20)] autorelease];
-	fname.text = [NSString stringWithString:attendee.fname];
-	fname.textAlignment = UITextAlignmentLeft;
-	fname.textColor = [UIColor blackColor];
-	fname.font = [UIFont systemFontOfSize:12];
 	[attendeeCell.contentView addSubview:fname];
-	
-	UILabel *lname = [[[UILabel alloc] initWithFrame:CGRectMake(120, 5, 60, 20)]autorelease];
-	lname.text = [NSString stringWithString:attendee.lname];
-	lname.textAlignment = UITextAlignmentCenter;
-	lname.textColor = [UIColor blackColor];
-	lname.font = [UIFont systemFontOfSize:12];
 	[attendeeCell.contentView addSubview:lname];
 	
-	CheckInButton *checkbox = [[[CheckInButton alloc] initWithFrame:CGRectMake(240, 5, 16, 20)] autorelease];
-	checkbox.tag = indexPath.row;
-	[checkbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
-	[checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
-	[checkbox addTarget:self action:@selector(checkboxPressed:) forControlEvents:UIControlEventTouchUpInside];
+	sendMarker.uid = attendee.uid;
 	checkbox.uid = attendee.uid;
 	checkbox.eid = event.eventID;
-	checkbox.userInteractionEnabled = NO;
+	checkbox.tag = indexPath.row;
 	if(attendee.isAttending)
 	{
 		checkbox.selected = YES;
 	}
-	
-	[attendeeCell.contentView addSubview:checkbox];
 	return attendeeCell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

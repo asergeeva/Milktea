@@ -13,6 +13,14 @@
 #define TOOLBAR2_TAG 5
 #define BLACKVIEW_TAG 6
 #define UPLOADMESSAGE_TAG 7
+#define SIGNIN_TAG 8
+#define TWEET_CELL 9
+#define TWEET_IMAGE_VIEW 10
+#define TWEET_CONTENTS 11
+#define LIST_CELL_TITLE 12
+#define LIST_CELL_DATE 13
+#define GUEST_SEND_MARKER 14
+#define GUEST_CHECKBOX 15
 
 #define REFRESH_HEADER_HEIGHT 20.0f
 
@@ -32,6 +40,7 @@ extern NSString *const checkIn;
 extern NSString *const checkInWithDate;
 extern NSString *const computeTrueRSVP;
 extern NSString *const sendMessage;
+extern NSString *const isAttending;
 extern NSString *const getUsername;
 extern NSString *const getCheckInDate;
 extern NSString *const twitPicKey;

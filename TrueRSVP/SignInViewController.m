@@ -16,7 +16,7 @@
 #import "MiscHelper.h"
 #import "ProgressView.h"
 #import "LocationManager.h"
-#import "FlurryAnalytics.h"
+#import "Constants.h"
 //#import "TrueRSVPAppDelegate.h"
 @implementation SignInViewController
 @synthesize facebook;
@@ -73,7 +73,18 @@
 	}
 }	
 #pragma mark - View lifecycle
--(BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)resignKeyboard
+{
+	if([txtUsername isFirstResponder])
+	{
+		[txtUsername resignFirstResponder];
+	}
+	else if([txtPassword isFirstResponder])
+	{
+		[txtPassword resignFirstResponder];
+	}
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 	if(textField == txtUsername)
 	{
@@ -181,6 +192,7 @@
 //}
 - (void)showProgress
 {
+	[self finishedSignIn];
 	[NetworkManager sharedNetworkManager].delegate = self;
 	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:nil completion:nil];
 //	timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(progressCheck) userInfo:nil repeats:YES];	
@@ -201,6 +213,7 @@
 }
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
+	[self finishedSignIn];
 	NSLog(@"Not Logged In");
 }
 - (void)login
@@ -211,6 +224,7 @@
 	[txtPassword resignFirstResponder];
 	if([[txtPassword text] isEqualToString:@""] || [[txtUsername text] isEqualToString:@""])
 	{
+		[self finishedSignIn];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Blank" 
 														message:@"Username/password may not be left blank."
 													   delegate:nil
@@ -225,12 +239,13 @@
 	[request setPostValue:[txtUsername text] forKey:@"email"];
 	request.useSessionPersistence = YES;
 	[request setPostValue:txtPassword.text forKey:@"pass"];	
+	[request setValidatesSecureCertificate:NO];
 	[request startSynchronous];
-	
 	NSString *status = [request responseString];
-	//NSLog(@"%@", status);
+	NSLog(@"%@", status);
 	if ([status isEqualToString:@"status_loginFailed"])
 	{
+		[self finishedSignIn];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Incorrect" 
 														message:@"Username/password is incorrect."
 													   delegate:nil
@@ -238,6 +253,7 @@
 											  otherButtonTitles:nil];
 		[alert show];
 		[alert release];
+		
 	}
 	else if ([status isEqualToString:@"status_loginSuccess"])
 	{
@@ -254,6 +270,7 @@
 	}
 	else
 	{
+		[self finishedSignIn];
 		NSNumber *checkOffline = [[SettingsManager sharedSettingsManager].settings objectForKey:@"Preloaded"];
 		if([checkOffline isEqual:[NSNumber numberWithBool:YES]])
 		{
@@ -273,36 +290,78 @@
 }
 - (IBAction)loginPressed:(UIButton*)sender
 {
-	[FlurryAnalytics logEvent:@"SIGNIN_REGULAR_LOGIN"];
-	NSURL *url = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"]];
-	if([self requiresAuth:url])
+	self.view.userInteractionEnabled = NO;
+	self.navigationController.navigationBar.userInteractionEnabled = NO;
+	[UIView animateWithDuration:0.3 animations:^(void) 
 	{
-		ASIHTTPRequest *loginRequest = [ASIHTTPRequest requestWithURL:url];
-		loginRequest.delegate = self;
-		loginRequest.shouldPresentAuthenticationDialog = YES;
-		[loginRequest startAsynchronous];
-	}
-	else
+		for(UIView *fadeView in self.view.subviews)
+		{
+			if(fadeView.tag != SIGNIN_TAG)
+			{
+				fadeView.alpha = 0.25;
+			}
+		}
+	} completion:^(BOOL finished) 
 	{
-		[self login];
-	}
+		[FlurryAnalytics logEvent:@"SIGNIN_REGULAR_LOGIN"];
+		NSURL *url = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"]];
+		if([self requiresAuth:url])
+		{
+			ASIHTTPRequest *loginRequest = [ASIHTTPRequest requestWithURL:url];
+			loginRequest.delegate = self;
+			loginRequest.shouldPresentAuthenticationDialog = YES;
+			[loginRequest startAsynchronous];
+		}
+		else
+		{
+			[self login];
+		}		
+	}];
+
 }
 - (IBAction)facebookLogin:(id)sender
 {
-	[FlurryAnalytics logEvent:@"SIGNIN_FB_LOGIN"];
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (![facebook isSessionValid]) {
-		NSArray *permissions = [NSArray arrayWithObject:@"email"];
-		[facebook authorize:permissions];
-	}
-	else if ([defaults objectForKey:@"FBAccessTokenKey"] 
-		&& [defaults objectForKey:@"FBExpirationDateKey"]) {
-		facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-		facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
-		[facebook requestWithGraphPath:@"me" andDelegate:self];
-	}
+	self.view.userInteractionEnabled = NO;
+	self.navigationController.navigationBar.userInteractionEnabled = NO;
+	[UIView animateWithDuration:0.3 animations:^(void) 
+	 {
+		 for(UIView *fadeView in self.view.subviews)
+		 {
+			 if(fadeView.tag != SIGNIN_TAG)
+			 {
+				 fadeView.alpha = 0.25;
+			 }
+		 }
+	 } completion:^(BOOL finished) 
+	 {
+		[FlurryAnalytics logEvent:@"SIGNIN_FB_LOGIN"];
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		if (![facebook isSessionValid]) {
+			NSArray *permissions = [NSArray arrayWithObject:@"email"];
+			[facebook authorize:permissions];
+		}
+		else if ([defaults objectForKey:@"FBAccessTokenKey"] 
+			&& [defaults objectForKey:@"FBExpirationDateKey"]) {
+			facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+			facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+			[facebook requestWithGraphPath:@"me" andDelegate:self];
+		}
+	 }];
 }
-
+- (void)finishedSignIn
+{
+	self.navigationController.navigationBar.userInteractionEnabled = YES;
+	self.view.userInteractionEnabled = YES;
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		for(UIView *fadeView in self.view.subviews)
+		{
+			if(fadeView.tag != SIGNIN_TAG)
+			{
+				fadeView.alpha = 1.0;
+			}
+		}
+	}];
+}
 - (void)showDebugView:(id)sender
 {
 	DebugViewController *debugVC = [[DebugViewController alloc] initWithNibName:@"DebugViewController" bundle:[NSBundle mainBundle]];
@@ -314,9 +373,15 @@
 	[ASIHTTPRequest clearSession];
 	[super viewWillAppear:animated];
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[self resignKeyboard];
+	[super viewWillDisappear:animated];
+}
 - (void)viewDidLoad
 {
 //	[self showDebugView:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	txtUsername.text = @"movingincircles@gmail.com";
 	txtPassword.text = @"supfoo";
 //	TrueRSVPAppDelegate *app = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]);

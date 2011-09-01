@@ -9,6 +9,7 @@
 #import "ListViewController.h"
 #import "NetworkManager.h"
 #import "Constants.h"
+#import "AttendanceList.h"
 @implementation ListViewController
 @synthesize eventTableView;
 @synthesize listController;
@@ -33,6 +34,8 @@
 {
     [super viewDidLoad];
 	eventTableView.delaysContentTouches = NO;
+	eventTableView.autoresizesSubviews = YES;
+	eventTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[self addPullRefreshHeader:eventTableView];
 }
 #pragma mark - Unloading
@@ -108,14 +111,23 @@
 	[df release];
 	return sectionView;
 }
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+	       return [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 5)] autorelease];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+	return 5;
+}
 - (void)addPullRefreshHeader:(UITableView*)tableView
 {
 	refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT)];
 	refreshHeaderView.backgroundColor = [UIColor clearColor];
 	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0-REFRESH_HEADER_HEIGHT + 23, 320, 17)] autorelease];
-	refreshLabel.text = @"Refresh";
+	refreshLabel.text = @"Refreshing...";
 	refreshLabel.font = [UIFont systemFontOfSize:12];
 	refreshLabel.textAlignment = UITextAlignmentLeft;
+	refreshLabel.backgroundColor = [UIColor clearColor];
 	[refreshHeaderView addSubview:refreshLabel];
 	[tableView addSubview:refreshHeaderView];
 }

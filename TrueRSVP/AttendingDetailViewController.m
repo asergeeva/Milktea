@@ -276,7 +276,6 @@
 	}
 
 	[[NetworkManager sharedNetworkManager] setAttendanceWithEID:eventAttending.eventID confidence:[NSString stringWithFormat:@"%d", confidence]];
-//	NSLog(@"%@", [request responseString]);
 }
 - (void)viewWillAppear:(BOOL)animated
 {

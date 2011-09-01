@@ -61,10 +61,6 @@
 		5125570113E8020A00469DAE /* uploading.png in Resources */ = {isa = PBXBuildFile; fileRef = 512556FF13E8020A00469DAE /* uploading.png */; };
 		5125570213E8020A00469DAE /* uploading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5125570013E8020A00469DAE /* uploading@2x.png */; };
 		512A1ACD13FF112F00A10ECF /* MiscHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 512A1ACC13FF112E00A10ECF /* MiscHelper.m */; };
-		514D990613E0D9B50036AC40 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990413E0D9B50036AC40 /* checkbox.png */; };
-		514D990713E0D9B50036AC40 /* checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990513E0D9B50036AC40 /* checkbox@2x.png */; };
-		514D990A13E0DABD0036AC40 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990813E0DABD0036AC40 /* checkbox_checked.png */; };
-		514D990B13E0DABD0036AC40 /* checkbox_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D990913E0DABD0036AC40 /* checkbox_checked@2x.png */; };
 		514D991C13E0E3D90036AC40 /* firstNameButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D991813E0E3D90036AC40 /* firstNameButton.png */; };
 		514D991E13E0E3D90036AC40 /* lastNameButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D991A13E0E3D90036AC40 /* lastNameButton.png */; };
 		514D991F13E0E3D90036AC40 /* lastNameButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D991B13E0E3D90036AC40 /* lastNameButton@2x.png */; };
@@ -73,6 +69,10 @@
 		514D992513E0FB9E0036AC40 /* firstNameButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D992413E0FB9E0036AC40 /* firstNameButton@2x.png */; };
 		514F875F13DCE11000EBAF83 /* BlueBackground_1px.png in Resources */ = {isa = PBXBuildFile; fileRef = 514F875D13DCE11000EBAF83 /* BlueBackground_1px.png */; };
 		514F876013DCE11000EBAF83 /* BlueBackground_1px@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514F875E13DCE11000EBAF83 /* BlueBackground_1px@2x.png */; };
+		5150A69E140DEC2600AA4EC1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5150A69D140DEC2600AA4EC1 /* arrow.png */; };
+		5150A6A1140DEC3800AA4EC1 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5150A6A0140DEC3800AA4EC1 /* arrow@2x.png */; };
+		5150A6A5140E0FDB00AA4EC1 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5150A6A3140E0FDB00AA4EC1 /* AboutViewController.m */; };
+		5150A6A6140E0FDB00AA4EC1 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5150A6A4140E0FDB00AA4EC1 /* AboutViewController.xib */; };
 		5151F61B13DABCB100D6D9FF /* OrangeBackground_1px.png in Resources */ = {isa = PBXBuildFile; fileRef = 5151F61913DABCB100D6D9FF /* OrangeBackground_1px.png */; };
 		5151F61C13DABCB100D6D9FF /* OrangeBackground_1px@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5151F61A13DABCB100D6D9FF /* OrangeBackground_1px@2x.png */; };
 		515A0E5213E12BC800C136D0 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515A0E4C13E12BC800C136D0 /* libzbar.a */; };
@@ -209,6 +209,11 @@
 		51F9BB4413D2623A0017731B /* TrueRSVPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51F9BB4213D2623A0017731B /* TrueRSVPViewController.xib */; };
 		51F9BB7713D2AAB70017731B /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F9BB7513D2AAB70017731B /* ProfileViewController.m */; };
 		51F9BB7813D2AAB70017731B /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51F9BB7613D2AAB70017731B /* ProfileViewController.xib */; };
+		51FBAFA4140D8E6E00F27838 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FBAFA0140D8E6E00F27838 /* checkbox.png */; };
+		51FBAFA5140D8E6E00F27838 /* checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FBAFA1140D8E6E00F27838 /* checkbox@2x.png */; };
+		51FBAFA8140D941200F27838 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FBAFA6140D941200F27838 /* checkbox_checked.png */; };
+		51FBAFA9140D941200F27838 /* checkbox_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FBAFA7140D941200F27838 /* checkbox_checked@2x.png */; };
+		51FBAFAC140D9F6700F27838 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51FBAFAB140D9F6700F27838 /* UIPlaceHolderTextView.m */; };
 		51FD960D13E25D640044BB1D /* doneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FD960B13E25D640044BB1D /* doneButton.png */; };
 		51FD960E13E25D640044BB1D /* doneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FD960C13E25D640044BB1D /* doneButton@2x.png */; };
 /* End PBXBuildFile section */
@@ -294,10 +299,6 @@
 		5125570013E8020A00469DAE /* uploading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploading@2x.png"; sourceTree = "<group>"; };
 		512A1ACB13FF112E00A10ECF /* MiscHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiscHelper.h; sourceTree = "<group>"; };
 		512A1ACC13FF112E00A10ECF /* MiscHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscHelper.m; sourceTree = "<group>"; };
-		514D990413E0D9B50036AC40 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
-		514D990513E0D9B50036AC40 /* checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox@2x.png"; sourceTree = "<group>"; };
-		514D990813E0DABD0036AC40 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked.png; sourceTree = "<group>"; };
-		514D990913E0DABD0036AC40 /* checkbox_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_checked@2x.png"; sourceTree = "<group>"; };
 		514D991813E0E3D90036AC40 /* firstNameButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firstNameButton.png; sourceTree = "<group>"; };
 		514D991A13E0E3D90036AC40 /* lastNameButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lastNameButton.png; sourceTree = "<group>"; };
 		514D991B13E0E3D90036AC40 /* lastNameButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lastNameButton@2x.png"; sourceTree = "<group>"; };
@@ -306,6 +307,11 @@
 		514D992413E0FB9E0036AC40 /* firstNameButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "firstNameButton@2x.png"; sourceTree = "<group>"; };
 		514F875D13DCE11000EBAF83 /* BlueBackground_1px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueBackground_1px.png; sourceTree = "<group>"; };
 		514F875E13DCE11000EBAF83 /* BlueBackground_1px@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlueBackground_1px@2x.png"; sourceTree = "<group>"; };
+		5150A69D140DEC2600AA4EC1 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		5150A6A0140DEC3800AA4EC1 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
+		5150A6A2140E0FDB00AA4EC1 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		5150A6A3140E0FDB00AA4EC1 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		5150A6A4140E0FDB00AA4EC1 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		5151F61913DABCB100D6D9FF /* OrangeBackground_1px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OrangeBackground_1px.png; sourceTree = "<group>"; };
 		5151F61A13DABCB100D6D9FF /* OrangeBackground_1px@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrangeBackground_1px@2x.png"; sourceTree = "<group>"; };
 		515A0E3913E12BC800C136D0 /* Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decoder.h; sourceTree = "<group>"; };
@@ -532,6 +538,12 @@
 		51F9BB7413D2AAB70017731B /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		51F9BB7513D2AAB70017731B /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		51F9BB7613D2AAB70017731B /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		51FBAFA0140D8E6E00F27838 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
+		51FBAFA1140D8E6E00F27838 /* checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox@2x.png"; sourceTree = "<group>"; };
+		51FBAFA6140D941200F27838 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked.png; sourceTree = "<group>"; };
+		51FBAFA7140D941200F27838 /* checkbox_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_checked@2x.png"; sourceTree = "<group>"; };
+		51FBAFAA140D9F6700F27838 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
+		51FBAFAB140D9F6700F27838 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		51FD960B13E25D640044BB1D /* doneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneButton.png; sourceTree = "<group>"; };
 		51FD960C13E25D640044BB1D /* doneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doneButton@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -801,6 +813,9 @@
 		518E2D7C13D24FA60080E068 /* TrueRSVP_iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				5150A6A2140E0FDB00AA4EC1 /* AboutViewController.h */,
+				5150A6A3140E0FDB00AA4EC1 /* AboutViewController.m */,
+				5150A6A4140E0FDB00AA4EC1 /* AboutViewController.xib */,
 				51D84D4E13D90C42008A705B /* AttendingListViewController.h */,
 				51D84D4F13D90C43008A705B /* AttendingListViewController.m */,
 				51D84D5013D90C43008A705B /* AttendingListViewController.xib */,
@@ -878,17 +893,19 @@
 				517D3F7813FE3C5200DA256B /* icon.png */,
 				519A0DF613E9F4BF0063695C /* 1px_whiteGradient.png */,
 				519A0DF713E9F4BF0063695C /* 1px_whiteGradient@2x.png */,
+				5150A69D140DEC2600AA4EC1 /* arrow.png */,
+				5150A6A0140DEC3800AA4EC1 /* arrow@2x.png */,
 				514D992013E0E3E00036AC40 /* attendedButton.png */,
 				514D992113E0E3E00036AC40 /* attendedButton@2x.png */,
 				5199178613E2B25500C4A946 /* cameraicon.png */,
+				51FBAFA0140D8E6E00F27838 /* checkbox.png */,
+				51FBAFA1140D8E6E00F27838 /* checkbox@2x.png */,
+				51FBAFA6140D941200F27838 /* checkbox_checked.png */,
+				51FBAFA7140D941200F27838 /* checkbox_checked@2x.png */,
 				519A0DE913E9F44F0063695C /* backButton.png */,
 				519A0DEA13E9F44F0063695C /* backButton@2x.png */,
 				5184E1E813FFD0E100273641 /* Back.png */,
 				5184E1E913FFD0E100273641 /* Back@2x.png */,
-				514D990413E0D9B50036AC40 /* checkbox.png */,
-				514D990513E0D9B50036AC40 /* checkbox@2x.png */,
-				514D990813E0DABD0036AC40 /* checkbox_checked.png */,
-				514D990913E0DABD0036AC40 /* checkbox_checked@2x.png */,
 				51B1859613E0A4C900FBDCC9 /* debugBackground.png */,
 				51B1859713E0A4C900FBDCC9 /* debugBackground@2x.png */,
 				5184E1E413FFD08900273641 /* Default.png */,
@@ -1105,6 +1122,8 @@
 				517DED5013E6AAE400630487 /* LiveController.m */,
 				519A0DFE13EAAFC30063695C /* SFHFKeychainUtils.m */,
 				519A0DFF13EAAFC30063695C /* SFHFKeychainUtils.h */,
+				51FBAFAA140D9F6700F27838 /* UIPlaceHolderTextView.h */,
+				51FBAFAB140D9F6700F27838 /* UIPlaceHolderTextView.m */,
 			);
 			name = TrueRSVP_Shared;
 			path = TrueRSVP;
@@ -1244,10 +1263,6 @@
 				51B1859413E0A3F500FBDCC9 /* DebugViewController.xib in Resources */,
 				51B1859813E0A4C900FBDCC9 /* debugBackground.png in Resources */,
 				51B1859913E0A4C900FBDCC9 /* debugBackground@2x.png in Resources */,
-				514D990613E0D9B50036AC40 /* checkbox.png in Resources */,
-				514D990713E0D9B50036AC40 /* checkbox@2x.png in Resources */,
-				514D990A13E0DABD0036AC40 /* checkbox_checked.png in Resources */,
-				514D990B13E0DABD0036AC40 /* checkbox_checked@2x.png in Resources */,
 				514D991C13E0E3D90036AC40 /* firstNameButton.png in Resources */,
 				514D991E13E0E3D90036AC40 /* lastNameButton.png in Resources */,
 				514D991F13E0E3D90036AC40 /* lastNameButton@2x.png in Resources */,
@@ -1308,6 +1323,13 @@
 				5184E1EB13FFD0E100273641 /* Back@2x.png in Resources */,
 				51C4B4E1140353130068FA02 /* WelcomeViewController.xib in Resources */,
 				51956F61140987FF004F3DA2 /* FBDialog.bundle in Resources */,
+				51FBAFA4140D8E6E00F27838 /* checkbox.png in Resources */,
+				51FBAFA5140D8E6E00F27838 /* checkbox@2x.png in Resources */,
+				51FBAFA8140D941200F27838 /* checkbox_checked.png in Resources */,
+				51FBAFA9140D941200F27838 /* checkbox_checked@2x.png in Resources */,
+				5150A69E140DEC2600AA4EC1 /* arrow.png in Resources */,
+				5150A6A1140DEC3800AA4EC1 /* arrow@2x.png in Resources */,
+				5150A6A6140E0FDB00AA4EC1 /* AboutViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1398,6 +1420,8 @@
 				51956F5E140987FF004F3DA2 /* SBJsonBase.m in Sources */,
 				51956F5F140987FF004F3DA2 /* SBJsonParser.m in Sources */,
 				51956F60140987FF004F3DA2 /* SBJsonWriter.m in Sources */,
+				51FBAFAC140D9F6700F27838 /* UIPlaceHolderTextView.m in Sources */,
+				5150A6A5140E0FDB00AA4EC1 /* AboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

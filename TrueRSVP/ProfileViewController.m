@@ -47,11 +47,16 @@
 }
 
 #pragma mark - View lifecycle
-- (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
+- (void)resignKeyboard
+{
 	for (UIView* view in self.view.subviews) {
-		if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UITextView class]])
+		if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UIPlaceHolderTextView class]])
 			[view resignFirstResponder];	
 	}	
+}
+- (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event 
+{
+	[self resignKeyboard];
 }
 - (IBAction)popAll:(id)sender
 {
@@ -70,6 +75,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
     // Do any additional setup after loading the view from its nib.
 	[self refreshProfile];
 	if([UIDevice currentDevice].multitaskingSupported)
@@ -89,6 +95,8 @@
 	aboutTextView.layer.cornerRadius = 5;
 	aboutTextView.layer.borderWidth = 2.0;
 	aboutTextView.layer.borderColor = [[UIColor grayColor] CGColor];
+	[aboutTextView setPlaceholder:@"About me..."];
+	profilePic.contentMode = UIViewContentModeScaleAspectFill;
 }
 
 - (void)viewDidUnload
@@ -111,6 +119,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[self resignKeyboard];
 	[super viewWillDisappear:animated];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -151,11 +160,18 @@
 }
 - (IBAction)updateProfile:(id)sender
 {	
-	
+	[self resignKeyboard];
 	[[User sharedUser].email setString:emailTextField.text];	
 	[[User sharedUser].cell setString:cellTextField.text];	
 	[[User sharedUser].zip setString:zipTextField.text];	
-	[[User sharedUser].twitter setString:twitterTextField.text];	
+	if([twitterTextField.text hasPrefix:@"@"])
+	{
+		[[User sharedUser].twitter setString:[twitterTextField.text substringFromIndex:1]];
+	}
+	else
+	{
+		[[User sharedUser].twitter setString:twitterTextField.text];	
+	}
 	[[User sharedUser].about setString:aboutTextView.text];	
 	[[NetworkManager sharedNetworkManager] updateProfileWithEmail:emailTextField.text about:aboutTextView.text cell:cellTextField.text zip:zipTextField.text twitter:twitterTextField.text delegate:self];
 }
@@ -166,7 +182,14 @@
 	emailTextField.text = user.email;
 	cellTextField.text = user.cell;
 	zipTextField.text = user.zip;
-	twitterTextField.text = user.twitter;
+	if([user.twitter hasPrefix:@"@"])
+	{
+		twitterTextField.text = user.twitter;
+	}
+	else
+	{
+		twitterTextField.text = [NSString stringWithFormat:@"@%@", user.twitter];
+	}
 	aboutTextView.text = user.about;
 	if(!welcomeShown && self.view.frame.size.width < 400)
 	{

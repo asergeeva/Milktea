@@ -23,6 +23,7 @@ NSString *const checkIn = @"checkIn";
 NSString *const checkInWithDate = @"checkIn";
 NSString *const computeTrueRSVP = @"computeTrueRSVP";
 NSString *const sendMessage = @"sendMessage";
+NSString *const isAttending = @"isAttending";
 NSString *const getUsername = @"getUsername";
 NSString *const getCheckInDate = @"getCheckInDate";
 NSString *const twitPicKey = @"e668abdf76a647a1ec1ccfcbbd857878";

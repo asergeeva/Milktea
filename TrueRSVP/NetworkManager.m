@@ -90,7 +90,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (NSString*)getUsernameWithUID:(NSString*)uid
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",[ud objectForKey:@"APILocation"], getUsername]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], getUsername]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setPostValue:uid forKey:@"uid"];
 	[request startSynchronous];
@@ -165,10 +165,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 				newAttendee.fname = [dictionary objectForKey:@"fname"];
 			else
 				newAttendee.fname = @" ";
+			
 			if([dictionary objectForKey:@"lname"] != [NSNull null])
 				newAttendee.lname = [dictionary objectForKey:@"lname"];
 			else
 				newAttendee.lname = @" ";
+			
+			if([dictionary objectForKey:@"email"] != [NSNull null])
+				newAttendee.email = [dictionary objectForKey:@"email"];
+			else
+				newAttendee.email = @" ";
 			newAttendee.isAttending = [[dictionary objectForKey:@"is_attending"] boolValue];
 			[guestNameAttendance addObject:newAttendee];
 			[newAttendee release];
@@ -249,8 +255,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request addPostValue:about forKey:@"about"];
 	[request addPostValue:cell forKey:@"cell"];
 	[request addPostValue:zip forKey:@"zip"];
-	[request addPostValue:twitter forKey:@"twitter"];
+	if([twitter hasPrefix:@"@"])
+	{
+		[request addPostValue:[twitter substringFromIndex:1] forKey:@"twitter"];			
+		[profile setObject:[twitter substringFromIndex:1] forKey:@"twitter"];
+	}
+	else
+	{
+		[request addPostValue:twitter forKey:@"twitter"];
+		[profile setObject:twitter forKey:@"twitter"];
+	}
+
 	request.delegate = viewController;
+	[profile setObject:email forKey:@"email"];
+	[profile setObject:about forKey:@"about"];
+	[profile setObject:cell forKey:@"cell"];
+	[profile setObject:zip forKey:@"zip"];
+
 	[request startAsynchronous];
 }
 - (int)getAttendanceForEvent:(NSString*)eid
@@ -482,7 +503,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (void)isCheckedInWithEID:(NSString*)eid didFinish:(SEL)finished delegate:(id)receiver
 {		
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getGuestList]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], isAttending]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	request.delegate = receiver;
 	[request addPostValue:eid forKey:@"eid"];

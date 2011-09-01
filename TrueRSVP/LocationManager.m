@@ -97,7 +97,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(LocationManager);
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-//	NSLog(@"New location");
 	NSSet *locations = _manager.monitoredRegions;
 	for(CLRegion *region in locations)
 	{

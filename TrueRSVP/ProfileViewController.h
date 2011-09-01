@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "ASIFormDataRequest.h"
+#import "UIPlaceHolderTextView.h"
 //#import "DebugView.h"
 @interface ProfileViewController : UIViewController <UserDelegate, ASIHTTPRequestDelegate> {
 //    IBOutlet UINavigationBar *navBar;
@@ -22,7 +23,7 @@
 	IBOutlet UITextField *cellTextField;
 	IBOutlet UITextField *zipTextField;
 	IBOutlet UITextField *twitterTextField;
-	IBOutlet UITextView *aboutTextView;
+	IBOutlet UIPlaceHolderTextView *aboutTextView;
 //	IBOutlet UIImageView *aboutImageView;
 	IBOutlet UIView *whiteBackground;
 	IBOutlet UIButton *updateButton;
@@ -32,6 +33,7 @@
 	IBOutlet UIButton *signOut;
 //	IBOutlet DebugView *view;
 }
+- (void)resignKeyboard;
 - (IBAction)popAll:(id)sender;
 - (IBAction)updateProfile:(id)sender;
 - (void)dismissWelcome:(id)sender;

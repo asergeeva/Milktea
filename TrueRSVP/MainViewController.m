@@ -10,6 +10,7 @@
 #import "HostingDetailViewController.h"
 #import "ASIFormDataRequest.h"
 #import "WelcomeViewController.h"
+#import "AboutViewController.h"
 @implementation MainViewController
 @synthesize profileVC;
 @synthesize attendingVC;
@@ -41,6 +42,7 @@ BOOL offlineWarning = NO;
 	
 		pageNumber = 0;
 		profileButton.selected = YES;
+
         // Custom initialization
     }
     return self;
@@ -111,6 +113,20 @@ BOOL offlineWarning = NO;
 		hostingVC.view.frame = CGRectMake(640, 0, 320, 480);
 	}	
 }
+- (void)presentAbout
+{
+	AboutViewController *aboutVC = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:[NSBundle mainBundle]];
+	[self presentModalViewController:aboutVC animated:YES];
+	[aboutVC release]; 
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+}
 - (void)viewDidAppear:(BOOL)animated
 {
 	if(![[NetworkManager sharedNetworkManager] isOnline] && !offlineWarning)
@@ -163,6 +179,9 @@ BOOL offlineWarning = NO;
 	self.navigationItem.titleView = segmentButtons;
 //	[self.navigationController.navigationBar addSubview:segmentButtons];
 	self.navigationItem.hidesBackButton = YES;
+	UIBarButtonItem *about = [[[UIBarButtonItem alloc] initWithTitle:@"About" style:UIBarButtonItemStylePlain target:self action:@selector(presentAbout)] autorelease];
+	self.navigationItem.leftBarButtonItem = about;
+	
 	[profileVC.profilePic addTarget:self action:@selector(launchCamera) forControlEvents:UIControlEventTouchUpInside];
 }
 #pragma mark - Navigation Controller Delegate methods
@@ -399,7 +418,8 @@ BOOL offlineWarning = NO;
 	[[self.view viewWithTag:UPLOADMESSAGE_TAG] removeFromSuperview];
 	self.view.userInteractionEnabled = YES;
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
-	[profileVC updatedImages];
+	[profileVC updateProfile:nil];
+	//[profileVC updatedImages];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -453,7 +473,6 @@ BOOL offlineWarning = NO;
 	[uploadingMessage addSubview:uploadingMessageLabel];
 	
 	[self.view addSubview:uploadingMessage];
-	[self.view addSubview:uploadingMessage];
 	self.view.userInteractionEnabled = NO;
 	self.navigationController.navigationBar.userInteractionEnabled = NO;
 	[uploadingMessage release];
@@ -461,7 +480,6 @@ BOOL offlineWarning = NO;
 }
 - (void)launchCamera
 {
-	NSLog(@"Test1");
 	[profileVC dismissWelcome:nil];
 	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
 	{
@@ -482,33 +500,5 @@ BOOL offlineWarning = NO;
 		[alert show];
 		[alert release];	
 	}
-	NSLog(@"Test2");
 }
-//{
-////	self.view.userInteractionEnabled = NO;
-////	self.navigationController.view.userInteractionEnabled = NO;
-////	if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-////	{
-////		UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-////		imagePicker.delegate = self;
-////		imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-////		[self presentModalViewController:imagePicker animated:YES];
-////		[imagePicker release];
-////	}
-////	self.view.userInteractionEnabled = YES;
-////	self.navigationController.view.userInteractionEnabled = YES;
-//}
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-//{
-//	//Send data
-//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[SettingsManager sharedSettingsManager].settings objectForKey:@"rootAddress"], @"event/image/upload"]];
-//	
-//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//	UIImage *small = [UIImage imageWithCGImage:((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]).CGImage scale:0.5 orientation:UIImageOrientationUp];
-//	[request setPostBody:[NSMutableData dataWithData:UIImageJPEGRepresentation(small, 0.2)]];
-//	[request startSynchronous];
-//	NSLog(@"%@", [request responseString]);
-//	[self dismissModalViewControllerAnimated:YES];
-////	UIImageJPEGRepresentation(((UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"]), 0.8)	
-//}
 @end

@@ -37,22 +37,32 @@
 #pragma mark - Other
 - (void)checkIfAttending:(ASIHTTPRequest*)request
 {
-	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
-	for (NSDictionary *dictionary in guestNames)
+	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	if(![[dictionary objectForKey:@"is_attending"] isEqual:@"1"])
 	{
-		if([[dictionary objectForKey:@"id"] isEqual:[User sharedUser].uid])
+		for(Event *event in eventArray)
 		{
-			if(![[dictionary objectForKey:@"is_attending"] isEqual:@"1"])
-			{
-				for(Event *event in eventArray)
-				{
-					if([event.eventID isEqual:[dictionary objectForKey:@"event_id"]])
-						[[LocationManager sharedLocationManager] addEvent:event];
-					break;
-				}
-			}
+			if([event.eventID isEqual:[dictionary objectForKey:@"event_id"]])
+				[[LocationManager sharedLocationManager] addEvent:event];
+			break;
 		}
 	}
+//	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
+//	for (NSDictionary *dictionary in guestNames)
+//	{
+//		if([[dictionary objectForKey:@"id"] isEqual:[User sharedUser].uid])
+//		{
+//			if(![[dictionary objectForKey:@"is_attending"] isEqual:@"1"])
+//			{
+//				for(Event *event in eventArray)
+//				{
+//					if([event.eventID isEqual:[dictionary objectForKey:@"event_id"]])
+//						[[LocationManager sharedLocationManager] addEvent:event];
+//					break;
+//				}
+//			}
+//		}
+//	}
 }
 - (void)refresh
 {
@@ -67,6 +77,7 @@
 		if([[df stringFromDate:event.eventDate] isEqual:[df stringFromDate:[NSDate date]]])
 		{
 			[[NetworkManager sharedNetworkManager] isCheckedInWithEID:event.eventID didFinish:@selector(checkIfAttending:) delegate:self];
+//			if([[NetworkManager sharedNetworkManager] isCheckedInWithEID:event.eventID]);
 		}
 	}
 	[df release];

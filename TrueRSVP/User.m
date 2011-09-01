@@ -54,7 +54,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 	[cell setString:[temp objectForKey:@"phone"]];
 	[zip setString:[temp objectForKey:@"zip"]];
 	[about setString:[temp objectForKey:@"about"]];
-	[twitter setString:[temp objectForKey:@"twitter"]];
+	if([[temp objectForKey:@"twitter"] hasPrefix:@"@"])
+	{
+		[twitter setString:[[temp objectForKey:@"twitter"] substringFromIndex:1]];
+	}
+	else
+	{
+		[twitter setString:[temp objectForKey:@"twitter"]];	
+	}
 	[picURL setString:[temp objectForKey:@"pic"]];
 	[temp release];
 	[self updatePic];

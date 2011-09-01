@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @class Event;
 @class ASIHTTPRequest;
+@class GuestListViewController;
 @interface MessageViewController : UIViewController <UITextViewDelegate>
 {
 	NSMutableArray *selectedFromList;
@@ -28,17 +29,20 @@
 	IBOutlet UIView *sendWhiteBack;
 	IBOutlet UIButton *sendButton;
 	Event *_event;
+	GuestListViewController *_guestVC;
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil list:(NSMutableArray*)list  event:(Event*)thisEvent;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil list:(NSMutableArray*)list event:(Event*)thisEvent guestViewController:(GuestListViewController*)guestVC;
 - (IBAction)emailPressed:(UIButton*)sender;
 - (IBAction)textPressed:(UIButton*)sender;
 - (IBAction)sendPressed:(UIButton*)sender;
+- (IBAction)selectionPressed:(id)sender;
 - (void)sendFinished:(ASIHTTPRequest*)request;
 - (void)sendFailed:(ASIHTTPRequest*)request;
 @property (nonatomic, copy) NSMutableArray *selectedFromList;
 @property (nonatomic, retain) Event *_event;
 @property (nonatomic, retain) IBOutlet UILabel *eventName;
 @property (nonatomic, retain) IBOutlet UILabel *eventDate;
+@property (nonatomic, assign) GuestListViewController *_guestVC;
 //@property (nonatomic, retain) IBOutlet UIButton *emailCheck;
 //@property (nonatomic, retain) IBOutlet UIButton *textCheck;
 //@property (nonatomic, retain) IBOutlet UIButton *sendButton;

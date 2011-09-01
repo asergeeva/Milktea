@@ -23,6 +23,7 @@
 - (void)setViewMoveUp:(BOOL)moveUp;
 - (void)login;
 - (void)progressFinished;
+- (void)finishedSignIn;
 @property (nonatomic, retain) Facebook *facebook;
 //@property (nonatomic, assign) NSTimer *timer;
 @end
