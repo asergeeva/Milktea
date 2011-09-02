@@ -74,6 +74,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], ping]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setTimeOutSeconds:3];
 	[request startSynchronous];
 	if(![[request responseString] isEqual:[NSNull null]])
@@ -103,6 +104,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], getUsername]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:uid forKey:@"uid"];
 	[request startSynchronous];
 	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
@@ -118,15 +120,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	profileReq.delegate = self;
 	profileReq.didFinishSelector = @selector(didFinishLoadProfile:);
 	profileReq.didFailSelector = @selector(didFailLoadProfile:);
+	[profileReq setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	
 	NSURL *hostingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getHostingEvents]];
 	ASIFormDataRequest *hostingListReq = [ASIFormDataRequest requestWithURL:hostingListURL];
+	[hostingListReq setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	hostingListReq.delegate = self;
 	hostingListReq.didFinishSelector = @selector(didFinishLoadHosting:);
 	hostingListReq.didFailSelector = @selector(didFailLoadHosting:);
 	
-	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getAttendingEvents]];
+	NSURL *attendingListURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], @"getAttendingEvents"]];
 	ASIFormDataRequest *attendingListReq = [ASIFormDataRequest requestWithURL:attendingListURL];
+	[attendingListReq setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	attendingListReq.delegate = self;
 	attendingListReq.didFinishSelector = @selector(didFinishLoadAttending:);
 	attendingListReq.didFailSelector = @selector(didFailLoadAttending:);
@@ -164,6 +169,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		
 		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getGuestList]];
 		ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+		[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 		[request addPostValue:[dictionary objectForKey:@"id"] forKey:@"eid"];
 		[request startSynchronous];
 		NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
@@ -251,6 +257,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getUserInfo]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];	
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request startSynchronous];
 	if([[request responseString] isEqualToString:@"false"])
 	{
@@ -262,6 +269,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], setUserInfo]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request addPostValue:email forKey:@"email"];
 	[request addPostValue:about forKey:@"about"];
 	[request addPostValue:cell forKey:@"cell"];
@@ -289,6 +297,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getAttendanceForEvent]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:eid forKey:@"eid"];
 	[request startSynchronous];
 	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
@@ -299,6 +308,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getOrganizerEmail]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:[NSString stringWithFormat:@"%@", oid] forKey:@"oid"];
 	[request startSynchronous];
 	return request;
@@ -308,6 +318,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAddress];
 	NSURL *mapURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:mapURL];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	request.didFinishSelector = finished;
 	request.didFailSelector = failed;
 	request.delegate = viewController;
@@ -319,6 +330,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAddress];
 	NSURL *mapURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:mapURL];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request startSynchronous];	
 	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
@@ -330,6 +342,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *trueURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], computeTrueRSVP]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:trueURL];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:eid forKey:@"eid"];
 	request.delegate = viewController;
 	request.didFinishSelector = finished;
@@ -339,6 +352,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 - (NSDate*)getDateForEID:(NSString*)eid uid:(NSString*)uid
 {
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getCheckInDate]]];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:uid forKey:@"uid"];
 	[request startSynchronous];	
@@ -353,6 +367,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 - (void)checkInDateWithCheckIn:(CheckIn*)check
 {
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], checkInWithDate]]];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"YYYY-MM-dd HH:mm:ss";
 	[request setPostValue:[NSNumber numberWithBool:check.isAttending] forKey:@"checkIn"];
@@ -367,6 +382,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], checkIn]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:uid forKey:@"uid"];
 	[request setPostValue:checkInValue forKey:@"checkIn"];
@@ -381,6 +397,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], @"checkInByDistance"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:eid forKey:@"eid"];
 	[request startSynchronous];
 	if([[request responseString] isEqualToString:@"status_checkInSuccess"])
@@ -428,6 +445,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 - (void)uploadPhoto:(NSData*)imageData oauth:(OAuth*)oAuth delegate:(UIViewController*)receiver finishedSelector:(SEL)finished failedSelector:(SEL)failed
 {
 	ASIFormDataRequest *req = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://api.twitpic.com/2/upload.json"]];
+	[req setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
     [req addRequestHeader:@"X-Auth-Service-Provider" value:@"https://api.twitter.com/1/account/verify_credentials.json"];
     [req addRequestHeader:@"X-Verify-Credentials-Authorization"
                     value:[oAuth oAuthHeaderForMethod:@"GET"
@@ -446,6 +464,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%%23%@", hashtag]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	request.delegate = receiver;
 	request.didFinishSelector = finished;
 	request.didFailSelector = failed;
@@ -456,6 +475,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[FlurryAnalytics logEvent:@"PROFILE_UPDATE_PIC"];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], @"uploadImage"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setData:UIImageJPEGRepresentation(image, 0.75) withFileName:@"8.jpg" andContentType:@"image/jpeg" forKey:@"qqfile"];
 	request.delegate = receiver;
 	request.didFinishSelector = finish;
@@ -465,6 +485,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], sendMessage]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	for(int i = 0; i < selectedFromList.count; i++)
 	{
 		[request setPostValue:[selectedFromList objectAtIndex:i] forKey:[NSString stringWithFormat:@"uid[%i]", i]];
@@ -508,6 +529,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], setAttendanceForEvent]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:confidence forKey:@"confidence"];
 	[request startAsynchronous];
@@ -516,6 +538,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {		
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], isAttending]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	request.delegate = receiver;
 	[request addPostValue:eid forKey:@"eid"];
 	[request startAsynchronous];
@@ -525,6 +548,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], logout]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request startAsynchronous];
 }
 - (void)dealloc

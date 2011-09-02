@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "ListController.h"
 #import <QuartzCore/QuartzCore.h>
+@protocol RefreshDelegate
+@optional
+-(void)refresh;
+@end
 @interface ListViewController : UIViewController <UITableViewDelegate>
 {
 	IBOutlet UITableView *eventTableView;

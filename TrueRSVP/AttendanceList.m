@@ -45,6 +45,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AttendanceList);
 		event.eventTwitter = [temp objectForKey:@"twitter"];
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
 		dateFormatter.dateFormat = dateFormatFromSQL;
+		[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 		if([[[temp objectForKey:@"event_datetime"] substringToIndex:4] isEqualToString:@"0000"])
 		{
 			event.eventDate = [dateFormatter dateFromString:@"1970-01-01 00:00:00"];

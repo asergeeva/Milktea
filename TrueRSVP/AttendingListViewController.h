@@ -20,6 +20,7 @@
 	AttendingDetailViewController *attendingDetailVC;
 	id<AttendingDelegate> delegate;
 }
+- (void)doneRefresh;
 @property (nonatomic, retain) AttendingController *attendingController;
 @property (nonatomic, retain) AttendingDetailViewController *attendingDetailVC;
 @property (nonatomic, assign) id<AttendingDelegate> delegate;

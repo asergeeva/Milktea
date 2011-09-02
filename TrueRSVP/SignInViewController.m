@@ -197,6 +197,7 @@
 {
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	[request startSynchronous];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	if([request responseStatusCode] == 401)
 	{
 		return YES;
@@ -251,6 +252,7 @@
 	}
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"], @"login"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:[txtUsername text] forKey:@"email"];
 	request.useSessionPersistence = YES;
 	[request setPostValue:txtPassword.text forKey:@"pass"];	
@@ -310,6 +312,7 @@
 		if([self requiresAuth:url])
 		{
 			ASIHTTPRequest *loginRequest = [ASIHTTPRequest requestWithURL:url];
+			[loginRequest setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 			loginRequest.delegate = self;
 			loginRequest.shouldPresentAuthenticationDialog = YES;
 			[loginRequest startAsynchronous];
@@ -385,8 +388,8 @@
 //	[self showDebugView:nil];
 	sessionKey = [[NSMutableString alloc] init];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
-//	txtUsername.text = @"movingincircles@gmail.com";
-//	txtPassword.text = @"supfoo";
+	txtUsername.text = @"movingincircles@gmail.com";
+	txtPassword.text = @"supfoo";
 //	TrueRSVPAppDelegate *app = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]);
 	if([[SettingsManager sharedSettingsManager].settings objectForKey:@"username"])
 	{
@@ -464,6 +467,7 @@
 		[[SettingsManager sharedSettingsManager] load];
 		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"]]];
 		ASIFormDataRequest *_request = [ASIFormDataRequest requestWithURL:url];
+		[_request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 		[_request addPostValue:[result objectForKey:@"first_name"] forKey:@"fname"];
 		[_request addPostValue:[result objectForKey:@"last_name"] forKey:@"lname"];
 		[_request addPostValue:[result objectForKey:@"id"] forKey:@"fbid"];

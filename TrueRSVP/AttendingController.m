@@ -35,51 +35,33 @@
 	[self refresh];
 }
 #pragma mark - Other
-- (void)checkIfAttending:(ASIHTTPRequest*)request
-{
-	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-	if(![[dictionary objectForKey:@"is_attending"] isEqual:@"1"])
-	{
-		for(Event *event in eventArray)
-		{
-			if([event.eventID isEqual:[dictionary objectForKey:@"event_id"]])
-				[[LocationManager sharedLocationManager] addEvent:event];
-			break;
-		}
-	}
-//	NSArray *guestNames = [[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil];
-//	for (NSDictionary *dictionary in guestNames)
+//- (void)checkIfAttending:(ASIHTTPRequest*)request
+//{
+//	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+//	if(![[dictionary objectForKey:@"is_attending"] isEqual:@"1"])
 //	{
-//		if([[dictionary objectForKey:@"id"] isEqual:[User sharedUser].uid])
+//		for(Event *event in eventArray)
 //		{
-//			if(![[dictionary objectForKey:@"is_attending"] isEqual:@"1"])
-//			{
-//				for(Event *event in eventArray)
-//				{
-//					if([event.eventID isEqual:[dictionary objectForKey:@"event_id"]])
-//						[[LocationManager sharedLocationManager] addEvent:event];
-//					break;
-//				}
-//			}
+//			if([event.eventID isEqual:[dictionary objectForKey:@"event_id"]])
+//				[[LocationManager sharedLocationManager] addEvent:event];
+//			break;
 //		}
 //	}
-}
+//}
 - (void)refresh
 {
 	NSArray *attendanceInfo = [NetworkManager sharedNetworkManager].attendingList;
 	[[AttendanceList sharedAttendanceList] updateEventsList:attendanceInfo];
 	eventArray = [AttendanceList sharedAttendanceList].eventsArray;
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-MM-dd";
-	//REDO THIS USING NEW BACKEND
-	for(Event *event in eventArray)
-	{
-		if([[df stringFromDate:event.eventDate] isEqual:[df stringFromDate:[NSDate date]]])
-		{
-			[[NetworkManager sharedNetworkManager] isCheckedInWithEID:event.eventID didFinish:@selector(checkIfAttending:) delegate:self];
-//			if([[NetworkManager sharedNetworkManager] isCheckedInWithEID:event.eventID]);
-		}
-	}
-	[df release];
+//	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//	df.dateFormat = @"yyyy-MM-dd";
+//	for(Event *event in eventArray)
+//	{
+//		if([[df stringFromDate:event.eventDate] isEqual:[df stringFromDate:[NSDate date]]])
+//		{
+//			[[NetworkManager sharedNetworkManager] isCheckedInWithEID:event.eventID didFinish:@selector(checkIfAttending:) delegate:self];
+//		}
+//	}
+//	[df release];
 }
 @end

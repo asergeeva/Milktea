@@ -21,7 +21,7 @@
 #define LIST_CELL_DATE 13
 #define GUEST_SEND_MARKER 14
 #define GUEST_CHECKBOX 15
-
+#define SHOULD_VALIDATE_SECURE_CERTIFICATE NO
 #define REFRESH_HEADER_HEIGHT 50.0f
 
 extern NSString *const consumerKey;
@@ -30,7 +30,7 @@ extern NSString *const dateFormatFromSQL;
 extern NSString *const getUserInfo;
 extern NSString *const setUserInfo;
 extern NSString *const getOrganizerEmail;
-extern NSString *const getAttendingEvents;
+//extern NSString *const getAttendingEvents;
 extern NSString *const getAttendanceForEvent;
 extern NSString *const setAttendanceForEvent;
 extern NSString *const getHostingEvents;

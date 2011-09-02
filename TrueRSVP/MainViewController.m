@@ -197,6 +197,7 @@ BOOL offlineWarning = NO;
 	self.navigationItem.leftBarButtonItem = about;
 	
 	[profileVC.profilePic addTarget:self action:@selector(launchCamera) forControlEvents:UIControlEventTouchUpInside];
+	[attendingVC doneRefresh];
 }
 #pragma mark - Navigation Controller Delegate methods
 //Unfortunately there's an iOS bug where scrollview resets all subviews when popping viewcontroller
