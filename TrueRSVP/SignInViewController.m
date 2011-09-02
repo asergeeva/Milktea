@@ -254,7 +254,7 @@
 	[request setPostValue:[txtUsername text] forKey:@"email"];
 	request.useSessionPersistence = YES;
 	[request setPostValue:txtPassword.text forKey:@"pass"];	
-	[request setValidatesSecureCertificate:NO];
+//	[request setValidatesSecureCertificate:NO];
 	[request startSynchronous];
 	NSString *status = [request responseString];
 	NSLog(@"%@", status);
@@ -385,8 +385,8 @@
 //	[self showDebugView:nil];
 	sessionKey = [[NSMutableString alloc] init];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
-	txtUsername.text = @"movingincircles@gmail.com";
-	txtPassword.text = @"supfoo";
+//	txtUsername.text = @"movingincircles@gmail.com";
+//	txtPassword.text = @"supfoo";
 //	TrueRSVPAppDelegate *app = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]);
 	if([[SettingsManager sharedSettingsManager].settings objectForKey:@"username"])
 	{

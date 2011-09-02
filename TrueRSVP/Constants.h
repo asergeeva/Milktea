@@ -45,3 +45,4 @@ extern NSString *const getUsername;
 extern NSString *const getCheckInDate;
 extern NSString *const twitPicKey;
 extern NSString *const logout;
+extern NSString *const ping;

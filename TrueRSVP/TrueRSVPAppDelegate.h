@@ -11,7 +11,7 @@
 #import "Reachability.h"
 //@class TrueRSVPViewController;
 
-@interface TrueRSVPAppDelegate : NSObject <UIApplicationDelegate, FBSessionDelegate> {
+@interface TrueRSVPAppDelegate : NSObject <UIApplicationDelegate, FBSessionDelegate, UIAlertViewDelegate> {
 	Facebook *facebook;
 	UINavigationController *navController;
 }

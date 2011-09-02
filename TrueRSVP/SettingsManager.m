@@ -29,6 +29,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 		{
 			[[NSUserDefaults standardUserDefaults] setValue:@"http://192.168.1.136/Eventfii/api/" forKey:@"APILocation"];
 		}
+		if(![[NSUserDefaults standardUserDefaults] objectForKey:@"ignoreSSL"])
+		{
+			[[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO] forKey:@"ignoreSSL"];
+		}
 		//[self save];
 	}
 	return self;

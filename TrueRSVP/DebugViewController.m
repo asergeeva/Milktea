@@ -22,11 +22,16 @@
 }
 - (IBAction)dismissDebug:(id)sender
 {
-//	[[SettingsManager sharedSettingsManager] setObject:debugAddress.text forKey:@"rootAddress"];
+	if(![debugAddress.text hasSuffix:@"/"])
+	{
+		debugAddress.text = [NSString stringWithFormat:@"%@/", debugAddress.text];
+	}
 	[[NSUserDefaults standardUserDefaults] setValue:debugAddress.text forKey:@"rootAddress"];
 	[[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%@api/", debugAddress.text] forKey:@"APILocation"];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:ignoreSSL.on] forKey:@"ignoreSSL"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
-//	[[SettingsManager sharedSettingsManager] save];
+	
+	[[SettingsManager sharedSettingsManager] save];
 	[self dismissModalViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning
@@ -41,6 +46,7 @@
 {
 	[debugAddress release];
 	[debugDoneButton release];
+    [ignoreSSL release];
 	[super dealloc];
 }
 #pragma mark - View lifecycle
@@ -57,11 +63,15 @@
 	debugAddress.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"];
 	debugAddress.returnKeyType = UIReturnKeyDone;
 	debugAddress.delegate = self;
+	
+	NSNumber *ignoreSSLValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"ignoreSSL"];
+	[ignoreSSL setOn:[ignoreSSLValue boolValue] animated:NO];
     // Do any additional setup after loading the view from its nib.
 }
-
 - (void)viewDidUnload
 {
+    [ignoreSSL release];
+    ignoreSSL = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

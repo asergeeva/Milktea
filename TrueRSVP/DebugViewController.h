@@ -12,6 +12,7 @@
 {
 	IBOutlet UITextField *debugAddress;
 	IBOutlet UIButton *debugDoneButton;
+	IBOutlet UISwitch *ignoreSSL;
 }
 - (IBAction)dismissDebug:(id)sender;
 @property (nonatomic, retain) IBOutlet UITextField *debugAddress;

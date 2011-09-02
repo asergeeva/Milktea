@@ -72,20 +72,31 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (BOOL)isOnline
 {
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], ping]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request setTimeOutSeconds:3];
+	[request startSynchronous];
+	if(![[request responseString] isEqual:[NSNull null]])
+	{
+		if([[request responseString] isEqual:@"pong"])
+		{
+			return YES;
+		}
+	}
 	connectionMonitor = [Reachability reachabilityForInternetConnection];
 	[connectionMonitor startNotifier];
-	if([connectionMonitor currentReachabilityStatus] == NotReachable)
-	{
-//		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//		[alert show];
-//		[alert release];
-	}
-	else
-	{
-//		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Internet" message:@"Internet Found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//		[alert show];
-//		[alert release];
-	}
+//	if([connectionMonitor currentReachabilityStatus] == NotReachable)
+//	{
+////		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet" message:@"No internetion connection found. Going offline." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+////		[alert show];
+////		[alert release];
+//	}
+//	else
+//	{
+////		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Internet" message:@"Internet Found" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+////		[alert show];
+////		[alert release];
+//	}
 	return ([connectionMonitor currentReachabilityStatus] != NotReachable);
 }
 - (NSString*)getUsernameWithUID:(NSString*)uid

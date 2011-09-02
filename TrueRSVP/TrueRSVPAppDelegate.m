@@ -24,11 +24,37 @@ BOOL didEnterBackground = NO;
 void uncaughtExceptionHandler(NSException *exception) {
     [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
 }
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if(buttonIndex == 1)
+	{
+		[FlurryAnalytics startSession:@"6D2G4ACFWJTJ889295IM"];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"allowFlurry"];
+	}
+	else
+	{
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"allowFlurry"];
+	}
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-	[FlurryAnalytics startSession:@"6D2G4ACFWJTJ889295IM"];
 	// Override point for customization after application launch.
+	if([[[NSUserDefaults standardUserDefaults] objectForKey:@"allowFlurry"] isEqual:[NSNumber numberWithBool:YES]])
+	{
+		[FlurryAnalytics startSession:@"6D2G4ACFWJTJ889295IM"];
+	}
+	else if(![[NSUserDefaults standardUserDefaults] objectForKey:@"allowFlurry"])
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Analytics"
+														message:@"You can help us improve the app by allowing us to collect anonymous data. Press OK to allow us to collect this data. Press cancel to if you do not wish to do this."
+													   delegate:self
+											  cancelButtonTitle:@"Cancel" 
+											  otherButtonTitles:@"OK", nil];
+		[alert show];
+		[alert release];
+	}
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
 	facebook = [[Facebook alloc] initWithAppId:@"256152217746559" andDelegate:signVC];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
@@ -101,7 +127,17 @@ void uncaughtExceptionHandler(NSException *exception) {
 	 Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	 */
 	[[LocationManager sharedLocationManager] removeIrrelevantEvents];
-	if([[NetworkManager sharedNetworkManager] isSessionAlive])
+	if(![[NetworkManager sharedNetworkManager] isOnline])
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline"
+														message:@"The application cannot connect to the server. You are now in offline mode. Some features are disabled."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
+	else if([[NetworkManager sharedNetworkManager] isSessionAlive])
 	{
 		if([[NetworkManager sharedNetworkManager] isOnline])
 		{
