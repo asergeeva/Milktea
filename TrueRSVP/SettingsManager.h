@@ -20,6 +20,7 @@
 - (void)saveArray:(NSMutableArray*)array withKey:(NSString*)key;
 - (NSMutableDictionary*)loadDictionaryForKey:(NSString*)key;
 - (NSMutableArray*)loadArrayForKey:(NSString*)key;
+- (NSNumber*)checkOfflineData;
 @property (nonatomic, retain) NSMutableDictionary *settings;
 @property (nonatomic, retain) NSMutableString *username;
 @end

@@ -121,13 +121,19 @@
 }
 - (void)addPullRefreshHeader:(UITableView*)tableView
 {
-	refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT)];
-	refreshHeaderView.backgroundColor = [UIColor clearColor];
-	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0-REFRESH_HEADER_HEIGHT + 23, 320, 17)] autorelease];
+//	refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT)];
+	refreshHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(10, 0 - REFRESH_HEADER_HEIGHT + 5, 300, REFRESH_HEADER_HEIGHT - 10)] autorelease];
+	refreshHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	refreshHeaderView.layer.cornerRadius = 5;
+	refreshHeaderView.clipsToBounds = YES;
+	refreshHeaderView.backgroundColor = [UIColor whiteColor];
+	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, REFRESH_HEADER_HEIGHT/2 - 15, 320, 19)] autorelease];
+	refreshLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	refreshLabel.text = @"Refreshing...";
-	refreshLabel.font = [UIFont systemFontOfSize:12];
-	refreshLabel.textAlignment = UITextAlignmentLeft;
+	refreshLabel.font = [UIFont boldSystemFontOfSize:17.0];
+	refreshLabel.textAlignment = UITextAlignmentCenter;
 	refreshLabel.backgroundColor = [UIColor clearColor];
+	refreshLabel.textColor = [UIColor darkGrayColor];
 	[refreshHeaderView addSubview:refreshLabel];
 	[tableView addSubview:refreshHeaderView];
 }

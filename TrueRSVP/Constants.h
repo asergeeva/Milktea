@@ -22,7 +22,7 @@
 #define GUEST_SEND_MARKER 14
 #define GUEST_CHECKBOX 15
 
-#define REFRESH_HEADER_HEIGHT 20.0f
+#define REFRESH_HEADER_HEIGHT 50.0f
 
 extern NSString *const consumerKey;
 extern NSString *const consumerSecret;
@@ -44,3 +44,4 @@ extern NSString *const isAttending;
 extern NSString *const getUsername;
 extern NSString *const getCheckInDate;
 extern NSString *const twitPicKey;
+extern NSString *const logout;

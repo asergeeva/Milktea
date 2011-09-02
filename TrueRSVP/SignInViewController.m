@@ -29,6 +29,7 @@
 	[loginButton release];
 	[facebook release];
 	[fbButton release];
+	[sessionKey release];
     [super dealloc];
 }
 
@@ -56,22 +57,22 @@
 		[[SettingsManager sharedSettingsManager] save];
 //		[timer invalidate];
 }
-- (void)offlineMode
-{
-	if(![[NetworkManager sharedNetworkManager] isOnline] && [[NetworkManager sharedNetworkManager] checkFilled])
-	{
-//		[NetworkManager sharedNetworkManager].delegate = nil;
-//		[[SettingsManager sharedSettingsManager].settings setObject:[NSNumber numberWithBool:TRUE] forKey:@"Preloaded"];
-//		[[SettingsManager sharedSettingsManager] save];
-//		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
-//		[self.navigationController pushViewController:mainVC animated:YES];
-//		[mainVC release];
-		//		[timer invalidate];
-//		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"No internet connection detected. Going offline. Some features are disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//		[alert show];
-//		[alert release];
-	}
-}	
+//- (void)offlineMode
+//{
+//	if(![[NetworkManager sharedNetworkManager] isOnline] && [[NetworkManager sharedNetworkManager] checkFilled])
+//	{
+////		[NetworkManager sharedNetworkManager].delegate = nil;
+////		[[SettingsManager sharedSettingsManager].settings setObject:[NSNumber numberWithBool:TRUE] forKey:@"Preloaded"];
+////		[[SettingsManager sharedSettingsManager] save];
+////		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
+////		[self.navigationController pushViewController:mainVC animated:YES];
+////		[mainVC release];
+//		//		[timer invalidate];
+////		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"No internet connection detected. Going offline. Some features are disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+////		[alert show];
+////		[alert release];
+//	}
+//}	
 #pragma mark - View lifecycle
 - (void)resignKeyboard
 {
@@ -122,10 +123,6 @@
 
 -(void)setViewMoveUp:(BOOL)moveUp
 {
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:0.3];
-//    [UIView setAnimationBeginsFromCurrentState:YES];
-//	
 	[UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void) {
 			CGRect rect = self.view.frame;
 			if (moveUp)
@@ -195,7 +192,6 @@
 	[self finishedSignIn];
 	[NetworkManager sharedNetworkManager].delegate = self;
 	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:nil completion:nil];
-//	timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(progressCheck) userInfo:nil repeats:YES];	
 }
 - (BOOL)requiresAuth:(NSURL*)url
 {
@@ -215,6 +211,25 @@
 {
 	[self finishedSignIn];
 	NSLog(@"Not Logged In");
+}
+- (void)goOffline
+{
+	[self finishedSignIn];
+	NSNumber *checkOfflineData = [[SettingsManager sharedSettingsManager] checkOfflineData];
+	if([checkOfflineData isEqual:[NSNumber numberWithBool:YES]])
+	{
+		[self showProgress];
+	}
+	else
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" 
+														message:@"Cannot connect to TrueRSVP."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+	}
 }
 - (void)login
 {
@@ -243,49 +258,36 @@
 	[request startSynchronous];
 	NSString *status = [request responseString];
 	NSLog(@"%@", status);
-	if ([status isEqualToString:@"status_loginFailed"])
+	if (![status isEqual:[NSNull null]])
 	{
-		[self finishedSignIn];
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Incorrect" 
-														message:@"Username/password is incorrect."
-													   delegate:nil
-											  cancelButtonTitle:@"OK" 
-											  otherButtonTitles:nil];
-		[alert show];
-		[alert release];
-		
-	}
-	else if ([status isEqualToString:@"status_loginSuccess"])
-	{
-		[[SettingsManager sharedSettingsManager].settings setObject:txtUsername.text forKey:@"username"];
-		[[SettingsManager sharedSettingsManager] save];
-		[SFHFKeychainUtils storeUsername:txtUsername.text andPassword:txtPassword.text forServiceName:@"TrueRSVP" updateExisting:NO error:nil];
-//		UIProgressView *progress = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar] autorelease];
-//		[self.view addSubview:progress];
-//		[[NetworkManager sharedNetworkManager] refreshAll:progress];
-		[FlurryAnalytics setUserID:txtUsername.text];
-		[self showProgress];
-//		[[NetworkManager sharedNetworkManager] refreshAll:nil];
-//		[self showMain];
-	}
-	else
-	{
-		[self finishedSignIn];
-		NSNumber *checkOffline = [[SettingsManager sharedSettingsManager].settings objectForKey:@"Preloaded"];
-		if([checkOffline isEqual:[NSNumber numberWithBool:YES]])
+		if ([status isEqualToString:@"status_loginFailed"])
 		{
-			[self showProgress];
-		}
-		else
-		{
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" 
-															message:@"Cannot connect to TrueRSVP."
+			[self finishedSignIn];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Incorrect" 
+															message:@"Username/password is incorrect."
 														   delegate:nil
 												  cancelButtonTitle:@"OK" 
 												  otherButtonTitles:nil];
 			[alert show];
 			[alert release];
+			
 		}
+		else if ([status isEqualToString:@"status_loginSuccess"])
+		{
+			[[SettingsManager sharedSettingsManager].settings setObject:txtUsername.text forKey:@"username"];
+			[[SettingsManager sharedSettingsManager] save];
+			[SFHFKeychainUtils storeUsername:txtUsername.text andPassword:txtPassword.text forServiceName:@"TrueRSVP" updateExisting:NO error:nil];
+			[FlurryAnalytics setUserID:txtUsername.text];
+			[self showProgress];
+		}
+		else
+		{
+			[self goOffline];
+		}
+	}
+	else
+	{
+		[self goOffline];
 	}
 }
 - (IBAction)loginPressed:(UIButton*)sender
@@ -381,6 +383,7 @@
 - (void)viewDidLoad
 {
 //	[self showDebugView:nil];
+	sessionKey = [[NSMutableString alloc] init];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	txtUsername.text = @"movingincircles@gmail.com";
 	txtPassword.text = @"supfoo";
@@ -440,50 +443,61 @@
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];
-	[facebook requestWithGraphPath:@"me" andDelegate:self];
+	NSMutableDictionary* params = [NSMutableDictionary 
+								   dictionaryWithObjectsAndKeys: [facebook accessToken], @"access_token", nil];
+	[facebook requestWithMethodName:@"auth.promoteSession" andParams:params andHttpMethod:@"GET" andDelegate:self];
 }
 - (void)request:(FBRequest *)request didLoad:(id)result
 {
-	[[SettingsManager sharedSettingsManager].username setString:[result objectForKey:@"email"]];
-	[FlurryAnalytics setUserID:[result objectForKey:@"email"]];
-	[[SettingsManager sharedSettingsManager] load];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"]]];
-	ASIFormDataRequest *_request = [ASIFormDataRequest requestWithURL:url];
-	[_request addPostValue:[result objectForKey:@"first_name"] forKey:@"fname"];
-	[_request addPostValue:[result objectForKey:@"last_name"] forKey:@"lname"];
-	[_request addPostValue:[result objectForKey:@"id"] forKey:@"fbid"];
-	[_request addPostValue:[result objectForKey:@"email"] forKey:@"email"];	
-	[_request addPostValue:@"1" forKey:@"isFB"];
-	[_request startSynchronous];
-	NSLog(@"%@", [_request responseString]);
-	if([[_request responseString ]isEqual:@"status_doesNotExist"])
+	NSString *stringData = [[NSString alloc] initWithData:[request responseText] encoding:NSASCIIStringEncoding];
+	if([stringData hasPrefix:@"\""] && [stringData hasSuffix:@"\""])
 	{
-		[facebook logout:self];
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Found" 
-														message:@"Unable to locate your account. Please goto http://www.truersvp.com to register."
-													   delegate:nil
-											  cancelButtonTitle:@"OK" 
-											  otherButtonTitles:nil];
-		[alert show];
-		[alert release];
+		NSRange range = {1, stringData.length-2};
+//		sessionKey = [stringData substringWithRange:range];
+		[sessionKey setString:[stringData substringWithRange:range]];
+		[facebook requestWithGraphPath:@"me" andDelegate:self];		
 	}
 	else
 	{
-		[self showProgress];
+		[[SettingsManager sharedSettingsManager].username setString:[result objectForKey:@"email"]];
+		[FlurryAnalytics setUserID:[result objectForKey:@"email"]];
+		[[SettingsManager sharedSettingsManager] load];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"]]];
+		ASIFormDataRequest *_request = [ASIFormDataRequest requestWithURL:url];
+		[_request addPostValue:[result objectForKey:@"first_name"] forKey:@"fname"];
+		[_request addPostValue:[result objectForKey:@"last_name"] forKey:@"lname"];
+		[_request addPostValue:[result objectForKey:@"id"] forKey:@"fbid"];
+		[_request addPostValue:[result objectForKey:@"email"] forKey:@"email"];	
+		[_request addPostValue:[facebook accessToken] forKey:@"access"];
+		[_request addPostValue:sessionKey forKey:@"session"];
+		[_request addPostValue:@"1" forKey:@"isFB"];
+		[_request startSynchronous];
+		NSLog(@"%@", [_request responseString]);
+		if([[_request responseString ]isEqual:@"status_doesNotExist"])
+		{
+			[facebook logout:self];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Found" 
+															message:@"Unable to locate your account. Please goto http://www.truersvp.com to register."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+		else
+		{
+			[self showProgress];
+		}
 	}
+	[stringData release];
 }
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-//	self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
 	return YES;
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

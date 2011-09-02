@@ -510,6 +510,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request startAsynchronous];
 	request.didFinishSelector = finished;
 }
+- (void)logout
+{
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], logout]];
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+	[request startAsynchronous];
+}
 - (void)dealloc
 {
 //	[formReq release];

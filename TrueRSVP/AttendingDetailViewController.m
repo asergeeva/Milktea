@@ -144,6 +144,13 @@
 {
 	[self dismissModalViewControllerAnimated:YES];
 }
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if(buttonIndex == 1)
+	{
+		[self presentModalViewController:reader animated:YES];
+	}
+}
 - (IBAction)checkIn:(UIButton*)sender
 {
 	CLLocation *destinationLocation = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
@@ -165,7 +172,13 @@
 	{
 		if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
 		{ 
-			[self presentModalViewController:reader animated:YES];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In"
+															message:@"Cannot check-in by distance. You may check-in through scanning a QR code if the host has provided one."
+														   delegate:self
+												  cancelButtonTitle:@"Cancel" 
+												  otherButtonTitles:@"OK", nil];
+			[alert show];
+			[alert release];
 		}
 		else if(distance < 0)
 		{

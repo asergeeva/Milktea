@@ -14,7 +14,7 @@
 #import "ASIFormDataRequest.h"
 #import "UITextViewUneditable.h"
 #import "ZBarReaderViewController.h"
-@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ASIHTTPRequestDelegate, ZBarReaderDelegate>
+@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ASIHTTPRequestDelegate, ZBarReaderDelegate, UIAlertViewDelegate>
 {
 	Event *eventAttending;
 	IBOutlet UIView *eventWhiteBack;

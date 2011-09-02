@@ -27,3 +27,4 @@ NSString *const isAttending = @"isAttending";
 NSString *const getUsername = @"getUsername";
 NSString *const getCheckInDate = @"getCheckInDate";
 NSString *const twitPicKey = @"e668abdf76a647a1ec1ccfcbbd857878";
+NSString *const logout = @"logout";

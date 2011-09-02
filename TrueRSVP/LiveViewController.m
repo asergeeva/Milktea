@@ -271,7 +271,7 @@ BOOL uploading = NO;
 	
 	UILabel *uploadingMessageLabel = [[[UILabel alloc] initWithFrame:original] autorelease];
 	uploadingMessageLabel.text = @"Uploading...";	
-	uploadingMessageLabel.backgroundColor = [UIColor clearColor];
+	uploadingMessageLabel.backgroundColor = [UIColor blackColor];
 	uploadingMessageLabel.tag = UPLOADMESSAGE_TAG;
 	uploadingMessageLabel.textAlignment = UITextAlignmentCenter;
 	uploadingMessageLabel.textColor = [UIColor whiteColor];
@@ -371,7 +371,7 @@ BOOL uploading = NO;
 	if(!cell)
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tweetCell"] autorelease];
-		cell.backgroundColor = [UIColor clearColor];
+//		cell.backgroundColor = [UIColor clearColor];
 		UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(10, 0, self.view.frame.size.width-20, 75)] autorelease];
 		tweetView = view;
 		view.tag = TWEET_CELL;

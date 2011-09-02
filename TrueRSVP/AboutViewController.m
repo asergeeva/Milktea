@@ -7,7 +7,7 @@
 //
 
 #import "AboutViewController.h"
-
+#import <QuartzCore/QuartzCore.h>
 @implementation AboutViewController
 @synthesize OKButton;
 
@@ -37,6 +37,9 @@
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	OKButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	OKButton.contentMode = UIViewContentModeBottom;
+	OKButton.layer.cornerRadius = 5;
+	OKButton.clipsToBounds = YES;
+	
     // Do any additional setup after loading the view from its nib.
 }
 

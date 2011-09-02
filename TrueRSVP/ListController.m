@@ -57,7 +57,7 @@
 		tableCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"listCell"] autorelease];
 		tableCell.autoresizesSubviews = YES;
 		tableCell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		tableCell.backgroundColor = [UIColor clearColor];
+//		tableCell.backgroundColor = [UIColor clearColor];
 		UIView *backView = [[[UIView alloc] initWithFrame:CGRectMake(10, 5, 300, 40)] autorelease];
 		backView.backgroundColor = [UIColor whiteColor];
 		backView.layer.cornerRadius = 5;
@@ -65,22 +65,21 @@
 		backView.layer.shouldRasterize = YES;
 		backView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		[tableCell.contentView addSubview:backView];
-		title = [[[UILabel alloc] initWithFrame:CGRectMake(40, 8, 220, 20)] autorelease];
+		title = [[[UILabel alloc] initWithFrame:CGRectMake(40, 8, 220, 22)] autorelease];
 		title.tag = LIST_CELL_TITLE;
-		title.backgroundColor = [UIColor clearColor];
+//		title.backgroundColor = [UIColor clearColor];
 		title.textAlignment = UITextAlignmentLeft;
 		title.textColor = [UIColor darkGrayColor];
 		title.font = [UIFont boldSystemFontOfSize:15];
-		[tableCell.contentView addSubview:title];
 		
 		date = [[[UILabel alloc] initWithFrame:CGRectMake(40, 24, 220, 20)] autorelease];
 		date.tag = LIST_CELL_DATE;
-		date.backgroundColor = [UIColor clearColor];
+//		date.backgroundColor = [UIColor clearColor];
 		date.textAlignment = UITextAlignmentLeft;
 		date.textColor = [UIColor darkGrayColor];
 		date.font = [UIFont systemFontOfSize:10];
 		[tableCell.contentView addSubview:date];
-		
+		[tableCell.contentView addSubview:title];
 		UIImageView *arrow = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]] autorelease];
 		arrow.frame = CGRectMake(backView.frame.size.width-arrow.frame.size.width-10, 15, arrow.frame.size.width, arrow.frame.size.height);
 		arrow.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -105,6 +104,7 @@
 //		[array removeAllObjects];
 //	}
 //	[eventSections removeAllObjects];
+	[uniqueMonths removeAllObjects];
 	for(Event *event in eventArray)
 	{
 		NSDate *date = event.eventDate;

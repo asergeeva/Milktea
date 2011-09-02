@@ -153,7 +153,7 @@
 	
 	UILabel *uploadingMessageLabel = [[[UILabel alloc] initWithFrame:original] autorelease];
 	uploadingMessageLabel.text = @"Sending...";	
-	uploadingMessageLabel.backgroundColor = [UIColor clearColor];
+	uploadingMessageLabel.backgroundColor = [UIColor blackColor];
 	uploadingMessageLabel.tag = UPLOADMESSAGE_TAG;
 	uploadingMessageLabel.textAlignment = UITextAlignmentCenter;
 	uploadingMessageLabel.textColor = [UIColor whiteColor];

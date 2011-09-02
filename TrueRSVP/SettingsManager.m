@@ -66,6 +66,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 		[settings addEntriesFromDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:username]];
 	}
 }
+- (NSNumber*)checkOfflineData
+{
+	NSNumber *isDataValid = [NSNumber numberWithBool:YES];
+	NSDictionary *profileDictionary = [[SettingsManager sharedSettingsManager] loadDictionaryForKey:@"profile"];
+	if([profileDictionary count] == 0)
+	{
+		isDataValid = [NSNumber numberWithBool:NO];
+	}
+	NSArray *attendingArray = [[SettingsManager sharedSettingsManager] loadArrayForKey:@"attendingList"];	
+	NSArray *hostingArray = [[SettingsManager sharedSettingsManager] loadArrayForKey:@"hostingList"];	
+	if([attendingArray count] == 0 && [hostingArray count] == 0)
+	{
+		isDataValid = [NSNumber numberWithBool:NO];
+	}
+
+	return isDataValid;
+}
 - (void)dealloc
 {
 	[settings release];

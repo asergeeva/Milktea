@@ -15,6 +15,7 @@
 	IBOutlet UIButton *loginButton;
 	IBOutlet UIButton *fbButton;
 	Facebook *facebook;
+	NSMutableString *sessionKey;
 //		NSTimer *timer;
 }
 - (void)showDebugView:(id)sender;

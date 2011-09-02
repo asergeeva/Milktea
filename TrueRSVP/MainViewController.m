@@ -479,7 +479,7 @@ BOOL offlineWarning = NO;
 	
 	UILabel *uploadingMessageLabel = [[[UILabel alloc] initWithFrame:original] autorelease];
 	uploadingMessageLabel.text = @"Uploading...";	
-	uploadingMessageLabel.backgroundColor = [UIColor clearColor];
+	uploadingMessageLabel.backgroundColor = [UIColor blackColor];
 	uploadingMessageLabel.tag = UPLOADMESSAGE_TAG;
 	uploadingMessageLabel.textAlignment = UITextAlignmentCenter;
 	uploadingMessageLabel.textColor = [UIColor whiteColor];
