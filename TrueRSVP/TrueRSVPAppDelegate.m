@@ -7,7 +7,7 @@
 //
 
 #import "TrueRSVPAppDelegate.h"
-#import "TrueRSVPViewController.h"
+//#import "TrueRSVPViewController.h"
 #import "SignInViewController.h"
 #import "LiveViewController.h"
 //#import "Reachability.h"
@@ -32,6 +32,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
 	facebook = [[Facebook alloc] initWithAppId:@"256152217746559" andDelegate:signVC];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
+	//navController.view.backgroundColor = [UIColor colorWithRed:0.925 green:0.914 blue:0.875 alpha:1.000];
 	[FlurryAnalytics logAllPageViews:navController];
 	self.window.rootViewController = navController;
 //	[navController pushViewController:signVC animated:NO];

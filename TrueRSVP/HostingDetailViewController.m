@@ -52,20 +52,27 @@
     }
     return self;
 }
-- (void)viewWillAppear:(BOOL)animated
-{	
-	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self finishedSelector:@selector(scoreLoadFinished:) failedSelector:@selector(scoreLoadFailed:)];
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
 	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventHosting.eventAddress delegate:self finishedSelector:@selector(mapRequestFinished:) failedSelector:@selector(mapRequestFailed:)];
-
+	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+	eventMap.alpha = 0;
+	eventMap.hidden = YES;
+	eventAddress.alpha = 0;
+	eventAddress.hidden = NO;
+}
+- (void)viewWillAppear:(BOOL)animated
+{
 	[super viewWillAppear:animated];
+//	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventHosting.eventAddress delegate:self finishedSelector:@selector(mapRequestFinished:) failedSelector:@selector(mapRequestFailed:)];
+
+
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[[UIApplication sharedApplication] setStatusBarHidden:NO];
-	eventName.text = eventHosting.eventName;
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-MM-dd hh:mm a";
-	eventDate.text = [df stringFromDate:eventHosting.eventDate];
-	eventDescription.text = eventHosting.eventDescription;
-	[df release];
 }
 - (void)addEffects:(UIView*)view
 {
@@ -79,6 +86,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	eventMap.alpha = 0;
+	eventMap.hidden = YES;
+	eventAddress.alpha = 0;
+	eventAddress.hidden = YES;
 	self.navigationItem.title = @"Event Details";
     // Do any additional setup after loading the view from its nib.
 	if([UIDevice currentDevice].multitaskingSupported)
@@ -116,6 +127,13 @@
 	[view addSubview:QRData];
 	[doneButton release];
 	reader.cameraOverlayView = view;
+	eventName.text = eventHosting.eventName;
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd hh:mm a";
+	eventDate.text = [df stringFromDate:eventHosting.eventDate];
+	eventDescription.text = eventHosting.eventDescription;
+	[df release];
+	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self finishedSelector:@selector(scoreLoadFinished:) failedSelector:@selector(scoreLoadFailed:)];
 }
 #pragma mark - Unload
 - (void)viewDidUnload
@@ -153,6 +171,8 @@
 //	[reader release];
 //	reader = nil;
 
+	[eventAddress release];
+	eventAddress = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -177,6 +197,7 @@
 	[guestListVC release];
 	[reader release];
 	[QRData release];
+	[eventAddress release];
 	[super dealloc];
 }
 #pragma mark - View Delegate Methods
@@ -191,12 +212,13 @@
 	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
 	{
 		eventWhiteBack.frame = CGRectMake(0, 51, 300, 40);
-		eventName.frame = CGRectMake(10, 54, 380, 21);
+		eventName.frame = CGRectMake(10, 54, 280, 21);
 		eventDate.frame = CGRectMake(10, 71, 280, 21);
 		yourRSVPBack.frame = CGRectMake(308, 51, 172, 40);
 		staticRSVP.frame = CGRectMake(247, 59, 300, 21);
 		dynamicRSVP.frame = CGRectMake(440, 60, 30, 21);
 		eventMap.frame = CGRectMake(8, 109, 284, 96);
+		eventAddress.frame = eventMap.frame;
 		eventMapBack.frame = CGRectMake(0, 100, 300, 114);
 		buttonWhiteBack.frame = CGRectMake(308, 100, 172, 114);
 		live.frame = CGRectMake(319, 177, 150, 27);
@@ -214,6 +236,7 @@
 		staticRSVP.frame = CGRectMake(10, 109, 300, 21);
 		dynamicRSVP.frame = CGRectMake(198, 109, 30, 21);
 		eventMap.frame = CGRectMake(25, 223, 270, 80);
+		eventAddress.frame = eventMap.frame;
 		eventMapBack.frame = CGRectMake(500, 500, 300, 114);
 		buttonWhiteBack.frame = CGRectMake(55, 333, 210, 120);
 		live.frame = CGRectMake(70, 415, 180, 27);
@@ -235,6 +258,10 @@
 #pragma mark - ASIHTTP Delegate Methods
 - (void)mapRequestFinished:(ASIHTTPRequest *)request
 {
+	eventMap.hidden = NO;
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		eventMap.alpha = 1.0;
+	}];
 	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
 	lat = [[location objectForKey:@"lat"] floatValue];
@@ -250,6 +277,11 @@
 }
 - (void)mapRequestFailed:(ASIHTTPRequest *)request
 {
+	eventAddress.text = eventHosting.eventAddress;
+	eventAddress.hidden = NO;
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		eventAddress.alpha = 1.0;
+	}];
 	NSLog(@"Loading Map failed");	
 }
 - (void)scoreLoadFinished:(ASIHTTPRequest*)request

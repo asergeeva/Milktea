@@ -191,7 +191,7 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="220287394"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
+					<int key="NSColorSpace">2</int>
 					<bytes key="NSRGB">MC4yMzUyOTQxMzM0IDAuNjAwMDAwMDIzOCAwLjc5MjE1NjkzNDcAA</bytes>
 				</object>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>

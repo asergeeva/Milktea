@@ -129,6 +129,13 @@ BOOL offlineWarning = NO;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
+	if(scrollView.alpha == 0)
+	{
+		scrollView.hidden = NO;
+		[UIView animateWithDuration:0.35 animations:^(void) {
+			scrollView.alpha = 1;
+		}];
+	}
 	if(![[NetworkManager sharedNetworkManager] isOnline] && !offlineWarning)
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"No internet connection detected. Going offline. Some features are disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -151,10 +158,17 @@ BOOL offlineWarning = NO;
 	[super viewDidAppear:animated];
 	
 }
+- (void)viewDidDisappear:(BOOL)animated
+{
+	scrollView.alpha = 0;
+	scrollView.hidden = 1;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	[self setupScrolling];
+	scrollView.alpha = 0;
+	scrollView.hidden = YES;
 //	CGRect frame = scrollView.frame;
 //	frame.origin.x = 0;
 

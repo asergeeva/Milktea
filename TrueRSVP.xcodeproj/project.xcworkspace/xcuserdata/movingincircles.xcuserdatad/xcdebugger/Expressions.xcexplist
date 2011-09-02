@@ -3,13 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[AttendingController refresh]:AttendingController.m">
+         contextName = "-[MainViewController resetScrollViewContentSize:]:MainViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "eventArray">
-            </PersistentString>
-            <PersistentString
-               value = "eventArray">
+               value = "scrollView">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -18,6 +15,25 @@
          <PersistentStrings>
             <PersistentString
                value = "eventsArray">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[LiveViewController tweet:]:LiveViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "tweetField.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[AttendingController refresh]:AttendingController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "eventArray">
+            </PersistentString>
+            <PersistentString
+               value = "eventArray">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

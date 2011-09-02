@@ -22,6 +22,7 @@
 	IBOutlet UILabel *eventDate;
 	IBOutlet UIView *eventDescriptionWhiteBack;
 	IBOutlet UITextViewUneditable *eventDescription;
+	IBOutlet UITextView *eventAddress;
 	IBOutlet MKMapView *eventMap;
 	IBOutlet UIButton *contact;
 	IBOutlet UIButton *directions;

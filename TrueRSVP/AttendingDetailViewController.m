@@ -277,24 +277,18 @@
 
 	[[NetworkManager sharedNetworkManager] setAttendanceWithEID:eventAttending.eventID confidence:[NSString stringWithFormat:@"%d", confidence]];
 }
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-//	NSString *urlAddress = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", eventAttending.eventAddress];
-//	NSURL *someURL = [NSURL URLWithString:[urlAddress stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-//	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:someURL];
-//	request.delegate = self;
-//	[request startAsynchronous];
+	[super viewDidAppear:animated];
 	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventAttending.eventAddress delegate:self finishedSelector:@selector(mapRequestFinished:) failedSelector:@selector(mapRequestFailed:)];
-	[super viewWillAppear:animated];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
-
-//	directions.enabled = NO;
-	eventName.text = eventAttending.eventName;
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-MM-dd hh:mm a";
-	eventDate.text = [df stringFromDate:eventAttending.eventDate];
-	eventDescription.text = eventAttending.eventDescription;
-	[df release];
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+	eventMap.alpha = 0;
+	eventMap.hidden = YES;
+	eventAddress.alpha = 0;
+	eventAddress.hidden = NO;
 }
 - (void)addEffects:(UIView*)view
 {
@@ -311,8 +305,11 @@
 }
 - (void)viewDidLoad
 {
-
     [super viewDidLoad];
+	eventMap.alpha = 0;
+	eventMap.hidden = YES;
+	eventAddress.alpha = 0;
+	eventAddress.hidden = YES;
 	//self.view.frame = self.navigationController.view.frame;
 	self.navigationItem.title = @"Event Details";
 	if([UIDevice currentDevice].multitaskingSupported)
@@ -343,17 +340,23 @@
 	UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 450, 320, 30)] autorelease];
 	view.backgroundColor = [UIColor whiteColor];
 	UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 70, 30)];
-//	QRData = [[UILabel alloc] initWithFrame:CGRectMake(70, 1, 250, 30)];
 	[doneButton setImage:[UIImage imageNamed:@"doneButton.png"] forState:UIControlStateNormal];
 	[doneButton addTarget:self action:@selector(dismissCamera) forControlEvents:UIControlEventTouchUpInside];
 	[view addSubview:doneButton];
-//	[view addSubview:QRData];
 	[doneButton release];
 	reader.cameraOverlayView = view;
+	eventName.text = eventAttending.eventName;
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd hh:mm a";
+	eventDate.text = [df stringFromDate:eventAttending.eventDate];
+	eventDescription.text = eventAttending.eventDescription;
+	[df release];
 }
 
 - (void)viewDidUnload
 {
+	[eventAddress release];
+	eventAddress = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -379,6 +382,7 @@
 	
 //	[someURL release];
 //	[address release];
+	[eventAddress release];
 	[super dealloc];
 }
 
@@ -392,6 +396,10 @@
 #pragma mark - ASIHTTP Delegate Methods
 - (void)mapRequestFinished:(ASIHTTPRequest *)request
 {
+	eventMap.hidden = NO;
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		eventMap.alpha = 1.0;
+	}];
 	NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	NSDictionary *location = [[[[result objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
 	lat = [[location objectForKey:@"lat"] floatValue];
@@ -409,7 +417,12 @@
 }
 - (void)mapRequestFailed:(ASIHTTPRequest *)request
 {
-	
+	eventAddress.text = eventAttending.eventAddress;
+	eventAddress.hidden = NO;
+	[UIView animateWithDuration:0.3 animations:^(void) {
+		eventAddress.alpha = 1.0;
+	}];
+	NSLog(@"Loading Map failed");	
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -428,7 +441,7 @@
 		eventDate.frame = CGRectMake(12, 74, 150, 21);
 		eventDescription.frame = CGRectMake(15, 5, 270, 80);
 		eventMap.frame = CGRectMake(15, 110, 270, 120);
-		
+		eventAddress.frame = eventMap.frame;
 		update.frame = CGRectMake(12, 115, 150, 24);
 		checkIn.frame = CGRectMake(12, 153, 150, 24);
 		live.frame = CGRectMake(12, 191, 150, 24);
@@ -446,6 +459,7 @@
 		eventDate.frame = CGRectMake(20, 75, 280, 21);
 		eventDescription.frame = CGRectMake(15, 10, 270, 60);
 		eventMap.frame = CGRectMake(15, 83, 270, 75);
+		eventAddress.frame = eventMap.frame;
 		update.frame = CGRectMake(70, 329, 180, 27);
 		checkIn.frame = CGRectMake(70, 364, 180, 27);
 		contact.frame = CGRectMake(25, 267, 125, 23);

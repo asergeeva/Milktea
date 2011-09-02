@@ -46,6 +46,7 @@ BOOL uploading = NO;
 		logoutButton = [[UIBarButtonItem alloc] init];
 		oAuth = [[OAuth alloc] initWithConsumerKey:OAUTH_CONSUMER_KEY andConsumerSecret:OAUTH_CONSUMER_SECRET];
 		[oAuth loadOAuthTwitterContextFromUserDefaults];
+		imageDictionary = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -205,16 +206,16 @@ BOOL uploading = NO;
                                    initWithURL:[NSURL URLWithString:postUrl]];
 	[tweetField resignFirstResponder];
 	NSString *hashtag = thisEvent.eventTwitter;
-	if(tweetField.text.length > 139-hashtag.length)
+	if(tweetField.text.length > 138-hashtag.length)
 	{
-		tweetField.text = [NSString stringWithFormat:@"%@ #%@", [tweetField.text substringToIndex:139-hashtag.length], hashtag];
+		tweetField.text = [NSString stringWithFormat:@"%@ #%@", [tweetField.text substringToIndex:138-hashtag.length], hashtag];
 	}
 	else
 	{
 		tweetField.text = [NSString stringWithFormat:@"%@ #%@", tweetField.text, hashtag];	
 	}
-	[tweetTable reloadData];
 	
+	NSLog(@"%i", tweetField.text.length);
 	NSMutableDictionary *postInfo = [NSMutableDictionary
                                      dictionaryWithObject:tweetField.text
                                      forKey:@"status"];
@@ -226,6 +227,7 @@ BOOL uploading = NO;
 	tweetField.text = @"";
 	[request release];
 	[tweetField resignFirstResponder];
+	[tweetTable reloadData];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -395,11 +397,23 @@ BOOL uploading = NO;
 		imageView = (UIImageView*)[tweetView viewWithTag:TWEET_IMAGE_VIEW];
 		theTweet = (UITextView*)[tweetView viewWithTag:TWEET_CONTENTS];
 	}
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[[tweets objectAtIndex:index] objectForKey:@"profile_image_url"]]];
-	[request setCompletionBlock:^(void) {
-		imageView.image = [UIImage imageWithData:[request responseData]];
-	}];
-	[request startAsynchronous];
+	imageView.image = nil;
+	NSString *imageString = [[tweets objectAtIndex:index] objectForKey:@"profile_image_url"];
+	if(![imageDictionary objectForKey:imageString])
+	{
+		ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[[tweets objectAtIndex:index] objectForKey:@"profile_image_url"]]];
+		[request setCompletionBlock:^(void) 
+		{
+			UIImage *imageFromData = [UIImage imageWithData:[request responseData]];
+			[imageDictionary setObject:imageFromData forKey:imageString];
+			imageView.image = imageFromData;
+		}];
+		[request startAsynchronous];
+	}
+	else
+	{
+		imageView.image = [imageDictionary objectForKey:imageString];	
+	}
 	theTweet.text = [[tweets objectAtIndex:index] objectForKey:@"text"];
 //	imageView.image = [UIImage imageWithData:[request responseData]];
 	return cell;
@@ -485,6 +499,7 @@ BOOL uploading = NO;
 	[tweetTable release];
 //	[lastTweet release];
 	[logoutButton release];
+	[imageDictionary release];
 //	[thisEvent release];
 //	[uploadingMessage release];
 //	[showUploadingMessage release];

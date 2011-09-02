@@ -30,6 +30,7 @@
 //	UIAlertView *showUploadingMessage;
 //	UIImageView *uploadingMessage;
 	TwitterLoginPopup *loginPopup;
+	NSMutableDictionary *imageDictionary;
 	OAuth *oAuth;
 //	MGTwitterEngine *twit;
 }
