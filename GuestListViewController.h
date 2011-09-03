@@ -33,6 +33,7 @@
 	NSMutableArray *guestNameAttendance;
 	NSMutableArray *selectionList;
 	BOOL showMessages;
+	BOOL inSearch;
 //	UIView *scale;
 	Event *event;
 }

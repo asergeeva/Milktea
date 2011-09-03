@@ -11,11 +11,14 @@
 @implementation CheckInButton
 @synthesize eid;
 @synthesize uid;
+@synthesize on;
+@synthesize value;
 - (id)init
 {
     self = [super init];
     if (self) {
         // Initialization code here.
+		on = NO;
     }
     
     return self;

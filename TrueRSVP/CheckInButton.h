@@ -12,7 +12,11 @@
 {
 	NSString *eid;
 	NSString *uid;
+	BOOL on;
+	int value;
 }
+@property (nonatomic) BOOL on;
+@property (nonatomic) int value;
 @property (nonatomic, retain) NSString *eid;
 @property (nonatomic, retain) NSString *uid;
 @end

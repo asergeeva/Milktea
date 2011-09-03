@@ -480,17 +480,29 @@
 		if([[_request responseString ]isEqual:@"status_doesNotExist"])
 		{
 			[facebook logout:self];
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Found" 
-															message:@"Unable to locate your account. Please goto http://www.truersvp.com to register."
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Account Not Found" 
+															message:@"The given Facebook account entered does not match any accouts on trueRSVP. Please check your details on http://www.truersvp.com"
 														   delegate:nil
 												  cancelButtonTitle:@"OK" 
 												  otherButtonTitles:nil];
 			[alert show];
 			[alert release];
+			[self finishedSignIn];
+		}
+		else if([[_request responseString ]isEqual:@"status_loginSuccess"])
+		{
+			[self showProgress];
 		}
 		else
 		{
-			[self showProgress];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+															message:@"There seems to be a problem with the servers at the moment. Try again later."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+			[self finishedSignIn];
 		}
 	}
 	[stringData release];

@@ -72,18 +72,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 }
 - (BOOL)isOnline
 {
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], ping]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
-	[request setTimeOutSeconds:3];
-	[request startSynchronous];
-	if(![[request responseString] isEqual:[NSNull null]])
-	{
-		if([[request responseString] isEqual:@"pong"])
-		{
-			return YES;
-		}
-	}
+//	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",[ud objectForKey:@"APILocation"], ping]];
+//	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
+//	[request setTimeOutSeconds:3];
+//	[request startSynchronous];
+//	if(![[request responseString] isEqual:[NSNull null]])
+//	{
+//		if([[request responseString] isEqual:@"pong"])
+//		{
+//			return YES;
+//		}
+//	}
 	connectionMonitor = [Reachability reachabilityForInternetConnection];
 	[connectionMonitor startNotifier];
 //	if([connectionMonitor currentReachabilityStatus] == NotReachable)
@@ -532,7 +532,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request setPostValue:eid forKey:@"eid"];
 	[request setPostValue:confidence forKey:@"confidence"];
-	[request startAsynchronous];
+	[request startSynchronous];
 }
 - (void)isCheckedInWithEID:(NSString*)eid didFinish:(SEL)finished delegate:(id)receiver
 {		

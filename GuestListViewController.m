@@ -53,7 +53,7 @@ BOOL sendSelection = NO;
 		fnameAscending = YES;
 		lnameAscending = YES;
 		attendingAscending = YES;
-		toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
+		toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 460, 320, 44)];
 		searchButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 105, 48)];
 		refreshButton = [[UIButton alloc] initWithFrame:CGRectMake(105, 0, 105, 48)];
 		[refreshButton addTarget:self action:@selector(refreshGuestList) forControlEvents:UIControlEventTouchUpInside];
@@ -90,6 +90,16 @@ BOOL sendSelection = NO;
 	}
 	[super viewDidAppear:animated];
 }
+- (void)setAutoresizing:(UIView*)viewToSet
+{
+	viewToSet.contentMode = UIViewContentModeCenter;
+	viewToSet.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+	[self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	[super viewWillAppear:animated];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -105,7 +115,7 @@ BOOL sendSelection = NO;
 	guestTable.backgroundColor = [UIColor clearColor];
 	guestTable.separatorStyle = UITableViewCellSeparatorStyleNone;
 	guestTable.tag = TABLE_TAG;
-
+	
 	
 	UIView *header = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 40)] autorelease];
 	header.backgroundColor = [UIColor whiteColor];
@@ -125,14 +135,20 @@ BOOL sendSelection = NO;
 	UIButton *firstNameButton = [[[UIButton alloc] initWithFrame:CGRectMake(15, 10, 85, 21)] autorelease];
 	[firstNameButton setImage:[UIImage imageNamed:@"firstNameButton.png"] forState:UIControlStateNormal];
 	[firstNameButton addTarget:self action:@selector(sortPressed:) forControlEvents:UIControlEventTouchUpInside];
+	firstNameButton.contentMode = UIViewContentModeLeft;
+	firstNameButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 	[header addSubview:firstNameButton];
 	UIButton *lastNameButton = [[[UIButton alloc] initWithFrame:CGRectMake(110, 10, 85, 21)] autorelease];
 	[lastNameButton setImage:[UIImage imageNamed:@"lastNameButton.png"] forState:UIControlStateNormal];
 	[lastNameButton addTarget:self action:@selector(sortPressed:) forControlEvents:UIControlEventTouchUpInside];
+	lastNameButton.contentMode = UIViewContentModeCenter;
+	lastNameButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 	[header addSubview:lastNameButton];
 	UIButton *attendedButton = [[[UIButton alloc] initWithFrame:CGRectMake(205, 10, 85, 21)] autorelease];
 	[attendedButton setImage:[UIImage imageNamed:@"attendedButton.png"] forState:UIControlStateNormal];
 	[attendedButton addTarget:self action:@selector(sortPressed:) forControlEvents:UIControlEventTouchUpInside];
+	attendedButton.contentMode = UIViewContentModeRight;
+	attendedButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 	[header addSubview:attendedButton];
 	[doneButton setImage:[UIImage imageNamed: @"doneButton.png"] forState:UIControlStateNormal];
 	doneButton.backgroundColor = [UIColor whiteColor];
@@ -177,6 +193,26 @@ BOOL sendSelection = NO;
 	
 	searchHeader.hidden = YES;
 	
+	[self setAutoresizing:guestTable];
+	[self setAutoresizing:eventCheckBack];
+	[self setAutoresizing:eventNameBack];
+	[self setAutoresizing:eventCheck];
+	[self setAutoresizing:toolbar];
+//	[self setAutoresizing:toolbar2];
+	[self setAutoresizing:masterHeader];
+	[self setAutoresizing:searchHeader];
+	[self setAutoresizing:header];
+	
+	sendButton.contentMode = UIViewContentModeRight;
+	sendButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+	refreshButton.contentMode = UIViewContentModeCenter;
+	refreshButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+	searchBar.contentMode = UIViewContentModeLeft;
+	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	doneButton.contentMode = UIViewContentModeRight;
+	doneButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+	toolbar.contentMode = UIViewContentModeCenter;
+	toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
 	CGRect rect = self.view.frame;
 	rect.origin.y += 44;
 	self.view.bounds = rect;
@@ -225,7 +261,11 @@ BOOL sendSelection = NO;
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+	if(inSearch)
+	{
 		return NO;
+	}	
+	return YES;
 }
 - (void)moveSearchOut:(float)duration
 {
@@ -290,11 +330,9 @@ BOOL sendSelection = NO;
 	searchHeader.hidden = NO;
 	[searchBar becomeFirstResponder];
 	[UIView animateWithDuration:0.3 animations:^(void) {
-		CGRect rect = masterHeader.frame;
-		rect.origin.x += 400;
-		masterHeader.frame = rect;
+
 		
-		rect = searchHeader.frame;
+		CGRect rect = searchHeader.frame;
 		rect.origin.x += 400;
 		searchHeader.frame = rect;
 		
@@ -302,39 +340,104 @@ BOOL sendSelection = NO;
 		rect.origin.y -= 95;
 		self.view.frame = rect;
 		
-		rect = self.navigationController.view.frame;
-		rect.origin.y -= 44;
-		self.navigationController.view.frame = rect;
+
+		if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+		{
+			rect = masterHeader.frame;
+			rect.origin.x += 480;
+			masterHeader.frame = rect;
+			rect = self.navigationController.view.frame;
+			if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)
+			{
+				rect.origin.x -= 32;
+			}
+			else
+			{
+				rect.origin.x += 32;
+			}
+			self.navigationController.view.frame = rect;
+		}
+		else
+		{
+			rect = masterHeader.frame;
+			rect.origin.x += 400;
+			masterHeader.frame = rect;
+			rect = self.navigationController.view.frame;
+			rect.origin.y -= 44;
+			self.navigationController.view.frame = rect;
+		}
+	
 		
 		rect = guestTable.frame;
 		rect.origin.y -= 11;
 		guestTable.frame = rect;
 		searchHeader.layer.opacity = 1.0;
+		toolbar.alpha = 0;
+	} completion:^(BOOL finished) {
+		toolbar.hidden = YES;
 	}];
+	
+	inSearch = YES;
 	[self.view bringSubviewToFront:guestTable];
 }
 - (void)donePressed:(UISearchBar *)thisSearchBar
 {
 	[searchBar resignFirstResponder];
 	[self moveSearchOut:0.3];
+	toolbar.hidden = NO;
 	[UIView animateWithDuration:0.3 animations:^(void) {
-		CGRect rect = masterHeader.frame;
-		rect.origin.x -= 400;
-		masterHeader.frame = rect;
+//		CGRect rect = masterHeader.frame;
+//		rect.origin.x -= 400;
+//		masterHeader.frame = rect;
 		
-		rect = self.view.frame;
+		CGRect rect = self.view.frame;
 		rect.origin.y += 95;
 		self.view.frame = rect;
 		
-		rect = self.navigationController.view.frame;
-		rect.origin.y += 44;
-		self.navigationController.view.frame = rect;
+//		rect = self.navigationController.view.frame;
+//		if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+//		{
+//			rect.origin.x += 32;
+//		}
+//		else
+//		{
+//			rect.origin.y += 44;
+//		}
+//		self.navigationController.view.frame = rect;
+
+		if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+		{
+			rect = masterHeader.frame;
+			rect.origin.x -= 480;
+			masterHeader.frame = rect;
+			rect = self.navigationController.view.frame;
+			if([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft)
+			{
+				rect.origin.x += 32;
+			}
+			else
+			{
+				rect.origin.x -= 32;
+			}
+//			rect.origin.x += 32;
+			self.navigationController.view.frame = rect;
+		}
+		else
+		{
+			rect = masterHeader.frame;
+			rect.origin.x -= 400;
+			masterHeader.frame = rect;
+			rect = self.navigationController.view.frame;
+			rect.origin.y += 44;
+			self.navigationController.view.frame = rect;
+		}
 		
 		rect = guestTable.frame;
 		rect.origin.y += 11;
 		guestTable.frame = rect;	
+		toolbar.alpha = 1;
 	}];
-	
+	inSearch = NO;
 	[guestTable reloadData];
 	searchBar.text = @"";
 	[self.view bringSubviewToFront:toolbar];
@@ -378,7 +481,7 @@ BOOL sendSelection = NO;
 			else if(view.tag == TOOLBAR2_TAG)
 			{
 				CGRect rect = view.frame;
-				rect.origin.y += 80;
+				rect.origin.y += 132;
 				view.frame = rect;				
 			}
 			else if(view.tag != TABLE_TAG)
@@ -414,6 +517,7 @@ BOOL sendSelection = NO;
 }
 - (void)sendPressed2
 {
+	sendSelection = NO;
 	if(selectionList.count > 0)
 	{
 		[self.navigationController setNavigationBarHidden:NO animated:YES];	
@@ -463,19 +567,34 @@ BOOL sendSelection = NO;
 			}
 		}
 	}completion:nil];
-	
-	toolbar2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 516, 320, 44)];
+	UIButton *selectNone, *selectAll;
+	CGFloat width = self.view.frame.size.width;
+	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+	{
+		toolbar2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 504, 480, 44)];		
+		selectNone = [[UIButton alloc] initWithFrame:CGRectMake(width/4 - width/80, -2, 63, 49)];
+		selectAll = [[UIButton alloc] initWithFrame:CGRectMake(width/2 + width/20, -2, 49, 49)];
+	}
+	else
+	{
+		toolbar2 = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 504, 320, 44)];
+		selectNone = [[UIButton alloc] initWithFrame:CGRectMake(width/4 - width/80, -2, 63, 49)];
+		selectAll = [[UIButton alloc] initWithFrame:CGRectMake(width/2 + width/80, -2, 49, 49)];
+	}
 	toolbar2.barStyle = UIBarStyleBlack;
 	toolbar2.tag = TOOLBAR2_TAG;
 	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(4, -2, 49, 49)];
 	[backButton setImage:[UIImage imageNamed:@"backButton.png"] forState:UIControlStateNormal];
 	[backButton addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-	UIButton *selectNone = [[UIButton alloc] initWithFrame:CGRectMake(70, -2, 63, 49)];
 	[selectNone setImage:[UIImage imageNamed:@"selectNone.png"] forState:UIControlStateNormal];
 	[selectNone addTarget:self action:@selector(selectNonePressed) forControlEvents:UIControlEventTouchUpInside];
-	UIButton *selectAll = [[UIButton alloc] initWithFrame:CGRectMake(155, -2, 49, 49)];
+	selectNone.contentMode = UIViewContentModeCenter;
+	selectNone.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+	
 	[selectAll setImage:[UIImage imageNamed:@"selectAll.png"] forState:UIControlStateNormal];
 	[selectAll addTarget:self action:@selector(selectAllPressed)forControlEvents:UIControlEventTouchUpInside];
+	selectAll.contentMode = UIViewContentModeCenter;
+	selectAll.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 	[toolbar2 addSubview:backButton];
 	[toolbar2 addSubview:selectAll];
 	[toolbar2 addSubview:selectNone];
@@ -486,6 +605,8 @@ BOOL sendSelection = NO;
 	toolbar2.alpha = 0;
 	[sendButton removeTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[sendButton addTarget:self action:@selector(sendPressed2) forControlEvents:UIControlEventTouchUpInside];
+	toolbar2.contentMode = UIViewContentModeCenter;
+	toolbar2.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
 	[UIView animateWithDuration:0.75 delay:0.05 options:UIViewAnimationCurveEaseInOut animations:^(void) {
 		[sendButton removeFromSuperview];
 		[toolbar2 addSubview:sendButton];
@@ -498,7 +619,14 @@ BOOL sendSelection = NO;
 		self.view.bounds = rect;
 		toolbar2.alpha = 1;
 		rect = toolbar2.frame;
-		rect.origin.y -= 100;
+		if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+		{
+			rect.origin.y -= 280;
+		}
+		else
+		{
+			rect.origin.y -= 132;
+		}
 		toolbar2.frame = rect;
 	} completion:nil];
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -565,7 +693,7 @@ BOOL sendSelection = NO;
 		attendee = ((Attendee*)[guestNameAttendance objectAtIndex:indexPath.row]);
 	}
 	
-	attendeeCell = [guestTable dequeueReusableCellWithIdentifier:@"attendeeCell"];
+//	attendeeCell = [guestTable dequeueReusableCellWithIdentifier:@"attendeeCell"];
 	
 	if([attendee.fname isEqual:[NSNull null]] || [attendee.lname isEqual:[NSNull null]])
 	{
@@ -591,10 +719,10 @@ BOOL sendSelection = NO;
 	lname.textAlignment = UITextAlignmentCenter;
 	lname.textColor = [UIColor blackColor];
 	lname.font = [UIFont systemFontOfSize:12];
-	
-	if(!attendeeCell)
-	{
-		attendeeCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"attendeeCell"] autorelease];
+//	
+//	if(!attendeeCell)
+//	{
+		attendeeCell = [[[UITableViewCell alloc] init] autorelease];
 		attendeeCell.frame = CGRectMake(0, 0, 300, 20);
 		attendeeCell.autoresizingMask = UIViewAutoresizingNone;
 		UIView *backView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
@@ -613,12 +741,12 @@ BOOL sendSelection = NO;
 		
 		[attendeeCell.contentView addSubview:sendMarker];
 		[attendeeCell.contentView addSubview:checkbox];
-	}
-	else
-	{
-		sendMarker = (SendButton*)[attendeeCell.contentView viewWithTag:GUEST_SEND_MARKER];
-		checkbox = (CheckInButton*)[attendeeCell.contentView viewWithTag:GUEST_CHECKBOX];
-	}
+//	}
+//	else
+//	{
+//		sendMarker = (SendButton*)[attendeeCell.contentView viewWithTag:GUEST_SEND_MARKER];
+//		checkbox = (CheckInButton*)[attendeeCell.contentView viewWithTag:GUEST_CHECKBOX];
+//	}
 	
 	if([selectionList containsObject:attendee.uid])
 	{
@@ -627,11 +755,19 @@ BOOL sendSelection = NO;
 	
 	[attendeeCell.contentView addSubview:fname];
 	[attendeeCell.contentView addSubview:lname];
+	fname.contentMode = UIViewContentModeLeft;
+	fname.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+	lname.contentMode = UIViewContentModeCenter;
+	lname.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 	
 	sendMarker.uid = attendee.uid;
+	sendMarker.contentMode = UIViewContentModeLeft;
+	sendMarker.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
 	checkbox.uid = attendee.uid;
 	checkbox.eid = event.eventID;
 	checkbox.tag = indexPath.row;
+	checkbox.contentMode = UIViewContentModeRight;
+	checkbox.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
 	if(attendee.isAttending)
 	{
 		checkbox.selected = YES;

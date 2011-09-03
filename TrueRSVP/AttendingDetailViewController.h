@@ -30,8 +30,10 @@
 	IBOutlet UIButton *checkIn;
 	IBOutlet UIButton *live;
 	IBOutlet UIView *buttonWhiteBack;
-
+	NSArray *choices;
 	NSString *organizerEmail;
+//	UIPickerView *picker;
+//	BOOL isPickerResigned;
 //	NSURL *someURL;
 	float lat;
 	float lng;
@@ -40,7 +42,7 @@
 //	UILabel *QRData;
 }
 - (void)dismissCamera;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (IBAction)showLive:(UIButton*)sender;
 - (IBAction)showMail:(UIButton*)sender;

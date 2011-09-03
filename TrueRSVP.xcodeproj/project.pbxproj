@@ -11,6 +11,7 @@
 		510F267313FF1B8E00776F65 /* ProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 510F267113FF1B8E00776F65 /* ProgressView.xib */; };
 		510F267713FF7E5300776F65 /* QueuedActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 510F267613FF7E5200776F65 /* QueuedActions.m */; };
 		510F267A13FFB66C00776F65 /* CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 510F267913FFB66B00776F65 /* CheckIn.m */; };
+		5114A6BA1412320800285833 /* RSVPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5114A6B91412320800285833 /* RSVPCell.m */; };
 		51152E4113E787F800673391 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51152E4013E787F800673391 /* Security.framework */; };
 		511F35F913D5686300F7E748 /* attending_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 511F35ED13D5686300F7E748 /* attending_selected.png */; };
 		511F35FA13D5686300F7E748 /* attending_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 511F35EE13D5686300F7E748 /* attending_selected@2x.png */; };
@@ -179,6 +180,8 @@
 		519A0E0013EAAFC30063695C /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 519A0DFE13EAAFC30063695C /* SFHFKeychainUtils.m */; };
 		519C557113DA04F900EE8E9A /* AttendanceList.m in Sources */ = {isa = PBXBuildFile; fileRef = 519C557013DA04F900EE8E9A /* AttendanceList.m */; };
 		519C557813DA09C200EE8E9A /* ProfileViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */; };
+		51A73DE714120C6A00073BD4 /* RSVPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A73DE514120C6A00073BD4 /* RSVPViewController.m */; };
+		51A73DE814120C6A00073BD4 /* RSVPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51A73DE614120C6A00073BD4 /* RSVPViewController.xib */; };
 		51ACEA4C13E354F200C206FD /* CheckInButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 51ACEA4B13E354F200C206FD /* CheckInButton.m */; };
 		51AEC93D13DE62A200E2FB69 /* AttendingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51AEC93C13DE62A200E2FB69 /* AttendingController.m */; };
 		51B1859313E0A3F500FBDCC9 /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51B1859113E0A3F400FBDCC9 /* DebugViewController.m */; };
@@ -226,6 +229,8 @@
 		510F267613FF7E5200776F65 /* QueuedActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueuedActions.m; sourceTree = "<group>"; };
 		510F267813FFB66A00776F65 /* CheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckIn.h; sourceTree = "<group>"; };
 		510F267913FFB66B00776F65 /* CheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckIn.m; sourceTree = "<group>"; };
+		5114A6B81412320800285833 /* RSVPCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVPCell.h; sourceTree = "<group>"; };
+		5114A6B91412320800285833 /* RSVPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVPCell.m; sourceTree = "<group>"; };
 		51152E4013E787F800673391 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		511F35ED13D5686300F7E748 /* attending_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attending_selected.png; sourceTree = "<group>"; };
 		511F35EE13D5686300F7E748 /* attending_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "attending_selected@2x.png"; sourceTree = "<group>"; };
@@ -491,6 +496,9 @@
 		519C556F13DA04F900EE8E9A /* AttendanceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceList.h; sourceTree = "<group>"; };
 		519C557013DA04F900EE8E9A /* AttendanceList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceList.m; sourceTree = "<group>"; };
 		519C557713DA09C200EE8E9A /* ProfileViewController_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController_Landscape.xib; sourceTree = "<group>"; };
+		51A73DE414120C6A00073BD4 /* RSVPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVPViewController.h; sourceTree = "<group>"; };
+		51A73DE514120C6A00073BD4 /* RSVPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVPViewController.m; sourceTree = "<group>"; };
+		51A73DE614120C6A00073BD4 /* RSVPViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSVPViewController.xib; sourceTree = "<group>"; };
 		51ACEA4A13E354F200C206FD /* CheckInButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInButton.h; sourceTree = "<group>"; };
 		51ACEA4B13E354F200C206FD /* CheckInButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInButton.m; sourceTree = "<group>"; };
 		51AEC93B13DE62A200E2FB69 /* AttendingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendingController.h; sourceTree = "<group>"; };
@@ -857,6 +865,11 @@
 				510F266F13FF1B8E00776F65 /* ProgressView.h */,
 				510F267013FF1B8E00776F65 /* ProgressView.m */,
 				510F267113FF1B8E00776F65 /* ProgressView.xib */,
+				51A73DE414120C6A00073BD4 /* RSVPViewController.h */,
+				51A73DE514120C6A00073BD4 /* RSVPViewController.m */,
+				51A73DE614120C6A00073BD4 /* RSVPViewController.xib */,
+				5114A6B81412320800285833 /* RSVPCell.h */,
+				5114A6B91412320800285833 /* RSVPCell.m */,
 				518E2D8B13D24FA60080E068 /* SignInViewController.h */,
 				518E2D8C13D24FA60080E068 /* SignInViewController.m */,
 				518E2D8E13D24FA70080E068 /* SignInViewController.xib */,
@@ -1330,6 +1343,7 @@
 				5150A69E140DEC2600AA4EC1 /* arrow.png in Resources */,
 				5150A6A1140DEC3800AA4EC1 /* arrow@2x.png in Resources */,
 				5150A6A6140E0FDB00AA4EC1 /* AboutViewController.xib in Resources */,
+				51A73DE814120C6A00073BD4 /* RSVPViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1422,6 +1436,8 @@
 				51956F60140987FF004F3DA2 /* SBJsonWriter.m in Sources */,
 				51FBAFAC140D9F6700F27838 /* UIPlaceHolderTextView.m in Sources */,
 				5150A6A5140E0FDB00AA4EC1 /* AboutViewController.m in Sources */,
+				51A73DE714120C6A00073BD4 /* RSVPViewController.m in Sources */,
+				5114A6BA1412320800285833 /* RSVPCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1476,7 +1492,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: OrganicStartup LLC";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1496,7 +1512,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "35FAB9F8-A2C5-44B1-A1D8-C347C37F65FB";
 				USER_HEADER_SEARCH_PATHS = "\"/usr/local/include/\"";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1540,6 +1556,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Scott Sangster (Q63UJR5EJV)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1560,6 +1577,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "81D7A6E8-EF0C-4650-ADD1-B96391511FEC";
 				USER_HEADER_SEARCH_PATHS = "\"/usr/local/include/\"";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1570,7 +1588,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NICHOLAS C CHAN";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: OrganicStartup LLC";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1590,7 +1608,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "51FBED7F-40C4-4D75-A6F8-9A2D68709CFB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8C3B1F1F-D097-4844-AF38-48E8AFEF6617";
 				USER_HEADER_SEARCH_PATHS = "\"/usr/local/include/\"";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

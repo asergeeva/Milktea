@@ -46,17 +46,10 @@ BOOL welcomeShown = NO;
 	[main attendingTabSelected:nil];
 	[main dismissModalViewControllerAnimated:YES];
 }
-- (void)viewDidLoad
+
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-	hostButton.layer.cornerRadius = 5;
-	hostButton.clipsToBounds = YES;
-	hostButton.layer.shouldRasterize = YES;
-	attendeeButton.layer.cornerRadius = 5;
-	attendeeButton.clipsToBounds = YES;
-	attendeeButton.layer.shouldRasterize = YES;
-    // Do any additional setup after loading the view from its nib.
-	if(!welcomeShown && self.view.frame.size.width < 400)
+	if(!welcomeShown && self.view.frame.size.width < 400 && UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]))
 	{
 		welcomeBar = [[UINavigationBar alloc] initWithFrame:self.view.frame];
 		CGRect rect = welcomeBar.frame;
@@ -95,6 +88,26 @@ BOOL welcomeShown = NO;
 		}];
 		welcomeShown = YES;
 	}
+	else
+	{
+		CGRect frame = self.view.bounds;
+		frame.origin.y = 44;
+		self.view.bounds = frame;
+	}
+	[super viewWillAppear:animated];
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	hostButton.layer.cornerRadius = 5;
+	hostButton.clipsToBounds = YES;
+	hostButton.layer.shouldRasterize = YES;
+	attendeeButton.layer.cornerRadius = 5;
+	attendeeButton.clipsToBounds = YES;
+	attendeeButton.layer.shouldRasterize = YES;
+	welcomeBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    // Do any additional setup after loading the view from its nib.
 	[hostButton addTarget:self action:@selector(hostPressed) forControlEvents:UIControlEventTouchUpInside];
 	[attendeeButton addTarget:self action:@selector(attendeePressed) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -127,8 +140,9 @@ BOOL welcomeShown = NO;
 	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 	{
 		CGRect rect = self.view.frame;
-		rect.origin.x -= 44;
+		rect.origin.x = 0;
 		rect.size.width = 344;
+		rect.size.height = 480;
 		self.view.frame = rect;
 //		self.view.frame = CGRectMake(-204.0, 0.0, 480.0, 320.0);
 	}

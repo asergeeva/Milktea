@@ -20,6 +20,7 @@
 #import "QueuedActions.h"
 #import "User.h"
 #import "FlurryAnalytics.h"
+#import "RSVPViewController.h"
 @implementation AttendingDetailViewController
 @synthesize eventAttending;
 @synthesize eventWhiteBack;
@@ -40,23 +41,30 @@
 @synthesize reader;
 //@synthesize address;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) 
-	{
-        // Custom initialization
-		eventAttending = event;
-		//[eventAttending retain];
-		reader = [ZBarReaderViewController new];
-		reader.readerDelegate = self;
-		reader.showsZBarControls = NO;
-		[reader.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
-		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
-//		address = [[NSMutableString alloc] init];
-    }
-    return self;
-}
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event
+//{
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self) 
+//	{
+//        // Custom initialization
+//		eventAttending = event;
+//		//[eventAttending retain];
+//		reader = [ZBarReaderViewController new];
+//		reader.readerDelegate = self;
+//		reader.showsZBarControls = NO;
+//		[reader.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
+//		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
+////		address = [[NSMutableString alloc] init];
+//		choices = [[NSArray alloc] initWithObjects:@"Absolutely", @"Pretty Sure", "50/50", "Most Likely Not", @"Raincheck", nil];
+////				   NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:6];
+////				   [array addObject:@"Absolutly"];
+////				   [array addObject:@"Pretty Sure"];
+////				   [array addObject:@"50/50"];
+////				   [array addObject:@"Most Likely Not"];
+////				   [array addObject:@"Raincheck"];
+//    }
+//    return self;
+//}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -67,6 +75,9 @@
 		reader.showsZBarControls = NO;
 		[reader.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
 		[reader.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
+		choices = [[NSArray alloc] initWithObjects:@"Absolutely", @"Pretty Sure", @"50/50", @"Most Likely Not", @"Raincheck", nil];
+//		picker = [[UIPickerView alloc] init];
+//		isPickerResigned = YES;
     }
     return self;
 }
@@ -106,39 +117,96 @@
 	NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"http://maps.google.com/maps?q=%@", eventAttending.eventAddress] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 	[[UIApplication sharedApplication] openURL:url];
 }
+//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+//{
+//	return 1;
+//}
+//- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+//{
+//	return 5;
+//}
+//- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+//{
+//	return [UIScreen mainScreen].applicationFrame.size.width-20;
+//}
+//- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//	return [choices objectAtIndex:row];
+//}
+//- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+//{
+//	[pickerView selectRow:row inComponent:component animated:YES];
+//}
+//- (void)dismissPicker
+//{
+//	[UIView animateWithDuration:0.3 animations:^(void) {
+//		CGRect frame = picker.frame;
+//		frame.origin.y += picker.frame.size.height;
+//		picker.frame = frame;
+//	}];
+//}
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+////	for(UIView *view in self.view.subviews)
+////	{
+//		for (UITouch *touch in touches)
+//		{
+//			if(CGRectContainsPoint(picker.frame, [touch locationInView:picker]))
+//			{
+//			
+//					return;
+//			}
+//		}
+////	}
+//	if(!isPickerResigned)
+//	{
+//		[self dismissPicker];
+//		isPickerResigned = YES;
+//	}
+//	[super touchesBegan:touches withEvent:event];
+//}
 - (IBAction)showRSVP:(UIButton*)sender
 {
-	NSString *absolutely = @"Absolutely";
-	NSString *prettySure = @"Pretty Sure";
-	NSString *fifty = @"50/50";
-	NSString *likelyNot = @"Most Likely Not";
-	NSString *rainCheck = @"Raincheck";
-	if([[NetworkManager sharedNetworkManager] isOnline])
-	{
-		switch([[NetworkManager sharedNetworkManager] getAttendanceForEvent:eventAttending.eventID])
-		{
-			case 90:
-				absolutely = [NSString stringWithFormat:@"*%@",absolutely];
-				break;
-			case 65:
-				prettySure = [NSString stringWithFormat:@"*%@", prettySure];
-				break;
-			case 35:
-				fifty = [NSString stringWithFormat:@"*%@", fifty];
-				break;
-			case 15:
-				likelyNot = [NSString stringWithFormat:@"*%@", likelyNot];
-				break;
-			case 4:
-				rainCheck = [NSString stringWithFormat:@"*%@", rainCheck];
-				break;
-			default:
-				break;
-		}
-	}
-	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Update RSVP" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:absolutely, prettySure, fifty, likelyNot, rainCheck, nil];
-	[sheet showInView:self.view];
-	[sheet release];
+//	isPickerResigned = NO;
+	RSVPViewController *rsvpVC = [[RSVPViewController alloc] initWithNibName:@"RSVPViewController" bundle:[NSBundle mainBundle] event:eventAttending];
+	[self.navigationController pushViewController:rsvpVC animated:YES];
+	[rsvpVC release];
+//	NSString *absolutely = @"Absolutely";
+//	NSString *prettySure = @"Pretty Sure";
+//	NSString *fifty = @"50/50";
+//	NSString *likelyNot = @"Most Likely Not";
+//	NSString *rainCheck = @"Raincheck";
+//	if([[NetworkManager sharedNetworkManager] isOnline])
+//	{
+//		switch([[NetworkManager sharedNetworkManager] getAttendanceForEvent:eventAttending.eventID])
+//		{
+//			case 90:
+//				absolutely = [NSString stringWithFormat:@"*%@",absolutely];
+//				break;
+//			case 65:
+//				prettySure = [NSString stringWithFormat:@"*%@", prettySure];
+//				break;
+//			case 35:
+//				fifty = [NSString stringWithFormat:@"*%@", fifty];
+//				break;
+//			case 15:
+//				likelyNot = [NSString stringWithFormat:@"*%@", likelyNot];
+//				break;
+//			case 4:
+//				rainCheck = [NSString stringWithFormat:@"*%@", rainCheck];
+//				break;
+//			default:
+//				break;
+//		}
+//	}
+//	[UIView animateWithDuration:0.3 animations:^(void) {
+//		CGRect frameAnimate = picker.frame;
+//		frameAnimate.origin.y -= picker.frame.size.height + 44;
+//		picker.frame = frameAnimate;
+//	}];
+//	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Update RSVP" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:absolutely, prettySure, fifty, likelyNot, rainCheck, nil];
+//	[sheet showInView:self.view];
+//	[sheet release];
 }
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
@@ -290,11 +358,16 @@
 
 	[[NetworkManager sharedNetworkManager] setAttendanceWithEID:eventAttending.eventID confidence:[NSString stringWithFormat:@"%d", confidence]];
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+//	[self dismissPicker];
+	[super viewWillDisappear:animated];
+}
 - (void)viewDidAppear:(BOOL)animated
 {
-	[super viewDidAppear:animated];
 	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventAttending.eventAddress delegate:self finishedSelector:@selector(mapRequestFinished:) failedSelector:@selector(mapRequestFailed:)];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	[super viewDidAppear:animated];
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -302,6 +375,18 @@
 	eventMap.hidden = YES;
 	eventAddress.alpha = 0;
 	eventAddress.hidden = NO;
+	[super viewDidDisappear:animated];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+	eventName.text = eventAttending.eventName;
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd hh:mm a";
+	eventDate.text = [df stringFromDate:eventAttending.eventDate];
+	eventDescription.text = eventAttending.eventDescription;
+	[df release];
+	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	[super viewWillAppear:animated];
 }
 - (void)addEffects:(UIView*)view
 {
@@ -323,6 +408,15 @@
 	eventMap.hidden = YES;
 	eventAddress.alpha = 0;
 	eventAddress.hidden = YES;
+//	picker.delegate = self;
+//	picker.dataSource = self;
+//	[self.view addSubview:picker];
+//	picker.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+//	CGRect frame = picker.frame;
+//	frame.origin.y = 44 + [UIScreen mainScreen].applicationFrame.size.height;
+//	picker.frame = frame;
+//	picker.contentMode = UIViewContentModeBottom;
+//	picker.showsSelectionIndicator = YES;
 	//self.view.frame = self.navigationController.view.frame;
 	self.navigationItem.title = @"Event Details";
 	if([UIDevice currentDevice].multitaskingSupported)
@@ -358,12 +452,6 @@
 	[view addSubview:doneButton];
 	[doneButton release];
 	reader.cameraOverlayView = view;
-	eventName.text = eventAttending.eventName;
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-MM-dd hh:mm a";
-	eventDate.text = [df stringFromDate:eventAttending.eventDate];
-	eventDescription.text = eventAttending.eventDescription;
-	[df release];
 }
 
 - (void)viewDidUnload
@@ -391,11 +479,13 @@
 	[buttonWhiteBack release];
 	[organizerEmail release];
 	[reader release];
+//	[picker release];
 //	[QRData release];
 	
 //	[someURL release];
 //	[address release];
 	[eventAddress release];
+	[choices release];
 	[super dealloc];
 }
 

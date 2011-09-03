@@ -56,7 +56,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 		[alert release];
 	}
 	SignInViewController *signVC = [[SignInViewController alloc] initWithNibName:@"SignInViewController" bundle:[NSBundle mainBundle]];
-	facebook = [[Facebook alloc] initWithAppId:@"256152217746559" andDelegate:signVC];
+	facebook = [[Facebook alloc] initWithAppId:@"123284527755183" andDelegate:signVC];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
 	//navController.view.backgroundColor = [UIColor colorWithRed:0.925 green:0.914 blue:0.875 alpha:1.000];
 	[FlurryAnalytics logAllPageViews:navController];

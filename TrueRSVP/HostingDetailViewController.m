@@ -73,6 +73,15 @@
 
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[[UIApplication sharedApplication] setStatusBarHidden:NO];
+	
+	eventName.text = eventHosting.eventName;
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	df.dateFormat = @"yyyy-MM-dd hh:mm a";
+	eventDate.text = [df stringFromDate:eventHosting.eventDate];
+	eventDescription.text = eventHosting.eventDescription;
+	[df release];
+	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self finishedSelector:@selector(scoreLoadFinished:) failedSelector:@selector(scoreLoadFailed:)];
+	QRData.text = @"";
 }
 - (void)addEffects:(UIView*)view
 {
@@ -107,7 +116,7 @@
 	checkIn.clipsToBounds = YES;
 	live.layer.cornerRadius = 5;
 	live.clipsToBounds = YES;
-	
+
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
 	eventMap.scrollEnabled = YES;
@@ -127,13 +136,7 @@
 	[view addSubview:QRData];
 	[doneButton release];
 	reader.cameraOverlayView = view;
-	eventName.text = eventHosting.eventName;
-	NSDateFormatter *df = [[NSDateFormatter alloc] init];
-	df.dateFormat = @"yyyy-MM-dd hh:mm a";
-	eventDate.text = [df stringFromDate:eventHosting.eventDate];
-	eventDescription.text = eventHosting.eventDescription;
-	[df release];
-	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self finishedSelector:@selector(scoreLoadFinished:) failedSelector:@selector(scoreLoadFailed:)];
+
 }
 #pragma mark - Unload
 - (void)viewDidUnload
@@ -298,12 +301,12 @@
 	[FlurryAnalytics logEvent:@"HOSTING_DETAIL_MESSAGING_INITIATED"];
 	guestListVC = [[GuestListViewController alloc] initWithNibName:@"GuestListViewController" bundle:[NSBundle mainBundle] event:eventHosting];
 	guestListVC.showMessages = YES;
-	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-	{
-		UIViewController *vc = [[[UIViewController alloc] init] autorelease];
-		[self presentModalViewController:vc animated:NO];
-		[self dismissModalViewControllerAnimated:NO];
-	}	
+//	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+//	{
+//		UIViewController *vc = [[[UIViewController alloc] init] autorelease];
+//		[self presentModalViewController:vc animated:NO];
+//		[self dismissModalViewControllerAnimated:NO];
+//	}	
 	[self.navigationController pushViewController:guestListVC animated:YES];
 }
 - (IBAction)showLive:(UIButton*)sender
@@ -371,13 +374,13 @@
 	{
 		case 0:
 			guestListVC = [[GuestListViewController alloc] initWithNibName:@"GuestListViewController" bundle:[NSBundle mainBundle] event:eventHosting];
-			if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-			{
-				//				[self presentModalViewController:guestListVC animated:YES];
-				UIViewController *vc = [[[UIViewController alloc] init] autorelease];
-				[self presentModalViewController:vc animated:NO];
-				[self dismissModalViewControllerAnimated:NO];
-			}	
+//			if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+//			{
+//				//				[self presentModalViewController:guestListVC animated:YES];
+//				UIViewController *vc = [[[UIViewController alloc] init] autorelease];
+//				[self presentModalViewController:vc animated:NO];
+//				[self dismissModalViewControllerAnimated:NO];
+//			}	
 			[self.navigationController pushViewController:guestListVC animated:YES];
 			break;
 		case 1:
