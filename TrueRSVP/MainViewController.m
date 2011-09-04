@@ -268,14 +268,18 @@ BOOL offlineWarning = NO;
     
     // Release any cached data, images, etc that aren't in use.
 }
-
-- (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
+- (void)dismissAllKeyboards
+{
 	for (UIView* view in scrollView.subviews) {
 		if ([view isKindOfClass:[UITextField class]] || [view isKindOfClass:[UITextView class]])
 		{
 			[view resignFirstResponder];	
 		}
 	}	
+	[profileVC resignKeyboard];
+}
+- (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
+	[self dismissAllKeyboards];
 }
 #pragma mark - Attending/Hosting Delegate Method
 - (void)selectedEvent:(UIViewController *)viewController
@@ -296,6 +300,7 @@ BOOL offlineWarning = NO;
 		[scrollView scrollRectToVisible:frame animated:YES];
 	}
 	pageNumber = 0;
+	[self dismissAllKeyboards];
 }
 - (void)attendingTabSelected:(id)sender
 {
@@ -309,6 +314,7 @@ BOOL offlineWarning = NO;
 		[scrollView scrollRectToVisible:frame animated:YES];
 	}
 	pageNumber = 1;
+	[self dismissAllKeyboards];
 }
 - (void)hostingTabSelected:(id)sender
 {	profileButton.selected = NO;
@@ -321,6 +327,7 @@ BOOL offlineWarning = NO;
 		[scrollView scrollRectToVisible:frame animated:YES];
 	}
 	pageNumber = 2;
+	[self dismissAllKeyboards];
 }
 #pragma mark - Textfield Delegate Methods
 - (void)setTextFieldDelegates:(UIView*)mainView

@@ -89,6 +89,11 @@
 		515445D31413191A00E3ECA1 /* SignIn_Facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D11413191A00E3ECA1 /* SignIn_Facebook@2x.png */; };
 		515445D614131A0400E3ECA1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D414131A0400E3ECA1 /* Default.png */; };
 		515445D714131A0400E3ECA1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D514131A0400E3ECA1 /* Default@2x.png */; };
+		515445DC14131ECE00E3ECA1 /* bar_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D814131ECD00E3ECA1 /* bar_landscape.png */; };
+		515445DD14131ECE00E3ECA1 /* bar_landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D914131ECD00E3ECA1 /* bar_landscape@2x.png */; };
+		515445DE14131ECE00E3ECA1 /* bar_portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445DA14131ECD00E3ECA1 /* bar_portrait.png */; };
+		515445DF14131ECE00E3ECA1 /* bar_portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445DB14131ECD00E3ECA1 /* bar_portrait@2x.png */; };
+		515445E21413242D00E3ECA1 /* AutoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 515445E11413242D00E3ECA1 /* AutoImageView.m */; };
 		515A0E5213E12BC800C136D0 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515A0E4C13E12BC800C136D0 /* libzbar.a */; };
 		515A0E5313E12BC800C136D0 /* zbar-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 515A0E4E13E12BC800C136D0 /* zbar-back.png */; };
 		515A0E5413E12BC800C136D0 /* zbar-help.html in Resources */ = {isa = PBXBuildFile; fileRef = 515A0E4F13E12BC800C136D0 /* zbar-help.html */; };
@@ -337,6 +342,12 @@
 		515445D11413191A00E3ECA1 /* SignIn_Facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Facebook@2x.png"; sourceTree = "<group>"; };
 		515445D414131A0400E3ECA1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		515445D514131A0400E3ECA1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		515445D814131ECD00E3ECA1 /* bar_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_landscape.png; sourceTree = "<group>"; };
+		515445D914131ECD00E3ECA1 /* bar_landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar_landscape@2x.png"; sourceTree = "<group>"; };
+		515445DA14131ECD00E3ECA1 /* bar_portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_portrait.png; sourceTree = "<group>"; };
+		515445DB14131ECD00E3ECA1 /* bar_portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar_portrait@2x.png"; sourceTree = "<group>"; };
+		515445E01413242D00E3ECA1 /* AutoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoImageView.h; sourceTree = "<group>"; };
+		515445E11413242D00E3ECA1 /* AutoImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoImageView.m; sourceTree = "<group>"; };
 		515A0E3913E12BC800C136D0 /* Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decoder.h; sourceTree = "<group>"; };
 		515A0E3A13E12BC800C136D0 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		515A0E3B13E12BC800C136D0 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
@@ -884,6 +895,8 @@
 				518E2D8B13D24FA60080E068 /* SignInViewController.h */,
 				518E2D8C13D24FA60080E068 /* SignInViewController.m */,
 				518E2D8E13D24FA70080E068 /* SignInViewController.xib */,
+				515445E01413242D00E3ECA1 /* AutoImageView.h */,
+				515445E11413242D00E3ECA1 /* AutoImageView.m */,
 				51F9BB4013D2623A0017731B /* TrueRSVPViewController.h */,
 				51F9BB4113D2623A0017731B /* TrueRSVPViewController.m */,
 				51F9BB4213D2623A0017731B /* TrueRSVPViewController.xib */,
@@ -923,6 +936,10 @@
 				514D992113E0E3E00036AC40 /* attendedButton@2x.png */,
 				515445C8141314DC00E3ECA1 /* back2.png */,
 				515445C9141314DD00E3ECA1 /* back2@2x.png */,
+				515445D814131ECD00E3ECA1 /* bar_landscape.png */,
+				515445D914131ECD00E3ECA1 /* bar_landscape@2x.png */,
+				515445DA14131ECD00E3ECA1 /* bar_portrait.png */,
+				515445DB14131ECD00E3ECA1 /* bar_portrait@2x.png */,
 				515445C01413033A00E3ECA1 /* checkbox_checked.png */,
 				515445C11413033A00E3ECA1 /* checkbox_checked@2x.png */,
 				515445C21413033A00E3ECA1 /* checkbox.png */,
@@ -1364,6 +1381,10 @@
 				515445D31413191A00E3ECA1 /* SignIn_Facebook@2x.png in Resources */,
 				515445D614131A0400E3ECA1 /* Default.png in Resources */,
 				515445D714131A0400E3ECA1 /* Default@2x.png in Resources */,
+				515445DC14131ECE00E3ECA1 /* bar_landscape.png in Resources */,
+				515445DD14131ECE00E3ECA1 /* bar_landscape@2x.png in Resources */,
+				515445DE14131ECE00E3ECA1 /* bar_portrait.png in Resources */,
+				515445DF14131ECE00E3ECA1 /* bar_portrait@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1458,6 +1479,7 @@
 				5150A6A5140E0FDB00AA4EC1 /* AboutViewController.m in Sources */,
 				51A73DE714120C6A00073BD4 /* RSVPViewController.m in Sources */,
 				5114A6BA1412320800285833 /* RSVPCell.m in Sources */,
+				515445E21413242D00E3ECA1 /* AutoImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

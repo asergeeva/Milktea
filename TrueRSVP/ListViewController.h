@@ -17,7 +17,7 @@
 {
 	IBOutlet UITableView *eventTableView;
 	ListController *listController;
-	UIView *refreshHeaderView;
+	UIImageView *refreshHeaderView;
 	BOOL isDragging;
     BOOL isLoading;
 }
@@ -27,5 +27,5 @@
 - (void)refresh;
 @property (nonatomic, retain) ListController *listController;
 @property (nonatomic, retain) IBOutlet UITableView *eventTableView;
-@property (nonatomic, retain) UIView *refreshHeaderView;
+@property (nonatomic, retain) UIImageView *refreshHeaderView;
 @end

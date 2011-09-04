@@ -363,9 +363,20 @@
 //	[self dismissPicker];
 	[super viewWillDisappear:animated];
 }
+- (void)checkAttending:(ASIHTTPRequest*)request
+{
+//	NSLog(@"%@", [request responseString]);
+	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
+	if([[dictionary objectForKey:@"is_attending"] isEqual:@"1"])
+	{
+		[checkIn setTitle:@"Already checked in!" forState:UIControlStateNormal];
+		checkIn.enabled = NO;
+	}
+}
 - (void)viewDidAppear:(BOOL)animated
 {
 	[[NetworkManager sharedNetworkManager] getMapWithAddress:eventAttending.eventAddress delegate:self finishedSelector:@selector(mapRequestFinished:) failedSelector:@selector(mapRequestFailed:)];
+	[[NetworkManager sharedNetworkManager] isCheckedInWithEID:eventAttending.eventID didFinish:@selector(checkAttending:) delegate:self];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[super viewDidAppear:animated];
 }
@@ -379,6 +390,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+	[checkIn setTitle:@"Check in to event" forState:UIControlStateNormal];
+	checkIn.enabled = YES;
 	eventName.text = eventAttending.eventName;
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd hh:mm a";

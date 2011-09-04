@@ -62,11 +62,21 @@
 	{
 		self.eventTableView.frame = CGRectMake(0, 32, self.eventTableView.frame.size.width, self.eventTableView.frame.size.height);
 		self.view.bounds = CGRectMake(0, 32, 480, 320);
+		for(UITableViewCell *cell in [eventTableView visibleCells])
+		{
+			cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bar_landscape.png"]] autorelease];
+			cell.backgroundView.contentMode = UIViewContentModeCenter;
+		}
 	}
 	else
 	{
 		self.eventTableView.frame = CGRectMake(0, 44, self.eventTableView.frame.size.width, self.eventTableView.frame.size.height);
 		self.view.bounds = CGRectMake(0, 44, 320, 480);
+		for(UITableViewCell *cell in [eventTableView visibleCells])
+		{
+			cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bar_portrait.png"]] autorelease];
+			cell.backgroundView.contentMode = UIViewContentModeCenter;
+		}
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -122,11 +132,12 @@
 - (void)addPullRefreshHeader:(UITableView*)tableView
 {
 //	refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT)];
-	refreshHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(10, 0 - REFRESH_HEADER_HEIGHT + 5, 300, REFRESH_HEADER_HEIGHT - 10)] autorelease];
+	refreshHeaderView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 0 - REFRESH_HEADER_HEIGHT + 5, 300, REFRESH_HEADER_HEIGHT - 10)] autorelease];
 	refreshHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	refreshHeaderView.layer.cornerRadius = 5;
-	refreshHeaderView.clipsToBounds = YES;
-	refreshHeaderView.backgroundColor = [UIColor whiteColor];
+//	refreshHeaderView.layer.cornerRadius = 5;
+//	refreshHeaderView.clipsToBounds = YES;
+	refreshHeaderView.image = [UIImage imageNamed:@"bar_portrait.png"];
+//	refreshHeaderView.backgroundColor = [UIColor whiteColor];
 	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, REFRESH_HEADER_HEIGHT/2 - 15, 320, 19)] autorelease];
 	refreshLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	refreshLabel.text = @"Refreshing...";

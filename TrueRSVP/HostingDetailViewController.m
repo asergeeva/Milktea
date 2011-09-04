@@ -336,6 +336,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
 	id<NSFastEnumeration> results = [info objectForKey: ZBarReaderControllerResults];
+	NSMutableString *result = [[NSMutableString alloc] init];
 	for(ZBarSymbol *symbol in results)
 	{
 		NSArray *splitString = [((NSString*)symbol.data) componentsSeparatedByString:@"-"];
@@ -356,17 +357,19 @@
 			if(![[NetworkManager sharedNetworkManager] isOnline])
 			{
 				[[QueuedActions sharedQueuedActions] addActionWithEID:[splitString objectAtIndex:1] userID:[splitString objectAtIndex:2] attendance:YES date:[NSDate date]];
-				QRData.text = @"Queued checkin for next push";
+				[result setString: @"Queued checkin for next push"];
 			}
 			else
 			{
 				[[NetworkManager sharedNetworkManager] checkInWithEID:[splitString objectAtIndex:1] uid:[splitString objectAtIndex:2] checkInValue:@"1"];	
-				QRData.text = [NSString stringWithFormat: @"Checked in:%@", [[NetworkManager sharedNetworkManager] getUsernameWithUID:[splitString objectAtIndex:2]]];	
+				[result setString:[NSString stringWithFormat: @"Checked in:%@", [[NetworkManager sharedNetworkManager] getUsernameWithUID:[splitString objectAtIndex:2]]]];	
 			}
 		}
 	}
 	[reader dismissModalViewControllerAnimated:NO];
 	[self presentModalViewController:reader animated:NO];
+	QRData.text = result;
+	[result release];
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {

@@ -536,6 +536,7 @@ BOOL sendSelection = NO;
 		MessageViewController *messageVC = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:[NSBundle mainBundle] list:selectionList event:event guestViewController:self];
 		[self.navigationController pushViewController:messageVC animated:YES];
 		[messageVC release];
+		[self backButtonPressed];
 	}
 	else
 	{
@@ -548,7 +549,6 @@ BOOL sendSelection = NO;
 		[alert release];
 	}
 	showMessages = NO;
-	[self backButtonPressed];
 }
 - (void)sendPressed:(UIButton*)sender
 {

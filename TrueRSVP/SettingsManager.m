@@ -23,11 +23,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(SettingsManager);
 //		[self loadAddress];
 		if(![[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"])
 		{
-			[[NSUserDefaults standardUserDefaults] setValue:@"http://192.168.1.136/Eventfii/" forKey:@"rootAddress"];
+			[[NSUserDefaults standardUserDefaults] setValue:@"https://www.truersvp.com/" forKey:@"rootAddress"];
 		}
 		if(![[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"])
 		{
-			[[NSUserDefaults standardUserDefaults] setValue:@"http://192.168.1.136/Eventfii/api/" forKey:@"APILocation"];
+			[[NSUserDefaults standardUserDefaults] setValue:@"https://www.truersvp.com/api/" forKey:@"APILocation"];
 		}
 		if(![[NSUserDefaults standardUserDefaults] objectForKey:@"ignoreSSL"])
 		{

@@ -161,7 +161,7 @@
 		[FlurryAnalytics logEvent:@"MESSAGING_EMAIL_SENT"];
 		type = @"email";
 	}
-	else if(messageType = MESSAGE_TYPE_TEXT)
+	else if(messageType == MESSAGE_TYPE_TEXT)
 	{
 		[FlurryAnalytics logEvent:@"MESSAGING_TEXT_SENT"];
 		type = @"text";

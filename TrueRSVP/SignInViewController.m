@@ -296,6 +296,7 @@
 {
 	self.view.userInteractionEnabled = NO;
 	self.navigationController.navigationBar.userInteractionEnabled = NO;
+	[[NSUserDefaults standardUserDefaults] setObject:txtUsername.text forKey:@"lastUsername"];
 	[UIView animateWithDuration:0.3 animations:^(void) 
 	{
 		for(UIView *fadeView in self.view.subviews)
@@ -388,17 +389,21 @@
 //	[self showDebugView:nil];
 	sessionKey = [[NSMutableString alloc] init];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
-	txtUsername.text = @"movingincircles@gmail.com";
-	txtPassword.text = @"supfoo";
+//	txtUsername.text = @"movingincircles@gmail.com";
+//	txtPassword.text = @"supfoo";
 //	TrueRSVPAppDelegate *app = ((TrueRSVPAppDelegate*)[[UIApplication sharedApplication] delegate]);
-	if([[SettingsManager sharedSettingsManager].settings objectForKey:@"username"])
+	if([[NSUserDefaults standardUserDefaults] objectForKey:@"lastUsername"] != [NSNull null])
 	{
-		txtUsername.text = [[SettingsManager sharedSettingsManager].settings objectForKey:@"username"];
-		if([SFHFKeychainUtils getPasswordForUsername:txtUsername.text andServiceName:@"TrueRSVP" error:nil])
-		{
-			txtPassword.text = [SFHFKeychainUtils getPasswordForUsername:txtUsername.text andServiceName:@"TrueRSVP" error:nil];
-		}
+		txtUsername.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastUsername"];
 	}
+//	if([[SettingsManager sharedSettingsManager].settings objectForKey:@"username"])
+//	{
+//		txtUsername.text = [[SettingsManager sharedSettingsManager].settings objectForKey:@"username"];
+	if([SFHFKeychainUtils getPasswordForUsername:txtUsername.text andServiceName:@"TrueRSVP" error:nil])
+	{
+		txtPassword.text = [SFHFKeychainUtils getPasswordForUsername:txtUsername.text andServiceName:@"TrueRSVP" error:nil];
+	}
+//	}
 	self.navigationController.navigationBar.frame = CGRectMake(0, -44, 480, 44);
 	self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.235 green:0.600 blue:0.792 alpha:1.000];
 	txtUsername.alpha = 0;
@@ -489,7 +494,7 @@
 			[alert release];
 			[self finishedSignIn];
 		}
-		else if([[_request responseString ]isEqual:@"status_loginSuccess"])
+		else if([[_request responseString ] hasSuffix:@"status_loginSuccess"])
 		{
 			[self showProgress];
 		}

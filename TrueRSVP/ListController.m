@@ -24,6 +24,7 @@
         // Initialization code here.
 		uniqueMonths = [[NSMutableArray alloc] init];
 		eventSections = [[NSMutableArray alloc] init];
+//		bars = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -37,6 +38,7 @@
 //		[array release];
 	}
 	[eventSections release];
+//	[bars release];
 //	[eventArray release];
 	[super dealloc];
 }
@@ -54,25 +56,37 @@
 	UILabel *date;
 	if(!tableCell)
 	{
-		tableCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"listCell"] autorelease];
+		tableCell = [[[UITableViewCell alloc] initWithFrame:CGRectMake(10, 5, 300, 40)] autorelease];
+		tableCell.backgroundView.frame = CGRectMake(10, 5, 300, 40);
 		tableCell.autoresizesSubviews = YES;
 		tableCell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 //		tableCell.backgroundColor = [UIColor clearColor];
-		UIView *backView = [[[UIView alloc] initWithFrame:CGRectMake(10, 5, 300, 40)] autorelease];
-		backView.backgroundColor = [UIColor whiteColor];
-		backView.layer.cornerRadius = 5;
-		backView.clipsToBounds = YES;
-		backView.layer.shouldRasterize = YES;
-		backView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		[tableCell.contentView addSubview:backView];
-		title = [[[UILabel alloc] initWithFrame:CGRectMake(40, 8, 220, 22)] autorelease];
+//		UIImageView *backView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 300, 40)] autorelease];
+//		backView.backgroundColor = [UIColor whiteColor];
+//		backView.image = [UIImage imageNamed:@"bar_portrait.png"];
+//		backView.layer.cornerRadius = 5;
+//		backView.clipsToBounds = YES;
+//		backView.layer.shouldRasterize = YES;
+//		backView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//		[tableCell.contentView addSubview:backView];
+		if(UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]))
+		{
+			tableCell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed: @"bar_portrait.png"]] autorelease];
+		}
+		else
+		{
+			tableCell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed: @"bar_landscape.png"]] autorelease];
+		}
+		tableCell.backgroundView.contentMode = UIViewContentModeCenter;
+		tableCell.tag = BAR_TAG;
+		title = [[[UILabel alloc] initWithFrame:CGRectMake(40, 7, 220, 20)] autorelease];
 		title.tag = LIST_CELL_TITLE;
 //		title.backgroundColor = [UIColor clearColor];
 		title.textAlignment = UITextAlignmentLeft;
 		title.textColor = [UIColor darkGrayColor];
 		title.font = [UIFont boldSystemFontOfSize:15];
 		
-		date = [[[UILabel alloc] initWithFrame:CGRectMake(40, 24, 220, 20)] autorelease];
+		date = [[[UILabel alloc] initWithFrame:CGRectMake(40, 23, 220, 18)] autorelease];
 		date.tag = LIST_CELL_DATE;
 //		date.backgroundColor = [UIColor clearColor];
 		date.textAlignment = UITextAlignmentLeft;
@@ -81,7 +95,7 @@
 		[tableCell.contentView addSubview:date];
 		[tableCell.contentView addSubview:title];
 		UIImageView *arrow = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]] autorelease];
-		arrow.frame = CGRectMake(backView.frame.size.width-arrow.frame.size.width-10, 15, arrow.frame.size.width, arrow.frame.size.height);
+		arrow.frame = CGRectMake(300-arrow.frame.size.width-10, 15, arrow.frame.size.width, arrow.frame.size.height);
 		arrow.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		arrow.contentMode = UIViewContentModeRight;
 		[tableCell.contentView addSubview:arrow];

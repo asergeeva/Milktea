@@ -14,6 +14,7 @@
 	NSMutableArray *uniqueMonths;
 	NSMutableArray *eventSections;
 	NSArray *eventArray;
+//	NSMutableArray *bars;
 }
 @property (nonatomic, retain) NSMutableArray *uniqueMonths;
 @property (nonatomic, retain) NSMutableArray *eventSections;
