@@ -10,8 +10,9 @@
 #import "User.h"
 #import "ASIFormDataRequest.h"
 #import "UIPlaceHolderTextView.h"
+#import "NetworkManager.h"
 //#import "DebugView.h"
-@interface ProfileViewController : UIViewController <UserDelegate, ASIHTTPRequestDelegate> {
+@interface ProfileViewController : UIViewController <UserDelegate, ASIHTTPRequestDelegate, NetworkManagerProfileDelegate> {
 //    IBOutlet UINavigationBar *navBar;
 	IBOutlet UILabel *nameLabel;
 	IBOutlet UILabel *emailLabel;

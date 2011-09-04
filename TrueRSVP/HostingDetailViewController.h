@@ -28,7 +28,7 @@
 	IBOutlet UIView *eventDescriptionWhiteBack;
 	IBOutlet UITextViewUneditable *eventDescription;
 	IBOutlet MKMapView *eventMap;
-	IBOutlet UITextView *eventAddress;
+//	IBOutlet UITextView *eventAddress;
 	IBOutlet UIButton *contact;
 	IBOutlet UIButton *checkIn;
 	IBOutlet UIButton *live;

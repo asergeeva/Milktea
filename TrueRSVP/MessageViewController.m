@@ -350,7 +350,7 @@
 		sendAsEmail.frame = CGRectMake(285, 26, 150, 12);
 		sendAsText.frame = CGRectMake(288, 78, 150, 12);
 		sendWhiteBack.frame = CGRectMake(255, 210, 200, 30);
-		sendButton.frame = CGRectMake(240, 163, 200, 25);
+		sendButton.frame = CGRectMake(20, 163, 420, 25);
 	}
 	else
 	{
@@ -358,9 +358,9 @@
 		eventName.frame = CGRectMake(10, 5, 280, 20);
 		eventDate.frame = CGRectMake(10, 20, 280, 20);		
 		messageWhiteBack.frame = CGRectMake(10, 60, 300, 340);
-		messageTypeButton.frame = CGRectMake(50, 260, 200, 25);
+//		messageTypeButton.frame = CGRectMake(50, 260, 200, 25);
 		messageLabel.frame = CGRectMake(20, 10, 100, 12);
-		messageTextView.frame = CGRectMake(20, 35, 260, 210);
+		messageTextView.frame = CGRectMake(20, 35, 260, 250);
 //		emailCheck.frame = CGRectMake(20, 175, 44, 44);
 //		textCheck.frame = CGRectMake(20, 224, 44, 44);
 		sendAsEmail.frame = CGRectMake(70, 191, 150, 12);

@@ -21,7 +21,10 @@
 	IBOutlet UILabel *eventName;
 	IBOutlet UILabel *eventDate;
 	IBOutlet UIView *eventDescriptionWhiteBack;
+	IBOutlet UILabel *orangeLabel;
 	IBOutlet UITextViewUneditable *eventDescription;
+	IBOutlet UIView *rsvpBack;
+	IBOutlet UILabel *currentRSVPStatic;
 	IBOutlet UITextView *eventAddress;
 	IBOutlet MKMapView *eventMap;
 	IBOutlet UIButton *contact;

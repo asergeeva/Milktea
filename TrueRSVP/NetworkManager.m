@@ -110,6 +110,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
 	return [NSString stringWithFormat:@"%@ %@", [dictionary objectForKey:@"fname"], [dictionary objectForKey:@"lname"]];
 }
+- (void)refreshProfileWithDelegate:(UIViewController*)receiver completion:(SEL)finished
+{
+	NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [ud objectForKey:@"APILocation"], getUserInfo]];
+	ASIFormDataRequest *profileReq = [ASIFormDataRequest requestWithURL:profileURL];
+	profileReq.delegate = self;
+	profileReq.didFinishSelector = @selector(didFinishLoadProfile:);
+	profileReq.didFailSelector = @selector(didFailLoadProfile:);
+	[profileReq setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
+	[profileReq startAsynchronous];
+}
 - (void)refreshAllWithDelegate:(UIViewController*)receiver completion:(SEL)finished
 {
 	ASINetworkQueue *allQueue = [ASINetworkQueue queue];
@@ -161,6 +171,27 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	NSArray *hostingInfo = [NSDictionary dictionaryWithJSONString:[request responseString] error:nil];
 	[hostingList removeAllObjects];
 	[hostingList addObjectsFromArray:hostingInfo];
+	NSDateFormatter *df = [[NSDateFormatter alloc]init];
+	df.dateFormat = dateFormatFromSQL;
+	[df setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+	NSMutableArray *listToRemove = [[NSMutableArray alloc] init];
+	for(int i = 0; i < hostingList.count ; i++)
+	{
+		NSDictionary *dictionary = [hostingList objectAtIndex:i];
+		NSDate *someDate = [df dateFromString:[dictionary objectForKey:@"event_datetime"]];
+//		NSLog(@"%f", [someDate timeIntervalSinceNow]);
+		if([someDate timeIntervalSinceNow]/3600/24 < -1)
+		{
+			[listToRemove addObject:dictionary];
+		}
+	}
+	for(int i = 0; i < listToRemove.count; i++)
+	{
+		[hostingList removeObject:[listToRemove objectAtIndex:i]];
+	}
+	[listToRemove removeAllObjects];
+	[listToRemove release];
+	[df release];
 	[[SettingsManager sharedSettingsManager] saveArray:hostingList withKey:@"hostingList"];
 	[guestList removeAllObjects];
 	for(NSDictionary *dictionary in hostingList)
@@ -209,6 +240,27 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 {
 	[attendingList removeAllObjects];
 	[attendingList addObjectsFromArray:[[CJSONDeserializer deserializer] deserializeAsArray:[request responseData] error:nil]];
+	NSDateFormatter *df = [[NSDateFormatter alloc]init];
+	df.dateFormat = dateFormatFromSQL;
+	[df setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+	NSMutableArray *listToRemove = [[NSMutableArray alloc] init];
+	for(int i = 0; i < attendingList.count ; i++)
+	{
+		NSDictionary *dictionary = [attendingList objectAtIndex:i];
+		NSDate *someDate = [df dateFromString:[dictionary objectForKey:@"event_datetime"]];
+		NSLog(@"%f", [someDate timeIntervalSinceNow]);
+		if([someDate timeIntervalSinceNow]/3600/24 < -1)
+		{
+			[listToRemove addObject:dictionary];
+		}
+	}
+	for(int i = 0; i < listToRemove.count; i++)
+	{
+		[attendingList removeObject:[listToRemove objectAtIndex:i]];
+	}
+	[listToRemove removeAllObjects];
+	[listToRemove release];
+	[df release];
 	[[SettingsManager sharedSettingsManager] saveArray:attendingList withKey:@"attendingList"];
 	attendingDone = YES;
 	[attendingDelegate updateAttending];
@@ -272,7 +324,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
 	[request addPostValue:email forKey:@"email"];
 	[request addPostValue:about forKey:@"about"];
-	[request addPostValue:cell forKey:@"cell"];
+	[request addPostValue:cell forKey:@"phone"];
 	[request addPostValue:zip forKey:@"zip"];
 	if([twitter hasPrefix:@"@"])
 	{
@@ -288,10 +340,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	request.delegate = viewController;
 	[profile setObject:email forKey:@"email"];
 	[profile setObject:about forKey:@"about"];
-	[profile setObject:cell forKey:@"cell"];
+	[profile setObject:cell forKey:@"phone"];
 	[profile setObject:zip forKey:@"zip"];
 
 	[request startAsynchronous];
+	[profileDelegate updateProfile];
 }
 - (int)getAttendanceForEvent:(NSString*)eid
 {
@@ -301,7 +354,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 	[request setPostValue:eid forKey:@"eid"];
 	[request startSynchronous];
 	NSDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[request responseData] error:nil];
-	NSLog(@"%@", [dictionary objectForKey:@"confidence"]);
+//	NSLog(@"%@", [dictionary objectForKey:@"confidence"]);
 	return [[dictionary objectForKey:@"confidence"] intValue];
 }
 - (ASIHTTPRequest*)getOrganizerEmailForOrganizerID:(NSString*)oid

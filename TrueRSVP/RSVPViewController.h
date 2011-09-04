@@ -22,8 +22,9 @@
 	NSString *eid;
 	int confidence;
 	IBOutlet UIToolbar *selectToolbar;
+	IBOutlet UILabel *orangeLabel;
 	Event *_event;
 }
-- (void)checkboxPressed:(int)confidence;
+- (void)cellPressed:(int)confidence;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
 @end

@@ -140,7 +140,7 @@
 	}
 	for(NSString *string in uniqueMonths)
 	{
-		[eventSections addObject:[[NSMutableArray alloc] init]];
+		[eventSections addObject:[[[NSMutableArray alloc] init] autorelease]];
 	}
 	return uniqueMonths.count;
 }

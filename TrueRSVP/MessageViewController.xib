@@ -54,7 +54,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 20}, {100, 12}}</string>
 								<reference key="NSSuperview" ref="298615079"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="951897830"/>
 								<string key="NSReuseIdentifierKey">_NS:311</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -79,10 +78,9 @@
 							<object class="IBUITextView" id="951897830">
 								<reference key="NSNextResponder" ref="298615079"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 35}, {260, 210}}</string>
+								<string key="NSFrame">{{20, 35}, {260, 250}}</string>
 								<reference key="NSSuperview" ref="298615079"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="777973158"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:613</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="641392838">
 									<int key="NSColorSpace">1</int>
@@ -98,13 +96,12 @@
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
 							</object>
-							<object class="IBUIButton" id="777973158">
+							<object class="IBUIButton" id="940064852">
 								<reference key="NSNextResponder" ref="298615079"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{50, 260}, {200, 25}}</string>
+								<string key="NSFrame">{{50, 300}, {200, 25}}</string>
 								<reference key="NSSuperview" ref="298615079"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="940064852"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:222</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -115,44 +112,24 @@
 									<double key="NSSize">15</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<string key="IBUINormalTitle">Message Type</string>
-								<object class="NSColor" key="IBUIHighlightedTitleColor" id="770695762">
+								<string key="IBUINormalTitle">Send</string>
+								<object class="NSColor" key="IBUIHighlightedTitleColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
 								<reference key="IBUINormalTitleColor" ref="641392838"/>
-								<object class="NSColor" key="IBUINormalTitleShadowColor" id="854299203">
+								<object class="NSColor" key="IBUINormalTitleShadowColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage" id="1065667123">
+								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">BlueBackground_1px.png</string>
 								</object>
 							</object>
-							<object class="IBUIButton" id="940064852">
-								<reference key="NSNextResponder" ref="298615079"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{50, 300}, {200, 25}}</string>
-								<reference key="NSSuperview" ref="298615079"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
-								<string key="NSReuseIdentifierKey">_NS:222</string>
-								<bool key="IBUIOpaque">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<int key="IBUIContentHorizontalAlignment">0</int>
-								<int key="IBUIContentVerticalAlignment">0</int>
-								<reference key="IBUIFont" ref="1047279791"/>
-								<string key="IBUINormalTitle">Send</string>
-								<reference key="IBUIHighlightedTitleColor" ref="770695762"/>
-								<reference key="IBUINormalTitleColor" ref="641392838"/>
-								<reference key="IBUINormalTitleShadowColor" ref="854299203"/>
-								<reference key="IBUINormalBackgroundImage" ref="1065667123"/>
-							</object>
 						</object>
 						<string key="NSFrame">{{10, 60}, {300, 340}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="751424629"/>
 						<string key="NSReuseIdentifierKey">_NS:180</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -174,7 +151,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{10, 5}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="17911495"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="814167679"/>
 								<string key="NSReuseIdentifierKey">_NS:311</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -194,7 +170,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{10, 20}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="17911495"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="298615079"/>
 								<string key="NSReuseIdentifierKey">_NS:311</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -212,7 +187,6 @@
 						</object>
 						<string key="NSFrame">{{10, 10}, {300, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="749103708"/>
 						<string key="NSReuseIdentifierKey">_NS:180</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -225,7 +199,6 @@
 				</object>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="17911495"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -304,29 +277,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">sendPressed:</string>
+						<string key="label">messageTypePressed:</string>
 						<reference key="source" ref="940064852"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">49</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">messageTypeButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="777973158"/>
-					</object>
-					<int key="connectionID">53</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">messageTypePressed:</string>
-						<reference key="source" ref="777973158"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">55</int>
+					<int key="connectionID">56</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -387,7 +343,6 @@
 							<reference ref="751424629"/>
 							<reference ref="951897830"/>
 							<reference ref="940064852"/>
-							<reference ref="777973158"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -404,11 +359,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">25</int>
 						<reference key="object" ref="940064852"/>
-						<reference key="parent" ref="298615079"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">51</int>
-						<reference key="object" ref="777973158"/>
 						<reference key="parent" ref="298615079"/>
 					</object>
 				</object>
@@ -429,14 +379,12 @@
 					<string>21.IBPluginDependency</string>
 					<string>22.IBPluginDependency</string>
 					<string>25.IBPluginDependency</string>
-					<string>51.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>MessageViewController</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIResponder</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -460,7 +408,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">55</int>
+			<int key="maxID">56</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

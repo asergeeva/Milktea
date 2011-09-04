@@ -21,7 +21,7 @@
     if (self) {
 		choices = [[NSArray alloc] initWithObjects:@"Absolutely", @"Pretty Sure", @"50/50", @"Most Likely Not", @"Raincheck", nil];
 		confidenceLevels = [[NSArray alloc] initWithObjects:@"90", @"65", @"35", @"15", @"4", nil];
-		checkboxes = [[NSMutableArray alloc] initWithCapacity:5];
+//		checkboxes = [[NSMutableArray alloc] initWithCapacity:5];
 		confidence = -1;
 		_event = event;
 		if([[NetworkManager sharedNetworkManager] isOnline])
@@ -91,7 +91,7 @@
 			break;
 	}
 	[[NetworkManager sharedNetworkManager] setAttendanceWithEID:eid confidence:[NSString stringWithFormat:@"%i",confidence]];
-	currentRSVP.text = [NSString stringWithFormat:@"Your current RSVP: %@", [self selectedConfidence:confidence]];
+	orangeLabel.text = [NSString stringWithFormat:@"%@", [self selectedConfidence:confidence]];
 //	[self selectedConfidence];
 }
 - (void)addEffects:(UIView*)view
@@ -156,7 +156,9 @@
 	eventBack.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	rsvpBack.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	rsvpTable.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	currentRSVP.text = [NSString stringWithFormat:@"Your current RSVP: %@", [self selectedConfidence:[[NetworkManager sharedNetworkManager] getAttendanceForEvent:eid]]];
+//	orangeLabel.contentMode = UIViewContentModeCenter;
+//	orangeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	orangeLabel.text = [NSString stringWithFormat:@"%@", [self selectedConfidence:[[NetworkManager sharedNetworkManager] getAttendanceForEvent:eid]]];
 	currentRSVP.contentMode = UIViewContentModeCenter;
 	currentRSVP.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     // Do any additional setup after loading the view from its nib.
@@ -166,10 +168,12 @@
 	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 	{
 		rsvpTable.frame = CGRectMake(10, 118, 460, 100);
+		orangeLabel.frame = CGRectMake(256, 8, 150, 21);
 	}
 	else
 	{
 		rsvpTable.frame = CGRectMake(10, 118, 300, 200);
+		orangeLabel.frame = CGRectMake(176, 8, 114, 21);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -193,6 +197,8 @@
 	rsvpBack = nil;
 	[selectToolbar release];
 	selectToolbar = nil;
+	[orangeLabel release];
+	orangeLabel = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -205,36 +211,39 @@
     [currentRSVP release];
 	[rsvpTable release];
 	[choices release];
-	[checkboxes release];
+//	[checkboxes release];
 	[eventBack release];
 	[rsvpBack release];
 	[selectToolbar release];
+	[orangeLabel release];
     [super dealloc];
 }
-- (void)checkboxPressed:(int)conf
+- (void)cellPressed:(int)conf
 {
-	for(CheckInButton* button in checkboxes)	
-	{
-		button.on = NO;
-		[button setSelected: NO];
-		if(button.value == conf)
-		{
-			button.on = YES;
-			[button setSelected: YES];
-		}
-	}
+//	for(CheckInButton* button in checkboxes)	
+//	{
+//		button.on = NO;
+//		[button setSelected: NO];
+//		if(button.value == conf)
+//		{
+//			button.on = YES;
+//			[button setSelected: YES];
+//		}
+//	}
 
 	[self selectConfidence:conf];
 }
 #pragma mark - Table Methods
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UILabel *fname = [[[UILabel alloc] initWithFrame:CGRectMake(20, 5, 220, 20)] autorelease];
+	UILabel *fname = [[[UILabel alloc] initWithFrame:CGRectMake(0, 10, 300, 20)] autorelease];
+	fname.contentMode = UIViewContentModeCenter;
+	fname.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	fname.text = [choices objectAtIndex:indexPath.row];
-	fname.textAlignment = UITextAlignmentLeft;
+	fname.textAlignment = UITextAlignmentCenter;
 	fname.textColor = [UIColor blackColor];
 	fname.font = [UIFont systemFontOfSize:17];
-	
+//	fname.backgroundColor = [UIColor clearColor];
 	RSVPCell *rsvpCell = [[[RSVPCell alloc] init] autorelease];
 	rsvpCell.frame = CGRectMake(0, 0, 300, 20);
 	rsvpCell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -244,18 +253,25 @@
 	
 	rsvpCell.backgroundView = backView;
 	
-	CheckInButton *checkbox = [[[CheckInButton alloc] initWithFrame:CGRectMake(240, 5, 20, 20)] autorelease];
-	[checkbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
-	[checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
-	checkbox.userInteractionEnabled = NO;
-	checkbox.tag = GUEST_CHECKBOX;
-	checkbox.contentMode = UIViewContentModeRight;
-	checkbox.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-	checkbox.value = indexPath.row;
-	[checkboxes addObject:checkbox];
+//	CheckInButton *checkbox = [[[CheckInButton alloc] initWithFrame:CGRectMake(240, 5, 20, 20)] autorelease];
+//	[checkbox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
+//	[checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
+//	checkbox.userInteractionEnabled = NO;
+//	checkbox.tag = GUEST_CHECKBOX;
+//	checkbox.contentMode = UIViewContentModeRight;
+//	checkbox.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+//	checkbox.value = indexPath.row;
+//	[checkboxes addObject:checkbox];
 	rsvpCell.confidence = indexPath.row;
 	[rsvpCell.contentView addSubview:fname];
-	[rsvpCell.contentView addSubview:checkbox];
+//	[rsvpCell.contentView addSubview:checkbox];
+	rsvpCell.selectionStyle = UITableViewCellSelectionStyleNone;
+	if([[choices objectAtIndex:indexPath.row] isEqual:orangeLabel.text])
+	{
+		rsvpCell.backgroundView.backgroundColor = [UIColor colorWithRed:0.992 green:0.675 blue:0.329 alpha:1.000];
+		fname.textColor = [UIColor whiteColor];
+		fname.backgroundColor = [UIColor colorWithRed:0.992 green:0.675 blue:0.329 alpha:1.000];
+	}
 	return rsvpCell;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -276,8 +292,31 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//	[tableView deselectRowAtIndexPath:indexPath animated:NO];
+	for(RSVPCell *cell in [tableView visibleCells])
+	{
+		cell.backgroundView.backgroundColor = [UIColor whiteColor];
+		for(UIView *view in cell.contentView.subviews)
+		{
+			if([view isKindOfClass:[UILabel class]])
+			{
+				UILabel *label = (UILabel*)view;
+				label.textColor = [UIColor blackColor];
+				label.backgroundColor = [UIColor whiteColor];
+			}
+		}
+	}
 	RSVPCell *cell = (RSVPCell*)[tableView cellForRowAtIndexPath:indexPath];
-	[self checkboxPressed:cell.confidence];
+	cell.backgroundView.backgroundColor = [UIColor colorWithRed:0.992 green:0.675 blue:0.329 alpha:1.000];
+	for(UIView *view in cell.contentView.subviews)
+	{
+		if([view isKindOfClass:[UILabel class]])
+		{
+			UILabel *label = (UILabel*)view;
+			label.textColor = [UIColor whiteColor];
+			label.backgroundColor = [UIColor colorWithRed:0.992 green:0.675 blue:0.329 alpha:1.000];
+		}
+	}
+	[self cellPressed:cell.confidence];
 }
 @end

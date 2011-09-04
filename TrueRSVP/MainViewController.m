@@ -42,10 +42,19 @@ BOOL offlineWarning = NO;
 	
 		pageNumber = 0;
 		profileButton.selected = YES;
-
+		timer = [NSTimer scheduledTimerWithTimeInterval:360 target:self selector:@selector(refreshAll) userInfo:nil repeats:YES];
         // Custom initialization
     }
     return self;
+}
+- (void)reloadAttendingHosting
+{
+	[attendingVC stopLoading];
+	[hostingVC stopLoading];
+}
+- (void)refreshAll
+{
+	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:self completion:@selector(reloadAttendingHosting)];
 }
 - (void)setupScrolling
 {
@@ -258,6 +267,8 @@ BOOL offlineWarning = NO;
 	[hostingButton release];
 	[attendingButton release];
 	[scrollView release];
+	[timer invalidate];
+//	[timer release];
     [super dealloc];
 }
 
@@ -440,7 +451,8 @@ BOOL offlineWarning = NO;
 	[[self.view viewWithTag:UPLOADMESSAGE_TAG] removeFromSuperview];
 	self.view.userInteractionEnabled = YES;
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
-	[profileVC updateProfile:nil];
+//	[profileVC updatedImages];
+//	[profileVC updateProfile:nil];
 	//[profileVC updatedImages];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -459,6 +471,8 @@ BOOL offlineWarning = NO;
 	{
 		uploadPic = pic;
 	}
+//	[User sharedUser].profilePic = [UIImage imageWithCGImage:[uploadPic CGImage]];
+	[profileVC.profilePic setImage:uploadPic forState:UIControlStateNormal];
 	[[NetworkManager sharedNetworkManager] uploadProfilePicWithImage: uploadPic filename:[User sharedUser].uid delegate:self finishedSelector:@selector(finishedUploadingPic)] ;
 	[picker dismissModalViewControllerAnimated:YES];
 	

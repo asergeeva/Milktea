@@ -62,8 +62,8 @@
 {
 	eventMap.alpha = 0;
 	eventMap.hidden = YES;
-	eventAddress.alpha = 0;
-	eventAddress.hidden = NO;
+//	eventAddress.alpha = 0;
+//	eventAddress.hidden = NO;
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -78,7 +78,7 @@
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd hh:mm a";
 	eventDate.text = [df stringFromDate:eventHosting.eventDate];
-	eventDescription.text = eventHosting.eventDescription;
+	eventDescription.text = [NSString stringWithFormat:@"%@\n%@", eventHosting.eventDescription, eventHosting.eventAddress];
 	[df release];
 	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self finishedSelector:@selector(scoreLoadFinished:) failedSelector:@selector(scoreLoadFailed:)];
 	QRData.text = @"";
@@ -97,8 +97,8 @@
     [super viewDidLoad];
 	eventMap.alpha = 0;
 	eventMap.hidden = YES;
-	eventAddress.alpha = 0;
-	eventAddress.hidden = YES;
+//	eventAddress.alpha = 0;
+//	eventAddress.hidden = YES;
 	self.navigationItem.title = @"Event Details";
     // Do any additional setup after loading the view from its nib.
 	if([UIDevice currentDevice].multitaskingSupported)
@@ -174,8 +174,8 @@
 //	[reader release];
 //	reader = nil;
 
-	[eventAddress release];
-	eventAddress = nil;
+//	[eventAddress release];
+//	eventAddress = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -200,7 +200,7 @@
 	[guestListVC release];
 	[reader release];
 	[QRData release];
-	[eventAddress release];
+//	[eventAddress release];
 	[super dealloc];
 }
 #pragma mark - View Delegate Methods
@@ -221,7 +221,7 @@
 		staticRSVP.frame = CGRectMake(247, 59, 300, 21);
 		dynamicRSVP.frame = CGRectMake(440, 60, 30, 21);
 		eventMap.frame = CGRectMake(8, 109, 284, 96);
-		eventAddress.frame = eventMap.frame;
+//		eventAddress.frame = eventMap.frame;
 		eventMapBack.frame = CGRectMake(0, 100, 300, 114);
 		buttonWhiteBack.frame = CGRectMake(308, 100, 172, 114);
 		live.frame = CGRectMake(319, 177, 150, 27);
@@ -239,14 +239,14 @@
 		staticRSVP.frame = CGRectMake(10, 109, 300, 21);
 		dynamicRSVP.frame = CGRectMake(198, 109, 30, 21);
 		eventMap.frame = CGRectMake(25, 223, 270, 80);
-		eventAddress.frame = eventMap.frame;
+//		eventAddress.frame = eventMap.frame;
 		eventMapBack.frame = CGRectMake(500, 500, 300, 114);
 		buttonWhiteBack.frame = CGRectMake(55, 333, 210, 120);
 		live.frame = CGRectMake(70, 415, 180, 27);
 		contact.frame = CGRectMake(70, 380, 180, 27);
 		checkIn.frame = CGRectMake(70, 345, 180, 27);
 		eventDescriptionWhiteBack.frame = CGRectMake(10, 143, 300, 180);
-		eventDescription.frame = CGRectMake(16, 163, 286, 61);
+		eventDescription.frame = CGRectMake(16, 158, 286, 61);
 //		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -280,12 +280,12 @@
 }
 - (void)mapRequestFailed:(ASIHTTPRequest *)request
 {
-	eventAddress.text = eventHosting.eventAddress;
-	eventAddress.hidden = NO;
-	[UIView animateWithDuration:0.3 animations:^(void) {
-		eventAddress.alpha = 1.0;
-	}];
-	NSLog(@"Loading Map failed");	
+//	eventAddress.text = eventHosting.eventAddress;
+//	eventAddress.hidden = NO;
+//	[UIView animateWithDuration:0.3 animations:^(void) {
+//		eventAddress.alpha = 1.0;
+//	}];
+//	NSLog(@"Loading Map failed");	
 }
 - (void)scoreLoadFinished:(ASIHTTPRequest*)request
 {

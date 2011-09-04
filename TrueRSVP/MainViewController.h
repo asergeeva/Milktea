@@ -26,8 +26,10 @@
 	CGFloat animatedDistance;
 	IBOutlet UIScrollView *scrollView;
 	int pageNumber;
+	NSTimer *timer;
 //	IBOutlet UIPageControl *pageControl;
 }
+- (void)refreshAll;
 - (void)launchCamera;
 //- (void)updatedImages;
 - (void)setTextFieldDelegates:(UIView*)mainView;

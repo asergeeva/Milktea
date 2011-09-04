@@ -35,6 +35,7 @@
 	[updateButton release];
 	[profilePic release];
     [signOut release];
+	[NetworkManager sharedNetworkManager].profileDelegate = nil;
     [super dealloc];
 }
 
@@ -75,6 +76,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	[NetworkManager sharedNetworkManager].profileDelegate = self;
+	[User sharedUser].delegate = self;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
     // Do any additional setup after loading the view from its nib.
 	[self refreshProfile];
@@ -158,6 +161,12 @@
 	[alert show];
 	[alert release];
 }
+- (void)updateProfile
+{
+//	[[User sharedUser] updateUser:[NetworkManager sharedNetworkManager].profile];
+	[self updatedStrings];
+	[self updatedImages];
+}
 - (IBAction)updateProfile:(id)sender
 {	
 	[self resignKeyboard];
@@ -174,6 +183,7 @@
 	}
 	[[User sharedUser].about setString:aboutTextView.text];	
 	[[NetworkManager sharedNetworkManager] updateProfileWithEmail:emailTextField.text about:aboutTextView.text cell:cellTextField.text zip:zipTextField.text twitter:twitterTextField.text delegate:self];
+//	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:self completion:@selector(updateGUIProfile)];
 }
 - (void)updatedStrings
 {

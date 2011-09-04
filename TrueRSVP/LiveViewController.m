@@ -215,7 +215,7 @@ BOOL uploading = NO;
 		tweetField.text = [NSString stringWithFormat:@"%@ #%@", tweetField.text, hashtag];	
 	}
 	
-	NSLog(@"%i", tweetField.text.length);
+//	NSLog(@"%i", tweetField.text.length);
 	NSMutableDictionary *postInfo = [NSMutableDictionary
                                      dictionaryWithObject:tweetField.text
                                      forKey:@"status"];

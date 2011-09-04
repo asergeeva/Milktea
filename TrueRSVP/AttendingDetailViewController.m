@@ -388,6 +388,33 @@
 	eventAddress.hidden = NO;
 	[super viewDidDisappear:animated];
 }
+- (NSString*)selectedConfidence:(int)confidenceSelected
+{
+	//	NSString *prefix = @"Your current selected RSVP: ";
+	NSString *selection;
+	switch (confidenceSelected) {
+		case 90:
+			selection = @"Absolutely";
+			break;
+		case 65:
+			selection = @"Pretty Sure";
+			break;				
+		case 35:
+			selection = @"50/50";
+			break;
+		case 15:
+			selection = @"Most Likely Not";
+			break;
+		case 4:
+			selection = @"Raincheck";
+			break;
+		default:
+			selection = @"N/A";
+			break;
+	}
+	//confidence = confidenceSelected;
+	return selection;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
 	[checkIn setTitle:@"Check in to event" forState:UIControlStateNormal];
@@ -396,9 +423,10 @@
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd hh:mm a";
 	eventDate.text = [df stringFromDate:eventAttending.eventDate];
-	eventDescription.text = eventAttending.eventDescription;
+	eventDescription.text = [NSString stringWithFormat:@"%@\n%@", eventAttending.eventDescription, eventAttending.eventAddress];
 	[df release];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	orangeLabel.text = [self selectedConfidence:[[NetworkManager sharedNetworkManager] getAttendanceForEvent:eventAttending.eventID]];
 	[super viewWillAppear:animated];
 }
 - (void)addEffects:(UIView*)view
@@ -414,6 +442,7 @@
 {
 	[self dismissModalViewControllerAnimated:YES];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -438,6 +467,7 @@
 		[self addEffects:eventDescriptionWhiteBack];
 		[self addEffects:buttonWhiteBack];
 		[self addEffects:eventMap];
+		[self addEffects:rsvpBack];
 	}
 	contact.layer.cornerRadius = 5;
 	contact.clipsToBounds = YES;
@@ -471,6 +501,12 @@
 {
 	[eventAddress release];
 	eventAddress = nil;
+	[currentRSVPStatic release];
+	currentRSVPStatic = nil;
+	[rsvpBack release];
+	rsvpBack = nil;
+	[orangeLabel release];
+	orangeLabel = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -499,6 +535,9 @@
 //	[address release];
 	[eventAddress release];
 	[choices release];
+	[currentRSVPStatic release];
+	[rsvpBack release];
+	[orangeLabel release];
 	[super dealloc];
 }
 
@@ -555,33 +594,36 @@
 		eventDescriptionWhiteBack.frame = CGRectMake(175, 55, 300, 245);
 		eventName.frame = CGRectMake(12, 55, 150, 21);
 		eventDate.frame = CGRectMake(12, 74, 150, 21);
-		eventDescription.frame = CGRectMake(15, 5, 270, 80);
-		eventMap.frame = CGRectMake(15, 110, 270, 120);
+		eventDescription.frame = CGRectMake(15, 10, 270, 70);
+		eventMap.frame = CGRectMake(15, 104, 270, 100);
 		eventAddress.frame = eventMap.frame;
 		update.frame = CGRectMake(12, 115, 150, 24);
 		checkIn.frame = CGRectMake(12, 153, 150, 24);
 		live.frame = CGRectMake(12, 191, 150, 24);
 		contact.frame = CGRectMake(12, 229, 150, 23);
 		directions.frame = CGRectMake(12, 267, 150, 23);
-
+		rsvpBack.frame = CGRectMake(190, 265, 270, 30);
 //		self.view.frame = CGRectMake(-2.0, 10.0, 480.0, 320.0);
 	}
 	else
 	{
 		eventWhiteBack.frame = CGRectMake(10, 55, 300, 40);
-		buttonWhiteBack.frame = CGRectMake(45, 311, 230, 135);
-		eventDescriptionWhiteBack.frame = CGRectMake(10, 103, 300, 200);
+		buttonWhiteBack.frame = CGRectMake(45, 335, 230, 115);
+		eventDescriptionWhiteBack.frame = CGRectMake(10, 145, 300, 180);
 		eventName.frame = CGRectMake(20, 58, 280, 21);
 		eventDate.frame = CGRectMake(20, 75, 280, 21);
-		eventDescription.frame = CGRectMake(15, 10, 270, 60);
-		eventMap.frame = CGRectMake(15, 83, 270, 75);
+		eventDescription.frame = CGRectMake(15, 10, 270, 40);
+		eventMap.frame = CGRectMake(15, 63, 270, 75);
 		eventAddress.frame = eventMap.frame;
-		update.frame = CGRectMake(70, 329, 180, 27);
-		checkIn.frame = CGRectMake(70, 364, 180, 27);
-		contact.frame = CGRectMake(25, 267, 125, 23);
-		live.frame = CGRectMake(70, 399, 180, 27);
-		directions.frame = CGRectMake(170, 267, 125, 23);
-
+		update.frame = CGRectMake(70, 344, 180, 27);
+		checkIn.frame = CGRectMake(70, 379, 180, 27);
+		contact.frame = CGRectMake(25, 290, 125, 23);
+		live.frame = CGRectMake(70, 414, 180, 27);
+		directions.frame = CGRectMake(170, 290, 125, 23);
+		
+		rsvpBack.frame = CGRectMake(10, 105, 300, 30);
+		currentRSVPStatic.frame = CGRectMake(10, 4, 280, 21);
+		orangeLabel.frame = CGRectMake(172, 3, 118, 21);
 		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];

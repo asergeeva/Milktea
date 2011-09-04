@@ -49,6 +49,7 @@
 	BOOL profileDone;
 	BOOL attendingDone;
 	BOOL hostingDone;
+	BOOL refreshTimer;
 	Reachability *r;
 	id<NetworkManagerDelegate> delegate;
 	id<NetworkManagerProfileDelegate> profileDelegate;
