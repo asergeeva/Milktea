@@ -10,7 +10,7 @@
 @class Event;
 @class ASIHTTPRequest;
 @class GuestListViewController;
-@interface MessageViewController : UIViewController <UITextViewDelegate>
+@interface MessageViewController : UIViewController <UITextViewDelegate, UIActionSheetDelegate>
 {
 	NSMutableArray *selectedFromList;
 	IBOutlet UIView *eventWhiteBack;
@@ -22,20 +22,23 @@
 	IBOutlet UIView *messageWhiteBack;
 	IBOutlet UILabel *messageLabel;
 	IBOutlet UITextView *messageTextView;
-	IBOutlet UIButton *emailCheck;
-	IBOutlet UIButton *textCheck;
+//	IBOutlet UIButton *emailCheck;
+//	IBOutlet UIButton *textCheck;
 	IBOutlet UILabel *sendAsEmail;
 	IBOutlet UILabel *sendAsText;
 	IBOutlet UIView *sendWhiteBack;
 	IBOutlet UIButton *sendButton;
 	Event *_event;
+	IBOutlet UIButton *messageTypeButton;
+	int messageType;
 	GuestListViewController *_guestVC;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil list:(NSMutableArray*)list event:(Event*)thisEvent guestViewController:(GuestListViewController*)guestVC;
-- (IBAction)emailPressed:(UIButton*)sender;
-- (IBAction)textPressed:(UIButton*)sender;
-- (IBAction)sendPressed:(UIButton*)sender;
-- (IBAction)selectionPressed:(id)sender;
+- (IBAction)messageTypePressed:(id)sender;
+//- (IBAction)emailPressed:(UIButton*)sender;
+//- (IBAction)textPressed:(UIButton*)sender;
+//- (IBAction)sendPressed:(UIButton*)sender;
+//- (IBAction)selectionPressed:(id)sender;
 - (void)sendFinished:(ASIHTTPRequest*)request;
 - (void)sendFailed:(ASIHTTPRequest*)request;
 @property (nonatomic, copy) NSMutableArray *selectedFromList;

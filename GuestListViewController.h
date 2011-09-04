@@ -34,6 +34,7 @@
 	NSMutableArray *selectionList;
 	BOOL showMessages;
 	BOOL inSearch;
+	BOOL inAnimation;
 //	UIView *scale;
 	Event *event;
 }

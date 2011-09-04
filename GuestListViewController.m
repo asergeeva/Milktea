@@ -88,6 +88,7 @@ BOOL sendSelection = NO;
 	{
 		[self sendPressed:nil];
 	}
+//	inAnimation = NO;
 	[super viewDidAppear:animated];
 }
 - (void)setAutoresizing:(UIView*)viewToSet
@@ -98,6 +99,7 @@ BOOL sendSelection = NO;
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	inAnimation = YES;
 	[super viewWillAppear:animated];
 }
 - (void)viewDidLoad
@@ -261,7 +263,7 @@ BOOL sendSelection = NO;
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	if(inSearch)
+	if(inSearch || inAnimation)
 	{
 		return NO;
 	}	
@@ -269,11 +271,14 @@ BOOL sendSelection = NO;
 }
 - (void)moveSearchOut:(float)duration
 {
+	inAnimation = YES;
 	[UIView animateWithDuration:duration animations:^(void) {
 		CGRect rect = searchHeader.frame;
 		rect.origin.x -= 400;
 		searchHeader.frame = rect;
 		searchHeader.layer.opacity = 0.0;
+	} completion:^(BOOL finished) {
+		inAnimation = NO;
 	}];
 }
 #pragma mark - UIButton Actions
@@ -329,6 +334,7 @@ BOOL sendSelection = NO;
 	[FlurryAnalytics logEvent:@"GUESTLIST_SEARCH_PRESSED"];
 	searchHeader.hidden = NO;
 	[searchBar becomeFirstResponder];
+	inAnimation = YES;
 	[UIView animateWithDuration:0.3 animations:^(void) {
 
 		
@@ -375,6 +381,7 @@ BOOL sendSelection = NO;
 		toolbar.alpha = 0;
 	} completion:^(BOOL finished) {
 		toolbar.hidden = YES;
+		inAnimation = NO;
 	}];
 	
 	inSearch = YES;
@@ -385,6 +392,7 @@ BOOL sendSelection = NO;
 	[searchBar resignFirstResponder];
 	[self moveSearchOut:0.3];
 	toolbar.hidden = NO;
+	inAnimation = YES;
 	[UIView animateWithDuration:0.3 animations:^(void) {
 //		CGRect rect = masterHeader.frame;
 //		rect.origin.x -= 400;
@@ -436,6 +444,8 @@ BOOL sendSelection = NO;
 		rect.origin.y += 11;
 		guestTable.frame = rect;	
 		toolbar.alpha = 1;
+	} completion:^(BOOL finished) {
+		inAnimation = NO;
 	}];
 	inSearch = NO;
 	[guestTable reloadData];
@@ -463,6 +473,7 @@ BOOL sendSelection = NO;
 	sendSelection = NO;
 	[selectionList removeAllObjects];
 	[guestTable reloadData];
+	inAnimation = YES;
 	[UIView animateWithDuration:0.75 delay:0 options:UIViewAnimationCurveEaseOut animations:^(void) {
 		for(UIView *view in self.view.subviews)
 		{
@@ -498,6 +509,7 @@ BOOL sendSelection = NO;
 			[toolbar2 removeFromSuperview];
 			[toolbar2 release];
 		}
+		inAnimation = NO;
 	}];
 	[UIView animateWithDuration:0.5 delay:0.1 options:UIViewAnimationCurveEaseIn animations:^(void) {
 		CGRect rect = guestTable.frame;
@@ -536,6 +548,7 @@ BOOL sendSelection = NO;
 		[alert release];
 	}
 	showMessages = NO;
+	[self backButtonPressed];
 }
 - (void)sendPressed:(UIButton*)sender
 {
@@ -543,6 +556,7 @@ BOOL sendSelection = NO;
 	self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.914 green:0.902 blue:0.863 alpha:1.000];
 //	[searchButton setImage:[UIImage imageNamed:@"searchButton.png"] forState:UIControlStateNormal];
 //	[searchButton addTarget:self action:@selector(searchPressed:) forControlEvents:UIControlEventTouchUpInside];
+	inAnimation = YES;
 	[UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationCurveEaseInOut animations:^(void) {
 		for(UIView *view in self.view.subviews)
 		{
@@ -566,7 +580,9 @@ BOOL sendSelection = NO;
 				view.frame = rect;					
 			}
 		}
-	}completion:nil];
+	}completion:^(BOOL finished) {
+		inAnimation = NO;
+	}];
 	UIButton *selectNone, *selectAll;
 	CGFloat width = self.view.frame.size.width;
 	if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
@@ -607,6 +623,7 @@ BOOL sendSelection = NO;
 	[sendButton addTarget:self action:@selector(sendPressed2) forControlEvents:UIControlEventTouchUpInside];
 	toolbar2.contentMode = UIViewContentModeCenter;
 	toolbar2.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+	inAnimation = YES;
 	[UIView animateWithDuration:0.75 delay:0.05 options:UIViewAnimationCurveEaseInOut animations:^(void) {
 		[sendButton removeFromSuperview];
 		[toolbar2 addSubview:sendButton];
@@ -628,7 +645,9 @@ BOOL sendSelection = NO;
 			rect.origin.y -= 132;
 		}
 		toolbar2.frame = rect;
-	} completion:nil];
+	} completion:^(BOOL finished) {
+		inAnimation = NO;
+	}];
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 #pragma mark - UITableView Methods

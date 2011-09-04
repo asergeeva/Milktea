@@ -76,6 +76,19 @@
 		5150A6A6140E0FDB00AA4EC1 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5150A6A4140E0FDB00AA4EC1 /* AboutViewController.xib */; };
 		5151F61B13DABCB100D6D9FF /* OrangeBackground_1px.png in Resources */ = {isa = PBXBuildFile; fileRef = 5151F61913DABCB100D6D9FF /* OrangeBackground_1px.png */; };
 		5151F61C13DABCB100D6D9FF /* OrangeBackground_1px@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5151F61A13DABCB100D6D9FF /* OrangeBackground_1px@2x.png */; };
+		515445BE1412FE6200E3ECA1 /* MessageViewController_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = 515445BD1412FE6200E3ECA1 /* MessageViewController_Landscape.xib */; };
+		515445C41413033A00E3ECA1 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445C01413033A00E3ECA1 /* checkbox_checked.png */; };
+		515445C51413033A00E3ECA1 /* checkbox_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445C11413033A00E3ECA1 /* checkbox_checked@2x.png */; };
+		515445C61413033A00E3ECA1 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445C21413033A00E3ECA1 /* checkbox.png */; };
+		515445C71413033A00E3ECA1 /* checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445C31413033A00E3ECA1 /* checkbox@2x.png */; };
+		515445CA141314DD00E3ECA1 /* back2.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445C8141314DC00E3ECA1 /* back2.png */; };
+		515445CB141314DD00E3ECA1 /* back2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445C9141314DD00E3ECA1 /* back2@2x.png */; };
+		515445CE1413179100E3ECA1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445CC1413179100E3ECA1 /* logo.png */; };
+		515445CF1413179100E3ECA1 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445CD1413179100E3ECA1 /* logo@2x.png */; };
+		515445D21413191A00E3ECA1 /* SignIn_Facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D01413191A00E3ECA1 /* SignIn_Facebook.png */; };
+		515445D31413191A00E3ECA1 /* SignIn_Facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D11413191A00E3ECA1 /* SignIn_Facebook@2x.png */; };
+		515445D614131A0400E3ECA1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D414131A0400E3ECA1 /* Default.png */; };
+		515445D714131A0400E3ECA1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 515445D514131A0400E3ECA1 /* Default@2x.png */; };
 		515A0E5213E12BC800C136D0 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515A0E4C13E12BC800C136D0 /* libzbar.a */; };
 		515A0E5313E12BC800C136D0 /* zbar-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 515A0E4E13E12BC800C136D0 /* zbar-back.png */; };
 		515A0E5413E12BC800C136D0 /* zbar-help.html in Resources */ = {isa = PBXBuildFile; fileRef = 515A0E4F13E12BC800C136D0 /* zbar-help.html */; };
@@ -111,8 +124,6 @@
 		517D3F7C13FE3C5500DA256B /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 517D3F7B13FE3C5500DA256B /* icon@2x.png */; };
 		517D3F7F13FE64B000DA256B /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517D3F7E13FE64B000DA256B /* NetworkManager.m */; };
 		517DED5113E6AAE400630487 /* LiveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517DED5013E6AAE400630487 /* LiveController.m */; };
-		5184E1E613FFD08900273641 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5184E1E413FFD08900273641 /* Default.png */; };
-		5184E1E713FFD08900273641 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5184E1E513FFD08900273641 /* Default@2x.png */; };
 		5184E1EA13FFD0E100273641 /* Back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5184E1E813FFD0E100273641 /* Back.png */; };
 		5184E1EB13FFD0E100273641 /* Back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5184E1E913FFD0E100273641 /* Back@2x.png */; };
 		518E2D7713D24FA60080E068 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518E2D7613D24FA60080E068 /* UIKit.framework */; };
@@ -126,8 +137,6 @@
 		518E2D9013D24FA70080E068 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 518E2D8E13D24FA70080E068 /* SignInViewController.xib */; };
 		518E2DAD13D259EB0080E068 /* SignIn_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DAB13D259EB0080E068 /* SignIn_Button.png */; };
 		518E2DAE13D259EB0080E068 /* SignIn_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DAC13D259EB0080E068 /* SignIn_Button@2x.png */; };
-		518E2DC113D25EC80080E068 /* SignIn_Facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DBF13D25EC80080E068 /* SignIn_Facebook@2x.png */; };
-		518E2DC313D25FC10080E068 /* SignIn_Facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 518E2DC213D25FC10080E068 /* SignIn_Facebook.png */; };
 		5194222513D3962B008B5418 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194221D13D3962B008B5418 /* ASIAuthenticationDialog.m */; };
 		5194222613D3962B008B5418 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194221E13D3962B008B5418 /* ASIDataCompressor.m */; };
 		5194222713D3962B008B5418 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5194221F13D3962B008B5418 /* ASIDataDecompressor.m */; };
@@ -212,10 +221,6 @@
 		51F9BB4413D2623A0017731B /* TrueRSVPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51F9BB4213D2623A0017731B /* TrueRSVPViewController.xib */; };
 		51F9BB7713D2AAB70017731B /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F9BB7513D2AAB70017731B /* ProfileViewController.m */; };
 		51F9BB7813D2AAB70017731B /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51F9BB7613D2AAB70017731B /* ProfileViewController.xib */; };
-		51FBAFA4140D8E6E00F27838 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FBAFA0140D8E6E00F27838 /* checkbox.png */; };
-		51FBAFA5140D8E6E00F27838 /* checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FBAFA1140D8E6E00F27838 /* checkbox@2x.png */; };
-		51FBAFA8140D941200F27838 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FBAFA6140D941200F27838 /* checkbox_checked.png */; };
-		51FBAFA9140D941200F27838 /* checkbox_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FBAFA7140D941200F27838 /* checkbox_checked@2x.png */; };
 		51FBAFAC140D9F6700F27838 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 51FBAFAB140D9F6700F27838 /* UIPlaceHolderTextView.m */; };
 		51FD960D13E25D640044BB1D /* doneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FD960B13E25D640044BB1D /* doneButton.png */; };
 		51FD960E13E25D640044BB1D /* doneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51FD960C13E25D640044BB1D /* doneButton@2x.png */; };
@@ -319,6 +324,19 @@
 		5150A6A4140E0FDB00AA4EC1 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		5151F61913DABCB100D6D9FF /* OrangeBackground_1px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OrangeBackground_1px.png; sourceTree = "<group>"; };
 		5151F61A13DABCB100D6D9FF /* OrangeBackground_1px@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OrangeBackground_1px@2x.png"; sourceTree = "<group>"; };
+		515445BD1412FE6200E3ECA1 /* MessageViewController_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController_Landscape.xib; sourceTree = "<group>"; };
+		515445C01413033A00E3ECA1 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked.png; sourceTree = "<group>"; };
+		515445C11413033A00E3ECA1 /* checkbox_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_checked@2x.png"; sourceTree = "<group>"; };
+		515445C21413033A00E3ECA1 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
+		515445C31413033A00E3ECA1 /* checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox@2x.png"; sourceTree = "<group>"; };
+		515445C8141314DC00E3ECA1 /* back2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back2.png; sourceTree = "<group>"; };
+		515445C9141314DD00E3ECA1 /* back2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back2@2x.png"; sourceTree = "<group>"; };
+		515445CC1413179100E3ECA1 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		515445CD1413179100E3ECA1 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		515445D01413191A00E3ECA1 /* SignIn_Facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignIn_Facebook.png; sourceTree = "<group>"; };
+		515445D11413191A00E3ECA1 /* SignIn_Facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Facebook@2x.png"; sourceTree = "<group>"; };
+		515445D414131A0400E3ECA1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		515445D514131A0400E3ECA1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		515A0E3913E12BC800C136D0 /* Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decoder.h; sourceTree = "<group>"; };
 		515A0E3A13E12BC800C136D0 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		515A0E3B13E12BC800C136D0 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
@@ -382,8 +400,6 @@
 		517D3F7E13FE64B000DA256B /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		517DED4F13E6AAE400630487 /* LiveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveController.h; sourceTree = "<group>"; };
 		517DED5013E6AAE400630487 /* LiveController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveController.m; sourceTree = "<group>"; };
-		5184E1E413FFD08900273641 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		5184E1E513FFD08900273641 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		5184E1E813FFD0E100273641 /* Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back.png; sourceTree = "<group>"; };
 		5184E1E913FFD0E100273641 /* Back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back@2x.png"; sourceTree = "<group>"; };
 		518E2D7213D24FA60080E068 /* TrueRSVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueRSVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -402,8 +418,6 @@
 		518E2D8F13D24FA70080E068 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SignInViewController.xib; sourceTree = "<group>"; };
 		518E2DAB13D259EB0080E068 /* SignIn_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignIn_Button.png; sourceTree = "<group>"; };
 		518E2DAC13D259EB0080E068 /* SignIn_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Button@2x.png"; sourceTree = "<group>"; };
-		518E2DBF13D25EC80080E068 /* SignIn_Facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SignIn_Facebook@2x.png"; sourceTree = "<group>"; };
-		518E2DC213D25FC10080E068 /* SignIn_Facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignIn_Facebook.png; sourceTree = "<group>"; };
 		5194221113D39626008B5418 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		5194221213D39626008B5418 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
 		5194221313D39626008B5418 /* ASIDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataCompressor.h; sourceTree = "<group>"; };
@@ -546,10 +560,6 @@
 		51F9BB7413D2AAB70017731B /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		51F9BB7513D2AAB70017731B /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		51F9BB7613D2AAB70017731B /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
-		51FBAFA0140D8E6E00F27838 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
-		51FBAFA1140D8E6E00F27838 /* checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox@2x.png"; sourceTree = "<group>"; };
-		51FBAFA6140D941200F27838 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked.png; sourceTree = "<group>"; };
-		51FBAFA7140D941200F27838 /* checkbox_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_checked@2x.png"; sourceTree = "<group>"; };
 		51FBAFAA140D9F6700F27838 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		51FBAFAB140D9F6700F27838 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		51FD960B13E25D640044BB1D /* doneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneButton.png; sourceTree = "<group>"; };
@@ -858,6 +868,7 @@
 				5125568213E7DB4E00469DAE /* MessageViewController.h */,
 				5125568313E7DB4E00469DAE /* MessageViewController.m */,
 				5125568413E7DB4E00469DAE /* MessageViewController.xib */,
+				515445BD1412FE6200E3ECA1 /* MessageViewController_Landscape.xib */,
 				51F9BB7413D2AAB70017731B /* ProfileViewController.h */,
 				51F9BB7513D2AAB70017731B /* ProfileViewController.m */,
 				51F9BB7613D2AAB70017731B /* ProfileViewController.xib */,
@@ -910,19 +921,21 @@
 				5150A6A0140DEC3800AA4EC1 /* arrow@2x.png */,
 				514D992013E0E3E00036AC40 /* attendedButton.png */,
 				514D992113E0E3E00036AC40 /* attendedButton@2x.png */,
+				515445C8141314DC00E3ECA1 /* back2.png */,
+				515445C9141314DD00E3ECA1 /* back2@2x.png */,
+				515445C01413033A00E3ECA1 /* checkbox_checked.png */,
+				515445C11413033A00E3ECA1 /* checkbox_checked@2x.png */,
+				515445C21413033A00E3ECA1 /* checkbox.png */,
+				515445C31413033A00E3ECA1 /* checkbox@2x.png */,
 				5199178613E2B25500C4A946 /* cameraicon.png */,
-				51FBAFA0140D8E6E00F27838 /* checkbox.png */,
-				51FBAFA1140D8E6E00F27838 /* checkbox@2x.png */,
-				51FBAFA6140D941200F27838 /* checkbox_checked.png */,
-				51FBAFA7140D941200F27838 /* checkbox_checked@2x.png */,
 				519A0DE913E9F44F0063695C /* backButton.png */,
 				519A0DEA13E9F44F0063695C /* backButton@2x.png */,
 				5184E1E813FFD0E100273641 /* Back.png */,
 				5184E1E913FFD0E100273641 /* Back@2x.png */,
 				51B1859613E0A4C900FBDCC9 /* debugBackground.png */,
 				51B1859713E0A4C900FBDCC9 /* debugBackground@2x.png */,
-				5184E1E413FFD08900273641 /* Default.png */,
-				5184E1E513FFD08900273641 /* Default@2x.png */,
+				515445D414131A0400E3ECA1 /* Default.png */,
+				515445D514131A0400E3ECA1 /* Default@2x.png */,
 				51FD960B13E25D640044BB1D /* doneButton.png */,
 				51FD960C13E25D640044BB1D /* doneButton@2x.png */,
 				519A0DFA13EA28050063695C /* dropdown.png */,
@@ -931,6 +944,8 @@
 				514D992413E0FB9E0036AC40 /* firstNameButton@2x.png */,
 				514D991A13E0E3D90036AC40 /* lastNameButton.png */,
 				514D991B13E0E3D90036AC40 /* lastNameButton@2x.png */,
+				515445CC1413179100E3ECA1 /* logo.png */,
+				515445CD1413179100E3ECA1 /* logo@2x.png */,
 				517033F513E90721007128BC /* messageButton.png */,
 				517033F613E90721007128BC /* messageButton@2x.png */,
 				5198EE8613E8E05000AB1FE4 /* notification.png */,
@@ -1063,8 +1078,8 @@
 			children = (
 				518E2DAB13D259EB0080E068 /* SignIn_Button.png */,
 				518E2DAC13D259EB0080E068 /* SignIn_Button@2x.png */,
-				518E2DC213D25FC10080E068 /* SignIn_Facebook.png */,
-				518E2DBF13D25EC80080E068 /* SignIn_Facebook@2x.png */,
+				515445D01413191A00E3ECA1 /* SignIn_Facebook.png */,
+				515445D11413191A00E3ECA1 /* SignIn_Facebook@2x.png */,
 			);
 			name = SignIn;
 			sourceTree = "<group>";
@@ -1240,8 +1255,6 @@
 				518E2D9013D24FA70080E068 /* SignInViewController.xib in Resources */,
 				518E2DAD13D259EB0080E068 /* SignIn_Button.png in Resources */,
 				518E2DAE13D259EB0080E068 /* SignIn_Button@2x.png in Resources */,
-				518E2DC113D25EC80080E068 /* SignIn_Facebook@2x.png in Resources */,
-				518E2DC313D25FC10080E068 /* SignIn_Facebook.png in Resources */,
 				51F9BB4413D2623A0017731B /* TrueRSVPViewController.xib in Resources */,
 				51F9BB7813D2AAB70017731B /* ProfileViewController.xib in Resources */,
 				51F3B4AA13D41384008ACF04 /* MainViewController.xib in Resources */,
@@ -1330,20 +1343,27 @@
 				517D3F7913FE3C5200DA256B /* icon.png in Resources */,
 				517D3F7C13FE3C5500DA256B /* icon@2x.png in Resources */,
 				510F267313FF1B8E00776F65 /* ProgressView.xib in Resources */,
-				5184E1E613FFD08900273641 /* Default.png in Resources */,
-				5184E1E713FFD08900273641 /* Default@2x.png in Resources */,
 				5184E1EA13FFD0E100273641 /* Back.png in Resources */,
 				5184E1EB13FFD0E100273641 /* Back@2x.png in Resources */,
 				51C4B4E1140353130068FA02 /* WelcomeViewController.xib in Resources */,
 				51956F61140987FF004F3DA2 /* FBDialog.bundle in Resources */,
-				51FBAFA4140D8E6E00F27838 /* checkbox.png in Resources */,
-				51FBAFA5140D8E6E00F27838 /* checkbox@2x.png in Resources */,
-				51FBAFA8140D941200F27838 /* checkbox_checked.png in Resources */,
-				51FBAFA9140D941200F27838 /* checkbox_checked@2x.png in Resources */,
 				5150A69E140DEC2600AA4EC1 /* arrow.png in Resources */,
 				5150A6A1140DEC3800AA4EC1 /* arrow@2x.png in Resources */,
 				5150A6A6140E0FDB00AA4EC1 /* AboutViewController.xib in Resources */,
 				51A73DE814120C6A00073BD4 /* RSVPViewController.xib in Resources */,
+				515445BE1412FE6200E3ECA1 /* MessageViewController_Landscape.xib in Resources */,
+				515445C41413033A00E3ECA1 /* checkbox_checked.png in Resources */,
+				515445C51413033A00E3ECA1 /* checkbox_checked@2x.png in Resources */,
+				515445C61413033A00E3ECA1 /* checkbox.png in Resources */,
+				515445C71413033A00E3ECA1 /* checkbox@2x.png in Resources */,
+				515445CA141314DD00E3ECA1 /* back2.png in Resources */,
+				515445CB141314DD00E3ECA1 /* back2@2x.png in Resources */,
+				515445CE1413179100E3ECA1 /* logo.png in Resources */,
+				515445CF1413179100E3ECA1 /* logo@2x.png in Resources */,
+				515445D21413191A00E3ECA1 /* SignIn_Facebook.png in Resources */,
+				515445D31413191A00E3ECA1 /* SignIn_Facebook@2x.png in Resources */,
+				515445D614131A0400E3ECA1 /* Default.png in Resources */,
+				515445D714131A0400E3ECA1 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

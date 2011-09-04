@@ -15,6 +15,7 @@
 #import "Event.h"
 #import "Constants.h"
 #import "GuestListViewController.h"
+#import "Constants.h"
 @implementation MessageViewController
 @synthesize selectedFromList;
 @synthesize eventName;
@@ -31,6 +32,7 @@
 		selectedFromList = [list mutableCopy];
 		_event = thisEvent;
 		_guestVC = guestVC;
+		messageType = -1;
         // Custom initialization
     }
     return self;
@@ -75,56 +77,96 @@
 	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	view.layer.shouldRasterize = YES;
 }
-- (IBAction)emailPressed:(UIButton*)sender
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if(emailCheck.selected)
+	switch (buttonIndex)
 	{
-		emailCheck.selected = NO;
-	}
-	else
-	{
-		emailCheck.selected = YES;
+		case 0:
+			messageType = MESSAGE_TYPE_EMAIL;
+			[messageTypeButton setTitle:@"Email" forState:UIControlStateNormal | UIControlStateSelected];
+//			messageTypeButton.text = @"Email";
+			break;
+		case 1:
+			messageType = MESSAGE_TYPE_TEXT;
+			[messageTypeButton setTitle:@"Text" forState:UIControlStateNormal | UIControlStateSelected];
+			break;
+		case 2:
+			messageType = MESSAGE_TYPE_BOTH;
+			[messageTypeButton setTitle:@"Both" forState:UIControlStateNormal | UIControlStateSelected];
+			break;
+		default:
+			return;
+			break;
 	}
 }
-- (IBAction)textPressed:(UIButton*)sender
+- (IBAction)messageTypePressed:(id)sender
 {
-	if(textCheck.selected)
-	{
-		textCheck.selected = NO;
-	}
-	else
-	{
-		textCheck.selected = YES;
-	}	
+	UIActionSheet *mType = [[UIActionSheet alloc] initWithTitle:@"Select a Message Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Email", @"Text", @"Both", nil];
+	[mType showInView:self.view];
+	[mType release];
 }
+//- (IBAction)emailPressed:(UIButton*)sender
+//{
+//	if(emailCheck.selected)
+//	{
+//		emailCheck.selected = NO;
+//	}
+//	else
+//	{
+//		emailCheck.selected = YES;
+//	}
+//}
+//- (IBAction)textPressed:(UIButton*)sender
+//{
+//	if(textCheck.selected)
+//	{
+//		textCheck.selected = NO;
+//	}
+//	else
+//	{
+//		textCheck.selected = YES;
+//	}	
+//}
 - (IBAction)sendPressed:(UIButton*)sender
 {
-	if(!emailCheck.selected && !textCheck.selected)
-	{			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Messaging" 
-														message:@"Please select at least one form of messaging service."
-													   delegate:nil
-											  cancelButtonTitle:@"OK" 
-											  otherButtonTitles:nil];
-		[alert show];
-		[alert release];
-		return;
-	}
+//	if(!emailCheck.selected && !textCheck.selected)
+//	{			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Messaging" 
+//														message:@"Please select at least one form of messaging service."
+//													   delegate:nil
+//											  cancelButtonTitle:@"OK" 
+//											  otherButtonTitles:nil];
+//		[alert show];
+//		[alert release];
+//		return;
+//	}
 	NSString *type = @"";
-	if(emailCheck.selected && textCheck.selected)
+	if(messageType == -1)
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Messaging" 
+															message:@"Please select at least one form of messaging service."
+														   delegate:nil
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+			return;
+	}	
+	if(messageType == MESSAGE_TYPE_BOTH)
 	{
 		[FlurryAnalytics logEvent:@"MESSAGING_EMAIL_AND_TEXT_SENT"];
 		type = @"both";
 	}
-	else if(emailCheck.selected)
+	else if(messageType == MESSAGE_TYPE_EMAIL)
 	{
 		[FlurryAnalytics logEvent:@"MESSAGING_EMAIL_SENT"];
 		type = @"email";
 	}
-	else if(textCheck.selected)
+	else if(messageType = MESSAGE_TYPE_TEXT)
 	{
 		[FlurryAnalytics logEvent:@"MESSAGING_TEXT_SENT"];
 		type = @"text";
 	}
+
 	[[NetworkManager sharedNetworkManager] sendMessageWithEventName:eventName.text eid:_event.eventID content:messageTextView.text selectionList:selectedFromList messageType:type delegate:self finishedSelector:@selector(sendFinished:) failedSelector:@selector(sendFailed:)];
 
 //	UIView *blackView = [[[UIView alloc] initWithFrame:CGRectMake(10, 200, 200, 200)]autorelease];
@@ -167,11 +209,11 @@
 
 
 }
-- (IBAction)selectionPressed:(id)sender
-{
-	_guestVC.showMessages = YES;
-	[self.navigationController popViewControllerAnimated:YES];
-}
+//- (IBAction)selectionPressed:(id)sender
+//{
+//	_guestVC.showMessages = YES;
+//	[self.navigationController popViewControllerAnimated:YES];
+//}
 - (void)sendFinished:(ASIHTTPRequest*)request
 {
 	[UIView animateWithDuration:0.3 animations:^(void) {
@@ -201,16 +243,34 @@
 	[self resignKeyboard];
 	[super viewWillDisappear: animated];
 }
+- (void)setDefaultResizing:(UIView*)viewToResize
+{
+	viewToResize.contentMode = UIViewContentModeCenter;
+	viewToResize.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+	messageType = -1;
+	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+	[super viewWillAppear:animated];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	[self setDefaultResizing:eventWhiteBack];
+	[self setDefaultResizing:toWhiteBack];
+//	messageWhiteBack.contentMode = UIViewContentModeCenter;
+//	messageWhiteBack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	[self setDefaultResizing:sendWhiteBack];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	messageTextView.delegate = self;
 	sendButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BlueBackground_1px.png"]];
-	[textCheck setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
-	[emailCheck setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
 	sendButton.layer.cornerRadius = 5;
 	sendButton.clipsToBounds = YES;
+	messageTypeButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BlueBackground_1px.png"]];
+	messageTypeButton.layer.cornerRadius = 5;
+	messageTypeButton.clipsToBounds = YES;
+	
 	if([UIDevice currentDevice].isMultitaskingSupported)
 	{
 		[self addEffects:eventWhiteBack];
@@ -249,10 +309,10 @@
 	messageLabel = nil;
 	[messageTextView release];
 	messageTextView = nil;
-	[emailCheck release];
-	emailCheck = nil;
-	[textCheck release];
-	textCheck = nil;
+//	[emailCheck release];
+//	emailCheck = nil;
+//	[textCheck release];
+//	textCheck = nil;
 	[sendAsEmail release];
 	sendAsEmail = nil;
 	[sendAsText release];
@@ -261,6 +321,8 @@
 	sendWhiteBack = nil;
 	[sendButton release];
 	sendButton = nil;
+	[messageTypeButton release];
+	messageTypeButton = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -269,9 +331,45 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	return YES;
 }
-
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+	{
+		eventWhiteBack.frame = CGRectMake(10, 10, 460, 40);
+		eventName.frame = CGRectMake(10, 5, 280, 21);
+		eventDate.frame = CGRectMake(10, 20, 280, 21);
+		messageWhiteBack.frame = CGRectMake(10, 60, 460, 200);
+		messageLabel.frame = CGRectMake(20, 10, 90, 12);
+		messageTextView.frame = CGRectMake(20, 25, 420, 130);
+//		emailCheck.frame = CGRectMake(236, 20, 44, 44);
+//		textCheck.frame = CGRectMake(236, 72, 44, 44);
+		messageTypeButton.frame = CGRectMake(24, 163, 200, 25);
+		sendAsEmail.frame = CGRectMake(285, 26, 150, 12);
+		sendAsText.frame = CGRectMake(288, 78, 150, 12);
+		sendWhiteBack.frame = CGRectMake(255, 210, 200, 30);
+		sendButton.frame = CGRectMake(240, 163, 200, 25);
+	}
+	else
+	{
+		eventWhiteBack.frame = CGRectMake(10, 10, 300, 40);
+		eventName.frame = CGRectMake(10, 5, 280, 20);
+		eventDate.frame = CGRectMake(10, 20, 280, 20);		
+		messageWhiteBack.frame = CGRectMake(10, 60, 300, 340);
+		messageTypeButton.frame = CGRectMake(50, 260, 200, 25);
+		messageLabel.frame = CGRectMake(20, 10, 100, 12);
+		messageTextView.frame = CGRectMake(20, 35, 260, 210);
+//		emailCheck.frame = CGRectMake(20, 175, 44, 44);
+//		textCheck.frame = CGRectMake(20, 224, 44, 44);
+		sendAsEmail.frame = CGRectMake(70, 191, 150, 12);
+		sendAsText.frame = CGRectMake(70, 240, 150, 12);
+		sendWhiteBack.frame = CGRectMake(10, 340, 300, 30);
+		sendButton.frame = CGRectMake(50, 300, 200, 25);
+	}
+	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
 - (void)dealloc
 {
 	[selectedFromList release];
@@ -286,12 +384,13 @@
 	[messageWhiteBack release];
 	[messageLabel release];
 	[messageTextView release];
-	[emailCheck release];
-	[textCheck release];
+//	[emailCheck release];
+//	[textCheck release];
 	[sendAsEmail release];
 	[sendAsText release];
 	[sendWhiteBack release];
 	[sendButton release];
+	[messageTypeButton release];
 	[super dealloc];
 }
 @end

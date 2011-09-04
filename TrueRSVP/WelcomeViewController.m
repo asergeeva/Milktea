@@ -56,7 +56,7 @@ BOOL welcomeShown = NO;
 		rect.size.height = 44;
 		rect.origin.y = 0;
 		welcomeBar.frame = rect;
-		welcomeBar.tintColor = [UIColor colorWithRed:0.235 green:0.600 blue:0.792 alpha:1.000];
+		welcomeBar.tintColor = [UIColor colorWithRed:0.286 green:0.761 blue:0.878 alpha:1.000];
 		
 		UILabel *label = [[UILabel alloc] initWithFrame:welcomeBar.bounds];
 		label.textAlignment = UITextAlignmentCenter;
