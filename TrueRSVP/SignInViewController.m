@@ -237,8 +237,6 @@
 }
 - (void)login
 {
-	[[SettingsManager sharedSettingsManager].username setString:txtUsername.text];
-	[[SettingsManager sharedSettingsManager] load];
 	[txtUsername resignFirstResponder];
 	[txtPassword resignFirstResponder];
 	if([[txtPassword text] isEqualToString:@""] || [[txtUsername text] isEqualToString:@""])
@@ -253,6 +251,9 @@
 		[alert release];
 		return;
 	}
+	[[SettingsManager sharedSettingsManager].username setString:txtUsername.text];
+	[[SettingsManager sharedSettingsManager] load];
+
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"APILocation"], @"login"]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	[request setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
@@ -312,19 +313,7 @@
 	} completion:^(BOOL finished) 
 	{
 		[FlurryAnalytics logEvent:@"SIGNIN_REGULAR_LOGIN"];
-		NSURL *url = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"rootAddress"]];
-		if([self requiresAuth:url])
-		{
-			ASIHTTPRequest *loginRequest = [ASIHTTPRequest requestWithURL:url];
-			[loginRequest setValidatesSecureCertificate:SHOULD_VALIDATE_SECURE_CERTIFICATE];
-			loginRequest.delegate = self;
-			loginRequest.shouldPresentAuthenticationDialog = YES;
-			[loginRequest startAsynchronous];
-		}
-		else
-		{
-			[self login];
-		}		
+		[self login];
 	}];
 
 }

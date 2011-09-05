@@ -33,7 +33,7 @@
 //@synthesize live;
 //@synthesize lat;
 //@synthesize lng;
-@synthesize buttonWhiteBack;
+//@synthesize buttonWhiteBack;
 @synthesize guestListVC;
 @synthesize reader;
 
@@ -83,14 +83,18 @@
 	[[NetworkManager sharedNetworkManager] getScoreWithEID:eventHosting.eventID delegate:self finishedSelector:@selector(scoreLoadFinished:) failedSelector:@selector(scoreLoadFailed:)];
 	QRData.text = @"";
 }
-- (void)addEffects:(UIView*)view
+- (void)addShadows:(UIView*)view
 {
-	view.layer.cornerRadius = 5;
 	view.layer.shadowOpacity = 0.3;
 	view.layer.shadowOffset = CGSizeMake(0.0, 0.1);
 	view.layer.shadowRadius = 1;
 	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	view.layer.shouldRasterize = YES;
+}
+- (void)addEffects:(UIView*)view
+{
+	view.layer.cornerRadius = 5;
+	[self addShadows:view];
 }
 - (void)viewDidLoad
 {
@@ -106,16 +110,25 @@
 		[self addEffects:eventWhiteBack];
 		[self addEffects:eventMapBack];
 		[self addEffects:eventDescriptionWhiteBack];
-		[self addEffects:buttonWhiteBack];
+//		[self addEffects:buttonWhiteBack];
 		[self addEffects:yourRSVPBack];
-		[self addEffects:eventMap];
+//		[self addEffects:eventMap];
+		[self addShadows:contact];
+		[contact setBackgroundImage:[UIImage imageNamed:@"bar_portrait.png"] forState:UIControlStateNormal];
+		contact.backgroundColor = [UIColor clearColor];
+		[self addShadows:checkIn];
+		[checkIn setBackgroundImage:[UIImage imageNamed:@"bar_portrait.png"] forState:UIControlStateNormal];
+		checkIn.backgroundColor = [UIColor clearColor];
+		[self addShadows:discuss];
+		[discuss setBackgroundImage:[UIImage imageNamed:@"bar_portrait.png"] forState:UIControlStateNormal];
+		discuss.backgroundColor = [UIColor clearColor];
 	}
-	contact.layer.cornerRadius = 5;
-	contact.clipsToBounds = YES;
-	checkIn.layer.cornerRadius = 5;
-	checkIn.clipsToBounds = YES;
-	live.layer.cornerRadius = 5;
-	live.clipsToBounds = YES;
+//	contact.layer.cornerRadius = 5;
+//	contact.clipsToBounds = YES;
+//	checkIn.layer.cornerRadius = 5;
+//	checkIn.clipsToBounds = YES;
+//	live.layer.cornerRadius = 5;
+//	live.clipsToBounds = YES;
 
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
@@ -161,8 +174,8 @@
 	checkIn = nil;
 //	[live release];
 //	live = nil;
-	[buttonWhiteBack release];
-	buttonWhiteBack = nil;
+//	[buttonWhiteBack release];
+//	buttonWhiteBack = nil;
 //	[yourRSVPBack release];
 //	yourRSVPBack = nil;
 	[staticRSVP release];
@@ -176,6 +189,12 @@
 
 //	[eventAddress release];
 //	eventAddress = nil;
+	[checkInArrow release];
+	checkInArrow = nil;
+	[contactArrow release];
+	contactArrow = nil;
+	[discussArrow release];
+	discussArrow = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -192,8 +211,8 @@
 	[eventMapBack release];
 	[contact release];
 	[checkIn release];
-	[live release];
-	[buttonWhiteBack release];
+	[discuss release];
+//	[buttonWhiteBack release];
 	[yourRSVPBack release];
 	[staticRSVP release];
 	[dynamicRSVP release];
@@ -201,6 +220,9 @@
 	[reader release];
 	[QRData release];
 //	[eventAddress release];
+	[checkInArrow release];
+	[contactArrow release];
+	[discussArrow release];
 	[super dealloc];
 }
 #pragma mark - View Delegate Methods
@@ -214,37 +236,51 @@
 {
 	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
 	{
-		eventWhiteBack.frame = CGRectMake(0, 51, 300, 40);
-		eventName.frame = CGRectMake(10, 54, 280, 21);
-		eventDate.frame = CGRectMake(10, 71, 280, 21);
-		yourRSVPBack.frame = CGRectMake(308, 51, 172, 40);
-		staticRSVP.frame = CGRectMake(247, 59, 300, 21);
-		dynamicRSVP.frame = CGRectMake(440, 60, 30, 21);
-		eventMap.frame = CGRectMake(8, 109, 284, 96);
-//		eventAddress.frame = eventMap.frame;
-		eventMapBack.frame = CGRectMake(0, 100, 300, 114);
-		buttonWhiteBack.frame = CGRectMake(308, 100, 172, 114);
-		live.frame = CGRectMake(319, 177, 150, 27);
-		contact.frame = CGRectMake(319, 143, 150, 27);
-		checkIn.frame = CGRectMake(319, 109, 150, 27);
-		eventDescriptionWhiteBack.frame = CGRectMake(0, 222, 480, 78);
-		eventDescription.frame = CGRectMake(5, 232, 455, 50);
+		CGFloat topMargin = 10.0;
+		eventWhiteBack.frame = CGRectMake(10, 51 + topMargin, 290, 40);
+		eventName.frame = CGRectMake(20, 54 + topMargin, 270, 21);
+		eventDate.frame = CGRectMake(20, 71 + topMargin, 270, 21);
+		
+		yourRSVPBack.frame = CGRectMake(310, 51 + topMargin, 162, 40);
+		staticRSVP.frame = CGRectMake(327, 59 + topMargin, 120, 21);
+		dynamicRSVP.frame = CGRectMake(430, 60 + topMargin, 30, 21);
+		
+		eventMapBack.frame = CGRectMake(10, 100 + topMargin, 290, 143);
+		eventMap.frame = CGRectMake(20, 109 + topMargin, 270, 126);
+		
+		eventDescriptionWhiteBack.frame = CGRectMake(310, 100 + topMargin, 160, 143);
+		eventDescription.frame = CGRectMake(320, 110 + topMargin, 135, 123);
+		
+		checkIn.frame = CGRectMake(10, 251 + topMargin, 150, 40);
+		checkInArrow.hidden = YES;
+		contact.frame = CGRectMake(165, 251 + topMargin, 150, 40);
+		contactArrow.hidden = YES;
+		discuss.frame = CGRectMake(320, 251 + topMargin, 150, 40);
+		discussArrow.hidden = YES;	
 	}
 	else
 	{
 		eventWhiteBack.frame = CGRectMake(10, 54, 300, 40);
 		eventName.frame = CGRectMake(20, 57, 280, 21);
 		eventDate.frame = CGRectMake(20, 74, 280, 21);
+		
 		yourRSVPBack.frame = CGRectMake(10, 105, 300, 30);
 		staticRSVP.frame = CGRectMake(10, 109, 300, 21);
 		dynamicRSVP.frame = CGRectMake(198, 109, 30, 21);
+		
 		eventMap.frame = CGRectMake(25, 223, 270, 80);
-//		eventAddress.frame = eventMap.frame;
 		eventMapBack.frame = CGRectMake(500, 500, 300, 114);
-		buttonWhiteBack.frame = CGRectMake(55, 333, 210, 120);
-		live.frame = CGRectMake(70, 415, 180, 27);
-		contact.frame = CGRectMake(70, 380, 180, 27);
-		checkIn.frame = CGRectMake(70, 345, 180, 27);
+	
+		checkIn.frame = CGRectMake(10, 331, 300, 35);
+//		checkInArrow.frame = CGRectMake(280, 340, 12, 18);
+		checkInArrow.hidden = NO;
+		contact.frame = CGRectMake(10, 374, 300, 35);
+//		contactArrow.frame = CGRectMake(280, 340, 12, 18);
+		contactArrow.hidden = NO;
+		discuss.frame = CGRectMake(10, 415, 300, 35);
+//		discussArrow.frame = CGRectMake(280, 426, 12, 18);
+		discussArrow.hidden = NO;
+		
 		eventDescriptionWhiteBack.frame = CGRectMake(10, 143, 300, 180);
 		eventDescription.frame = CGRectMake(16, 158, 286, 61);
 //		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);

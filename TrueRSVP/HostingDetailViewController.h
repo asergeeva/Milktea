@@ -31,8 +31,11 @@
 //	IBOutlet UITextView *eventAddress;
 	IBOutlet UIButton *contact;
 	IBOutlet UIButton *checkIn;
-	IBOutlet UIButton *live;
-	IBOutlet UIView *buttonWhiteBack;
+	IBOutlet UIButton *discuss;
+	IBOutlet UIImageView *checkInArrow;
+	IBOutlet UIImageView *contactArrow;
+	IBOutlet UIImageView *discussArrow;
+//	IBOutlet UIView *buttonWhiteBack;
 	UILabel *QRData;
 	GuestListViewController *guestListVC;
 	ZBarReaderViewController *reader;
@@ -63,7 +66,7 @@
 //@property (nonatomic, retain) IBOutlet UIButton *contact;
 //@property (nonatomic, retain) IBOutlet UIButton *checkIn;
 //@property (nonatomic, retain) IBOutlet UIButton *live;
-@property (nonatomic, retain) IBOutlet UIView *buttonWhiteBack;;
+//@property (nonatomic, retain) IBOutlet UIView *buttonWhiteBack;;
 @property (nonatomic, retain) GuestListViewController *guestListVC;
 @property (nonatomic, retain) ZBarReaderViewController *reader;
 //@property (nonatomic, retain) NSString *organizerEmail;
