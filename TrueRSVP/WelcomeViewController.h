@@ -11,12 +11,13 @@
 @interface WelcomeViewController : UIViewController
 {
 	NSMutableString *fullName;
-	IBOutlet UIButton *hostButton;
-	IBOutlet UIButton *attendeeButton;
 	MainViewController *main;
+	IBOutlet UIButton *hostButton;
+	IBOutlet UIButton *guestButton;
+	IBOutlet UIImageView *logo;
 }
 - (void)hostPressed;
-- (void)attendeePressed;
+- (void)guestPressed;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil name:(NSString*)name mainVC:(MainViewController*)mainVC;
 - (void)dismissWelcome:(id)sender;
 @property (nonatomic, retain) NSMutableString *fullName;

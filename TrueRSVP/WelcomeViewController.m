@@ -40,7 +40,7 @@ BOOL welcomeShown = NO;
 	[main hostingTabSelected:nil];
 	[main dismissModalViewControllerAnimated:YES];
 }
-- (void)attendeePressed
+- (void)guestPressed
 {
 	[FlurryAnalytics logEvent:@"WELCOME_I_AM_ATTENDEE"];
 	[main attendingTabSelected:nil];
@@ -99,25 +99,27 @@ BOOL welcomeShown = NO;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	hostButton.layer.cornerRadius = 5;
-	hostButton.clipsToBounds = YES;
-	hostButton.layer.shouldRasterize = YES;
-	attendeeButton.layer.cornerRadius = 5;
-	attendeeButton.clipsToBounds = YES;
-	attendeeButton.layer.shouldRasterize = YES;
+//	hostButton.layer.cornerRadius = 5;
+//	hostButton.clipsToBounds = YES;
+//	hostButton.layer.shouldRasterize = YES;
+//	attendeeButton.layer.cornerRadius = 5;
+//	attendeeButton.clipsToBounds = YES;
+//	attendeeButton.layer.shouldRasterize = YES;
 	welcomeBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 //	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     // Do any additional setup after loading the view from its nib.
 	[hostButton addTarget:self action:@selector(hostPressed) forControlEvents:UIControlEventTouchUpInside];
-	[attendeeButton addTarget:self action:@selector(attendeePressed) forControlEvents:UIControlEventTouchUpInside];
+	[guestButton addTarget:self action:@selector(guestPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewDidUnload
 {
 	[hostButton release];
 	hostButton = nil;
-	[attendeeButton release];
-	attendeeButton = nil;
+	[guestButton release];
+	guestButton = nil;
+	[logo release];
+	logo = nil;
     [super viewDidUnload];
 }
 
@@ -132,19 +134,23 @@ BOOL welcomeShown = NO;
 	[welcomeBar release];
 	[fullName release];
 	[hostButton release];
-	[attendeeButton release];
+	[guestButton release];
+	[logo release];
 	[super dealloc];
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 	{
-		CGRect rect = self.view.frame;
-		rect.origin.x = 0;
-		rect.size.width = 344;
-		rect.size.height = 480;
-		self.view.frame = rect;
+//		CGRect rect = self.view.frame;
+//		rect.origin.x = 0;
+//		rect.size.width = 344;
+//		rect.size.height = 480;
+//		self.view.frame = rect;
 //		self.view.frame = CGRectMake(-204.0, 0.0, 480.0, 320.0);
+		logo.frame = CGRectMake(-12, 69, 320, 185);
+		hostButton.frame = CGRectMake(310, 127, 150, 45);
+		guestButton.frame = CGRectMake(310, 191, 150, 45);
 	}
 	else
 	{
@@ -153,6 +159,10 @@ BOOL welcomeShown = NO;
 //		rect.size.height += 44;
 //		self.view.frame = rect;
 //		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
+		logo.frame = CGRectMake(0, 67, 320, 185);
+		hostButton.frame = CGRectMake(53, 270, 215, 65);
+		guestButton.frame = CGRectMake(52, 350, 215, 65);
+		
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
