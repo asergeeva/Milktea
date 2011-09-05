@@ -30,6 +30,7 @@
 	[facebook release];
 	[fbButton release];
 	[sessionKey release];
+	[orLabel release];
     [super dealloc];
 }
 
@@ -516,6 +517,8 @@
 }
 - (void)viewDidUnload
 {
+	[orLabel release];
+	orLabel = nil;
     [super viewDidUnload];
 }
 
@@ -537,6 +540,8 @@
 			self.view.bounds = CGRectMake(-80.0, 89.0, 480.0, 320.0);
 		}
 		self.navigationController.navigationBar.frame = CGRectMake(0, -440, 480, 44);
+		fbButton.frame = CGRectMake(41, 351, 237, 40);
+		orLabel.frame = CGRectMake(139, 327, 42, 21);
 	}
 	else
 	{
@@ -550,6 +555,8 @@
 			self.view.bounds = CGRectMake(0.0, 44.0, 320.0, 480.0);
 		}
 		self.navigationController.navigationBar.frame = CGRectMake(0, 20, 320, 44);
+		fbButton.frame = CGRectMake(41, 361, 237, 40);
+		orLabel.frame = CGRectMake(139, 334, 42, 21);
 	}
 //	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }

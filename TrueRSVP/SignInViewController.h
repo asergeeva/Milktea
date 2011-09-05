@@ -16,6 +16,7 @@
 	IBOutlet UIButton *fbButton;
 	Facebook *facebook;
 	NSMutableString *sessionKey;
+	IBOutlet UILabel *orLabel;
 //		NSTimer *timer;
 }
 - (void)showDebugView:(id)sender;
