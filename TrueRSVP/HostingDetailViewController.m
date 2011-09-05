@@ -236,14 +236,14 @@
 {
 	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
 	{
-		CGFloat topMargin = 10.0;
+		CGFloat topMargin = 12.0;
 		eventWhiteBack.frame = CGRectMake(10, 51 + topMargin, 290, 40);
 		eventName.frame = CGRectMake(20, 54 + topMargin, 270, 21);
 		eventDate.frame = CGRectMake(20, 71 + topMargin, 270, 21);
 		
 		yourRSVPBack.frame = CGRectMake(310, 51 + topMargin, 162, 40);
 		staticRSVP.frame = CGRectMake(327, 59 + topMargin, 120, 21);
-		dynamicRSVP.frame = CGRectMake(430, 60 + topMargin, 30, 21);
+		dynamicRSVP.frame = CGRectMake(430, 59 + topMargin, 30, 21);
 		
 		eventMapBack.frame = CGRectMake(10, 100 + topMargin, 290, 143);
 		eventMap.frame = CGRectMake(20, 109 + topMargin, 270, 126);
@@ -252,10 +252,13 @@
 		eventDescription.frame = CGRectMake(320, 110 + topMargin, 135, 123);
 		
 		checkIn.frame = CGRectMake(10, 251 + topMargin, 150, 40);
+		checkIn.titleLabel.font = [UIFont boldSystemFontOfSize:12.0];
 		checkInArrow.hidden = YES;
-		contact.frame = CGRectMake(165, 251 + topMargin, 150, 40);
+		contact.frame = CGRectMake(320, 251 + topMargin, 150, 40);
+		contact.titleLabel.font = [UIFont boldSystemFontOfSize:12.0];
 		contactArrow.hidden = YES;
-		discuss.frame = CGRectMake(320, 251 + topMargin, 150, 40);
+		discuss.frame = CGRectMake(165, 251 + topMargin, 150, 40);
+		discuss.titleLabel.font = [UIFont boldSystemFontOfSize:12.0];
 		discussArrow.hidden = YES;	
 	}
 	else
@@ -272,12 +275,15 @@
 		eventMapBack.frame = CGRectMake(500, 500, 300, 114);
 	
 		checkIn.frame = CGRectMake(10, 331, 300, 35);
+		checkIn.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
 //		checkInArrow.frame = CGRectMake(280, 340, 12, 18);
 		checkInArrow.hidden = NO;
-		contact.frame = CGRectMake(10, 374, 300, 35);
+		contact.frame = CGRectMake(10, 415, 300, 35);
+		contact.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
 //		contactArrow.frame = CGRectMake(280, 340, 12, 18);
 		contactArrow.hidden = NO;
-		discuss.frame = CGRectMake(10, 415, 300, 35);
+		discuss.frame = CGRectMake(10, 374, 300, 35);
+		discuss.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
 //		discussArrow.frame = CGRectMake(280, 426, 12, 18);
 		discussArrow.hidden = NO;
 		

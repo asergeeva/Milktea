@@ -256,7 +256,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="839018925"/>
 						<string key="NSReuseIdentifierKey">_NS:222</string>
-						<object class="NSColor" key="IBUIBackgroundColor" id="727385326">
+						<object class="NSColor" key="IBUIBackgroundColor" id="691157292">
 							<int key="NSColorSpace">2</int>
 							<bytes key="NSRGB">MSAxIDEAA</bytes>
 						</object>
@@ -265,11 +265,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<object class="NSFont" key="IBUIFont" id="867851657">
-							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">12</double>
-							<int key="NSfFlags">16</int>
-						</object>
+						<reference key="IBUIFont" ref="596639767"/>
 						<string key="IBUINormalTitle">Check in or see guests</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="990133842">
 							<int key="NSColorSpace">3</int>
@@ -292,14 +288,14 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="643986837"/>
 						<string key="NSReuseIdentifierKey">_NS:222</string>
-						<reference key="IBUIBackgroundColor" ref="727385326"/>
+						<reference key="IBUIBackgroundColor" ref="691157292"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUIContentMode">4</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIFont" ref="867851657"/>
-						<string key="IBUINormalTitle">Message your guests</string>
+						<reference key="IBUIFont" ref="596639767"/>
+						<string key="IBUINormalTitle">Discuss event</string>
 						<reference key="IBUIHighlightedTitleColor" ref="990133842"/>
 						<reference key="IBUINormalTitleColor" ref="1025013050"/>
 						<reference key="IBUINormalTitleShadowColor" ref="150561911"/>
@@ -312,14 +308,14 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="681692655"/>
 						<string key="NSReuseIdentifierKey">_NS:222</string>
-						<reference key="IBUIBackgroundColor" ref="727385326"/>
+						<reference key="IBUIBackgroundColor" ref="691157292"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUIContentMode">4</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIFont" ref="867851657"/>
-						<string key="IBUINormalTitle">Discuss the event</string>
+						<reference key="IBUIFont" ref="596639767"/>
+						<string key="IBUINormalTitle">Message your guests</string>
 						<reference key="IBUIHighlightedTitleColor" ref="990133842"/>
 						<reference key="IBUINormalTitleColor" ref="1025013050"/>
 						<reference key="IBUINormalTitleShadowColor" ref="150561911"/>
@@ -398,14 +394,6 @@
 						<reference key="destination" ref="758634982"/>
 					</object>
 					<int key="connectionID">47</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">contact</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="170043386"/>
-					</object>
-					<int key="connectionID">48</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -548,11 +536,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">discuss</string>
+						<string key="label">contact</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="124330012"/>
 					</object>
-					<int key="connectionID">79</int>
+					<int key="connectionID">80</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">discuss</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="170043386"/>
+					</object>
+					<int key="connectionID">81</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -754,7 +750,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">79</int>
+			<int key="maxID">81</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
