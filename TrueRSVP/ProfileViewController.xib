@@ -394,7 +394,7 @@
 						<string key="NSFrame">{{69, 394}, {183, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="900526062"/>
+						<reference key="NSNextKeyView" ref="185684961"/>
 						<string key="NSReuseIdentifierKey">_NS:222</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -410,7 +410,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="503880191"/>
 						<reference key="IBUINormalBackgroundImage" ref="961278149"/>
 					</object>
-					<object class="IBUIButton" id="900526062">
+					<object class="IBUIButton" id="185684961">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{69, 429}, {183, 27}}</string>
@@ -603,19 +603,10 @@
 					<int key="connectionID">64</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">popAll:</string>
-						<reference key="source" ref="900526062"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">68</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">aboutButton</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="900526062"/>
+						<reference key="destination" ref="185684961"/>
 					</object>
 					<int key="connectionID">69</int>
 				</object>
@@ -649,7 +640,7 @@
 							<reference ref="203020078"/>
 							<reference ref="942538458"/>
 							<reference ref="699587974"/>
-							<reference ref="900526062"/>
+							<reference ref="185684961"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -744,7 +735,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">67</int>
-						<reference key="object" ref="900526062"/>
+						<reference key="object" ref="185684961"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</object>

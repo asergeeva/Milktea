@@ -70,6 +70,17 @@
 	confidence = confidenceSelected;
 	return selection;
 }
+- (IBAction)updatePressed:(id)sender
+{
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Updated"
+													message:@"Your RSVP has been updated."
+												   delegate:nil
+										  cancelButtonTitle:@"OK" 
+										  otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+	[self.navigationController popViewControllerAnimated:YES];
+}
 - (void)selectConfidence:(int)value
 {
 	switch (value) {
@@ -106,34 +117,35 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-	NSMutableArray *items = [[NSMutableArray alloc] init];
-	
-	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-	[items addObject:spacer];
-	[spacer release];
-	
-	UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0 , 11.0f, self.view.frame.size.width, 21.0f)];
-	[titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
-	[titleLabel setBackgroundColor:[UIColor clearColor]];
-	[titleLabel setTextColor:[UIColor whiteColor]];
-	titleLabel.contentMode = UIViewContentModeCenter;
-	titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	[titleLabel setText:@"Select your RSVP"];
-	[titleLabel setTextAlignment:UITextAlignmentCenter];
-
-	UIBarButtonItem *title = [[UIBarButtonItem alloc] initWithCustomView:titleLabel];
-	[items addObject:title];
-	[title release];
-	[titleLabel release];
-	
-	UIBarButtonItem *spacer2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-	[items addObject:spacer2];
-	[spacer2 release];
-	
-
-	[selectToolbar setItems:items animated:YES];
-	[items release];
-	
+	self.navigationItem.title = @"Select your RSVP";
+//	NSMutableArray *items = [[NSMutableArray alloc] init];
+//	
+//	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+//	[items addObject:spacer];
+//	[spacer release];
+//	
+//	UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0 , 11.0f, self.view.frame.size.width, 21.0f)];
+//	[titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
+//	[titleLabel setBackgroundColor:[UIColor clearColor]];
+//	[titleLabel setTextColor:[UIColor whiteColor]];
+//	titleLabel.contentMode = UIViewContentModeCenter;
+//	titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//	[titleLabel setText:@"Select your RSVP"];
+//	[titleLabel setTextAlignment:UITextAlignmentCenter];
+//
+//	UIBarButtonItem *title = [[UIBarButtonItem alloc] initWithCustomView:titleLabel];
+//	[items addObject:title];
+//	[title release];
+//	[titleLabel release];
+//	
+//	UIBarButtonItem *spacer2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+//	[items addObject:spacer2];
+//	[spacer2 release];
+//	
+//
+//	[selectToolbar setItems:items animated:YES];
+//	[items release];
+//	
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[super viewWillAppear:animated];
 }
@@ -148,7 +160,7 @@
 	[self addEffects:eventBack];
 	[self addEffects:rsvpBack];
 //	[self selectedConfidence];
-	selectToolbar.tintColor = [UIColor colorWithRed:0.286 green:0.761 blue:0.878 alpha:1.000];
+//	selectToolbar.tintColor = [UIColor colorWithRed:0.286 green:0.761 blue:0.878 alpha:1.000];
 	eventTitle.text = _event.eventName;
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd hh:mm a";
@@ -157,6 +169,11 @@
 	eventBack.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	rsvpBack.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	rsvpTable.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//	updateButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+//	updateButton.contentMode = UIViewContentModeCenter;
+	updateButton.layer.cornerRadius = 5;
+	updateButton.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+	updateButton.clipsToBounds = YES;
 //	orangeLabel.contentMode = UIViewContentModeCenter;
 //	orangeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	orangeLabel.text = [NSString stringWithFormat:@"%@", [self selectedConfidence:[[NetworkManager sharedNetworkManager] getAttendanceForEvent:eid]]];
@@ -170,11 +187,13 @@
 	{
 		rsvpTable.frame = CGRectMake(10, 118, 460, 100);
 		orangeLabel.frame = CGRectMake(256, 8, 150, 21);
+		updateButton.frame = CGRectMake(115, 230, 250, 31);
 	}
 	else
 	{
 		rsvpTable.frame = CGRectMake(10, 118, 300, 200);
 		orangeLabel.frame = CGRectMake(176, 8, 114, 21);
+		updateButton.frame = CGRectMake(35, 380, 250, 31);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -196,10 +215,12 @@
 	eventBack = nil;
 	[rsvpBack release];
 	rsvpBack = nil;
-	[selectToolbar release];
-	selectToolbar = nil;
+//	[selectToolbar release];
+//	selectToolbar = nil;
 	[orangeLabel release];
 	orangeLabel = nil;
+	[updateButton release];
+	updateButton = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -215,8 +236,9 @@
 //	[checkboxes release];
 	[eventBack release];
 	[rsvpBack release];
-	[selectToolbar release];
+//	[selectToolbar release];
 	[orangeLabel release];
+	[updateButton release];
     [super dealloc];
 }
 - (void)cellPressed:(int)conf

@@ -21,10 +21,12 @@
 	NSMutableArray *checkboxes;
 	NSString *eid;
 	int confidence;
-	IBOutlet UIToolbar *selectToolbar;
+//	IBOutlet UIToolbar *selectToolbar;
 	IBOutlet UILabel *orangeLabel;
 	Event *_event;
+	IBOutlet UIButton *updateButton;
 }
 - (void)cellPressed:(int)confidence;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
+- (IBAction)updatePressed:(id)sender;
 @end

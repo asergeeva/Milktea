@@ -603,6 +603,8 @@
 		contact.frame = CGRectMake(12, 229, 150, 23);
 		directions.frame = CGRectMake(12, 267, 150, 23);
 		rsvpBack.frame = CGRectMake(190, 265, 270, 30);
+		currentRSVPStatic.frame = CGRectMake(-15, 4, 280, 21);
+		orangeLabel.frame = CGRectMake(155, 3, 118, 21);
 //		self.view.frame = CGRectMake(-2.0, 10.0, 480.0, 320.0);
 	}
 	else

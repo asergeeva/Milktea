@@ -20,7 +20,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "User.h"
 #import "UITextViewUneditable.h"
-
+//#import "StringHelper.h"
 
 @interface LiveViewController (PrivateMethods)
 
@@ -108,12 +108,12 @@ BOOL uploading = NO;
 - (void)startLoading 
 {
     isLoading = YES;
-	[UIView animateWithDuration:0.4 animations:^(void) {
-		for(UITableViewCell *cell in [tweetTable visibleCells])
-		{
-			cell.alpha = 0;
-		}
-	}];
+//	[UIView animateWithDuration:0.4 animations:^(void) {
+//		for(UITableViewCell *cell in [tweetTable visibleCells])
+//		{
+//			cell.alpha = 0;
+//		}
+//	}];
 	[UIView animateWithDuration:0.5 animations:^(void) 
 	 {
 		 self.tweetTable.contentInset = UIEdgeInsetsMake(0, REFRESH_HEADER_HEIGHT_TWITTER, 0, 0);		
@@ -434,7 +434,10 @@ BOOL uploading = NO;
 //	
 //	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 //	[request startSynchronous];
-	[[NetworkManager sharedNetworkManager] updateStreamWithHashtag:thisEvent.eventTwitter delegate:self finishedSelector:@selector(updateStreamFinished:) failedSelector:@selector(updateStreamFailed:)];
+	if([thisEvent.eventTwitter length] > 0)
+	{
+			[[NetworkManager sharedNetworkManager] updateStreamWithHashtag:thisEvent.eventTwitter delegate:self finishedSelector:@selector(updateStreamFinished:) failedSelector:@selector(updateStreamFailed:)];
+	}
 }
 - (void)updateStreamFinished:(ASIHTTPRequest*)request
 {
@@ -457,15 +460,16 @@ BOOL uploading = NO;
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	int index = indexPath.row;
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
+//	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
+	UITableViewCell *cell;
 	UIView *tweetView;
 	UIImageView *imageView;
 	UITextViewUneditable *theTweet;
-	if(!cell)
-	{
+//	if(!cell)
+//	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tweetCell"] autorelease];
 //		cell.backgroundColor = [UIColor clearColor];
-		UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(10, 0, self.view.frame.size.width-20, 75)] autorelease];
+		UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(10, 0, self.view.frame.size.width-20, 95)] autorelease];
 		tweetView = view;
 		view.tag = TWEET_CELL;
 		view.backgroundColor = [UIColor whiteColor];
@@ -474,22 +478,22 @@ BOOL uploading = NO;
 			[self addEffects:view];
 		}
 		[cell.contentView addSubview:view];
-		imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 55, 55)] autorelease];
+		imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 20, 55, 55)] autorelease];
 		imageView.tag = TWEET_IMAGE_VIEW;
 		[tweetView addSubview:imageView];
 		
-		theTweet = [[[UITextViewUneditable alloc] initWithFrame:CGRectMake(65, 10, 225, 65)] autorelease];
+		theTweet = [[[UITextViewUneditable alloc] initWithFrame:CGRectMake(65, 20, 225, 75)] autorelease];
 		theTweet.tag = TWEET_CONTENTS;
-		theTweet.userInteractionEnabled = YES;
+		theTweet.userInteractionEnabled = NO;
 		theTweet.font = [UIFont systemFontOfSize:12];
 		[tweetView addSubview:theTweet];
-	}
-	else
-	{
-		tweetView = [cell viewWithTag:TWEET_CELL];
-		imageView = (UIImageView*)[tweetView viewWithTag:TWEET_IMAGE_VIEW];
-		theTweet = (UITextViewUneditable*)[tweetView viewWithTag:TWEET_CONTENTS];
-	}
+//	}
+//	else
+//	{
+//		tweetView = [cell viewWithTag:TWEET_CELL];
+//		imageView = (UIImageView*)[tweetView viewWithTag:TWEET_IMAGE_VIEW];
+//		theTweet = (UITextViewUneditable*)[tweetView viewWithTag:TWEET_CONTENTS];
+//	}
 	theTweet.dataDetectorTypes = UIDataDetectorTypeLink;
 //	[cell.contentView addSubview:theTweet];
 	imageView.image = nil;
@@ -510,8 +514,36 @@ BOOL uploading = NO;
 		imageView.image = [imageDictionary objectForKey:imageString];	
 	}
 	theTweet.text = [[tweets objectAtIndex:index] objectForKey:@"text"];
+//	theTweet.backgroundColor = [UIColor greenColor]; 
+//	int maxHeight = 2000;
+//	CGSize size = [theTweet.text sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(225, 2000) lineBreakMode:UILineBreakModeWordWrap];
+//	[theTweet sizeToFit];
+//	if(size.height > imageView.frame.size.height)
+//	{
+//		CGRect rect = theTweet.frame;
+//		rect.size.height = size.height;
+//		theTweet.frame = rect;
+//		rect = tweetView.frame;
+//		rect.size.height = size.height + 20;
+//		tweetView.frame = rect;
+////		rect = imageView.frame;
+//		
+//	}
+//	if(theTweet.frame.size.height > imageView.frame.size.height)
+//	{
+//		CGRect rect = theTweet.frame;
+//		rect.size.height += 10;
+//		cell.frame = rect;
+//	}
 //	imageView.image = [UIImage imageWithData:[request responseData]];
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//	[cell
+//	cell.backgroundColor = [UIColor greenColor];
+//	[cell sizeToFit];
+//	[cell.contentView sizeToFit];
+//	[cell.backgroundView sizeToFit];
+//	cell.contentView.backgroundColor = [UIColor greenColor];
+//	cell.backgroundView.backgroundColor = [UIColor greenColor];
 	return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -521,7 +553,7 @@ BOOL uploading = NO;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 95.0;
+	return 105;
 }
 - (void)dismissPicView
 {
@@ -535,8 +567,16 @@ BOOL uploading = NO;
 	{
 		NSString *suffix = [tweet substringFromIndex:range.location];
 		NSRange rangeEnd = [suffix rangeOfString:@" "];
-		NSString *url = [suffix substringToIndex:rangeEnd.location];
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+		NSString *urlString;
+		if(rangeEnd.location > 140)
+		{
+			urlString = suffix;
+		}
+		else
+		{
+			urlString = [suffix substringToIndex:rangeEnd.location];
+		}
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	

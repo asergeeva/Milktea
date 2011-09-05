@@ -180,7 +180,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		NSDictionary *dictionary = [hostingList objectAtIndex:i];
 		NSDate *someDate = [df dateFromString:[dictionary objectForKey:@"event_datetime"]];
 //		NSLog(@"%f", [someDate timeIntervalSinceNow]);
-		if([someDate timeIntervalSinceNow]/3600/24 < -1)
+		if([someDate timeIntervalSinceNow]/3600/24 < -2)
 		{
 			[listToRemove addObject:dictionary];
 		}
@@ -249,7 +249,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(NetworkManager);
 		NSDictionary *dictionary = [attendingList objectAtIndex:i];
 		NSDate *someDate = [df dateFromString:[dictionary objectForKey:@"event_datetime"]];
 		NSLog(@"%f", [someDate timeIntervalSinceNow]);
-		if([someDate timeIntervalSinceNow]/3600/24 < -1)
+		if([someDate timeIntervalSinceNow]/3600/24 < -2)
 		{
 			[listToRemove addObject:dictionary];
 		}
