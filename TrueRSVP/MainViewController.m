@@ -124,6 +124,7 @@ BOOL offlineWarning = NO;
 }
 - (void)presentAbout
 {
+	[FlurryAnalytics logEvent:@"PROFILE_ABOUT_PRESSED"];
 	AboutViewController *aboutVC = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:[NSBundle mainBundle]];
 	[self presentModalViewController:aboutVC animated:YES];
 	[aboutVC release]; 
@@ -202,9 +203,9 @@ BOOL offlineWarning = NO;
 	self.navigationItem.titleView = segmentButtons;
 //	[self.navigationController.navigationBar addSubview:segmentButtons];
 	self.navigationItem.hidesBackButton = YES;
-	UIBarButtonItem *about = [[[UIBarButtonItem alloc] initWithTitle:@"About" style:UIBarButtonItemStylePlain target:self action:@selector(presentAbout)] autorelease];
-	self.navigationItem.leftBarButtonItem = about;
-	
+//	UIBarButtonItem *about = [[[UIBarButtonItem alloc] initWithTitle:@"About" style:UIBarButtonItemStylePlain target:self action:@selector(presentAbout)] autorelease];
+//	self.navigationItem.leftBarButtonItem = about;
+	[profileVC.aboutButton addTarget:self action:@selector(presentAbout) forControlEvents:UIControlEventTouchUpInside];
 	[profileVC.profilePic addTarget:self action:@selector(launchCamera) forControlEvents:UIControlEventTouchUpInside];
 	[attendingVC doneRefresh];
 }

@@ -29,7 +29,14 @@
 }
 
 #pragma mark - View lifecycle
-
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+	if([request.URL isEqual:[NSURL URLWithString:@"https://www.truersvp.com/method"]])
+	{
+		return YES;
+	}
+	return NO;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -39,13 +46,42 @@
 	OKButton.contentMode = UIViewContentModeBottom;
 	OKButton.layer.cornerRadius = 5;
 	OKButton.clipsToBounds = YES;
-	
+	legalButton.contentMode = UIViewContentModeBottom;
+	legalButton.layer.cornerRadius = 5;
+	legalButton.clipsToBounds = YES;
+	NSURL *url = [NSURL URLWithString:@"https://www.truersvp.com/method"];
+	NSURLRequest *request = [NSURLRequest requestWithURL:url];
+	[webView loadRequest:request];
+	webView.scalesPageToFit = YES;
+	webView.delegate = self;
     // Do any additional setup after loading the view from its nib.
 }
-
+- (IBAction)legal:(id)sender
+{
+	if(!legalShown)
+	{
+		legalShown = YES;
+		webView.hidden = YES;
+		legalView.hidden = NO;
+		[legalButton setTitle:@"About" forState:UIControlStateNormal];
+	}
+	else
+	{
+		legalView.hidden = YES;
+		webView.hidden = NO;
+		legalShown = NO;
+		[legalButton setTitle:@"Legal" forState:UIControlStateNormal];
+	}
+}
 - (void)viewDidUnload
 {
     [self setOKButton:nil];
+	[webView release];
+	webView = nil;
+	[legalButton release];
+	legalButton = nil;
+	[legalView release];
+	legalView = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -60,6 +96,9 @@
 
 - (void)dealloc {
     [OKButton release];
+	[webView release];
+	[legalButton release];
+	[legalView release];
     [super dealloc];
 }
 - (IBAction)dismiss:(id)sender

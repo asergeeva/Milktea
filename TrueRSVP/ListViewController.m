@@ -131,21 +131,34 @@
 }
 - (void)addPullRefreshHeader:(UITableView*)tableView
 {
-//	refreshHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 - REFRESH_HEADER_HEIGHT, 320, REFRESH_HEADER_HEIGHT)];
+//	refreshHeaderView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 0 - REFRESH_HEADER_HEIGHT + 5, 300, REFRESH_HEADER_HEIGHT - 10)] autorelease];
+//	refreshHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//	refreshHeaderView.image = [UIImage imageNamed:@"bar_portrait.png"];
+//	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, REFRESH_HEADER_HEIGHT/2 - 15, 320, 19)] autorelease];
+//	refreshLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//	refreshLabel.text = @"Pull down and release to refresh";
+//	refreshLabel.font = [UIFont boldSystemFontOfSize:17.0];
+//	refreshLabel.textAlignment = UITextAlignmentCenter;
+//	refreshLabel.backgroundColor = [UIColor clearColor];
+//	refreshLabel.textColor = [UIColor darkGrayColor];
+//	[refreshHeaderView addSubview:refreshLabel];
+//	[tableView addSubview:refreshHeaderView];
 	refreshHeaderView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 0 - REFRESH_HEADER_HEIGHT + 5, 300, REFRESH_HEADER_HEIGHT - 10)] autorelease];
 	refreshHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//	refreshHeaderView.layer.cornerRadius = 5;
-//	refreshHeaderView.clipsToBounds = YES;
-	refreshHeaderView.image = [UIImage imageNamed:@"bar_portrait.png"];
-//	refreshHeaderView.backgroundColor = [UIColor whiteColor];
 	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, REFRESH_HEADER_HEIGHT/2 - 15, 320, 19)] autorelease];
 	refreshLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	refreshLabel.text = @"Refreshing...";
-	refreshLabel.font = [UIFont boldSystemFontOfSize:17.0];
+	refreshLabel.text = @"Pull down and release to refresh";
+	refreshLabel.textColor = [UIColor colorWithRed:0.798 green:0.760 blue:0.695 alpha:1.000];
+	refreshLabel.font = [UIFont boldSystemFontOfSize:14];
 	refreshLabel.textAlignment = UITextAlignmentCenter;
 	refreshLabel.backgroundColor = [UIColor clearColor];
-	refreshLabel.textColor = [UIColor darkGrayColor];
 	[refreshHeaderView addSubview:refreshLabel];
+	UIImageView *image = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pullarrow.png"]] autorelease];
+	CGRect frame = image.frame;
+	frame.origin.x += 20;
+	frame.origin.y += 5;
+	image.frame = frame;
+	[refreshHeaderView addSubview:image];
 	[tableView addSubview:refreshHeaderView];
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

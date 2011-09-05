@@ -37,7 +37,7 @@
 - (IBAction)messageTypePressed:(id)sender;
 //- (IBAction)emailPressed:(UIButton*)sender;
 //- (IBAction)textPressed:(UIButton*)sender;
-//- (IBAction)sendPressed:(UIButton*)sender;
+- (IBAction)sendPressed:(UIButton*)sender;
 //- (IBAction)selectionPressed:(id)sender;
 - (void)sendFinished:(ASIHTTPRequest*)request;
 - (void)sendFailed:(ASIHTTPRequest*)request;

@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AboutViewController : UIViewController {
+@interface AboutViewController : UIViewController <UIWebViewDelegate> {
 	UIButton *OKButton;
+	IBOutlet UIWebView *webView;
+	IBOutlet UIButton *legalButton;
+	BOOL legalShown;
+	IBOutlet UITextView *legalView;
 }
 - (IBAction)dismiss:(id)sender;
+- (IBAction)legal:(id)sender;
 @property (nonatomic, retain) IBOutlet UIButton *OKButton;
 
 @end

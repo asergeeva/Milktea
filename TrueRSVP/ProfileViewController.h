@@ -31,6 +31,7 @@
 	IBOutlet UIButton *profilePic;
 	IBOutlet UIView *portrait;
 	BOOL welcomeShown;
+	IBOutlet UIButton *aboutButton;
 	IBOutlet UIButton *signOut;
 //	IBOutlet DebugView *view;
 }
@@ -41,5 +42,6 @@
 @property (nonatomic, retain) UINavigationBar *welcomeBar;
 @property (nonatomic) BOOL welcomeShown;
 @property (nonatomic, retain) UIButton *profilePic;
+@property (nonatomic, retain) UIButton *aboutButton;
 //@property (nonatomic, retain) IBOutlet DebugView *view;
 @end

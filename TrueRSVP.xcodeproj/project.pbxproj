@@ -62,6 +62,8 @@
 		5125570113E8020A00469DAE /* uploading.png in Resources */ = {isa = PBXBuildFile; fileRef = 512556FF13E8020A00469DAE /* uploading.png */; };
 		5125570213E8020A00469DAE /* uploading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5125570013E8020A00469DAE /* uploading@2x.png */; };
 		512A1ACD13FF112F00A10ECF /* MiscHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 512A1ACC13FF112E00A10ECF /* MiscHelper.m */; };
+		514BBEB71414458000832E1B /* pullarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 514BBEB51414458000832E1B /* pullarrow.png */; };
+		514BBEB81414458000832E1B /* pullarrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514BBEB61414458000832E1B /* pullarrow@2x.png */; };
 		514D991C13E0E3D90036AC40 /* firstNameButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D991813E0E3D90036AC40 /* firstNameButton.png */; };
 		514D991E13E0E3D90036AC40 /* lastNameButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D991A13E0E3D90036AC40 /* lastNameButton.png */; };
 		514D991F13E0E3D90036AC40 /* lastNameButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 514D991B13E0E3D90036AC40 /* lastNameButton@2x.png */; };
@@ -314,6 +316,8 @@
 		5125570013E8020A00469DAE /* uploading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploading@2x.png"; sourceTree = "<group>"; };
 		512A1ACB13FF112E00A10ECF /* MiscHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiscHelper.h; sourceTree = "<group>"; };
 		512A1ACC13FF112E00A10ECF /* MiscHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscHelper.m; sourceTree = "<group>"; };
+		514BBEB51414458000832E1B /* pullarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pullarrow.png; sourceTree = "<group>"; };
+		514BBEB61414458000832E1B /* pullarrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pullarrow@2x.png"; sourceTree = "<group>"; };
 		514D991813E0E3D90036AC40 /* firstNameButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firstNameButton.png; sourceTree = "<group>"; };
 		514D991A13E0E3D90036AC40 /* lastNameButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lastNameButton.png; sourceTree = "<group>"; };
 		514D991B13E0E3D90036AC40 /* lastNameButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lastNameButton@2x.png"; sourceTree = "<group>"; };
@@ -969,6 +973,8 @@
 				5198EE8713E8E05000AB1FE4 /* notification@2x.png */,
 				5173571213D7FAD100204AAF /* Profile_aboutTextView.png */,
 				5173571313D7FAD100204AAF /* Profile_aboutTextView@2x.png */,
+				514BBEB51414458000832E1B /* pullarrow.png */,
+				514BBEB61414458000832E1B /* pullarrow@2x.png */,
 				515A0E5F13E15CA500C136D0 /* refreshButton.png */,
 				515A0E6013E15CA500C136D0 /* refreshButton@2x.png */,
 				515A0E6113E15CA500C136D0 /* searchButton.png */,
@@ -1385,6 +1391,8 @@
 				515445DD14131ECE00E3ECA1 /* bar_landscape@2x.png in Resources */,
 				515445DE14131ECE00E3ECA1 /* bar_portrait.png in Resources */,
 				515445DF14131ECE00E3ECA1 /* bar_portrait@2x.png in Resources */,
+				514BBEB71414458000832E1B /* pullarrow.png in Resources */,
+				514BBEB81414458000832E1B /* pullarrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1554,7 +1562,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "35FAB9F8-A2C5-44B1-A1D8-C347C37F65FB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4324C0E-A018-405A-A44E-E8F6B6406F02";
 				USER_HEADER_SEARCH_PATHS = "\"/usr/local/include/\"";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1619,7 +1627,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "81D7A6E8-EF0C-4650-ADD1-B96391511FEC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DA4907ED-7FE2-4531-9F65-6325414F4E68";
 				USER_HEADER_SEARCH_PATHS = "\"/usr/local/include/\"";
 				WRAPPER_EXTENSION = app;
 			};

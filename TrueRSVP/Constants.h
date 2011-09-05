@@ -27,6 +27,7 @@
 #define BAR_TAG 19
 #define SHOULD_VALIDATE_SECURE_CERTIFICATE YES
 #define REFRESH_HEADER_HEIGHT 50.0f
+#define REFRESH_HEADER_HEIGHT_TWITTER 40.0f
 
 extern NSString *const consumerKey;
 extern NSString *const consumerSecret;

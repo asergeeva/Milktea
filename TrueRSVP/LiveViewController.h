@@ -23,6 +23,7 @@
 	IBOutlet UIButton *shareButton;
 	NSMutableArray *tweets;
 	IBOutlet UITableView *tweetTable;
+	UIImageView *refreshHeaderView;
 	UIBarButtonItem *logoutButton;
 	Event *thisEvent;
 	IBOutlet UILabel *warning;
@@ -32,8 +33,14 @@
 	TwitterLoginPopup *loginPopup;
 	NSMutableDictionary *imageDictionary;
 	OAuth *oAuth;
+	BOOL isDragging;
+    BOOL isLoading;
 //	MGTwitterEngine *twit;
 }
+- (void)addPullRefreshHeader:(UITableView*)tableView;
+- (void)startLoading;
+- (void)stopLoading;
+- (void)refresh;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)thisEvent;
 - (void)updateStream;
 - (IBAction)tweet:(UIButton*)sender;

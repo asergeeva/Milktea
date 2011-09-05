@@ -18,6 +18,7 @@
 @synthesize welcomeBar;
 @synthesize welcomeShown;
 @synthesize profilePic;
+@synthesize aboutButton;
 - (void)dealloc
 {
 	[nameLabel release];
@@ -36,6 +37,7 @@
 	[profilePic release];
     [signOut release];
 	[NetworkManager sharedNetworkManager].profileDelegate = nil;
+	[aboutButton release];
     [super dealloc];
 }
 
@@ -91,6 +93,10 @@
 	updateButton.layer.cornerRadius = 5;
 	updateButton.clipsToBounds = YES;
 	updateButton.layer.shouldRasterize = YES;
+	aboutButton.layer.cornerRadius = 5;
+	aboutButton.clipsToBounds = YES;
+	aboutButton.layer.shouldRasterize = YES;
+	aboutButton.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	signOut.layer.cornerRadius = 5;
 	signOut.clipsToBounds = YES;
 	signOut.layer.shouldRasterize = YES;
@@ -99,7 +105,8 @@
 	aboutTextView.layer.borderWidth = 2.0;
 	aboutTextView.layer.borderColor = [[UIColor grayColor] CGColor];
 	[aboutTextView setPlaceholder:@"About me..."];
-	profilePic.contentMode = UIViewContentModeScaleAspectFill;
+	profilePic.contentMode = UIViewContentModeScaleAspectFit;
+//	profilePic.imageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (void)viewDidUnload
@@ -112,6 +119,8 @@
 	portrait = nil;
     [signOut release];
     signOut = nil;
+	[aboutButton release];
+	aboutButton = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -200,6 +209,7 @@
 	{
 		twitterTextField.text = [NSString stringWithFormat:@"@%@", user.twitter];
 	}
+	[user.about setString:@""];
 	aboutTextView.text = user.about;
 	if(!welcomeShown && self.view.frame.size.width < 400)
 	{
@@ -243,28 +253,33 @@
 }
 - (void)updatedImages
 {
-	[profilePic setImage:[User sharedUser].profilePic forState:UIControlStateNormal];
+//	[profilePic.imageView setImage:[User sharedUser].profilePic];
+	[profilePic setBackgroundImage:[User sharedUser].profilePic forState:UIControlStateNormal];
+//	[profilePic setImage:[User sharedUser].profilePic forState:UIControlStateNormal];
 }
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 	{
 		[self dismissWelcome:nil];
-		whiteBackground.frame = CGRectMake(4, 76, 210, 210);
-		profilePic.frame = CGRectMake(16, 87, 188, 188);
-		emailTextField.frame = CGRectMake(222, 74, 250, 31);
-		cellTextField.frame = CGRectMake(222, 120, 93, 31);
-		zipTextField.frame = CGRectMake(222, 168, 93, 31);
-		twitterTextField.frame = CGRectMake(222, 214, 250, 31);
-		aboutTextView.frame = CGRectMake(328, 120, 145, 79);
-		nameLabel.frame = CGRectMake(4, 53, 210, 21);
-		emailLabel.frame = CGRectMake(222, 53, 42, 21);
-		cellLabel.frame = CGRectMake(222, 100, 42, 21);
-		aboutLabel.frame = CGRectMake(323, 100, 42, 21);
-		zipLabel.frame = CGRectMake(222, 148, 42, 21);
-		twitterLabel.frame = CGRectMake(222, 196, 105, 21);
-		updateButton.frame = CGRectMake(253, 253, 183, 27);
-		signOut.frame = CGRectMake(500, 500, 0, 0);
+		CGFloat topMargin = 5.0;
+		whiteBackground.frame = CGRectMake(10, 76 + topMargin, 168, 168);
+		profilePic.frame = CGRectMake(22, 87 + topMargin, 145, 145);
+//		[profilePic setImage:[User sharedUser].profilePic forState:UIControlStateNormal];
+		emailTextField.frame = CGRectMake(191, 74 + topMargin, 279, 31);
+		cellTextField.frame = CGRectMake(191, 120 + topMargin, 124, 31);
+		zipTextField.frame = CGRectMake(191, 168 + topMargin, 124, 31);
+		twitterTextField.frame = CGRectMake(191, 214 + topMargin, 279, 31);
+		aboutTextView.frame = CGRectMake(323, 120 + topMargin, 149, 79);
+		nameLabel.frame = CGRectMake(10, 53 + topMargin, 173, 21);
+		emailLabel.frame = CGRectMake(191, 53 + topMargin, 42, 21);
+		cellLabel.frame = CGRectMake(191, 100 + topMargin, 42, 21);
+		aboutLabel.frame = CGRectMake(323, 100 + topMargin, 42, 21);
+		zipLabel.frame = CGRectMake(191, 148 + topMargin, 42, 21);
+		twitterLabel.frame = CGRectMake(191, 196 + topMargin, 105, 21);
+		updateButton.frame = CGRectMake(180, 265, 120, 27);
+		signOut.frame = CGRectMake(10, 265, 120, 27);
+		aboutButton.frame = CGRectMake(350, 265, 120, 27);
 		self.view.frame = CGRectMake(-2.0, 10.0, 480.0, 320.0);
 	}
 	else
@@ -281,9 +296,10 @@
 		cellLabel.frame = CGRectMake(157, 173, 42, 21);
 		zipLabel.frame = CGRectMake(157, 234, 42, 21);
 		twitterLabel.frame = CGRectMake(157, 297, 105, 21);
-		updateButton.frame = CGRectMake(69, 374, 183, 27);
+		updateButton.frame = CGRectMake(69, 359, 183, 27);
 		aboutLabel.frame = CGRectMake(400, 0, 0, 0);
-		signOut.frame = CGRectMake(69, 409, 183, 27);
+		signOut.frame = CGRectMake(69, 394, 183, 27);
+		aboutButton.frame = CGRectMake(69, 429, 183, 27);
 		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];

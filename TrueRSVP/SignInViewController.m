@@ -51,7 +51,9 @@
 {
 		[NetworkManager sharedNetworkManager].delegate = nil;
 		MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:[NSBundle mainBundle]];
+//	[self finishedSignIn];
 		[self.navigationController pushViewController:mainVC animated:YES];
+	
 		[mainVC release];
 		[[SettingsManager sharedSettingsManager].settings setObject:[NSNumber numberWithBool:TRUE] forKey:@"Preloaded"];
 		[[SettingsManager sharedSettingsManager] save];
@@ -377,6 +379,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[ASIHTTPRequest clearSession];
+	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	[super viewWillAppear:animated];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -461,7 +464,6 @@
 	if([stringData hasPrefix:@"\""] && [stringData hasSuffix:@"\""])
 	{
 		NSRange range = {1, stringData.length-2};
-//		sessionKey = [stringData substringWithRange:range];
 		[sessionKey setString:[stringData substringWithRange:range]];
 		[facebook requestWithGraphPath:@"me" andDelegate:self];		
 	}

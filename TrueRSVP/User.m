@@ -47,6 +47,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User);
 			[temp removeObjectForKey:s];
 			[temp setValue:@"" forKey:s];
 		}
+		else if([[userInfo objectForKey:s] isEqual:@"null"])
+		{
+			[temp removeObjectForKey:s];
+			[temp setValue:@"" forKey:s];			
+		}
 	}
 	[uid setString:[temp objectForKey:@"id"]];
 	[fullName setString:[NSString stringWithFormat:@"%@ %@", [temp objectForKey:@"fname"], [temp objectForKey:@"lname"]]];

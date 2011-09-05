@@ -98,6 +98,7 @@
 			return;
 			break;
 	}
+	[self sendPressed:nil];
 }
 - (IBAction)messageTypePressed:(id)sender
 {
@@ -225,7 +226,15 @@
 	[[self.view viewWithTag:UPLOADMESSAGE_TAG] removeFromSuperview];
 	self.view.userInteractionEnabled = YES;
 	self.navigationController.navigationBar.userInteractionEnabled = YES;
-	NSLog(@"%@", [request responseString]);
+//	NSLog(@"%@", [request responseString]);
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message Sent!"
+													message:nil
+												   delegate:nil
+										  cancelButtonTitle:@"OK" 
+										  otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+	[self.navigationController popViewControllerAnimated:YES];
 }
 - (void)sendFailed:(ASIHTTPRequest*)request
 {

@@ -19,7 +19,7 @@
 #import "CJSONDeserializer.h"
 #import <QuartzCore/QuartzCore.h>
 #import "User.h"
-
+#import "UITextViewUneditable.h"
 
 
 @interface LiveViewController (PrivateMethods)
@@ -59,6 +59,94 @@ BOOL uploading = NO;
 }
 
 #pragma mark - View lifecycle
+- (void)addPullRefreshHeader:(UITableView *)tableView
+{
+	refreshHeaderView = [[[UIImageView alloc] initWithFrame:CGRectMake(10, 0 - REFRESH_HEADER_HEIGHT_TWITTER + 5, 300, REFRESH_HEADER_HEIGHT_TWITTER - 10)] autorelease];
+	refreshHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	UILabel *refreshLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, REFRESH_HEADER_HEIGHT_TWITTER/2 - 15, 320, 19)] autorelease];
+	refreshLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	refreshLabel.text = @"Pull down and release to refresh";
+	refreshLabel.textColor = [UIColor colorWithRed:0.798 green:0.760 blue:0.695 alpha:1.000];
+	refreshLabel.font = [UIFont boldSystemFontOfSize:14];
+	refreshLabel.textAlignment = UITextAlignmentCenter;
+	refreshLabel.backgroundColor = [UIColor clearColor];
+	[refreshHeaderView addSubview:refreshLabel];
+	UIImageView *image = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pullarrow.png"]] autorelease];
+	CGRect frame = image.frame;
+	frame.origin.x += 20;
+	frame.origin.y += 5;
+	image.frame = frame;
+	[refreshHeaderView addSubview:image];
+	[tableView addSubview:refreshHeaderView];
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (isLoading) return;
+    isDragging = YES;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (isLoading) 
+	{
+        // Update the content inset, good for section headers
+        if (scrollView.contentOffset.y > 0)
+            self.tweetTable.contentInset = UIEdgeInsetsZero;
+        else if (scrollView.contentOffset.y >= -REFRESH_HEADER_HEIGHT_TWITTER)
+            self.tweetTable.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+    } 
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate 
+{
+    if (isLoading) 
+	{
+		return;
+	}
+    isDragging = NO;
+    if (scrollView.contentOffset.y <= -REFRESH_HEADER_HEIGHT_TWITTER) 
+	{
+        [self startLoading];
+    }
+}
+- (void)startLoading 
+{
+    isLoading = YES;
+	[UIView animateWithDuration:0.4 animations:^(void) {
+		for(UITableViewCell *cell in [tweetTable visibleCells])
+		{
+			cell.alpha = 0;
+		}
+	}];
+	[UIView animateWithDuration:0.5 animations:^(void) 
+	 {
+		 self.tweetTable.contentInset = UIEdgeInsetsMake(0, REFRESH_HEADER_HEIGHT_TWITTER, 0, 0);		
+	 } completion:^(BOOL finished) {
+		 if(finished)
+		 {
+			 [self refresh];
+		 }
+	 }];
+	
+}
+
+- (void)stopLoading 
+{
+	[tweetTable reloadData];
+    isLoading = NO;
+	[UIView animateWithDuration:0.3 animations:^(void) 
+	 {
+		 self.tweetTable.contentInset = UIEdgeInsetsZero;
+	 }];
+}
+
+- (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context 
+{
+	[self updateStream];
+}
+
+- (void)refresh 
+{
+//	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:self completion:@selector(stopLoading)];
+	//	[self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0];
+	[self updateStream];
+}
 - (void)viewDidAppear:(BOOL)animated
 {
 
@@ -107,6 +195,7 @@ BOOL uploading = NO;
 	CGRect rect = self.view.frame;
 	rect.origin.y += 44;
 	self.view.bounds = rect;
+	[self addPullRefreshHeader:tweetTable];
     // Do any additional setup after loading the view from its nib.
 }
 - (void)resetUi 
@@ -227,7 +316,7 @@ BOOL uploading = NO;
 	tweetField.text = @"";
 	[request release];
 	[tweetField resignFirstResponder];
-	[tweetTable reloadData];
+//	[tweetTable reloadData];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -355,6 +444,10 @@ BOOL uploading = NO;
 	{
 		[tweets addObject:dictionary];
 	}
+	if(isLoading)
+	{
+		[self stopLoading];
+	}
 }
 - (void)updateStreamFailed:(ASIHTTPRequest*)request
 {
@@ -367,7 +460,7 @@ BOOL uploading = NO;
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tweetCell"];
 	UIView *tweetView;
 	UIImageView *imageView;
-	UITextView *theTweet;
+	UITextViewUneditable *theTweet;
 	if(!cell)
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tweetCell"] autorelease];
@@ -385,9 +478,9 @@ BOOL uploading = NO;
 		imageView.tag = TWEET_IMAGE_VIEW;
 		[tweetView addSubview:imageView];
 		
-		theTweet = [[[UITextView alloc] initWithFrame:CGRectMake(65, 10, 225, 65)] autorelease];
+		theTweet = [[[UITextViewUneditable alloc] initWithFrame:CGRectMake(65, 10, 225, 65)] autorelease];
 		theTweet.tag = TWEET_CONTENTS;
-		theTweet.userInteractionEnabled = NO;
+		theTweet.userInteractionEnabled = YES;
 		theTweet.font = [UIFont systemFontOfSize:12];
 		[tweetView addSubview:theTweet];
 	}
@@ -395,8 +488,10 @@ BOOL uploading = NO;
 	{
 		tweetView = [cell viewWithTag:TWEET_CELL];
 		imageView = (UIImageView*)[tweetView viewWithTag:TWEET_IMAGE_VIEW];
-		theTweet = (UITextView*)[tweetView viewWithTag:TWEET_CONTENTS];
+		theTweet = (UITextViewUneditable*)[tweetView viewWithTag:TWEET_CONTENTS];
 	}
+	theTweet.dataDetectorTypes = UIDataDetectorTypeLink;
+//	[cell.contentView addSubview:theTweet];
 	imageView.image = nil;
 	NSString *imageString = [[tweets objectAtIndex:index] objectForKey:@"profile_image_url"];
 	if(![imageDictionary objectForKey:imageString])
@@ -416,6 +511,7 @@ BOOL uploading = NO;
 	}
 	theTweet.text = [[tweets objectAtIndex:index] objectForKey:@"text"];
 //	imageView.image = [UIImage imageWithData:[request responseData]];
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -427,9 +523,39 @@ BOOL uploading = NO;
 {
 	return 95.0;
 }
+- (void)dismissPicView
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	NSString *tweet = [[tweets objectAtIndex:indexPath.row] objectForKey:@"text"];
+	NSRange range = [tweet rangeOfString:@"http://"];
+	if(range.length > 0)
+	{
+		NSString *suffix = [tweet substringFromIndex:range.location];
+		NSRange rangeEnd = [suffix rangeOfString:@" "];
+		NSString *url = [suffix substringToIndex:rangeEnd.location];
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+	}
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+//	UIViewController *picView = [[UIViewController alloc] init];
+//	picView.view.frame = self.view.frame;
+	
+//	UIWebView *webView = [[UIWebView alloc] initWithFrame:(0, 0, 320, 450)]
+//	
+//	UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 450, 320, 30)] autorelease];
+//	view.backgroundColor = [UIColor whiteColor];
+//	UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, 70, 30)];
+//	[doneButton setImage:[UIImage imageNamed:@"doneButton.png"] forState:UIControlStateNormal];
+//	[doneButton addTarget:self action:@selector(dismissPicView) forControlEvents:UIControlEventTouchUpInside];
+//	[view addSubview:doneButton];
+//	[doneButton release];
+//	[picView.view addSubview:view];
+//	[self presentModalViewController:picView animated:YES];
+//	[picView release];
+	
 }
 #pragma mark - UITextField Delegate Methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -489,6 +615,7 @@ BOOL uploading = NO;
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 - (void)dealloc {
+	[refreshHeaderView release];
     [liveEventBack release];
     [eventName release];
     [eventDate release];

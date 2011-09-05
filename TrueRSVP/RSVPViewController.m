@@ -75,6 +75,7 @@
 	switch (value) {
 		case 0:
 			confidence = 90;
+//			[FlurryAnalytics logEvent:@"RSVP"];
 			break;
 		case 1:
 			confidence = 65;
