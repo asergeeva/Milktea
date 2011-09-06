@@ -21,6 +21,8 @@
 #import "User.h"
 #import "FlurryAnalytics.h"
 #import "RSVPViewController.h"
+//#import "QREncoder/QREncoder.h"
+#import "QRViewController.h"
 @implementation AttendingDetailViewController
 @synthesize eventAttending;
 @synthesize eventWhiteBack;
@@ -80,6 +82,28 @@
 //		isPickerResigned = YES;
     }
     return self;
+}
+- (IBAction)showQR:(id)sender
+{
+//	UIViewController *qrVC = [[UIViewController alloc] init];
+//	qrVC.view.backgroundColor = [UIColor colorWithRed:0.914 green:0.902 blue:0.863 alpha:1.000];
+	
+//	UIImage *qrImage = [QREncoder encode:[NSString stringWithFormat:@"truersvp-%@-%@", eventAttending.eventID, [User sharedUser].uid]];
+//	UIImageView* imageView = [[UIImageView alloc] initWithImage:qrImage];
+//	int padding = 10;
+//	CGFloat qrSize = self.view.bounds.size.width - padding * 2;
+//	imageView.frame = CGRectMake(padding, (self.view.bounds.size.height - qrSize) / 2, qrSize, qrSize);
+//	[imageView layer].magnificationFilter = kCAFilterNearest;
+//	[qrVC.view addSubview:imageView];
+//	UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, qrVC.view.frame.size.height-35, 150, 35)];
+//	[closeButton setImage:[UIImage imageNamed:@"BlueBackground_1px.png"] forState:UIControlStateNormal];
+//	[closeButton setTitle:@"Close" forState:UIControlStateNormal];
+//	[closeButton addTarget:self action:@selector(dismissQR) forControlEvents:UIControlStateNormal];
+//	[qrVC.view addSubview:closeButton];
+	NSString *contents = [NSString stringWithFormat:@"truersvp-%@-%@", eventAttending.eventID, [User sharedUser].uid];
+	QRViewController *qrVC = [[QRViewController alloc] initWithNibName:@"QRViewController" bundle:[NSBundle mainBundle] string:contents];
+	[self.navigationController pushViewController:qrVC animated:YES];
+	[qrVC release];
 }
 - (IBAction)showLive:(UIButton*)sender
 {
@@ -494,6 +518,9 @@
 	checkIn.layer.cornerRadius = 5;
 	checkIn.clipsToBounds = YES;
 	
+	showQR.layer.cornerRadius = 5;
+	showQR.clipsToBounds = YES;
+	
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
 	eventMap.scrollEnabled = YES;
@@ -525,6 +552,8 @@
 	rsvpArrow = nil;
 	[liveArrow release];
 	liveArrow = nil;
+	[showQR release];
+	showQR = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -558,6 +587,7 @@
 	[orangeLabel release];
 	[rsvpArrow release];
 	[liveArrow release];
+	[showQR release];
 	[super dealloc];
 }
 
@@ -629,11 +659,13 @@
 		live.titleLabel.font = [UIFont boldSystemFontOfSize:12];
 		liveArrow.hidden = YES;
 		rsvpArrow.hidden = YES;
+		showQR.frame = CGRectMake(120, 251, 80, 23);
 //		eventDescription.layer.shadowOpacity = 0.5;
 		[self addEffects:eventDescription];
 		checkIn.frame = CGRectMake(178, 241, 292, 49);
-		contact.frame = CGRectMake(185, 192, 130, 24);
-		directions.frame = CGRectMake(330, 192, 130, 24);
+		contact.frame = CGRectMake(185, 192, 80, 24);
+		showQR.frame = CGRectMake(282, 192, 80, 23);
+		directions.frame = CGRectMake(380, 192, 80, 24);
 //		rsvpBack.frame = CGRectMake(190, 265, 270, 30);
 //		currentRSVPStatic.frame = CGRectMake(-15, 4, 280, 21);
 //		orangeLabel.frame = CGRectMake(155, 3, 118, 21);
@@ -665,8 +697,9 @@
 		eventMap.frame = CGRectMake(25, 169, 270, 70);
 //		eventAddress.frame = eventMap.frame;
 		checkIn.frame = CGRectMake(10, 388, 300, 45);
-		contact.frame = CGRectMake(25, 251, 125, 23);
-		directions.frame = CGRectMake(170, 251, 125, 23);
+		contact.frame = CGRectMake(25, 251, 80, 23);
+		showQR.frame = CGRectMake(120, 251, 80, 23);
+		directions.frame = CGRectMake(215, 251, 80, 23);
 		
 //		rsvpBack.frame = CGRectMake(10, 105, 300, 30);
 //		currentRSVPStatic.frame = CGRectMake(10, 4, 280, 21);

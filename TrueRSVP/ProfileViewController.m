@@ -185,6 +185,7 @@
 	test = [test stringByReplacingOccurrencesOfString:@"-" withString:@""];
 	NSNumberFormatter *isNumber = [[NSNumberFormatter alloc] init];
 	NSNumber *number = [isNumber numberFromString:test];
+	[isNumber release];
 	if(test.length != 10 || number == nil)
 	{
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Cell"
@@ -197,7 +198,6 @@
 		cellTextField.text = [User sharedUser].cell;
 		return;
 	}
-	[isNumber release];
 	[[User sharedUser].email setString:emailTextField.text];	
 	[[User sharedUser].cell setString:cellTextField.text];	
 	[[User sharedUser].zip setString:zipTextField.text];	

@@ -33,6 +33,7 @@
 	IBOutlet UIButton *directions;
 	IBOutlet UIButton *update;
 	IBOutlet UIButton *checkIn;
+	IBOutlet UIButton *showQR;
 	IBOutlet UIButton *live;
 //	IBOutlet UIView *buttonWhiteBack;
 	NSArray *choices;
@@ -49,11 +50,14 @@
 - (void)dismissCamera;
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+- (IBAction)showQR:(id)sender;
 - (IBAction)showLive:(UIButton*)sender;
 - (IBAction)showMail:(UIButton*)sender;
 - (IBAction)showMap:(UIButton*)sender;
 - (IBAction)showRSVP:(UIButton*)sender;
 - (IBAction)checkIn:(UIButton*)sender;
+//- (void)dismissQR;
+- (IBAction)showQR:(id)sender;
 - (void)mapRequestFinished:(ASIHTTPRequest *)request;
 - (void)mapRequestFailed:(ASIHTTPRequest *)request;
 @property (nonatomic, retain) Event *eventAttending;

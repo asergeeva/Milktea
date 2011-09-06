@@ -425,11 +425,11 @@
 	[txtUsername setDelegate:self];
 	[txtPassword setDelegate:self];
 	
-	UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showDebugView:)];
-	recognizer.direction = UISwipeGestureRecognizerDirectionUp;
-	recognizer.numberOfTouchesRequired = 3;
-	[self.view addGestureRecognizer:recognizer];
-	[recognizer release];
+//	UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showDebugView:)];
+//	recognizer.direction = UISwipeGestureRecognizerDirectionUp;
+//	recognizer.numberOfTouchesRequired = 3;
+//	[self.view addGestureRecognizer:recognizer];
+//	[recognizer release];
 	
     [super viewDidLoad];
 }

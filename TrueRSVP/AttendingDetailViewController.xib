@@ -69,7 +69,7 @@
 						<string key="NSFrame">{{10, 106}, {300, 180}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="328675491"/>
+						<reference key="NSNextKeyView" ref="692496060"/>
 						<string key="NSReuseIdentifierKey">_NS:180</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -84,7 +84,7 @@
 						<string key="NSFrame">{{25, 116}, {270, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="989930649"/>
+						<reference key="NSNextKeyView" ref="328675491"/>
 						<string key="NSReuseIdentifierKey">_NS:613</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="603592084">
 							<int key="NSColorSpace">2</int>
@@ -115,7 +115,7 @@
 						<string key="NSFrame">{{25, 169}, {270, 75}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="692496060"/>
+						<reference key="NSNextKeyView" ref="989930649"/>
 						<string key="NSReuseIdentifierKey">_NS:774</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -181,10 +181,10 @@
 					<object class="IBUIButton" id="989930649">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{25, 251}, {125, 23}}</string>
+						<string key="NSFrame">{{25, 251}, {80, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="879225299"/>
+						<reference key="NSNextKeyView" ref="972639273"/>
 						<string key="NSReuseIdentifierKey">_NS:222</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">2</int>
@@ -288,7 +288,7 @@
 					<object class="IBUIButton" id="879225299">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{170, 251}, {125, 23}}</string>
+						<string key="NSFrame">{{215, 251}, {80, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="117903602"/>
@@ -306,6 +306,28 @@
 						<string key="IBUINormalTitle">Directions</string>
 						<reference key="IBUIHighlightedTitleColor" ref="574443660"/>
 						<reference key="IBUINormalTitleColor" ref="574443660"/>
+						<reference key="IBUINormalTitleShadowColor" ref="241952363"/>
+						<reference key="IBUINormalBackgroundImage" ref="456744038"/>
+					</object>
+					<object class="IBUIButton" id="972639273">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{120, 251}, {80, 23}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="879225299"/>
+						<string key="NSReuseIdentifierKey">_NS:222</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<reference key="IBUIFont" ref="806483032"/>
+						<string key="IBUINormalTitle">Your Ticket</string>
+						<reference key="IBUIHighlightedTitleColor" ref="574443660"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MSAxIDEAA</bytes>
+						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="241952363"/>
 						<reference key="IBUINormalBackgroundImage" ref="456744038"/>
 					</object>
@@ -544,6 +566,23 @@
 					</object>
 					<int key="connectionID">67</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">showQR</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="972639273"/>
+					</object>
+					<int key="connectionID">69</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">showQR:</string>
+						<reference key="source" ref="972639273"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">70</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -573,6 +612,7 @@
 							<reference ref="743017326"/>
 							<reference ref="328675491"/>
 							<reference ref="692496060"/>
+							<reference ref="972639273"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -661,6 +701,11 @@
 						<reference key="object" ref="328675491"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">68</int>
+						<reference key="object" ref="972639273"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -685,6 +730,7 @@
 					<string>59.IBPluginDependency</string>
 					<string>64.IBPluginDependency</string>
 					<string>65.IBPluginDependency</string>
+					<string>68.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
 					<string>9.IBPluginDependency</string>
 				</object>
@@ -696,6 +742,7 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UITextViewUneditable</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -724,7 +771,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">67</int>
+			<int key="maxID">70</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -740,6 +787,7 @@
 							<string>showLive:</string>
 							<string>showMail:</string>
 							<string>showMap:</string>
+							<string>showQR:</string>
 							<string>showRSVP:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -748,6 +796,7 @@
 							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UIButton</string>
+							<string>id</string>
 							<string>UIButton</string>
 						</object>
 					</object>
@@ -759,6 +808,7 @@
 							<string>showLive:</string>
 							<string>showMail:</string>
 							<string>showMap:</string>
+							<string>showQR:</string>
 							<string>showRSVP:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -778,6 +828,10 @@
 							<object class="IBActionInfo">
 								<string key="name">showMap:</string>
 								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showQR:</string>
+								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">showRSVP:</string>
@@ -802,6 +856,7 @@
 							<string>liveArrow</string>
 							<string>orangeLabel</string>
 							<string>rsvpArrow</string>
+							<string>showQR</string>
 							<string>update</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -819,6 +874,7 @@
 							<string>UIImageView</string>
 							<string>UILabel</string>
 							<string>UIImageView</string>
+							<string>UIButton</string>
 							<string>UIButton</string>
 						</object>
 					</object>
@@ -839,6 +895,7 @@
 							<string>liveArrow</string>
 							<string>orangeLabel</string>
 							<string>rsvpArrow</string>
+							<string>showQR</string>
 							<string>update</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -894,6 +951,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">rsvpArrow</string>
 								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">showQR</string>
+								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">update</string>
