@@ -1572,7 +1572,7 @@
 				GCC_PREFIX_HEADER = "TrueRSVP/TrueRSVP-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "TrueRSVP/TrueRSVP-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Twitter+OAuth/Libraries & Headers\"",
 					"\"$SDKROOT/usr/include/libxml2\"",
@@ -1637,7 +1637,7 @@
 				GCC_PREFIX_HEADER = "TrueRSVP/TrueRSVP-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "TrueRSVP/TrueRSVP-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Twitter+OAuth/Libraries & Headers\"",
 					"\"$SDKROOT/usr/include/libxml2\"",
@@ -1668,7 +1668,7 @@
 				GCC_PREFIX_HEADER = "TrueRSVP/TrueRSVP-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "TrueRSVP/TrueRSVP-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Twitter+OAuth/Libraries & Headers\"",
 					"\"$SDKROOT/usr/include/libxml2\"",

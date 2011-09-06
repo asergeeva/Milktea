@@ -236,7 +236,7 @@
 {
 	if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
 	{
-		CGFloat topMargin = 12.0;
+		CGFloat topMargin = 10.0;
 		eventWhiteBack.frame = CGRectMake(10, 51 + topMargin, 290, 40);
 		eventName.frame = CGRectMake(20, 54 + topMargin, 270, 21);
 		eventDate.frame = CGRectMake(20, 71 + topMargin, 270, 21);

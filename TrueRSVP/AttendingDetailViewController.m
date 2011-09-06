@@ -36,7 +36,7 @@
 @synthesize live;
 @synthesize lat;
 @synthesize lng;
-@synthesize buttonWhiteBack;
+//@synthesize buttonWhiteBack;
 @synthesize organizerEmail;
 @synthesize reader;
 //@synthesize address;
@@ -384,8 +384,8 @@
 {
 	eventMap.alpha = 0;
 	eventMap.hidden = YES;
-	eventAddress.alpha = 0;
-	eventAddress.hidden = NO;
+//	eventAddress.alpha = 0;
+//	eventAddress.hidden = NO;
 	[super viewDidDisappear:animated];
 }
 - (NSString*)selectedConfidence:(int)confidenceSelected
@@ -409,7 +409,7 @@
 			selection = @"Raincheck";
 			break;
 		default:
-			selection = @"N/A";
+			selection = @"No Response";
 			break;
 	}
 	//confidence = confidenceSelected;
@@ -423,20 +423,24 @@
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd hh:mm a";
 	eventDate.text = [df stringFromDate:eventAttending.eventDate];
-	eventDescription.text = [NSString stringWithFormat:@"%@\n%@", eventAttending.eventDescription, eventAttending.eventAddress];
+	eventDescription.text = [[NSString stringWithFormat:@"%@\n%@", eventAttending.eventDescription, eventAttending.eventAddress] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	[df release];
 	[self willAnimateRotationToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
 	orangeLabel.text = [self selectedConfidence:[[NetworkManager sharedNetworkManager] getAttendanceForEvent:eventAttending.eventID]];
 	[super viewWillAppear:animated];
 }
-- (void)addEffects:(UIView*)view
+- (void)addShadows:(UIView*)view
 {
-	view.layer.cornerRadius = 5;
 	view.layer.shadowOpacity = 0.3;
 	view.layer.shadowOffset = CGSizeMake(0.0, 0.1);
 	view.layer.shadowRadius = 1;
 	view.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 	view.layer.shouldRasterize = YES;
+}
+- (void)addEffects:(UIView*)view
+{
+	view.layer.cornerRadius = 5;
+	[self addShadows:view];
 }
 - (void)dismissCamera
 {
@@ -448,8 +452,8 @@
     [super viewDidLoad];
 	eventMap.alpha = 0;
 	eventMap.hidden = YES;
-	eventAddress.alpha = 0;
-	eventAddress.hidden = YES;
+//	eventAddress.alpha = 0;
+//	eventAddress.hidden = YES;
 //	picker.delegate = self;
 //	picker.dataSource = self;
 //	[self.view addSubview:picker];
@@ -465,20 +469,30 @@
 	{
 		[self addEffects:eventWhiteBack];
 		[self addEffects:eventDescriptionWhiteBack];
-		[self addEffects:buttonWhiteBack];
-		[self addEffects:eventMap];
-		[self addEffects:rsvpBack];
+//		[self addEffects:buttonWhiteBack];
+//		[self addEffects:eventMap];
+//		[self addEffects:rsvpBack];
+		update.backgroundColor = [UIColor clearColor];
+		live.backgroundColor = [UIColor clearColor];
+		[update setBackgroundImage:[UIImage imageNamed:@"bar_portrait.png"] forState:UIControlStateNormal];
+		[live setBackgroundImage:[UIImage imageNamed:@"bar_portrait.png"] forState:UIControlStateNormal];
+		[self addShadows:update];
+		[self addShadows:live];
+		[self addEffects:eventDescription];
+//		update.layer.cornerRadius = 5;
+//		update.clipsToBounds = YES;
+//		live.layer.cornerRadius = 5;
+//		live.clipsToBounds = YES;
+
 	}
 	contact.layer.cornerRadius = 5;
 	contact.clipsToBounds = YES;
 	directions.layer.cornerRadius = 5;
 	directions.clipsToBounds = YES;
-	update.layer.cornerRadius = 5;
-	update.clipsToBounds = YES;
+	
+	
 	checkIn.layer.cornerRadius = 5;
 	checkIn.clipsToBounds = YES;
-	live.layer.cornerRadius = 5;
-	live.clipsToBounds = YES;
 	
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
@@ -499,14 +513,18 @@
 
 - (void)viewDidUnload
 {
-	[eventAddress release];
-	eventAddress = nil;
-	[currentRSVPStatic release];
-	currentRSVPStatic = nil;
-	[rsvpBack release];
-	rsvpBack = nil;
+//	[eventAddress release];
+//	eventAddress = nil;
+//	[currentRSVPStatic release];
+//	currentRSVPStatic = nil;
+//	[rsvpBack release];
+//	rsvpBack = nil;
 	[orangeLabel release];
 	orangeLabel = nil;
+	[rsvpArrow release];
+	rsvpArrow = nil;
+	[liveArrow release];
+	liveArrow = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -525,7 +543,7 @@
 	[update release];
 	[checkIn release];
 	[live release];
-	[buttonWhiteBack release];
+//	[buttonWhiteBack release];
 	[organizerEmail release];
 	[reader release];
 //	[picker release];
@@ -533,11 +551,13 @@
 	
 //	[someURL release];
 //	[address release];
-	[eventAddress release];
+//	[eventAddress release];
 	[choices release];
-	[currentRSVPStatic release];
-	[rsvpBack release];
+//	[currentRSVPStatic release];
+//	[rsvpBack release];
 	[orangeLabel release];
+	[rsvpArrow release];
+	[liveArrow release];
 	[super dealloc];
 }
 
@@ -572,11 +592,11 @@
 }
 - (void)mapRequestFailed:(ASIHTTPRequest *)request
 {
-	eventAddress.text = eventAttending.eventAddress;
-	eventAddress.hidden = NO;
-	[UIView animateWithDuration:0.3 animations:^(void) {
-		eventAddress.alpha = 1.0;
-	}];
+//	eventAddress.text = eventAttending.eventAddress;
+//	eventAddress.hidden = NO;
+//	[UIView animateWithDuration:0.3 animations:^(void) {
+//		eventAddress.alpha = 1.0;
+//	}];
 	NSLog(@"Loading Map failed");	
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -589,44 +609,68 @@
 {
 	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 	{
-		eventWhiteBack.frame = CGRectMake(5, 55, 165, 40);
-		buttonWhiteBack.frame = CGRectMake(5, 105, 165, 195);
-		eventDescriptionWhiteBack.frame = CGRectMake(175, 55, 300, 245);
-		eventName.frame = CGRectMake(12, 55, 150, 21);
-		eventDate.frame = CGRectMake(12, 74, 150, 21);
-		eventDescription.frame = CGRectMake(15, 10, 270, 70);
-		eventMap.frame = CGRectMake(15, 104, 270, 100);
-		eventAddress.frame = eventMap.frame;
-		update.frame = CGRectMake(12, 115, 150, 24);
-		checkIn.frame = CGRectMake(12, 153, 150, 24);
-		live.frame = CGRectMake(12, 191, 150, 24);
-		contact.frame = CGRectMake(12, 229, 150, 23);
-		directions.frame = CGRectMake(12, 267, 150, 23);
-		rsvpBack.frame = CGRectMake(190, 265, 270, 30);
-		currentRSVPStatic.frame = CGRectMake(-15, 4, 280, 21);
-		orangeLabel.frame = CGRectMake(155, 3, 118, 21);
-//		self.view.frame = CGRectMake(-2.0, 10.0, 480.0, 320.0);
+		eventWhiteBack.frame = CGRectMake(5, 51, 160, 40);
+//		buttonWhiteBack.frame = CGRectMake(5, 105, 165, 195);
+		eventName.frame = CGRectMake(17, 54, 145, 21);
+		eventDate.frame = CGRectMake(17, 69, 145, 21);
+		
+		eventDescription.frame = CGRectMake(5, 98, 160, 100);
+		
+		eventDescriptionWhiteBack.frame = CGRectMake(175, 51, 295, 175);
+		eventMap.frame = CGRectMake(187, 64, 275, 123);
+		
+		update.frame = CGRectMake(5, 210, 160, 35);
+//		update.titleLabel.text = @"RSVP:";
+		[update setTitle:@"" forState:UIControlStateNormal];
+		orangeLabel.frame = CGRectMake(5, 210, 160, 35);
+		[orangeLabel setTextAlignment:UITextAlignmentCenter];
+		orangeLabel.font = [UIFont boldSystemFontOfSize:12];
+		live.frame = CGRectMake(5, 253, 160, 35);
+		live.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+		liveArrow.hidden = YES;
+		rsvpArrow.hidden = YES;
+//		eventDescription.layer.shadowOpacity = 0.5;
+		[self addEffects:eventDescription];
+		checkIn.frame = CGRectMake(178, 241, 292, 49);
+		contact.frame = CGRectMake(185, 192, 130, 24);
+		directions.frame = CGRectMake(330, 192, 130, 24);
+//		rsvpBack.frame = CGRectMake(190, 265, 270, 30);
+//		currentRSVPStatic.frame = CGRectMake(-15, 4, 280, 21);
+//		orangeLabel.frame = CGRectMake(155, 3, 118, 21);
+//		self.view.frame = CGRectMake(0.0, 00.0, 480.0, 320.0);
 	}
 	else
 	{
 		eventWhiteBack.frame = CGRectMake(10, 55, 300, 40);
-		buttonWhiteBack.frame = CGRectMake(45, 335, 230, 115);
-		eventDescriptionWhiteBack.frame = CGRectMake(10, 145, 300, 180);
 		eventName.frame = CGRectMake(20, 58, 280, 21);
-		eventDate.frame = CGRectMake(20, 75, 280, 21);
-		eventDescription.frame = CGRectMake(15, 10, 270, 40);
-		eventMap.frame = CGRectMake(15, 63, 270, 75);
-		eventAddress.frame = eventMap.frame;
-		update.frame = CGRectMake(70, 344, 180, 27);
-		checkIn.frame = CGRectMake(70, 379, 180, 27);
-		contact.frame = CGRectMake(25, 290, 125, 23);
-		live.frame = CGRectMake(70, 414, 180, 27);
-		directions.frame = CGRectMake(170, 290, 125, 23);
+		eventDate.frame = CGRectMake(20, 77, 280, 15);
+//		update.titleLabel.text = @"Your RSVP:                               ";
+		[update setTitle:@"Your RSVP:                               " forState:UIControlStateNormal];
+		[orangeLabel setTextAlignment:UITextAlignmentLeft];
+		update.frame = CGRectMake(10, 106, 300, 35);
+		orangeLabel.frame = CGRectMake(156, 113, 111, 21);
+		orangeLabel.font = [UIFont boldSystemFontOfSize:17];
+		rsvpArrow.frame = CGRectMake(288, 116, 12, 15);
+		rsvpArrow.hidden = NO;
+		live.frame = CGRectMake(10, 152, 300, 35);
+		live.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+		liveArrow.frame = CGRectMake(288, 162, 12, 15);
+		liveArrow.hidden = NO;
+		eventDescription.layer.shadowOpacity = 0;
 		
-		rsvpBack.frame = CGRectMake(10, 105, 300, 30);
-		currentRSVPStatic.frame = CGRectMake(10, 4, 280, 21);
-		orangeLabel.frame = CGRectMake(172, 3, 118, 21);
-		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
+		
+//		buttonWhiteBack.frame = CGRectMake(45, 335, 230, 115);
+		eventDescriptionWhiteBack.frame = CGRectMake(10, 197, 300, 180);
+		eventDescription.frame = CGRectMake(20, 200, 270, 55);
+		eventMap.frame = CGRectMake(25, 260, 270, 70);
+//		eventAddress.frame = eventMap.frame;
+		checkIn.frame = CGRectMake(10, 388, 300, 45);
+		contact.frame = CGRectMake(25, 342, 125, 23);
+		directions.frame = CGRectMake(170, 342, 125, 23);
+		
+//		rsvpBack.frame = CGRectMake(10, 105, 300, 30);
+//		currentRSVPStatic.frame = CGRectMake(10, 4, 280, 21);
+//		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }

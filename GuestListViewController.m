@@ -218,7 +218,7 @@ BOOL sendSelection = NO;
 	CGRect rect = self.view.frame;
 	rect.origin.y += 44;
 	self.view.bounds = rect;
-	[self refreshGuestList];
+//	[self refreshGuestList];
 //	toolbar.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin);
 }
 #pragma mark - Unloading
