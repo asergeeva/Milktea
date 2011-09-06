@@ -36,11 +36,15 @@
 	eventTableView.delaysContentTouches = NO;
 	eventTableView.autoresizesSubviews = YES;
 	eventTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//	noticeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+//	noticeLabel.contentMode = UIViewContentModeBottom;
 	[self addPullRefreshHeader:eventTableView];
 }
 #pragma mark - Unloading
 - (void)viewDidUnload
 {
+    [noticeLabel release];
+    noticeLabel = nil;
     [super viewDidUnload];
 }
 
@@ -49,6 +53,7 @@
 //	[eventTableView release];
 //	[listController release];
 	[refreshHeaderView release];
+    [noticeLabel release];
 	[super dealloc];
 }
 #pragma mark - View Delegate Methods
@@ -71,7 +76,7 @@
 	else
 	{
 		self.eventTableView.frame = CGRectMake(0, 44, self.eventTableView.frame.size.width, self.eventTableView.frame.size.height);
-		self.view.bounds = CGRectMake(0, 44, 320, 480);
+		self.view.bounds = CGRectMake(0, 44, 320, 383);
 		for(UITableViewCell *cell in [eventTableView visibleCells])
 		{
 			cell.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bar_portrait.png"]] autorelease];

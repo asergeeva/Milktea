@@ -20,6 +20,7 @@
 	UIImageView *refreshHeaderView;
 	BOOL isDragging;
     BOOL isLoading;
+	IBOutlet UILabel *noticeLabel;
 }
 - (void)addPullRefreshHeader:(UITableView*)tableView;
 - (void)startLoading;

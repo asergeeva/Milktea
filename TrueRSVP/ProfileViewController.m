@@ -179,6 +179,25 @@
 - (IBAction)updateProfile:(id)sender
 {	
 	[self resignKeyboard];
+	NSString *test = [cellTextField.text stringByReplacingOccurrencesOfString:@"(" withString:@""];
+	test = [test stringByReplacingOccurrencesOfString:@")" withString:@""];
+	test = [test stringByReplacingOccurrencesOfString:@" " withString:@""];
+	test = [test stringByReplacingOccurrencesOfString:@"-" withString:@""];
+	NSNumberFormatter *isNumber = [[NSNumberFormatter alloc] init];
+	NSNumber *number = [isNumber numberFromString:test];
+	if(test.length != 10 || number == nil)
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Cell"
+														message:@"The cell phone number is invalid."
+													   delegate:nil
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+		cellTextField.text = [User sharedUser].cell;
+		return;
+	}
+	[isNumber release];
 	[[User sharedUser].email setString:emailTextField.text];	
 	[[User sharedUser].cell setString:cellTextField.text];	
 	[[User sharedUser].zip setString:zipTextField.text];	
@@ -191,7 +210,7 @@
 		[[User sharedUser].twitter setString:twitterTextField.text];	
 	}
 	[[User sharedUser].about setString:aboutTextView.text];	
-	[[NetworkManager sharedNetworkManager] updateProfileWithEmail:emailTextField.text about:aboutTextView.text cell:cellTextField.text zip:zipTextField.text twitter:twitterTextField.text delegate:self];
+	[[NetworkManager sharedNetworkManager] updateProfileWithEmail:emailTextField.text about:aboutTextView.text cell:test zip:zipTextField.text twitter:twitterTextField.text delegate:self];
 //	[[NetworkManager sharedNetworkManager] refreshAllWithDelegate:self completion:@selector(updateGUIProfile)];
 }
 - (void)updatedStrings
@@ -209,7 +228,7 @@
 	{
 		twitterTextField.text = [NSString stringWithFormat:@"@%@", user.twitter];
 	}
-	[user.about setString:@""];
+//	[user.about setString:@""];
 	aboutTextView.text = user.about;
 	if(!welcomeShown && self.view.frame.size.width < 400)
 	{
