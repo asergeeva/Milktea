@@ -647,26 +647,26 @@
 //		update.titleLabel.text = @"Your RSVP:                               ";
 		[update setTitle:@"Your RSVP:                               " forState:UIControlStateNormal];
 		[orangeLabel setTextAlignment:UITextAlignmentLeft];
-		update.frame = CGRectMake(10, 106, 300, 35);
-		orangeLabel.frame = CGRectMake(156, 113, 111, 21);
+		update.frame = CGRectMake(10, 297, 300, 35);
+		orangeLabel.frame = CGRectMake(156, 304, 111, 21);
 		orangeLabel.font = [UIFont boldSystemFontOfSize:17];
-		rsvpArrow.frame = CGRectMake(288, 116, 12, 15);
+		rsvpArrow.frame = CGRectMake(288, 307, 12, 15);
 		rsvpArrow.hidden = NO;
-		live.frame = CGRectMake(10, 152, 300, 35);
+		live.frame = CGRectMake(10, 343, 300, 35);
 		live.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-		liveArrow.frame = CGRectMake(288, 162, 12, 15);
+		liveArrow.frame = CGRectMake(288, 353, 12, 15);
 		liveArrow.hidden = NO;
 		eventDescription.layer.shadowOpacity = 0;
 		
 		
 //		buttonWhiteBack.frame = CGRectMake(45, 335, 230, 115);
-		eventDescriptionWhiteBack.frame = CGRectMake(10, 197, 300, 180);
-		eventDescription.frame = CGRectMake(20, 200, 270, 55);
-		eventMap.frame = CGRectMake(25, 260, 270, 70);
+		eventDescriptionWhiteBack.frame = CGRectMake(10, 106, 300, 180);
+		eventDescription.frame = CGRectMake(20, 116, 270, 55);
+		eventMap.frame = CGRectMake(25, 169, 270, 70);
 //		eventAddress.frame = eventMap.frame;
 		checkIn.frame = CGRectMake(10, 388, 300, 45);
-		contact.frame = CGRectMake(25, 342, 125, 23);
-		directions.frame = CGRectMake(170, 342, 125, 23);
+		contact.frame = CGRectMake(25, 251, 125, 23);
+		directions.frame = CGRectMake(170, 251, 125, 23);
 		
 //		rsvpBack.frame = CGRectMake(10, 105, 300, 30);
 //		currentRSVPStatic.frame = CGRectMake(10, 4, 280, 21);

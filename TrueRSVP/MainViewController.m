@@ -153,14 +153,6 @@ BOOL offlineWarning = NO;
 		[alert release];
 		offlineWarning = YES;
 	}
-	if(![[SettingsManager sharedSettingsManager].settings objectForKey:@"didShowWelcome"])
-	{
-		WelcomeViewController *welcome = [[WelcomeViewController alloc] initWithNibName:@"WelcomeViewController" bundle:[NSBundle mainBundle] name:[User sharedUser].fullName  mainVC:self];
-		[self presentModalViewController:welcome animated:YES];
-		[welcome release];
-		[[SettingsManager sharedSettingsManager].settings setObject:@"1" forKey:@"didShowWelcome"];
-		[[SettingsManager sharedSettingsManager] save];
-	}
 	[self resetRotation:profileVC duration:0.3];
 	[self resetRotation:attendingVC duration:0.3];
 	[self resetRotation:hostingVC duration:0.3];
@@ -179,6 +171,15 @@ BOOL offlineWarning = NO;
 	[self setupScrolling];
 	scrollView.alpha = 0;
 	scrollView.hidden = YES;
+//	if(![[SettingsManager sharedSettingsManager].settings objectForKey:@"didShowWelcome"])
+//	{
+		WelcomeViewController *welcome = [[WelcomeViewController alloc] initWithNibName:@"WelcomeViewController" bundle:[NSBundle mainBundle] name:[User sharedUser].fullName  mainVC:self];
+		[self presentModalViewController:welcome animated:YES];
+		[welcome release];
+//		[[SettingsManager sharedSettingsManager].settings setObject:@"1" forKey:@"didShowWelcome"];
+//		[[SettingsManager sharedSettingsManager] save];
+//	}
+
 //	CGRect frame = scrollView.frame;
 //	frame.origin.x = 0;
 
