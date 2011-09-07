@@ -633,7 +633,7 @@ static int RS_BLOCK_TABLE[][7] = {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 - (QRBitBuffer *)getData {
-  QRBitBuffer *buffer = [[QRBitBuffer alloc] init];
+  QRBitBuffer *buffer = [[[QRBitBuffer alloc] init] autorelease];
   [buffer append:4 length:4];
   [buffer append:[_str length] length:8];
 
@@ -730,7 +730,7 @@ static int RS_BLOCK_TABLE[][7] = {
                       length:dcCount
                        shift:rsPoly.length - 1];
     QRPolynomial *modPoly = [rawPoly mod:rsPoly];
-    
+
     int length = rsPoly.length - 1;
     ecCounts[r] = length;
     int *es = (int *)malloc(length * sizeof(int));
@@ -739,6 +739,7 @@ static int RS_BLOCK_TABLE[][7] = {
       es[i] = modIndex >= 0 ? [modPoly get:modIndex] : 0;
     }
     ecData[r] = es;
+	[rawPoly release];
   }
   
   int totalCodeCount = 0;
@@ -774,7 +775,7 @@ static int RS_BLOCK_TABLE[][7] = {
   free(dcData);
   free(ecData);
   free(ecCounts);
-  
+	
   return data2;
 }
 

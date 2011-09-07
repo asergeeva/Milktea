@@ -311,6 +311,7 @@
 		default:
 			break;
 	}
+	[destinationLocation release];
 }
 - (IBAction)checkIn:(UIButton*)sender
 {
@@ -364,13 +365,13 @@
 //	}
 	else
 	{
-		UIActionSheet *checkInSheet = [[UIActionSheet alloc] initWithTitle:@"Check-In:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"By Distance", @"By Showing Ticket", @"By Scanning Event Code", nil];
+		UIActionSheet *checkInSheet = [[UIActionSheet alloc] initWithTitle:@"Check-In:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"By Distance", @"By Showing Ticket", @"By Scanning Event's Ticket", nil];
 		[checkInSheet showInView:self.view];
 		[checkInSheet release];
 //		[[NetworkManager sharedNetworkManager] checkInWithEID:eventAttending.eventID];
 	}
 //	[destinationLocation release];
-//	[df release];
+	[df release];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {

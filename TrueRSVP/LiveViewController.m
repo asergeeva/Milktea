@@ -166,6 +166,7 @@ BOOL uploading = NO;
 }
 - (void)viewDidLoad
 {	
+	logoutButton.enabled = NO;
 	warning.alpha = 0.0;
     [self resetUi];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resignKeyboard) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -203,7 +204,7 @@ BOOL uploading = NO;
     if (oAuth.oauth_token_authorized) 
 	{
 		//logged in
-		
+		logoutButton.enabled = YES;
     }
 	else 
 	{
@@ -241,6 +242,7 @@ BOOL uploading = NO;
 }
 
 - (void)twitterLoginPopupDidAuthorize:(TwitterLoginPopup *)popup {
+	logoutButton.enabled = YES;
     [self dismissModalViewControllerAnimated:YES];        
     [loginPopup release]; loginPopup = nil; // was retained as ivar in "login"
     [oAuth saveOAuthTwitterContextToUserDefaults];
@@ -655,7 +657,7 @@ BOOL uploading = NO;
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 - (void)dealloc {
-	[refreshHeaderView release];
+//	[refreshHeaderView release];
     [liveEventBack release];
     [eventName release];
     [eventDate release];
@@ -671,7 +673,7 @@ BOOL uploading = NO;
 //	[uploadingMessage release];
 //	[showUploadingMessage release];
 	[oAuth release];
-	[loginPopup release];
+//	[loginPopup release];
 	[warning release];
     [super dealloc];
 }

@@ -59,7 +59,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 	facebook = [[Facebook alloc] initWithAppId:@"123284527755183" andDelegate:signVC];
 	navController = [[UINavigationController alloc] initWithRootViewController:signVC];	
 	//navController.view.backgroundColor = [UIColor colorWithRed:0.925 green:0.914 blue:0.875 alpha:1.000];
-	[FlurryAnalytics logAllPageViews:navController];
+//	[FlurryAnalytics logAllPageViews:navController];
 	self.window.rootViewController = navController;
 //	[navController pushViewController:signVC animated:NO];
 	[signVC release];
