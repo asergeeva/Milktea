@@ -46,7 +46,7 @@
 	[qrView setImage:qrImage];
 	[qrView layer].magnificationFilter = kCAFilterNearest;
 	[self.view addSubview:qrView];
-	
+	self.navigationItem.title = @"Your Ticket";
 //	NSString *contents = [NSString stringWithFormat:@"truersvp-%@-%@", eventAttending.eventID, [User sharedUser].uid];
 //	QRViewController *qrVC = [[QRViewController alloc] initWithNibName:@"QRViewController" bundle:[NSBundle mainBundle] string:contents];
 //	[self presentModalViewController:qrVC animated:YES];

@@ -236,17 +236,84 @@
 {
 	[self dismissModalViewControllerAnimated:YES];
 }
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//	if(buttonIndex == 1)
+//	{
+//		[self presentModalViewController:reader animated:YES];
+//	}
+//}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if(buttonIndex == 1)
-	{
-		[self presentModalViewController:reader animated:YES];
+	CLLocation *destinationLocation = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
+	CLLocationDistance distance = [destinationLocation distanceFromLocation:eventMap.userLocation.location];
+
+	switch (buttonIndex) {
+		case 0:
+			if(distance > 3218 || distance < 0)
+			{
+				if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+				{ 
+					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In"
+																	message:@"Cannot check-in by distance. You may check-in through scanning a QR code if the host has provided one."
+																   delegate:self
+														  cancelButtonTitle:@"Cancel" 
+														  otherButtonTitles:@"OK", nil];
+					[alert show];
+					[alert release];
+				}
+				else if(distance < 0)
+				{
+					[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_UNLOCATABLE"];
+					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+																	message:@"Unable to locate your position. Please enable location services for this app."
+																   delegate:nil
+														  cancelButtonTitle:@"OK" 
+														  otherButtonTitles:nil];
+					[alert show];
+					[alert release];	
+				}
+				else
+				{
+					[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_TOOFAR"];
+					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+																	message:@"You are either too far or GPS is currently inaccurate. Try again when you are closer to the event."
+																   delegate:nil
+														  cancelButtonTitle:@"OK" 
+														  otherButtonTitles:nil];
+					[alert show];
+					[alert release];
+				}
+			}
+			else
+			{
+				[[NetworkManager sharedNetworkManager] checkInWithEID:eventAttending.eventID];
+			}
+			break;
+		case 1:
+			[self showQR:nil];
+			break;
+		case 2:
+			if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+			{
+				[self presentModalViewController:reader animated:YES];
+			}
+			else
+			{
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Camera Detected."
+																message:nil
+															   delegate:nil
+													  cancelButtonTitle:@"OK" 
+													  otherButtonTitles:nil];
+				[alert show];
+				[alert release];
+			}
+		default:
+			break;
 	}
 }
 - (IBAction)checkIn:(UIButton*)sender
 {
-	CLLocation *destinationLocation = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
-	CLLocationDistance distance = [destinationLocation distanceFromLocation:eventMap.userLocation.location];
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	df.dateFormat = @"yyyy-MM-dd";
 	if(![[df stringFromDate:eventAttending.eventDate] isEqualToString:[df stringFromDate:[NSDate date]]])
@@ -260,47 +327,50 @@
 		[alert show];
 		[alert release];		
 	}
-	else if(distance > 3218 || distance < 0)
-	{
-		if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-		{ 
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In"
-															message:@"Cannot check-in by distance. You may check-in through scanning a QR code if the host has provided one."
-														   delegate:self
-												  cancelButtonTitle:@"Cancel" 
-												  otherButtonTitles:@"OK", nil];
-			[alert show];
-			[alert release];
-		}
-		else if(distance < 0)
-		{
-			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_UNLOCATABLE"];
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-															message:@"Unable to locate your position. Please enable location services for this app."
-														   delegate:nil
-												  cancelButtonTitle:@"OK" 
-												  otherButtonTitles:nil];
-			[alert show];
-			[alert release];	
-		}
-		else
-		{
-			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_TOOFAR"];
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
-															message:@"You are either too far or GPS is currently inaccurate. Try again when you are closer to the event."
-														   delegate:nil
-												  cancelButtonTitle:@"OK" 
-												  otherButtonTitles:nil];
-			[alert show];
-			[alert release];
-		}
-	}
+//	else if(distance > 3218 || distance < 0)
+//	{
+//		if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+//		{ 
+//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In"
+//															message:@"Cannot check-in by distance. You may check-in through scanning a QR code if the host has provided one."
+//														   delegate:self
+//												  cancelButtonTitle:@"Cancel" 
+//												  otherButtonTitles:@"OK", nil];
+//			[alert show];
+//			[alert release];
+//		}
+//		else if(distance < 0)
+//		{
+//			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_UNLOCATABLE"];
+//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+//															message:@"Unable to locate your position. Please enable location services for this app."
+//														   delegate:nil
+//												  cancelButtonTitle:@"OK" 
+//												  otherButtonTitles:nil];
+//			[alert show];
+//			[alert release];	
+//		}
+//		else
+//		{
+//			[FlurryAnalytics logEvent:@"ATTENDEE_CHECKIN_ATTEMPT_TOOFAR"];
+//			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Check-In" 
+//															message:@"You are either too far or GPS is currently inaccurate. Try again when you are closer to the event."
+//														   delegate:nil
+//												  cancelButtonTitle:@"OK" 
+//												  otherButtonTitles:nil];
+//			[alert show];
+//			[alert release];
+//		}
+//	}
 	else
 	{
-		[[NetworkManager sharedNetworkManager] checkInWithEID:eventAttending.eventID];
+		UIActionSheet *checkInSheet = [[UIActionSheet alloc] initWithTitle:@"Check-In:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"By Distance", @"By Showing Ticket", @"By Scanning Event Code", nil];
+		[checkInSheet showInView:self.view];
+		[checkInSheet release];
+//		[[NetworkManager sharedNetworkManager] checkInWithEID:eventAttending.eventID];
 	}
-	[destinationLocation release];
-	[df release];
+//	[destinationLocation release];
+//	[df release];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -347,41 +417,41 @@
 	[reader dismissModalViewControllerAnimated:YES];
 //	[self presentModalViewController:reader animated:NO];
 }
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	int confidence = 0;
-	switch (buttonIndex)
-	{
-		case 0:
-			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF90"];
-			confidence = 90;
-			break;
-		case 1:
-			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF65"];
-			confidence = 65;
-			break;
-		case 2:
-			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF35"];
-			confidence = 35;
-			break;
-		case 3:
-			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF15"];
-			confidence = 15;
-			break;
-		case 4:
-			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF4"];
-			confidence = 4;
-			break;
-//		case 5:
-//			confidence = 1;
+//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//	int confidence = 0;
+//	switch (buttonIndex)
+//	{
+//		case 0:
+//			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF90"];
+//			confidence = 90;
 //			break;
-		default:
-			confidence = 5;
-			break;
-	}
-
-	[[NetworkManager sharedNetworkManager] setAttendanceWithEID:eventAttending.eventID confidence:[NSString stringWithFormat:@"%d", confidence]];
-}
+//		case 1:
+//			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF65"];
+//			confidence = 65;
+//			break;
+//		case 2:
+//			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF35"];
+//			confidence = 35;
+//			break;
+//		case 3:
+//			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF15"];
+//			confidence = 15;
+//			break;
+//		case 4:
+//			[FlurryAnalytics logEvent:@"ATTENDEE_UPDATED_RSVP_CONF4"];
+//			confidence = 4;
+//			break;
+////		case 5:
+////			confidence = 1;
+////			break;
+//		default:
+//			confidence = 5;
+//			break;
+//	}
+//
+//	[[NetworkManager sharedNetworkManager] setAttendanceWithEID:eventAttending.eventID confidence:[NSString stringWithFormat:@"%d", confidence]];
+//}
 - (void)viewWillDisappear:(BOOL)animated
 {
 //	[self dismissPicker];
@@ -518,8 +588,8 @@
 	checkIn.layer.cornerRadius = 5;
 	checkIn.clipsToBounds = YES;
 	
-	showQR.layer.cornerRadius = 5;
-	showQR.clipsToBounds = YES;
+//	showQR.layer.cornerRadius = 5;
+//	showQR.clipsToBounds = YES;
 	
 	eventMap.mapType = MKMapTypeStandard;
 	eventMap.zoomEnabled = YES;
@@ -552,8 +622,8 @@
 	rsvpArrow = nil;
 	[liveArrow release];
 	liveArrow = nil;
-	[showQR release];
-	showQR = nil;
+//	[showQR release];
+//	showQR = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -587,7 +657,7 @@
 	[orangeLabel release];
 	[rsvpArrow release];
 	[liveArrow release];
-	[showQR release];
+//	[showQR release];
 	[super dealloc];
 }
 
@@ -640,7 +710,7 @@
 	if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
 	{
 		eventWhiteBack.frame = CGRectMake(5, 51, 160, 40);
-//		buttonWhiteBack.frame = CGRectMake(5, 105, 165, 195);
+		//		buttonWhiteBack.frame = CGRectMake(5, 105, 165, 195);
 		eventName.frame = CGRectMake(17, 54, 145, 21);
 		eventDate.frame = CGRectMake(17, 69, 145, 21);
 		
@@ -650,7 +720,7 @@
 		eventMap.frame = CGRectMake(187, 64, 275, 123);
 		
 		update.frame = CGRectMake(5, 210, 160, 35);
-//		update.titleLabel.text = @"RSVP:";
+		//		update.titleLabel.text = @"RSVP:";
 		[update setTitle:@"" forState:UIControlStateNormal];
 		orangeLabel.frame = CGRectMake(5, 210, 160, 35);
 		[orangeLabel setTextAlignment:UITextAlignmentCenter];
@@ -659,24 +729,22 @@
 		live.titleLabel.font = [UIFont boldSystemFontOfSize:12];
 		liveArrow.hidden = YES;
 		rsvpArrow.hidden = YES;
-		showQR.frame = CGRectMake(120, 251, 80, 23);
-//		eventDescription.layer.shadowOpacity = 0.5;
+		//		eventDescription.layer.shadowOpacity = 0.5;
 		[self addEffects:eventDescription];
 		checkIn.frame = CGRectMake(178, 241, 292, 49);
-		contact.frame = CGRectMake(185, 192, 80, 24);
-		showQR.frame = CGRectMake(282, 192, 80, 23);
-		directions.frame = CGRectMake(380, 192, 80, 24);
-//		rsvpBack.frame = CGRectMake(190, 265, 270, 30);
-//		currentRSVPStatic.frame = CGRectMake(-15, 4, 280, 21);
-//		orangeLabel.frame = CGRectMake(155, 3, 118, 21);
-//		self.view.frame = CGRectMake(0.0, 00.0, 480.0, 320.0);
+		contact.frame = CGRectMake(185, 192, 130, 24);
+		directions.frame = CGRectMake(330, 192, 130, 24);
+		//		rsvpBack.frame = CGRectMake(190, 265, 270, 30);
+		//		currentRSVPStatic.frame = CGRectMake(-15, 4, 280, 21);
+		//		orangeLabel.frame = CGRectMake(155, 3, 118, 21);
+		//		self.view.frame = CGRectMake(0.0, 00.0, 480.0, 320.0);
 	}
 	else
 	{
 		eventWhiteBack.frame = CGRectMake(10, 55, 300, 40);
 		eventName.frame = CGRectMake(20, 58, 280, 21);
 		eventDate.frame = CGRectMake(20, 77, 280, 15);
-//		update.titleLabel.text = @"Your RSVP:                               ";
+		//		update.titleLabel.text = @"Your RSVP:                               ";
 		[update setTitle:@"Your RSVP:                               " forState:UIControlStateNormal];
 		[orangeLabel setTextAlignment:UITextAlignmentLeft];
 		update.frame = CGRectMake(10, 297, 300, 35);
@@ -691,19 +759,18 @@
 		eventDescription.layer.shadowOpacity = 0;
 		
 		
-//		buttonWhiteBack.frame = CGRectMake(45, 335, 230, 115);
+		//		buttonWhiteBack.frame = CGRectMake(45, 335, 230, 115);
 		eventDescriptionWhiteBack.frame = CGRectMake(10, 106, 300, 180);
 		eventDescription.frame = CGRectMake(20, 116, 270, 55);
 		eventMap.frame = CGRectMake(25, 169, 270, 70);
-//		eventAddress.frame = eventMap.frame;
+		//		eventAddress.frame = eventMap.frame;
 		checkIn.frame = CGRectMake(10, 388, 300, 45);
-		contact.frame = CGRectMake(25, 251, 80, 23);
-		showQR.frame = CGRectMake(120, 251, 80, 23);
-		directions.frame = CGRectMake(215, 251, 80, 23);
+		contact.frame = CGRectMake(25, 251, 125, 23);
+		directions.frame = CGRectMake(170, 251, 125, 23);
 		
-//		rsvpBack.frame = CGRectMake(10, 105, 300, 30);
-//		currentRSVPStatic.frame = CGRectMake(10, 4, 280, 21);
-//		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
+		//		rsvpBack.frame = CGRectMake(10, 105, 300, 30);
+		//		currentRSVPStatic.frame = CGRectMake(10, 4, 280, 21);
+		//		self.view.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
 	}
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }

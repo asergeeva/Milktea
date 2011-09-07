@@ -14,7 +14,7 @@
 #import "ASIFormDataRequest.h"
 #import "UITextViewUneditable.h"
 #import "ZBarReaderViewController.h"
-@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ASIHTTPRequestDelegate, ZBarReaderDelegate, UIAlertViewDelegate>
+@interface AttendingDetailViewController : UIViewController <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, ASIHTTPRequestDelegate, ZBarReaderDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
 {
 	Event *eventAttending;
 	IBOutlet UIView *eventWhiteBack;
@@ -33,7 +33,7 @@
 	IBOutlet UIButton *directions;
 	IBOutlet UIButton *update;
 	IBOutlet UIButton *checkIn;
-	IBOutlet UIButton *showQR;
+//	IBOutlet UIButton *showQR;
 	IBOutlet UIButton *live;
 //	IBOutlet UIView *buttonWhiteBack;
 	NSArray *choices;
@@ -50,7 +50,7 @@
 - (void)dismissCamera;
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(Event*)event;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
-- (IBAction)showQR:(id)sender;
+//- (IBAction)showQR:(id)sender;
 - (IBAction)showLive:(UIButton*)sender;
 - (IBAction)showMail:(UIButton*)sender;
 - (IBAction)showMap:(UIButton*)sender;
